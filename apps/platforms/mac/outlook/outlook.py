@@ -61,24 +61,21 @@ class UserActions:
 
 	def outlook_focus_message_list():
 		outlook = outlook_app()
-		role = outlook_focused_element().AXRole
 
-		if role == "AXOutline": # folder list in new Outlook
-			actions.key("ctrl-shift-]")
-		elif role != "AXTable":
-			actions.key("ctrl-shift-[")
+		if outlook_focused_element().AXRole == "AXGroup":
+			# Work around state in which keyboard controls message list but focus is in message body
+			# (likely intended, but confusing when inspecting). Focus flashes without this.
+			actions.key("ctrl-shift-] ctrl-shift-[")
+			actions.sleep("100ms")
 
-		saw_button = False
+		last_focused_element = None
 		for attempt in range(10):
 			focused_element = outlook_focused_element()
 			role = focused_element.AXRole
-			if role == "AXTable" and focused_element.get("AXDescription") == "Message List":
-				return
-			if not saw_button:
-				if role == "AXButton": # message toolbar / "hide task pane" button
-					actions.key("ctrl-shift-[")
-					saw_button = True
-					continue
+			if focused_element != last_focused_element:
+				if role == "AXTable":
+					return
+				actions.key("ctrl-shift-[")
 			actions.sleep("50ms")
 
 		raise Exception(f'Unable to focus Outlook message list, instead focused {focused_element}')
