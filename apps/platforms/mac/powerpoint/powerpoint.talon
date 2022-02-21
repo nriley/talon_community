@@ -3,6 +3,6 @@ app: powerpoint_mac
 
 # dictation mode gets confused when typing too fast
 settings():
-	key_wait = 3
+	insert_wait = 0.1
 
 presenter view: key(esc alt-enter)
