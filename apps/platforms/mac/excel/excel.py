@@ -4,13 +4,8 @@ from talon.mac import applescript
 ctx = Context()
 mod = Module()
 
-mod.apps.excel = """
-os: mac
-and app.bundle: com.microsoft.Excel
-"""
-
 ctx.matches = r"""
-app: excel
+app: excel_mac
 """
 
 @ctx.action_class('edit')

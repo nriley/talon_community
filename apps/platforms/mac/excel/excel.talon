@@ -1,4 +1,4 @@
-app: excel
+app: excel_mac
 -
 save as excel: user.excel_save_as_format('Excel Workbook (.xlsx)')
 
