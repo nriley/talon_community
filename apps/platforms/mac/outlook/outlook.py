@@ -76,6 +76,7 @@ class UserActions:
 				if role == "AXTable":
 					return
 				actions.key("ctrl-shift-[")
+			last_focused_element = focused_element
 			actions.sleep("50ms")
 
 		raise Exception(f'Unable to focus Outlook message list, instead focused {focused_element}')
@@ -96,6 +97,7 @@ class UserActions:
 				if role == "AXOutline":
 					return
 				actions.key("ctrl-shift-[")
+			last_focused_element = focused_element
 			actions.sleep("50ms")
 
 		raise Exception("Unable to focus Outlook folder list")
