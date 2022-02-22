@@ -4,8 +4,6 @@ app: citrix_viewer
 # keys get dropped frequently, particularly during initial login
 settings():
 	insert_wait = 2
-	# context sensitive dictation is destroying text - leave it off for now
-    user.context_sensitive_dictation = 0
 
 full screen: user.window_toggle_full_screen()
 
