@@ -27,6 +27,9 @@ class Actions:
 		if fda is None:
 			return
 
+		if not actions.user.fd_is_running():
+			return
+
 		fdas = fda.Connect()
 		if fdas is None:
 			return # unable to connect
