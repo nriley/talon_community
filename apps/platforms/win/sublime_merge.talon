@@ -21,3 +21,7 @@ stage all:
 	key(ctrl-shift-a)
 	sleep(100ms)
 stage untracked: key(ctrl-k ctrl-a)
+
+^repository | repo [<user.text>]:
+	key(ctrl-shift-o)
+	insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
