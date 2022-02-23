@@ -2,7 +2,7 @@ app.bundle: com.microsoft.Outlook
 -
 # dictation mode gets confused when typing too fast
 settings():
-	insert_wait = 0.1
+	insert_wait = 4
 
 archive: user.outlook_archive()
 delete: key(cmd-backspace)
