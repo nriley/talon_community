@@ -1,5 +1,7 @@
 app: excel_mac
 -
+tag(): user.find_and_replace
+
 save as excel: user.excel_save_as_format('Excel Workbook (.xlsx)')
 
 fill down: key(cmd-d)

@@ -63,6 +63,42 @@ class UserActions:
 		file_format_item = file_format_menu.children.find_one(AXRole='AXMenuItem', AXTitle=format, max_depth=0)
 		file_format_item.perform('AXPress')
 
+	def find(text: str):
+		actions.key('cmd-f')
+		if text:
+			actions.insert(text)
+
+	def find_next(): actions.key('cmd-g')
+	def find_previous(): actions.key('cmd-shift-g')
+
+	def find_everywhere(text: str):
+		actions.key('ctrl-f')
+		if text:
+			actions.insert(text)
+
+	def find_toggle_match_by_case(): pass # could implement
+	def find_toggle_match_by_word(): pass
+	def find_toggle_match_by_regex(): pass
+
+	def replace(text: str):
+		actions.key('ctrl-h')
+		if text:
+			actions.insert(text)
+	replace_everywhere = replace
+
+	def replace_confirm(): actions.key('cmd-r')
+	def replace_confirm_all(): actions.key('cmd-a')
+
+	def select_previous_occurrence(text: str):
+		actions.edit.find(text)
+		actions.edit.find_previous()
+		actions.key('esc')
+
+	def select_next_occurrence(text: str):
+		actions.edit.find(text)
+		actions.edit.find_next()
+		actions.key('esc')
+
 @mod.action_class
 class Actions:
 	def excel_save_as_format(format: str):
