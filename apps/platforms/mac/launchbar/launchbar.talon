@@ -1,26 +1,26 @@
 os: mac
 -
 
-# Intent is to simulate interactive use of LaunchBar, so if you have different
-# keyboard shortcuts configured you will need to replace them here.  Mine are:
-
-# Search in LaunchBar: Command-Space
-# Instant Send: Double Control (which I have mapped to caps lock)
-# Show clipboard history: Control-Option-Command-V
-
 launch <user.text>:
-	key(cmd-space)
-	insert('{user.formatted_text(text, "ALL_LOWERCASE,NO_SPACES")}')
+	user.launchbar_select(text)
 
 launch brief {user.abbreviation}: 
-	key(cmd-space)
-	insert('{user.formatted_text(abbreviation, "ALL_LOWERCASE,NO_SPACES")}')
+	user.launchbar_select(abbreviation)
 
 launch bar:
-	key(cmd-space)
+	user.launch_or_focus_bundle('at.obdev.LaunchBar')
 
 launch running:
-	user.launchbar_action('Running Applications')
+	user.launchbar_action('Running Applications', '')
+
+web search <phrase>:
+	user.launchbar_action('Google', '{phrase}')
+
+# If you have different keyboard shortcuts configured, you will need
+# to replace them here.  Mine are:
+
+# Instant Send: Double Control (which I have mapped to caps lock)
+# Show clipboard history: Control-Option-Command-V
 
 launch paste:
 	key(ctrl-cmd-alt-v)
@@ -31,8 +31,3 @@ launch send:
 	key(ctrl:up ctrl:down)
 	sleep(10ms)
 	key(ctrl:up)
-
-web search <phrase>:
-	user.launchbar_action('Google')
-	key(backspace)
-	insert("{phrase}")
