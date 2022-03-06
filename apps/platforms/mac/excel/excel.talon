@@ -55,6 +55,7 @@ array select: key(ctrl-/)
 
 column hide: key(ctrl-0)
 column unhide: key(ctrl-shift-0)
+# XXX Sometimes ctrl-space selects more than a single column despite the documentation
 column select: key(ctrl-space)
 column insert: key(ctrl-space ctrl-shift-=)
 column delete: key(ctrl-space cmd--)
