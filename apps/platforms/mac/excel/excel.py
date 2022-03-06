@@ -25,6 +25,9 @@ class EditActions:
 			tell application id "com.microsoft.Excel" to set front window's zoom to 100
 		""")
 
+	def line_insert_down():
+		actions.key("enter")
+
 def excel_app():
 	return ui.apps(bundle="com.microsoft.Excel")[0]
 
