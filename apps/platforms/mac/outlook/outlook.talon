@@ -24,7 +24,7 @@ send [this] message: key(cmd-enter)
 move:
 	key(cmd-shift-m)
 
-(save to | move to) [<user.text>]:
+move to [<user.text>]:
 	key(cmd-shift-m)
 	insert(user.text or "")
 
