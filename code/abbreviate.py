@@ -220,6 +220,7 @@ abbreviations = {
     "user": "usr",
     "utilities": "utils",
     "utility": "util",
+    "val": "VAL",
     "value": "val",
     "variable": "var",
     "verify": "vrfy",
