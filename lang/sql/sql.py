@@ -1,9 +1,7 @@
 from talon import Context, actions
 ctx = Context()
 ctx.matches = r"""
-mode: user.sql
-mode: user.auto_lang
-and code.language: sql
+tag: user.sql
 """
 
 # these vary by dialect

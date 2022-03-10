@@ -1,8 +1,4 @@
-mode: command
-and mode: user.sql
-mode: command
-and mode: user.auto_lang
-and code.language: sql
+tag: user.sql
 -
 tag(): user.code_operators_math
 tag(): user.code_comment_line
