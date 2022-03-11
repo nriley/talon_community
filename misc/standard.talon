@@ -22,6 +22,7 @@ clear that: key(backspace)
 nope | ((i do | and do | undo) that): edit.undo()
 (read do | redo) that: edit.redo()
 paste match: edit.paste_match_style()
+file open: user.file_open()
 file save: edit.save()
 #(pad | padding): 
 #	insert("  ") 
