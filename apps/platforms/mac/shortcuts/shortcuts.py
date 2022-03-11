@@ -33,4 +33,6 @@ def refresh():
 
 	ctx.lists['user.shortcuts'] = shortcuts
 
-app.register('ready', refresh)
+if app.platform == 'mac':
+	app.register('ready', refresh)
+
