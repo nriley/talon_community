@@ -14,17 +14,10 @@ os: windows
 ^nav screen$: key(ctrl-alt-;)
 
 # -- LaunchBar
-# Search hotkey
-launch <user.text>:
-	key(ctrl-alt-space backspace)
-	user.paste(text)
-
-launch brief {user.abbreviation}:
-	key(ctrl-alt-space backspace)
-	user.paste(abbreviation)
-
-launch bar:
-	key(ctrl-alt-space)
+# Search hotkey (in fluent_search.py)
+launch <user.text>: user.fluent_search(text)
+launch brief {user.abbreviation}: user.fluent_search(abbreviation)
+launch bar: user.fluent_search("")
 
 # Search using Processes hotkey
 launch running:
