@@ -79,11 +79,9 @@ interface <user.text> [over]:
 state slice: " []"
 slice of: "[]"
 state tag:
-  insert(" ``")
-  key("left")
+  user.insert_between(" `", "`")
 field tag <user.text> [over]:
-    insert(" ``")
-    key("left")
+    user.insert_between(" `", "`")
     sleep(100ms)
     insert(user.formatted_text(text, "snake"))
     insert(" ")
