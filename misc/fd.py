@@ -1,10 +1,9 @@
-from talon import Module, actions
-
-import sys
+from talon import Context, Module, actions, app, cron, ui
+from talon.experimental.locate import locate_in_image
 
 fda = None
 
-if sys.platform == 'win32':
+if app.platform == "windows":
 	import win32api
 	import win32com.client
 
@@ -13,9 +12,25 @@ if sys.platform == 'win32':
 	fda = win32com.client.Dispatch("FDLink.Application")
 
 mod = Module()
+ctx = Context()
+ctx.matches = """
+os: windows
+"""
 
 @mod.action_class
 class Actions:
+	def fd_is_running() -> bool:
+		"""Is Fluency Direct running?"""
+		return False
+
+	def disable_fd():
+		"""Disable Fluency Direct"""
+
+	def enable_fd():
+		"""Enable Fluency Direct via a keyboard shortcut."""
+
+@ctx.action_class('user')
+class UserActions:
 	def fd_is_running() -> bool:
 		"""Is Fluency Direct running?"""
 		if fda is None:
@@ -23,7 +38,6 @@ class Actions:
 		return fda.IsRunning()
 
 	def disable_fd():
-		"""Disable Fluency Direct"""
 		if fda is None:
 			return
 
@@ -45,9 +59,38 @@ class Actions:
 		fdrc.EnableRecording(True)
 
 	def enable_fd():
-		"""Enable Fluency Direct via a keyboard shortcut."""
 		if not actions.user.fd_is_running():
 			return
 		# start out with FD in a known state
 		actions.user.disable_fd()
 		actions.key("`")
+
+def fd_window():
+	fd_app = ui.apps(name='M*Modal Fluency Direct')
+	if not fd_app:
+		return None
+	fd_app = fd_app[0]
+	try:
+		return next(window for window in fd_app.windows() if window.title == 'M*Modal Fluency Direct')
+	except StopIteration:
+		return None
+
+def disable_talon_if_fd_listening():
+	if not actions.speech.enabled():
+		return
+
+	window = fd_window()
+	if not window:
+		return_value
+
+	fd_listening = actions.user.mouse_helper_find_template_relative(
+		"fd_listening.png", region=window.rect)
+	if fd_listening:
+		print('FD listening - disabling Talon')
+		actions.speech.disable()
+
+def app_launched(app):
+	cron.interval("5s", disable_talon_if_fd_listening)
+
+if app.platform == "windows":
+	ui.register("app_launch", app_launched)
