@@ -17,7 +17,6 @@ def outlook_focused_element():
 	seen_nothing = False
 	for attempt in range(10):
 		element = outlook.focused_element
-		print(element)
 		if element and getattr(element, "AXRole", None):
 			return element
 		# XXX relative of https://github.com/talonvoice/talon/issues/480
