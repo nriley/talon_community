@@ -20,8 +20,8 @@ def outlook_focused_element():
 		print(element)
 		if element and getattr(element, "AXRole", None):
 			return element
-		# XXX work around https://github.com/talonvoice/talon/issues/480
-		element = outlook.element.AXFocusedUIElement
+		# XXX relative of https://github.com/talonvoice/talon/issues/480
+		element = ui.focused_element()
 		if not seen_nothing:
 			# attempt to work around Outlook issue where nothing apepars focused
 			# (via either method; outlook.element.AXFocusedUIElement is None)
