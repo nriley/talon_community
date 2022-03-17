@@ -29,6 +29,11 @@ class Actions:
 	def enable_fd():
 		"""Enable Fluency Direct via a keyboard shortcut."""
 
+
+@Context().action_class('user')
+class FallbackUserActions:
+	def disable_fd(): pass
+
 @ctx.action_class('user')
 class UserActions:
 	def fd_is_running() -> bool:
