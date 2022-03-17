@@ -8,14 +8,6 @@ os: mac
 and app.bundle: com.apple.mail
 """
 
-def measure(f, label=""):
-	from time import perf_counter
-	start = perf_counter()
-	result = f()
-	end = perf_counter()
-	print(f'{label}: {end - start}s')
-	return result
-
 def mail_messages_table():
 	mail = ui.apps(bundle='com.apple.mail')[0]
 	try:
@@ -38,7 +30,7 @@ class UserActions:
 			return
 
 		try: # filtering this way is ~2x as fast as using AXSelectedRows
-			selected_row = measure(lambda: messages_table.children.find_one(AXSelected=True, max_depth=0), 'selected')
+			selected_row = messages_table.children.find_one(AXSelected=True, max_depth=0)
 		except ui.UIErr:
 			return
 
@@ -46,7 +38,7 @@ class UserActions:
 		desired_index = selected_row.AXIndex + offset
 		desired_index = max(desired_index, 0)
 
-		children = measure(lambda: list(messages_table.children), 'list(children)')
+		children = list(messages_table.children)
 		desired_index = min(desired_index, len(children) - 1)
 
 		# don't get stuck in column headers
