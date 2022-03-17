@@ -12,14 +12,24 @@ app.bundle: com.microsoft.Outlook
 def outlook_app():
 	return ui.apps(bundle="com.microsoft.Outlook")[0]
 
-# Temporary workaround for https://github.com/talonvoice/talon/issues/480
 def outlook_focused_element():
 	outlook = outlook_app()
-	element = outlook.focused_element
-	if element and getattr(element, "AXRole", None):
-		return element
-	element = outlook.element.AXFocusedUIElement
-	return element
+	seen_nothing = False
+	for attempt in range(10):
+		element = outlook.focused_element
+		print(element)
+		if element and getattr(element, "AXRole", None):
+			return element
+		# XXX work around https://github.com/talonvoice/talon/issues/480
+		element = outlook.element.AXFocusedUIElement
+		if not seen_nothing:
+			# attempt to work around Outlook issue where nothing apepars focused
+			# (via either method; outlook.element.AXFocusedUIElement is None)
+			actions.key("ctrl-shift-[ ctrl-shift-]")
+			seen_nothing = True
+		actions.sleep("50ms")
+	else:
+		raise Exception('Unable to determine focused element in Outlook')
 
 @ctx.action_class("user")
 class UserActions:
