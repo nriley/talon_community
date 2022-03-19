@@ -125,8 +125,6 @@ class UserActions:
 		role = outlook_focused_element().AXRole
 		message_roles = ("AXGroup", "AXTextArea", "AXWebArea")
 
-		print("Before:", outlook_focused_element(), outlook_focused_element().attrs)
-
 		if role in message_roles:
 			return
 
@@ -147,8 +145,6 @@ class UserActions:
 					saw_button = True
 					continue
 			actions.sleep("50ms")
-
-		print("After:", focused_element, focused_element.attrs)
 
 		raise Exception("Unable to focus Outlook message body")
 
