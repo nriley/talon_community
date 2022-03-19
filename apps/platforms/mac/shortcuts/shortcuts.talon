@@ -2,4 +2,4 @@ os: mac
 -
 (shortcut|shortcuts) refresh: user.shortcuts_refresh()
 
-shortcut {user.shortcuts}: user.shortcut_run(shortcuts)
+shortcut {user.shortcuts}: user.shortcut_run_nb(shortcuts)

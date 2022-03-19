@@ -19,6 +19,9 @@ class Actions:
 	def shortcut_run(shortcut: str) -> str:
 		"""Run a shortcut"""
 
+	def shortcut_run_nb(shortcut: str):
+		"""Run a shortcut without blocking"""
+
 @ctx.action_class('user')
 class UserActions:
 	def shortcuts_refresh():
@@ -26,6 +29,10 @@ class UserActions:
 
 	def shortcut_run(shortcut: str) -> str:
 		return subprocess.check_output(['/usr/bin/shortcuts', 'run', shortcut]).decode()
+
+	def shortcut_run_nb(shortcut: str):
+		popen = subprocess.Popen(['/usr/bin/shortcuts', 'run', shortcut])
+		popen.returncode = 0 # XXX hack to suppress ResourceWarning
 
 def refresh():
 	shortcuts = subprocess.check_output(['/usr/bin/shortcuts', 'list']).decode().split('\n')
