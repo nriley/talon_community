@@ -148,6 +148,20 @@ class UserActions:
 
 		raise Exception("Unable to focus Outlook message body")
 
+	def accessibility_adjust_context_for_application(el, context):
+		role = el.AXRole
+		if role == 'AXTextArea':
+			return context
+		elif role == 'AXScrollArea':
+			for textarea in el.children.find(AXRole='AXTextArea'):
+				selection = textarea.AXSelectedTextRange
+				if selection.left != 9223372036854775807: # XXX kCFNotFound
+					context.content = el.get("AXValue")
+					context.selection = selection
+					break
+
+		return context
+
 @mod.action_class
 class Actions:
 	def outlook_set_selected_folder(folder: str):
