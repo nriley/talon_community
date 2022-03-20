@@ -54,5 +54,9 @@ settings():
     # per-application basis.
     user.context_sensitive_dictation = 1
 
+    # Accessibility dictation settings.
+    user.accessibility_dictation = 1
+    user.hiss_to_debug_accessibility = 1
+
 # Uncomment this to enable the curse yes/curse no commands (show hide mouse cursor). See issue #688.
 # tag(): user.mouse_cursor_commands_enable
