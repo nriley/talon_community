@@ -148,19 +148,15 @@ class UserActions:
 
 		raise Exception("Unable to focus Outlook message body")
 
-	def accessibility_adjust_context_for_application(el, context):
+	def dictation_current_element():
+		el = ui.focused_element()
 		role = el.AXRole
 		if role == 'AXTextArea':
-			return context
+			return el
 		elif role == 'AXScrollArea':
 			for textarea in el.children.find(AXRole='AXTextArea'):
-				selection = textarea.AXSelectedTextRange
-				if selection.left != 9223372036854775807: # XXX kCFNotFound
-					context.content = el.get("AXValue")
-					context.selection = selection
-					break
-
-		return context
+				if textarea.AXSelectedTextRange.left != 9223372036854775807: # NSNotFound
+					return textarea
 
 @mod.action_class
 class Actions:
