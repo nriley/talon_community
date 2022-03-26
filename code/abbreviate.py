@@ -181,6 +181,7 @@ abbreviations = {
     "return": "ret",
     "revision": "rev",
     "ruby": "rb",
+    "rust": "rs",
     "saskatchewan": "sk",
     "sequel": "SQL",
     "service pack": "sp",
