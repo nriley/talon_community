@@ -22,7 +22,7 @@ class UserActions:
 			if was_hidden is True:
 				viewer.element.AXHidden = False
 			for window in viewer.windows():
-				if window.element.AXSubrole == 'AXStandardWindow':
+				if window.element.get('AXSubrole') == 'AXStandardWindow':
 					viewer.focus()
 					window.focus()
 					return
