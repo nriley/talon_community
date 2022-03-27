@@ -148,16 +148,6 @@ class UserActions:
 
 		raise Exception("Unable to focus Outlook message body")
 
-	def dictation_current_element():
-		el = ui.focused_element()
-		role = el.AXRole
-		if role == 'AXTextArea':
-			return el
-		elif role == 'AXScrollArea':
-			for textarea in el.children.find(AXRole='AXTextArea'):
-				if textarea.AXSelectedTextRange.left != 9223372036854775807: # NSNotFound
-					return textarea
-
 @mod.action_class
 class Actions:
 	def outlook_set_selected_folder(folder: str):
