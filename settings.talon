@@ -58,7 +58,7 @@ settings():
     user.accessibility_dictation = 1
     user.hiss_to_debug_accessibility = 1
     # I am accidently triggering this far too frequently.
-    user.hiss_to_debug_accessibility_threshold = 1
+    user.hiss_to_debug_accessibility_threshold = 2
 
 # Uncomment this to enable the curse yes/curse no commands (show hide mouse cursor). See issue #688.
 # tag(): user.mouse_cursor_commands_enable
