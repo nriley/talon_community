@@ -86,7 +86,7 @@ def disable_talon_if_fd_listening():
 
 	window = fd_window()
 	if not window:
-		return_value
+		return
 
 	fd_listening = actions.user.mouse_helper_find_template_relative(
 		"fd_listening.png", region=window.rect)
