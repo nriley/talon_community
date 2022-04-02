@@ -89,6 +89,7 @@ abbreviations = {
     "extend": "ext",
     "extension": "ext",
     "file system": "fs",
+    "fire": "FHIR",
     "framework": "fw",
     "function": "func",
     "funny": "lol",

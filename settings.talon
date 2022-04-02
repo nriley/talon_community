@@ -60,5 +60,8 @@ settings():
     # I am accidently triggering this far too frequently.
     user.hiss_to_debug_accessibility_threshold = 2
 
+    # Enable notification debug logging.
+    user.notification_debug = 0
+
 # Uncomment this to enable the curse yes/curse no commands (show hide mouse cursor). See issue #688.
 # tag(): user.mouse_cursor_commands_enable
