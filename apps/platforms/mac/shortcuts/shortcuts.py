@@ -1,5 +1,6 @@
 from talon import actions, app, Context, Module, ui
 
+import os.path
 import subprocess
 
 mod = Module()
@@ -40,6 +41,6 @@ def refresh():
 
 	ctx.lists['user.shortcuts'] = shortcuts
 
-if app.platform == 'mac':
+if app.platform == 'mac' and os.path.exists("/usr/bin/shortcuts"):
 	app.register('ready', refresh)
 
