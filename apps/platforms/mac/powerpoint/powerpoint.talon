@@ -20,3 +20,5 @@ align justify: key(cmd-j)
 bold: key(cmd-b)
 italic: key(cmd-i)
 underline: key(cmd-u)
+
+comment new: key(cmd-shift-m)
