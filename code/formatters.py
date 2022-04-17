@@ -275,4 +275,3 @@ ctx.lists["self.prose_formatter"] = {
     "remark": "CAPITALIZE_FIRST_WORD",
     "sentence": "CAPITALIZE_FIRST_WORD",
 }
-

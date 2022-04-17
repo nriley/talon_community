@@ -243,4 +243,3 @@ cut (word (right | next) | east):
 cut line:
     edit.select_line()
     edit.cut()
-
