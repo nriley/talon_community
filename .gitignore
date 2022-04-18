@@ -7,3 +7,5 @@ __pycache__
 .idea/
 # Locally generated
 .vscode/settings.json
+# Platform-specific
+settings/system_paths.csv
