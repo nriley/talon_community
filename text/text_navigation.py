@@ -33,7 +33,7 @@ ctx.lists["self.navigation_action"] = {
     "select": "SELECT",
     "clear": "DELETE",
     "cut": "CUT",
-    "copy": "COPY",
+    # "copy": "COPY",
 }
 ctx.lists["self.before_or_after"] = {
     "before": "BEFORE",
