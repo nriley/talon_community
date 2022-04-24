@@ -364,3 +364,25 @@ class UserActions:
         actions.edit.find(text)
         actions.sleep("100ms")
         actions.key("esc")
+
+    # line_commands.py support begin
+
+    def delete_camel_left():
+        actions.user.vscode("deleteWordPartLeft")
+
+    def delete_camel_right():
+        actions.user.vscode("deleteWordPartRight")
+
+    def extend_camel_left():
+        actions.user.vscode("cursorWordPartLeftSelect")
+
+    def extend_camel_right():
+        actions.user.vscode("cursorWordPartRightSelect")
+
+    def camel_left():
+        actions.user.vscode("cursorWordPartLeft")
+
+    def camel_right():
+        actions.user.vscode("cursorWordPartRight")
+
+    # line_commands.py support end
