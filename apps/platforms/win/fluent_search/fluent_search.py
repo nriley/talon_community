@@ -1,4 +1,4 @@
-from talon import actions, Context, Module
+from talon import actions, Context, Module, ui
 
 mod = Module()
 ctx = Context()
@@ -20,6 +20,8 @@ class UserActions:
 		# If you have a different search keyboard shortcut configured,
 		# replace ctrl-alt-space with it below.
 		actions.key('ctrl-alt-space backspace')
+		while ui.active_app().name != 'FluentSearch':
+			actions.sleep("50ms")
 		if '\t' in text:
 			plugin, text = text.split('\t', 1)
 			actions.insert(plugin + '\t')
