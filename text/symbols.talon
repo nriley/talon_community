@@ -46,7 +46,7 @@ inside (list | brackets):
     insert("[]")
     key(left)
 inside braces:
-    insert("{}") 
+    insert("{}")
     key(left)
 inside percent:
     insert("%%")
@@ -63,10 +63,10 @@ angle that:
 brace that:
     text = edit.selected_text()
     user.paste("{{{text}}}")
-bracket that: 
+bracket that:
     text = edit.selected_text()
     user.paste("[{text}]")
-(parens | args) that: 
+(parens | args) that:
     text = edit.selected_text()
     user.paste("({text})")
 percent that:

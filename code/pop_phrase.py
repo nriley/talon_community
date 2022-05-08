@@ -43,12 +43,12 @@ def on_pop(active):
     global pop_phrase
     if pop_phrase == "":
         return
-    actions.mimic(pop_phrase) 
+    actions.mimic(pop_phrase)
 
 noise.register("pop", on_pop)
 
 def ui_event(event, arg=None):
-    global pop_phrase 
+    global pop_phrase
     pop_phrase = ""
 
 def on_ready():

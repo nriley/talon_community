@@ -51,13 +51,13 @@ class UserActions:
 	def find_previous():                         actions.key('shift-f3')
 	def replace_confirm():                       actions.key('ctrl-shift-h')
 	def replace_confirm_all():                   actions.key('ctrl-alt-enter')
-	
+
 	# user.line_commands
 	def extend_camel_left():                     actions.key('alt-shift-left')
 	def extend_camel_right():                    actions.key('alt-shift-right')
 	def camel_left():                            actions.key('alt-left')
 	def camel_right():                           actions.key('alt-right')
-	
+
 	# user.multiple_cursors
 	def multi_cursor_add_above():                actions.key('ctrl-alt-up')
 	def multi_cursor_add_below():                actions.key('ctrl-alt-down')
@@ -76,7 +76,7 @@ class UserActions:
 		actions.key("ctrl-shift-f")
 		actions.insert(text)
 
-	def replace(text: str): 
+	def replace(text: str):
 		actions.key("ctrl-h")
 		actions.insert(text)
 

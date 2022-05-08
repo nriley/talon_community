@@ -49,7 +49,7 @@ move left: key(cmd-alt-2 escape cmd-. ctrl-cmd-left)
 
 go in box: key(cmd-1)
 go projects: key(cmd-2)
-go tags: key(cmd-3)	
+go tags: key(cmd-3)
 go forecast: key(cmd-4)
 go flagged: key(cmd-5)
 go review: key(cmd-6)

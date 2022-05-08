@@ -93,7 +93,7 @@ class UserActions:
 
 	def find_next():     actions.key('cmd-g')
 	def find_previous(): actions.key('cmd-shift-g')
-	
+
 	# not standard OneNote; approximate equivalents of AutoHotKey
 	def onenote_heading_1():
 		actions.key('ctrl-e enter')
@@ -107,7 +107,7 @@ class UserActions:
 		actions.key('cmd-alt-1')
 
 	def onenote_checkbox(): actions.key('ctrl-e enter tab cmd-1 up ctrl-e')
-	
+
 	def onenote_hide_navigation():
 		onenote = onenote_app()
 		window = onenote_window()
@@ -149,7 +149,7 @@ class UserActions:
 		desired_row = max(desired_row, 0)
 		desired_row = min(desired_row, len(recent_rows) - 1)
 		recent_rows[desired_row].AXSelected = True
-	
+
 	def onenote_copy_link():
 		onenote = onenote_app()
 		# despite the name of this menu item, the link takes you directly to the selected paragraph

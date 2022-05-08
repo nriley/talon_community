@@ -51,10 +51,10 @@ go way down:
 
 go way up:
     edit.file_start()
-    
+
 go bottom:
     edit.file_end()
-    
+
 go top:
     edit.file_start()
 
@@ -202,7 +202,7 @@ copy (word (left | previous) | west):
     edit.extend_word_left()
     edit.copy()
 
-copy (word (right | next) | east): 
+copy (word (right | next) | east):
     edit.extend_word_right()
     edit.copy()
 
@@ -232,11 +232,11 @@ cut word:
     edit.select_word()
     edit.cut()
 
-cut (word (left | previous) | west): 
+cut (word (left | previous) | west):
     edit.extend_word_left()
     edit.cut()
 
-cut (word (right | next) | east): 
+cut (word (right | next) | east):
     edit.extend_word_right()
     edit.cut()
 

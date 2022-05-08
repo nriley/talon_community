@@ -24,8 +24,8 @@ nope | ((i do | and do | undo) that): edit.undo()
 paste match: edit.paste_match_style()
 file open: user.file_open()
 file save: edit.save()
-#(pad | padding): 
-#	insert("  ") 
+#(pad | padding):
+#	insert("  ")
 #	key(left)
 slap: edit.line_insert_down()
 new paragraph:

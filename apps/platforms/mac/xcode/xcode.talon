@@ -7,8 +7,7 @@ tag(): user.tabs
 
 file:
     key(cmd-shift-o)
-    
+
 file name <user.text>:
     key(cmd-shift-o)
     insert(user.text)
-    

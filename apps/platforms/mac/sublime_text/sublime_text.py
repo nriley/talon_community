@@ -61,7 +61,7 @@ class UserActions:
 	def find_next():                             actions.key('cmd-g')
 	def find_previous():                         actions.key('cmd-shift-g')
 
-	def replace(text: str): 
+	def replace(text: str):
 		actions.key("cmd-alt-f")
 		actions.insert(text)
 
@@ -79,7 +79,7 @@ class UserActions:
 		actions.key("cmd-i")
 		actions.insert(text)
 		actions.key("enter")
-	
+
 	# user.line_commands
 	def delete_camel_left():                     actions.key('ctrl-backspace')
 	def delete_camel_right():                    actions.key('ctrl-delete')
@@ -87,7 +87,7 @@ class UserActions:
 	def extend_camel_right():                    actions.key('ctrl-shift-right')
 	def camel_left():                            actions.key('ctrl-left')
 	def camel_right():                           actions.key('ctrl-right')
-	
+
 	# user.multiple_cursors
 	def multi_cursor_add_above():                actions.key('ctrl-shift-up')
 	def multi_cursor_add_below():                actions.key('ctrl-shift-down')

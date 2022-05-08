@@ -28,4 +28,3 @@ class UserActions:
 					return
 			if was_hidden:
 				viewer.element.AXHidden = True
-

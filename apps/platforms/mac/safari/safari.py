@@ -15,7 +15,7 @@ ctx.tags = ['browser', 'user.tabs']
 
 @ctx.action_class('browser')
 class BrowserActions:
-    def address() -> str: 
+    def address() -> str:
         window = ui.active_window()
         if not window:
             return ''

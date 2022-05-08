@@ -36,7 +36,7 @@ with:
     edit.delete()
     ") "
     key(delete up:2 right:3)
-    
+
 column:
     key(return)
     ", "

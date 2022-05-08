@@ -16,76 +16,76 @@ replace confirm that: user.replace_confirm()
 ^replace confirm all$: user.replace_confirm_all()
 
 #quick replace commands, modeled after jetbrains
-clear last <user.text> [over]: 
+clear last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
     edit.delete()
-clear next <user.text> [over]: 
+clear next <user.text> [over]:
     user.select_next_occurrence(text)
     sleep(100ms)
     edit.delete()
-clear last clip: 
+clear last clip:
     user.select_previous_occurrence(clip.text())
     edit.delete()
-clear next clip: 
+clear next clip:
     user.select_next_occurrence(clip.text())
     sleep(100ms)
     edit.delete()
-comment last <user.text> [over]: 
+comment last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
     code.toggle_comment()
-comment last clip: 
+comment last clip:
     user.select_previous_occurrence(clip.text())
     sleep(100ms)
     code.toggle_comment()
-comment next <user.text> [over]: 
+comment next <user.text> [over]:
     user.select_next_occurrence(text)
     sleep(100ms)
     code.toggle_comment()
-comment next clip: 
+comment next clip:
     user.select_next_occurrence(clip.text())
     sleep(100ms)
     code.toggle_comment()
-go before last <user.text> [over]: 
+go before last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
     edit.left()
-go [after] last <user.text> [over]: 
+go [after] last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
     edit.right()
-go before last clip: 
+go before last clip:
     user.select_previous_occurrence(clip.text())
     sleep(100ms)
     edit.left()
-go [after] last clip: 
+go [after] last clip:
     user.select_previous_occurrence(clip.text())
     sleep(100ms)
     edit.right()
-go before next <user.text> [over]: 
+go before next <user.text> [over]:
     user.select_next_occurrence(text)
     edit.left()
-go [after] next <user.text> [over]: 
+go [after] next <user.text> [over]:
     user.select_next_occurrence(text)
     edit.right()
-go before next clip: 
+go before next clip:
     user.select_next_occurrence(clip.text())
     edit.left()
-go [after] next clip: 
+go [after] next clip:
     user.select_next_occurrence(clip.text())
     edit.right()
-paste last <user.text> [over]: 
+paste last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
     edit.right()
     edit.paste()
-paste next <user.text> [over]: 
+paste next <user.text> [over]:
     user.select_next_occurrence(text)
     sleep(100ms)
     edit.right()
     edit.paste()
-replace last <user.text> [over]: 
+replace last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
     edit.paste()

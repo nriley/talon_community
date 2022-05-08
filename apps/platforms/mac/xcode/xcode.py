@@ -41,7 +41,7 @@ class UserActions:
 	def find_next():          actions.key('cmd-g')
 	def find_previous():      actions.key('cmd-shift-g')
 
-	def replace(text: str): 
+	def replace(text: str):
 		actions.key("cmd-alt-f")
 		actions.insert(text)
 

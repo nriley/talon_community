@@ -47,11 +47,11 @@ page move left: key(ctrl-alt-g shift-f10 o enter)
 [page] rename date [<user.prose>]$:
     key(ctrl-shift-t alt-shift-d)
     user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
-    
+
 [page] rename [<user.prose>]$:
     key(ctrl-shift-t)
     user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
-    
+
 go forward: key(alt-right)
 go back[ward]: key(alt-left)
 
@@ -68,12 +68,12 @@ tomorrow:
     key(super-alt-shift-d)
     sleep(300ms)
     key(1)
-    
+
 <digit_string> days:
     key(super-alt-shift-d)
     sleep(300ms)
     insert(digit_string)
-    
+
 # back to progress (first notebook, first section)
 go progress:
     key(ctrl-g home enter tab:2 down enter esc)

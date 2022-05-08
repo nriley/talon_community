@@ -38,4 +38,3 @@ class Actions:
 				return active_app
 			actions.sleep("50ms")
 		return actions.user.focus_bundle(bundle)
- 

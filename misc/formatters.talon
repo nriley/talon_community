@@ -4,7 +4,7 @@ phrase <user.text> over: user.insert_formatted(text, "NOOP")
 {user.prose_formatter} <user.prose>$: user.insert_formatted(prose, prose_formatter)
 {user.prose_formatter} <user.prose> over: user.insert_formatted(prose, prose_formatter)
 {user.prose_formatter} <user.prose> space:
-  user.insert_formatted(prose, prose_formatter) 
+  user.insert_formatted(prose, prose_formatter)
   " "
 <user.format_text>+$: user.insert_many(format_text_list)
 <user.format_text>+ over: user.insert_many(format_text_list)

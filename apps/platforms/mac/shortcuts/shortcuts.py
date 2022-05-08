@@ -43,4 +43,3 @@ def refresh():
 
 if app.platform == 'mac' and os.path.exists("/usr/bin/shortcuts"):
 	app.register('ready', refresh)
-

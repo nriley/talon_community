@@ -13,19 +13,19 @@ tag(): user.tabs
 file hunt [<user.text>]:
     key(ctrl-p)
     insert(text or "")
-    
+
 please [<user.text>]:
     key(ctrl-shift-p)
     insert(text or "")
-    
+
 project switch [<user.text>]:
     key(alt p s)
     insert(text or "")
-    
+
 project symbol [<user.text>]:
     key(ctrl-shift-r)
     insert(text or "")
-    
+
 slap: key(ctrl-enter)
 
 definition show: key(f12)

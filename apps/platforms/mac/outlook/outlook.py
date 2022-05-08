@@ -162,7 +162,7 @@ class Actions:
 	def outlook_focus_message_body():
 		"""Focus the message body in Outlook"""
 
-	def outlook_focus_message_list():		
+	def outlook_focus_message_list():
 		"""Focus the message list in Outlook"""
 
 	def outlook_focus_folder_list():

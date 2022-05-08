@@ -15,15 +15,15 @@ toggle sidebar: key(cmd-k cmd-b)
 file hunt [<user.text>]:
     key(cmd-p)
     insert(text or "")
-    
+
 please [<user.text>]:
     key(cmd-shift-p)
     insert(text or "")
-    
+
 project switch [<user.text>]:
     key(cmd-ctrl-p)
     insert(text or "")
-    
+
 project symbol [<user.text>]:
     key(cmd-shift-r)
     insert(text or "")

@@ -66,12 +66,12 @@ page move left: key(cmd-alt-[)
     key(cmd-shift-t cmd-d)
     sleep(200ms)
     insert(prose or "")
-    
+
 [page] name [<user.prose>]$:
     key(cmd-shift-t)
     sleep(100ms)
     user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
-    
+
 # navigating in notebook/section/page lists
 go top: key(alt-up)
 go bottom: key(alt-down)
@@ -103,7 +103,7 @@ paste link:
     key(cmd-v)
     sleep(100ms)
     key(enter cmd-shift-n)
-    
+
 # missing shortcut for hiding navigation
 (navigation hide | escape):
     user.onenote_hide_navigation()
@@ -121,10 +121,10 @@ today:
     sleep(500ms)
     key(down)
     user.onenote_checkbox()
-    
+
 key(ctrl-cmd-t):
     mimic('today')
-    
+
 tomorrow:
     user.onenote_heading_1()
     user.insert_date(1, '%-m/%-d/%Y')
@@ -133,7 +133,7 @@ tomorrow:
     sleep(500ms)
     key(down)
     user.onenote_checkbox()
-    
+
 # back to progress (first notebook, first section)
 go progress:
     user.onenote_go_progress()

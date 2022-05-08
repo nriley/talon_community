@@ -4,7 +4,7 @@ os: mac
 launch <user.text>:
 	user.launchbar_select(text)
 
-launch brief {user.abbreviation}: 
+launch brief {user.abbreviation}:
 	user.launchbar_select(abbreviation)
 
 launch bar:
