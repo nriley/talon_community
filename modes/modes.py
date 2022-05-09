@@ -1,5 +1,5 @@
 from talon import Context, Module, app, actions, speech_system
-from talon import canvas, ui
+from talon import canvas, scope, ui
 from talon.types import Rect
 
 mod = Module()
@@ -17,9 +17,7 @@ for key, value in modes.items():
     mod.mode(key, value)
 
 def dictation_mode_active() -> bool:
-    # XXX uses private API
-    from talon import registry
-    return 'dictation' in registry._modes.modes
+    return 'dictation' in scope.get('mode')
 
 @mod.action_class
 class Actions:
