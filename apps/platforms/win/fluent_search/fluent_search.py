@@ -20,8 +20,13 @@ class UserActions:
 		# If you have a different search keyboard shortcut configured,
 		# replace ctrl-alt-space with it below.
 		actions.key('ctrl-alt-space backspace')
-		while ui.active_app().name != 'FluentSearch':
+		for attempt in range(10):
+			if ui.active_app().name == 'FluentSearch':
+				break
 			actions.sleep("50ms")
+		else:
+			app.notify("Gave up while waiting for Fluent Search")
+			return
 		if '\t' in text:
 			plugin, text = text.split('\t', 1)
 			actions.insert(plugin + '\t')
