@@ -53,7 +53,7 @@ page move left: key(ctrl-alt-g shift-f10 o enter)
     user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
 
 go forward: key(alt-right)
-go back[ward]: key(alt-left)
+go back: key(alt-left)
 
 [open] link: key(shift-f10 l)
 edit link: key(ctrl-k)
