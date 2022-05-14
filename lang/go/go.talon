@@ -100,9 +100,9 @@ loggers [<user.text>] [over]:
     insert("logrus.")
     insert(user.formatted_text(text, "PUBLIC_CAMEL_CASE"))
 
-length <user.text> [over]:
+length [<user.text>] [over]:
     insert("len(")
-    insert(user.formatted_text(text, "PRIVATE_CAMEL_CASE"))
+    insert(user.formatted_text(text or "", "PRIVATE_CAMEL_CASE"))
 
 append <user.text> [over]:
     insert("append(")
