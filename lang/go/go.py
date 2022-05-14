@@ -4,9 +4,7 @@ mod = Module()
 
 ctx = Context()
 ctx.matches = r"""
-mode: user.go
-mode: user.auto_lang
-and code.language: go
+tag: user.go
 """
 
 ctx.lists["user.code_type"] = {
