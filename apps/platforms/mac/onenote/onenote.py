@@ -115,7 +115,6 @@ class UserActions:
 	def onenote_checkbox(): actions.key('ctrl-e enter tab cmd-1 up ctrl-e')
 
 	def onenote_hide_navigation():
-		onenote = onenote_app()
 		window = onenote_window()
 		# hide the navigation pane(s) if necessary
 		splitgroup = window.children.find_one(AXRole='AXSplitGroup', max_depth=0)
