@@ -54,6 +54,9 @@ class Actions:
 		if actions.user.onenote_focus():
 			cron.after('200ms', lambda: actions.user.onenote_now(entry))
 
+	def onenote_font_size(size: int):
+		"""Change the font size in OneNote (or edit it, if size is 0)."""
+
 	def onenote_checkbox():
 		"""Insert indented checkbox into OneNote."""
 
@@ -217,6 +220,42 @@ class UserActions:
 		actions.insert(" - ")
 		if entry:
 			actions.mimic(entry)
+
+	def onenote_font_size(size):
+		window = onenote_window()
+
+		ribbon = window.children.find_one(AXRole='AXTabGroup', max_depth=0)
+		home_tab = ribbon.AXTabs[0]
+		if home_tab.AXValue != 1:
+			home_tab.perform('AXPress')
+
+		for attempt in range(10):
+			actions.sleep("50ms")
+			if home_tab.AXValue == 1:
+				break
+		else:
+			app.notify(body='Could not activate Home tab', title='OneNote')
+			return
+
+		combo_boxes = []
+		for attempt in range(10):
+			actions.sleep("50ms")
+			if combo_boxes := ribbon.children.find(AXRole='AXComboBox'):
+				break
+		else:
+			app.notify(body='Could not find combo boxes', title='OneNote')
+			return
+
+		for combo_box in combo_boxes:
+			if combo_box.AXDescription == 'Font Size:' or str.isnumeric(combo_box.AXValue):
+				break
+		else:
+			app.notify(body='Could not find Font Size combo box', title='OneNote')
+			return
+
+		combo_box.AXFocused = True
+		if size:
+			actions.insert(f"{size}\n")
 
 	def zoom_to_fit_width():
 		onenote = onenote_app()

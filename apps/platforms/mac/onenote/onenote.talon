@@ -6,6 +6,9 @@ italic: key(cmd-i)
 strike through: key(ctrl-cmd--)
 highlight: key(ctrl-cmd-h)
 
+font size [<number_small>]:
+    user.onenote_font_size(number_small or 0)
+
 bullet: key(cmd-.)
 check | done: key(cmd-1)
 
