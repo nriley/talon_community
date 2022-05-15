@@ -236,12 +236,12 @@ class UserActions:
 
 		ribbon = window.children.find_one(AXRole='AXTabGroup', max_depth=0)
 		home_tab = ribbon.AXTabs[0]
-		if home_tab.AXValue != 1:
+		if home_tab.get('AXValue') != 1:
 			home_tab.perform('AXPress')
 
 		for attempt in range(10):
 			actions.sleep("50ms")
-			if home_tab.AXValue == 1:
+			if home_tab.get('AXValue') == 1:
 				break
 		else:
 			app.notify(body='Could not activate Home tab', title='OneNote')
