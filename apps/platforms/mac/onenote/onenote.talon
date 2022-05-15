@@ -109,10 +109,12 @@ paste link:
 
 # missing shortcut for hiding navigation
 (navigation hide | escape):
+    user.onenote_hide_ribbon()
     user.onenote_hide_navigation()
     user.zoom_to_fit_width()
 
 key(esc):
+    user.onenote_hide_ribbon()
     user.onenote_hide_navigation()
     user.zoom_to_fit_width()
 
@@ -140,5 +142,6 @@ tomorrow:
 # back to progress (first notebook, first section)
 go progress:
     user.onenote_go_progress()
+    user.onenote_hide_ribbon()
     user.onenote_hide_navigation()
     user.zoom_to_fit_width()

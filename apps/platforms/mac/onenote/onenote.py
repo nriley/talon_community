@@ -64,7 +64,10 @@ class Actions:
 		"""Insert a first-level heading into OneNote."""
 
 	def onenote_hide_navigation():
-		"""Hide the navigation panes."""
+		"""Hide the navigation panes in OneNote."""
+
+	def onenote_hide_ribbon():
+		"""Hide the Ribbon in OneNote."""
 
 	def onenote_copy_link():
 		"""Copy a link to the current paragraph in OneNote."""
@@ -133,6 +136,14 @@ class UserActions:
 			else:
 				return
 		app.notify(body='Unable to focus note body', title='OneNote')
+
+	def onenote_hide_ribbon():
+		window = onenote_window()
+
+		ribbon = window.children.find_one(AXRole='AXTabGroup', max_depth=0)
+		open_tab = ribbon.get('AXValue')
+		if open_tab:
+			open_tab.perform('AXPress')
 
 	def onenote_go_recent(offset: int):
 		window = onenote_window()
