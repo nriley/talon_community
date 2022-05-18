@@ -95,4 +95,4 @@ def disable_talon_if_fd_listening():
 		actions.speech.disable()
 
 if app.platform == "windows":
-	app.register("ready", lambda: cron.interval("5s", disable_talon_if_fd_listening))
+	app.register("ready", lambda: cron.interval("2s", disable_talon_if_fd_listening))
