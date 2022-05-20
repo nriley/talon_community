@@ -6,6 +6,9 @@ italic: key(ctrl-i)
 strike through: key(ctrl--)
 highlight: key(ctrl-alt-h)
 
+font size [<number_small>]:
+    user.onenote_font_size(number_small or 0)
+
 bullet: key(ctrl-.)
 check | done: key(ctrl-1)
 tag clear: key(ctrl-0)
