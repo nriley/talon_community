@@ -13,6 +13,15 @@ class EditActions:
     def select_line(n: int=None):
         actions.key('ctrl-a')
 
+    def zoom_in():
+        actions.key("ctrl-alt-shift-+")
+
+    def zoom_out():
+        actions.key("ctrl-alt-shift--")
+
+    def zoom_reset():
+        actions.user.onenote_ribbon_select("w1")
+
 @mod.action_class
 class Actions:
     def onenote_ribbon_select(keys: str):
@@ -31,3 +40,6 @@ class UserActions:
         actions.key("alt-" + keys[0])
         actions.sleep("20ms")
         actions.key(' '.join(keys[1:]))
+
+    def zoom_to_fit_width():
+        actions.user.onenote_ribbon_select("wi")
