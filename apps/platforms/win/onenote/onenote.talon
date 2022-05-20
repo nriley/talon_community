@@ -8,7 +8,7 @@ highlight: key(ctrl-alt-h)
 
 font size [<number_small>]:
     user.onenote_font_size(number_small or 0)
-larger: key(ctrl-shift->)
+(bigger | larger): key(ctrl-shift->)
 smaller: key(ctrl-shift-<)
 
 bullet: key(ctrl-.)
