@@ -33,7 +33,7 @@ cell select: user.onenote_ribbon_select("jlc")
 
 column select: user.onenote_ribbon_select("jlm")
 column insert left: user.onenote_ribbon_select("jll")
-column insert right: user.onenote_ribbon_select("jli")
+column insert right: key(ctrl-alt-r)
 column delete: user.onenote_ribbon_select("jlu")
 
 row select: user.onenote_ribbon_select("jlo")
