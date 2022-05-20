@@ -29,6 +29,20 @@ move down: key(alt-shift-down)
 move right: key(alt-shift-right)
 move left: key(alt-shift-left)
 
+cell select: user.onenote_ribbon_select("jlc")
+
+column select: user.onenote_ribbon_select("jlm")
+column insert left: user.onenote_ribbon_select("jll")
+column insert right: user.onenote_ribbon_select("jli")
+column delete: user.onenote_ribbon_select("jlu")
+
+row select: user.onenote_ribbon_select("jlo")
+row insert up: user.onenote_ribbon_select("jlv")
+row insert down: user.onenote_ribbon_select("jle")
+row delete: user.onenote_ribbon_select("jlw")
+
+table select: user.onenote_ribbon_select("jls")
+
 # for consistency with Mac version, where collapsing will collapse to level 1
 collapse: key(alt-shift-1)
 expand: key(alt-shift-+)
