@@ -81,8 +81,17 @@ class Actions:
 def onenote_app():
 	return ui.apps(bundle="com.microsoft.onenote.mac")[0]
 
-def onenote_window():
-	return next(window for window in onenote_app().windows() if window.doc)
+def onenote_notebook_window():
+	if not (active_window := ui.active_window()):
+		raise Exception("Can't determine active window")
+
+	if active_window.app != onenote_app():
+		raise Exception("OneNote is not frontmost")
+
+	if not active_window.doc:
+		raise Exception("Frontmost window is not a document window")
+
+	return active_window
 
 @ctx.action_class('user')
 class UserActions:
@@ -115,7 +124,7 @@ class UserActions:
 	def onenote_checkbox(): actions.key('ctrl-e enter tab cmd-1 up ctrl-e')
 
 	def onenote_hide_navigation():
-		window = onenote_window()
+		window = onenote_notebook_window()
 		# hide the navigation pane(s) if necessary
 		splitgroup = window.children.find_one(AXRole='AXSplitGroup', max_depth=0)
 		group = splitgroup.children.find_one(AXRole='AXGroup', max_depth=0)
@@ -137,7 +146,7 @@ class UserActions:
 		app.notify(body='Unable to focus note body', title='OneNote')
 
 	def onenote_hide_ribbon():
-		window = onenote_window()
+		window = onenote_notebook_window()
 
 		ribbon = window.children.find_one(AXRole='AXTabGroup', max_depth=0)
 		open_tab = ribbon.get('AXValue')
@@ -145,7 +154,7 @@ class UserActions:
 			open_tab.perform('AXPress')
 
 	def onenote_go_recent(offset: int):
-		window = onenote_window()
+		window = onenote_notebook_window()
 
 		splitgroup = window.children.find_one(AXRole='AXSplitGroup', max_depth=0)
 		group = splitgroup.children.find_one(AXRole='AXGroup', max_depth=0)
@@ -174,7 +183,7 @@ class UserActions:
 		app.notify(body='Copied link to paragraph', title='OneNote')
 
 	def onenote_go_progress():
-		window = onenote_window()
+		window = onenote_notebook_window()
 
 		# show navigation
 		splitgroup = window.children.find_one(AXRole='AXSplitGroup', max_depth=0)
@@ -232,7 +241,7 @@ class UserActions:
 			actions.mimic(entry)
 
 	def onenote_font_size(size):
-		window = onenote_window()
+		window = onenote_notebook_window()
 
 		ribbon = window.children.find_one(AXRole='AXTabGroup', max_depth=0)
 		home_tab = ribbon.AXTabs[0]
