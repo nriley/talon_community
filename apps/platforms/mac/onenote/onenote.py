@@ -57,6 +57,9 @@ class Actions:
 	def onenote_font_size(size: int):
 		"""Change the font size in OneNote (or edit it, if size is 0)."""
 
+	def onenote_font_size_adjust(offset: int):
+		"""Adjust the font size in OneNote."""
+
 	def onenote_checkbox():
 		"""Insert indented checkbox into OneNote."""
 
@@ -92,6 +95,38 @@ def onenote_notebook_window():
 		raise Exception("Frontmost window is not a document window")
 
 	return active_window
+
+def onenote_font_size_combo_box():
+	window = onenote_notebook_window()
+
+	ribbon = window.children.find_one(AXRole='AXTabGroup', max_depth=0)
+	home_tab = ribbon.AXTabs[0]
+	if home_tab.get('AXValue') != 1:
+		home_tab.perform('AXPress')
+
+	for attempt in range(10):
+		actions.sleep("50ms")
+		if home_tab.get('AXValue') == 1:
+			break
+	else:
+		app.notify(body='Could not activate Home tab', title='OneNote')
+		return None
+
+	combo_boxes = []
+	for attempt in range(10):
+		actions.sleep("50ms")
+		if combo_boxes := ribbon.children.find(AXRole='AXComboBox'):
+			break
+	else:
+		app.notify(body='Could not find combo boxes', title='OneNote')
+		return None
+
+	for combo_box in combo_boxes:
+		if combo_box.AXDescription == 'Font Size:' or str.isnumeric(combo_box.AXValue):
+			return combo_box
+	else:
+		app.notify(body='Could not find Font Size combo box', title='OneNote')
+		return None
 
 @ctx.action_class('user')
 class UserActions:
@@ -241,40 +276,27 @@ class UserActions:
 			actions.mimic(entry)
 
 	def onenote_font_size(size):
-		window = onenote_notebook_window()
-
-		ribbon = window.children.find_one(AXRole='AXTabGroup', max_depth=0)
-		home_tab = ribbon.AXTabs[0]
-		if home_tab.get('AXValue') != 1:
-			home_tab.perform('AXPress')
-
-		for attempt in range(10):
-			actions.sleep("50ms")
-			if home_tab.get('AXValue') == 1:
-				break
-		else:
-			app.notify(body='Could not activate Home tab', title='OneNote')
-			return
-
-		combo_boxes = []
-		for attempt in range(10):
-			actions.sleep("50ms")
-			if combo_boxes := ribbon.children.find(AXRole='AXComboBox'):
-				break
-		else:
-			app.notify(body='Could not find combo boxes', title='OneNote')
-			return
-
-		for combo_box in combo_boxes:
-			if combo_box.AXDescription == 'Font Size:' or str.isnumeric(combo_box.AXValue):
-				break
-		else:
-			app.notify(body='Could not find Font Size combo box', title='OneNote')
+		combo_box = onenote_font_size_combo_box()
+		if combo_box is None:
 			return
 
 		combo_box.AXFocused = True
 		if size:
 			actions.insert(f"{size}\n")
+
+	def onenote_font_size_adjust(offset):
+		combo_box = onenote_font_size_combo_box()
+		if combo_box is None:
+			return
+
+		font_size = combo_box.AXValue
+		if not str.isnumeric(font_size):
+			app.notify(body='Unable to determine current font size', title='OneNote')
+			return
+		font_size = int(font_size)
+
+		combo_box.AXFocused = True
+		actions.insert(f"{font_size + offset}\n")
 
 	def zoom_to_fit_width():
 		onenote = onenote_app()

@@ -8,6 +8,8 @@ highlight: key(ctrl-cmd-h)
 
 font size [<number_small>]:
     user.onenote_font_size(number_small or 0)
+(bigger | larger): user.onenote_font_size_adjust(1)
+smaller: user.onenote_font_size_adjust(-1)
 
 bullet: key(cmd-.)
 check | done: key(cmd-1)
