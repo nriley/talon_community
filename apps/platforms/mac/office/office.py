@@ -1,4 +1,4 @@
-from talon import app, Context, Module, ui
+from talon import Context, Module, ui
 
 mod = Module()
 ctx = Context()
@@ -25,18 +25,24 @@ ctx.matches = """
 app: office_mac
 """
 
+
 def document_window():
-	return ui.active_app().children.find_one(
-		AXRole='AXWindow', AXSubrole='AXStandardWindow', max_depth=0)
+    return ui.active_app().children.find_one(
+        AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
+    )
+
 
 @ctx.action_class("user")
 class UserActions:
-	def office_tell_me():
-		(document_window().children.find_one(AXRole='AXTabGroup', max_depth=0)
-						  .children.find_one(AXRole='AXButton', max_depth=0)
-		).perform('AXPress')
+    def office_tell_me():
+        (
+            document_window()
+            .children.find_one(AXRole="AXTabGroup", max_depth=0)
+            .children.find_one(AXRole="AXButton", max_depth=0)
+        ).perform("AXPress")
+
 
 @mod.action_class
 class Actions:
-	def office_tell_me():
-		"""Focus 'Tell me' in Microsoft Office apps"""
+    def office_tell_me():
+        """Focus 'Tell me' in Microsoft Office apps"""

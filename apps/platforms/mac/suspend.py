@@ -1,15 +1,18 @@
 from talon import actions, ui
 
-DEFAULT_DISABLE_BUNDLE_IDS = frozenset({
-    'com.apple.FaceTime',
-    'com.bluejeansnet.Blue',
-    'com.microsoft.teams',
-    'com.webex.meetingmanager',
-    'us.zoom.xos',
-})
+DEFAULT_DISABLE_BUNDLE_IDS = frozenset(
+    {
+        "com.apple.FaceTime",
+        "com.bluejeansnet.Blue",
+        "com.microsoft.teams",
+        "com.webex.meetingmanager",
+        "us.zoom.xos",
+    }
+)
 
 was_enabled_globally = False
 disabling_app_bundle_ids = set()
+
 
 def app_launched(app):
     global was_enabled_globally, disabling_app_bundle_ids
@@ -28,6 +31,7 @@ def app_launched(app):
         actions.speech.disable()
         disabling_app_bundle_ids.add(launched_app_bundle_id)
 
+
 def app_quit(app):
     global was_enabled_globally, disabling_app_bundle_ids
     quit_app_bundle_id = app.bundle
@@ -42,10 +46,13 @@ def app_quit(app):
             # print(f'enabling...')
             actions.speech.enable()
 
+
 def register_events():
-    ui.register('app_launch', app_launched)
-    ui.register('app_close', app_quit)
+    ui.register("app_launch", app_launched)
+    ui.register("app_close", app_quit)
+
 
 # if we try to do this on module load at startup, the action speech.enabled is not yet defined
 from talon import app
-app.register('ready', register_events)
+
+app.register("ready", register_events)
