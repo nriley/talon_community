@@ -6,7 +6,7 @@ tag: user.sql
 """
 
 # these vary by dialect
-ctx.lists["user.code_functions"] = {"count": "Count", "min": "Min", "max": "Max"}
+ctx.lists["user.code_common_function"] = {"count": "Count", "min": "Min", "max": "Max"}
 
 
 @ctx.action_class("user")
@@ -42,12 +42,10 @@ class UserActions:
         actions.auto_insert(" <= ")
 
     def code_operator_in():
-        actions.auto_insert(" IN ()")
-        actions.key("left")
+        actions.user.insert_between(" IN (", ")")
 
     def code_operator_not_in():
-        actions.auto_insert(" NOT IN ()")
-        actions.key("left")
+        actions.user.insert_between(" NOT IN (", ")")
 
     def code_operator_and():
         actions.auto_insert("AND ")
@@ -68,10 +66,4 @@ class UserActions:
         actions.auto_insert("-- ")
 
     def code_insert_function(text: str, selection: str):
-        if selection:
-            text = f"{text}({selection})"
-        else:
-            text = text + "()"
-
-        actions.user.paste(text)
-        actions.edit.left()
+        actions.user.insert_between(f"{text}({selection or ''}", ")")

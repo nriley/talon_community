@@ -4,6 +4,7 @@ tag(): user.code_operators_math
 tag(): user.code_comment_line
 tag(): user.code_comment_block_c_like
 tag(): user.code_data_null
+tag(): user.code_functions_common
 
 ^select$: "SELECT "
 distinct: "DISTINCT "
@@ -16,15 +17,9 @@ having: "HAVING "
 descending: " DESC"
 ascending: " ASC"
 dot i d: ".id"
-inner join:
-    "INNER JOIN  ON "
-    key(left:4)
-left outer join:
-    "LEFT OUTER JOIN  ON "
-    key(left:4)
-right outer join:
-    "RIGHT OUTER JOIN  ON "
-    key(left:4)
+inner join: user.insert_between("INNER JOIN ", " ON ")
+left outer join: user.insert_between("LEFT OUTER JOIN ", " ON ")
+right outer join: user.insert_between("RIGHT OUTER JOIN ", " ON ")
 
 with:
     key(enter up)
@@ -43,12 +38,10 @@ column:
 
 count: user.code_insert_function("Count", "")
 
-date:
-    "DATE ''"
-    key(left)
+date: user.insert_between("DATE '", "'")
 
-funk <user.code_functions>:
-    user.code_insert_function(code_functions, "")
+funk <user.code_common_function>:
+    user.code_insert_function(code_common_function, "")
 
-funk wrap <user.code_functions>:
-    user.code_insert_function(code_functions, edit.selected_text())
+funk wrap <user.code_common_function>:
+    user.code_insert_function(code_common_function, edit.selected_text())
