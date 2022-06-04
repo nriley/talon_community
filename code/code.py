@@ -9,42 +9,42 @@ mod = Module()
 language_extensions = {
     # 'assembly': 'asm s',
     # 'bash': 'bashbook sh',
-    'batch': 'bat',
-    'c': 'c h',
+    "batch": "bat",
+    "c": "c h",
     # 'cmake': 'cmake',
     # 'cplusplus': 'cpp hpp',
-    'csharp': 'cs',
-    'css': 'css',
+    "csharp": "cs",
+    "css": "css",
     # 'elisp': 'el',
     # 'elm': 'elm',
-    'gdb': 'gdb',
-    'go': 'go',
+    "gdb": "gdb",
+    "go": "go",
     # 'html': 'html',
-    'java': 'java',
-    'javascript': 'js',
-    'javascriptreact': 'jsx',
+    "java": "java",
+    "javascript": "js",
+    "javascriptreact": "jsx",
     # 'json': 'json',
     # 'lua': 'lua',
-    'markdown': 'md',
+    "markdown": "md",
     # 'perl': 'pl',
-    'php': 'php',
+    "php": "php",
     # 'powershell': 'ps1',
-    'python': 'py',
-    'protobuf': 'proto',
-    'r': 'r',
+    "python": "py",
+    "protobuf": "proto",
+    "r": "r",
     # 'racket': 'rkt',
-    'ruby': 'rb',
-    'rust': 'rs',
+    "ruby": "rb",
+    "rust": "rs",
     # 'sass': 'sass',
-    'scala': 'scala',
+    "scala": "scala",
     # 'snippets': 'snippets',
-    'sql': 'sql',
-    'talon': 'talon',
-    'terraform': 'tf',
-    'typescript': 'ts',
-    'typescriptreact': 'tsx',
+    "sql": "sql",
+    "talon": "talon",
+    "terraform": "tf",
+    "typescript": "ts",
+    "typescriptreact": "tsx",
     # 'vba': 'vba',
-    'vimscript': 'vim vimrc',
+    "vimscript": "vim vimrc",
 }
 
 # Override speakable forms for language modes. If not present, a language mode's
@@ -56,7 +56,7 @@ language_name_overrides = {
     "gdb": ["g d b"],
     "go": ["go", "go lang", "go language"],
     "r": ["are language"],
-    "sql": ["s q l", "sequel"]
+    "sql": ["s q l", "sequel"],
 }
 mod.list("language_mode", desc="Name of a programming language mode.")
 ctx.lists["self.language_mode"] = {
@@ -67,7 +67,7 @@ ctx.lists["self.language_mode"] = {
 
 # Maps extension to languages.
 extension_lang_map = {
-    '.' + ext: language
+    "." + ext: language
     for language, extensions in language_extensions.items()
     for ext in extensions.split()
 }

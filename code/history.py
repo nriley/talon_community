@@ -1,5 +1,6 @@
 from typing import Optional
-from talon import imgui, Module, speech_system, actions, app
+
+from talon import Module, actions, imgui, speech_system
 
 # We keep command_history_size lines of history, but by default display only
 # command_history_display of them.
@@ -16,14 +17,14 @@ history = []
 def on_phrase(j):
     global history
 
-    words = j.get('text')
+    words = j.get("text")
 
     text = actions.user.history_transform_phrase_text(words)
 
     if text is not None:
         history.append(text)
         history = history[-setting_command_history_size.get() :]
-        print('>', ' '.join(words))
+        print(">", " ".join(words))
 
 
 # todo: dynamic rect?
@@ -89,4 +90,4 @@ class Actions:
         if not actions.speech.enabled():
             return None
 
-        return ' '.join(words) if words else None
+        return " ".join(words) if words else None

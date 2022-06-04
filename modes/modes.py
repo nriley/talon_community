@@ -1,5 +1,4 @@
-from talon import Context, Module, app, actions, speech_system
-from talon import canvas, scope, ui
+from talon import Module, actions, app, canvas, scope, speech_system, ui
 from talon.types import Rect
 
 mod = Module()
@@ -16,8 +15,10 @@ modes = {
 for key, value in modes.items():
     mod.mode(key, value)
 
+
 def dictation_mode_active() -> bool:
-    return 'dictation' in scope.get('mode')
+    return "dictation" in scope.get("mode")
+
 
 @mod.action_class
 class Actions:
@@ -54,7 +55,7 @@ class Actions:
         """Switch to dictation mode."""
         show_mode()
         actions.mode.disable("sleep")
-        actions.mode.enable("command") # mixed mode
+        actions.mode.enable("command")  # mixed mode
         actions.mode.enable("dictation")
         actions.user.code_clear_language_mode()
         actions.mode.disable("user.gdb")
@@ -73,7 +74,9 @@ class Actions:
         else:
             actions.user.dictation_mode()
 
+
 dictation_apps = set()
+
 
 def set_command_mode_on_app_deactivate(app):
     global dictation_apps
@@ -83,23 +86,32 @@ def set_command_mode_on_app_deactivate(app):
         actions.user.command_mode()
     elif app in dictation_apps:
         dictation_apps.remove(app)
-ui.register('app_deactivate', set_command_mode_on_app_deactivate)
+
+
+ui.register("app_deactivate", set_command_mode_on_app_deactivate)
+
 
 def restore_dictation_mode_on_app_activate(app):
     if app in dictation_apps and not dictation_mode_active():
         actions.user.dictation_mode()
-ui.register('app_activate', restore_dictation_mode_on_app_activate)
+
+
+ui.register("app_activate", restore_dictation_mode_on_app_activate)
+
 
 def remove_dictation_app_on_quit(app):
     global dictation_apps
 
     if app in dictation_apps:
         dictation_apps.remove(app)
-ui.register('app_close', remove_dictation_app_on_quit)
+
+
+ui.register("app_close", remove_dictation_app_on_quit)
 
 # XXX switch to canvas.overlay instead?
 
 mode_canvases = []
+
 
 def show_mode():
     global mode_canvases
@@ -111,9 +123,10 @@ def show_mode():
 
     for screen in ui.screens():
         mode_canvas = canvas.Canvas.from_screen(screen)
-        mode_canvas.register('draw', draw_mode)
+        mode_canvas.register("draw", draw_mode)
         mode_canvas.freeze()
         mode_canvases.append(mode_canvas)
+
 
 def hide_mode():
     global mode_canvases
@@ -124,10 +137,11 @@ def hide_mode():
     for mode_canvas in mode_canvases:
         mode_canvas.hide()
 
+
 def draw_mode(canvas):
     paint = canvas.paint
     paint.textsize = 12
-    text = 'Dictation Mode'
+    text = "Dictation Mode"
     _, text_rect = paint.measure_text(text)
 
     screen = ui.screen_containing(canvas.x, canvas.y)
@@ -135,7 +149,7 @@ def draw_mode(canvas):
     padding_x = 4
     padding_y = 4
 
-    if app.platform == 'mac':
+    if app.platform == "mac":
         top_left = screen_rect.right - text_rect.width - (padding_x * 2) + 1
         text_offset = 1
     else:
@@ -146,16 +160,18 @@ def draw_mode(canvas):
         top_left,
         screen_rect.y - 1,
         text_rect.width + (padding_x * 2),
-        text_rect.height + (padding_y * 2)
+        text_rect.height + (padding_y * 2),
     )
 
-    paint.color = "ff0000ff" # red
+    paint.color = "ff0000ff"  # red
     canvas.draw_rect(bg_rect)
-    paint.color = "ffffffff" # white
+    paint.color = "ffffffff"  # white
     canvas.draw_text(
         text,
         bg_rect.x + padding_x + text_offset,
-        bg_rect.y + padding_y + text_rect.height - text_offset)
+        bg_rect.y + padding_y + text_rect.height - text_offset,
+    )
+
 
 def on_screen_change(screens):
     global mode_canvases
@@ -167,7 +183,7 @@ def on_screen_change(screens):
     print(f"screen_change {screens}")
 
     for mode_canvas in mode_canvases:
-        mode_canvas.unregister('draw', draw_mode)
+        mode_canvas.unregister("draw", draw_mode)
         mode_canvas.close()
 
     mode_canvases = []
@@ -175,6 +191,7 @@ def on_screen_change(screens):
     if dictation_mode_active():
         show_mode()
 
+
 # XXX doesn't work when display configuration is changed
 # see https://github.com/talonvoice/talon/issues/248#issuecomment-877831551
-ui.register('screen_change', on_screen_change)
+ui.register("screen_change", on_screen_change)

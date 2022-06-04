@@ -1,26 +1,29 @@
-from talon import Context, Module, actions, imgui, settings, ui
+from talon import Context, actions, ui
 from talon.mac import applescript
-
-import os
 
 ctx = Context()
 ctx.matches = r"""
 app: finder
 """
 
-@ctx.action_class('user')
+
+@ctx.action_class("user")
 class UserActions:
     def file_manager_open_parent():
-        actions.key('cmd-up')
+        actions.key("cmd-up")
+
     def file_manager_go_forward():
-        actions.key('cmd-]')
+        actions.key("cmd-]")
+
     def file_manager_go_back():
-        actions.key('cmd-[')
+        actions.key("cmd-[")
+
     def file_manager_current_path():
         if ui.active_window().title == "":
-            return None # likely a modal window
+            return None  # likely a modal window
         try:
-            return applescript.run(r"""
+            return applescript.run(
+                r"""
                 tell application id "com.apple.Finder"
                     with timeout of 0.1 seconds
                         if not (exists (front Finder window's target)) then return
@@ -29,14 +32,18 @@ class UserActions:
                         return (result as alias)'s POSIX path
                     end timeout
                 end tell
-            """)
+            """
+            )
         except applescript.ApplescriptErr as e:
-            print(f'Unable to get path of frontmost Finder window "{ui.active_window().title}": {e}')
+            print(
+                f'Unable to get path of frontmost Finder window "{ui.active_window().title}": {e}'
+            )
 
     def file_manager_terminal_here():
         if ui.active_window().title == "":
-            return # likely a modal window
-        applescript.run(r"""
+            return  # likely a modal window
+        applescript.run(
+            r"""
             try
                 with timeout of 0.1 seconds
                     tell application id "com.apple.Finder" to set theTarget to (front Finder window's target as alias)
@@ -48,7 +55,8 @@ class UserActions:
                 activate
                 open theTarget
             end tell
-        """)
+        """
+        )
 
     def file_manager_show_properties():
         """Shows the properties for the file"""
@@ -56,8 +64,9 @@ class UserActions:
 
     def file_manager_open_directory(path: str):
         """opens the directory that's already visible in the view"""
-        escaped_path = path.replace(r'"', r'\"')
-        applescript.run(f"""
+        escaped_path = path.replace(r'"', r"\"")
+        applescript.run(
+            f"""
             set _folder to POSIX file "{escaped_path}"
 
             tell application id "com.apple.finder"
@@ -71,7 +80,8 @@ class UserActions:
                 end try
                 open _folder
             end tell
-        """)
+        """
+        )
 
     def file_manager_select_directory(path: str):
         """selects the directory"""
