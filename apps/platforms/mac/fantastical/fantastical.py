@@ -10,9 +10,7 @@ os: mac
 @ctx.action_class("user")
 class UserActions:
 	def fantastical_parse(text: str):
-		from talon.mac import applescript
-		text = text.replace('"', '\"')
-		applescript.run(f'tell app id "com.flexibits.fantastical2.mac" to parse sentence "{text}"')
+		ui.apps(bundle='com.flexibits.fantastical2.mac')[0].appscript().parse_sentence(text)
 
 	def fantastical_show_mini_calendar():
 		import webbrowser
