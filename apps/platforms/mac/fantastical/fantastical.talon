@@ -7,6 +7,8 @@ next: key(cmd-right)
 previous: key(cmd-left)
 today: key(cmd-t)
 
+calendar set [<user.text>]: user.fantastical_select_calendar_set(text or "")
+
 # XXX eliminate duplication with date_time.talon
 
 # mm/0x
