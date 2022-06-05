@@ -1,7 +1,7 @@
 os: mac
 and app.bundle: com.flyingmeat.Acorn7
 -
-new from clipboard: key(cmd-alt-n)
+new (from|with) clipboard: key(cmd-alt-n)
 
 export: key(cmd-alt-s)
 
