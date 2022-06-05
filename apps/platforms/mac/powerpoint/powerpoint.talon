@@ -22,3 +22,12 @@ italic: key(cmd-i)
 underline: key(cmd-u)
 
 comment new: key(cmd-shift-m)
+
+crop: key(shift-c)
+guides: key(ctrl-cmd-alt-g)
+
+bring to front: key(cmd-shift-f)
+send to back: key(cmd-shift-b)
+
+bring forward: key(cmd-alt-shift-f)
+send to back: key(cmd-alt-shift-b)
