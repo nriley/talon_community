@@ -30,4 +30,4 @@ bring to front: key(cmd-shift-f)
 send to back: key(cmd-shift-b)
 
 bring forward: key(cmd-alt-shift-f)
-send to back: key(cmd-alt-shift-b)
+send backward: key(cmd-alt-shift-b)
