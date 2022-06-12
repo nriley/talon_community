@@ -11,3 +11,8 @@ file:
 file name <user.text>:
     key(cmd-shift-o)
     insert(user.text)
+
+product run: key(cmd-r)
+product stop: key(cmd-.)
+
+product clean: key(cmd-shift-k)
