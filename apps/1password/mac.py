@@ -16,7 +16,7 @@ os: mac
 @ctx.action_class("user")
 class UserActions:
     def password_fill():
-        actions.key("cmd-\\")
+        actions.key("cmd-shift-x")
 
     def password_show():
         actions.key("cmd-alt-\\")
