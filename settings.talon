@@ -63,8 +63,5 @@ settings():
     # Enable notification debug logging.
     user.notification_debug = 0
 
-    # Don't allow direct clicking with rango by default.
-    user.rango_direct_clicking = 0
-
 # Uncomment this to enable the curse yes/curse no commands (show hide mouse cursor). See issue #688.
 # tag(): user.mouse_cursor_commands_enable
