@@ -6,10 +6,10 @@ tag(): user.code_comment_block_c_like
 tag(): user.code_data_null
 tag(): user.code_functions_common
 
-^select$: "SELECT "
+select: "SELECT "
 distinct: "DISTINCT "
 from: "FROM "
-^select star from$: "SELECT *\nFROM "
+select star from: "SELECT *\nFROM "
 where: "WHERE "
 order by: "ORDER BY "
 group by: "GROUP BY "
@@ -18,6 +18,7 @@ descending: " DESC"
 ascending: " ASC"
 dot i d: ".id"
 inner join: user.insert_between("INNER JOIN ", " ON ")
+inner join using: user.insert_between("INNER JOIN ", " USING ")
 left outer join: user.insert_between("LEFT OUTER JOIN ", " ON ")
 right outer join: user.insert_between("RIGHT OUTER JOIN ", " ON ")
 
@@ -39,9 +40,3 @@ column:
 count: user.code_insert_function("Count", "")
 
 date: user.insert_between("DATE '", "'")
-
-funk <user.code_common_function>:
-    user.code_insert_function(code_common_function, "")
-
-funk wrap <user.code_common_function>:
-    user.code_insert_function(code_common_function, edit.selected_text())
