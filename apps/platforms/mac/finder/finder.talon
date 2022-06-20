@@ -23,6 +23,7 @@ gallery view: key(cmd-4)
 
 copy path: key(alt-cmd-c)
 trash that: key(cmd-backspace)
+empty trash: key(cmd-shift-backspace)
 
 open that: key(cmd-down)
 move that here: key(cmd-alt-v)
