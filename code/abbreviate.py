@@ -125,6 +125,7 @@ abbreviations = {
     "language": "lng",
     "length": "len",
     "library": "lib",
+    "loinc": "LOINC",
     "manitoba": "mb",
     "markdown": "md",
     "medication": "med",
