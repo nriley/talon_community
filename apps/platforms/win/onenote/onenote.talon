@@ -11,6 +11,9 @@ font size [<number_small>]:
 (bigger | larger): key(ctrl-shift->)
 smaller: key(ctrl-shift-<)
 
+align left: key(ctrl-l)
+align right: key(ctrl-r)
+
 bullet: key(ctrl-.)
 check | done: key(ctrl-1)
 tag clear: key(ctrl-0)
