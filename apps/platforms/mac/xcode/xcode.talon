@@ -15,6 +15,7 @@ file name <user.text>:
 product run: key(cmd-r)
 product stop: key(cmd-.)
 product build: key(cmd-b)
+product archive: user.menu_select('Product|Archive')
 
 product clean: key(cmd-shift-k)
 
