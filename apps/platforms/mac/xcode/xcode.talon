@@ -19,6 +19,8 @@ product archive: user.menu_select('Product|Archive')
 
 product clean: key(cmd-shift-k)
 
+organizer: key(cmd-shift-alt-o)
+
 # Sidebar navigators (left side)
 bar (project | explore): key(cmd-1)
 bar source: key(cmd-2)
