@@ -1,6 +1,12 @@
 app.bundle: com.microsoft.onenote.mac
 -
 tag(): user.find_and_replace
+
+# due to a combination of clipboard slowness/flakiness, issues with inserting text in tables
+# and lack of exposure though accessibility
+settings():
+    user.context_sensitive_dictation = 0
+
 bold: key(cmd-b)
 italic: key(cmd-i)
 strike through: key(ctrl-cmd--)
