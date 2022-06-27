@@ -11,6 +11,9 @@ font size [<number_small>]:
 (bigger | larger): user.onenote_font_size_adjust(1)
 smaller: user.onenote_font_size_adjust(-1)
 
+align left: key(cmd-l)
+align right: key(cmd-r)
+
 bullet: key(cmd-.)
 check | done: key(cmd-1)
 
