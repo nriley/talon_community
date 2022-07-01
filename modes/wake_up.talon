@@ -18,8 +18,10 @@ mode: all
     user.enable_fd()
 ^(talon|talent|talents|towns) wake$:
     user.disable_fd()
+    user.reselect_microphone()
     speech.enable()
 
 key(ctrl-`):
     speech.toggle()
     user.disable_fd()
+    user.reselect_microphone()
