@@ -11,6 +11,10 @@ class Actions:
 	def reselect_microphone():
 		"""Reselect microphone (workaround for Talon bug on Windows) if speech is active"""
 
+@Context().action_class('user')
+class FallbackUserActions:
+	def reselect_microphone(): pass
+
 @ctx.action_class('user')
 class UserActions:
 	def reselect_microphone():
@@ -32,7 +36,7 @@ def ui_callback(event, app):
 	if event == "app_launch":
 	    actions.speech.disable()
 	    return
-	
+
 	print(event, app)
 
 if app.platform == "windows":
