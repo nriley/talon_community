@@ -43,7 +43,7 @@ cell border left: key(cmd-alt-left)
 cell border right: key(cmd-alt-right)
 cell border top: key(cmd-alt-up)
 cell border bottom: key(cmd-alt-down)
-cell border clear: key(cmd-alt--)
+clear cell border: key(cmd-alt--)
 
 cell select: key(shift-backspace)
 cell note: key(shift-f2)
