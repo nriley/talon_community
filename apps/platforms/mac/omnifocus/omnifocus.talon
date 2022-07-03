@@ -34,7 +34,7 @@ open [<phrase>]:
 	insert(user.formatted_text(phrase or "", "ALL_LOWERCASE,NO_SPACES"))
 
 edit: key(cmd-')
-view: key(cmd-alt-')
+close: key(cmd-alt-')
 
 project [<phrase>]:
 	key(cmd-alt-2 escape cmd-. tab:2)
