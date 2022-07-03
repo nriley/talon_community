@@ -1,4 +1,4 @@
-question: "?"
+question [mark]: "?"
 check mark: "✓"
 dash: "-"
 splash: " - "
