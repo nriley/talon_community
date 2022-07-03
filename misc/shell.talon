@@ -1,3 +1,5 @@
+tag: terminal
+-
 run ditto: "ditto "
 run hard link: "ln "
 run move: "mv "
