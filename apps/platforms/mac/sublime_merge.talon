@@ -11,6 +11,11 @@ please [<user.text>]:
 	sleep(100ms)
 	user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
 
+^message previous:
+	key(cmd-9)
+	sleep(100ms)
+	key(cmd-; down)
+
 go locations: key(cmd-1)
 go commits: key(cmd-2)
 go files: key(cmd-3)
