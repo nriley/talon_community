@@ -8,7 +8,7 @@ mod = Module()
 last_phrase = ""
 pop_phrase = ""
 
-auto_pop_that_phrases = ["go", "move", "select", "undo that", "cursor more"]
+auto_pop_that_phrases = ["go", "nope", "move", "select", "undo that", "cursor more"]
 
 
 def on_phrase(j):
