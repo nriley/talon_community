@@ -30,9 +30,9 @@ slap: key(ctrl-enter)
 
 definition show: key(f12)
 
-# navigate through multifile search results
-result next: key(f4 f3)
-result previous: key(shift-f4 f3)
+# navigate through multifile search (match) results
+(match|result) next: key(f4 f3)
+(match|result) previous: key(shift-f4 f3)
 
 ^repository | repo$:
     key(ctrl-shift-p)

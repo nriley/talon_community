@@ -33,9 +33,9 @@ complete: key(ctrl-space)
 
 slap: key(cmd-enter)
 
-# navigate through multifile search results
-result next: key(f4 cmd-g)
-result previous: key(shift-f4 cmd-g)
+# navigate through multifile search (match) results
+(match|result) next: key(f4 cmd-g)
+(match|result) previous: key(shift-f4 cmd-g)
 
 # history navigation
 go back: key(ctrl--)
