@@ -103,3 +103,7 @@ tomorrow:
 # back to progress (first notebook, first section)
 go progress:
     key(ctrl-g home enter tab:2 down enter esc)
+
+# Windows+arrows do not work in full screen mode
+window minimize: key(alt-space n)
+window maximize: key(alt-space x)
