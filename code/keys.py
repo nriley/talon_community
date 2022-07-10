@@ -163,6 +163,7 @@ symbol_key_words = {
     "dot": ".",
     "point": ".",
     "quote": "'",
+    "question": "?",
     "apostrophe": "'",
     "bracket": "[",
     "left bracket": "[",
@@ -238,10 +239,10 @@ simple_keys = [
 ]
 
 alternate_keys = {
-    "delete": "backspace",
-    "junk": "backspace",
     "wipe": "backspace",
     "white": "backspace",
+    "delete": "backspace",
+    "junk": "backspace",
     "eat": "delete",
     "forward delete": "delete",
     #'junk': 'backspace',

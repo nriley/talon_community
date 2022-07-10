@@ -1,15 +1,3 @@
-#(jay son | jason ): "json"
-#(http | htp): "http"
-#tls: "tls"
-#M D five: "md5"
-#word (regex | rejex): "regex"
-#word queue: "queue"
-#word eye: "eye"
-#word iter: "iter"
-#word no: "NULL"
-#word cmd: "cmd"
-#word dup: "dup"
-#word shell: "shell".
 zoom in: edit.zoom_in()
 zoom out: edit.zoom_out()
 zoom reset: edit.zoom_reset()
@@ -24,9 +12,7 @@ nope | ((i do | and do | undo) that): edit.undo()
 paste match: edit.paste_match_style()
 file open: user.file_open()
 file save: edit.save()
-#(pad | padding):
-#	insert("  ")
-#	key(left)
+(pad | padding): user.insert_between(" ", " ")
 slap: edit.line_insert_down()
 new paragraph:
 	edit.line_end()
