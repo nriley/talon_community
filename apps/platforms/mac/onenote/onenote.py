@@ -58,6 +58,9 @@ class Actions:
         if actions.user.onenote_focus():
             cron.after("200ms", lambda: actions.user.onenote_now(entry))
 
+    def onenote_font(font: str = ""):
+        """Change the font in OneNote."""
+
     def onenote_font_size(size: int):
         """Change the font size in OneNote (or edit it, if size is 0)."""
 
@@ -103,20 +106,27 @@ def onenote_notebook_window():
     return active_window
 
 
-def onenote_font_size_combo_box():
+def onenote_activate_ribbon_tab(tab_index, tab_name):
     window = onenote_notebook_window()
 
     ribbon = window.children.find_one(AXRole="AXTabGroup", max_depth=0)
-    home_tab = ribbon.AXTabs[0]
-    if home_tab.get("AXValue") != 1:
-        home_tab.perform("AXPress")
+    tab = ribbon.AXTabs[tab_index]
+    if tab.get("AXValue") != 1:
+        tab.perform("AXPress")
 
     for attempt in range(10):
         actions.sleep("50ms")
-        if home_tab.get("AXValue") == 1:
+        if tab.get("AXValue") == 1:
             break
     else:
-        app.notify(body="Could not activate Home tab", title="OneNote")
+        app.notify(body=f"Could not activate {tab_name} tab", title="OneNote")
+        return None
+
+    return ribbon
+
+
+def onenote_ribbon_combo_box(tab_index, tab_name, box_name, box_filter=None):
+    if (ribbon := onenote_activate_ribbon_tab(tab_index, tab_name)) is None:
         return None
 
     combo_boxes = []
@@ -129,11 +139,23 @@ def onenote_font_size_combo_box():
         return None
 
     for combo_box in combo_boxes:
-        if combo_box.AXDescription == "Font Size:" or str.isnumeric(combo_box.AXValue):
+        if combo_box.AXDescription == f"{box_name}:" or box_filter(combo_box):
             return combo_box
     else:
-        app.notify(body="Could not find Font Size combo box", title="OneNote")
+        app.notify(body=f"Could not find {box_name} combo box", title="OneNote")
         return None
+
+
+def onenote_font_combo_box():
+    return onenote_ribbon_combo_box(
+        0, "Home", "Font", lambda combo_box: not str.isnumeric(combo_box.AXValue)
+    )
+
+
+def onenote_font_size_combo_box():
+    return onenote_ribbon_combo_box(
+        0, "Home", "Font Size", lambda combo_box: str.isnumeric(combo_box.AXValue)
+    )
 
 
 @ctx.action_class("user")
@@ -310,6 +332,15 @@ class UserActions:
         actions.insert(" - ")
         if entry:
             actions.mimic(entry)
+
+    def onenote_font(font):
+        if (combo_box := onenote_font_combo_box()) is None:
+            return
+
+        combo_box.AXFocused = True
+        if font:
+            actions.insert(f"{font}\n")
+            actions.key("tab")
 
     def onenote_font_size(size):
         combo_box = onenote_font_size_combo_box()

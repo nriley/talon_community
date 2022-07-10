@@ -12,6 +12,8 @@ italic: key(cmd-i)
 strike through: key(ctrl-cmd--)
 highlight: key(ctrl-cmd-h)
 
+font [<user.text>]:
+    user.onenote_font('{text or ""}')
 font size [<number_small>]:
     user.onenote_font_size(number_small or 0)
 (bigger | larger): user.onenote_font_size_adjust(1)
