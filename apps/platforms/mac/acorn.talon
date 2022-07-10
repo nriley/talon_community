@@ -37,6 +37,13 @@ toggle guides: key(cmd-alt-;)
 
 toggle palettes: key(tab)
 
+snap to guides: user.menu_select('View|Guides and Grids|Snap To Guides')
+snap to selection: user.menu_select('View|Guides and Grids|Snap To Selection')
+snap to grid: user.menu_select('View|Guides and Grids|Snap To Grid')
+snap to shapes: user.menu_select('View|Guides and Grids|Snap To Shapes')
+snap to layers: user.menu_select('View|Guides and Grids|Snap To Layers')
+snap to canvas: user.menu_select('View|Guides and Grids|Snap To Canvas')
+
 zoom to fit: key(cmd-0)
 one hundred percent: key(cmd-1)
 two hundred percent: key(cmd-2)
