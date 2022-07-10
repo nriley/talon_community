@@ -22,6 +22,7 @@ align right: key(cmd-r)
 
 bullet: key(cmd-.)
 check | done: key(cmd-1)
+tag remove: key(cmd-alt-0)
 
 insert date: key(cmd-d)
 
