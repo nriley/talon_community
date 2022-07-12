@@ -31,3 +31,6 @@ send to back: key(cmd-shift-b)
 
 bring forward: key(cmd-alt-shift-f)
 send backward: key(cmd-alt-shift-b)
+
+group that: key(cmd-alt-g)
+un group that: key(cmd-alt-shift-g)
