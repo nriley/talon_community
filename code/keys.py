@@ -192,7 +192,7 @@ symbol_key_words = {
     "R brace": "}",
     "right brace": "}",
     "close brace": "}",
-    "race": "}",
+    # "race": "}",
     "angle": "<",
     "left angle": "<",
     "less than": "<",
