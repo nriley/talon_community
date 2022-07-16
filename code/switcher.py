@@ -4,7 +4,7 @@ import time
 from pathlib import Path
 
 import talon
-from talon import Context, Module, actions, app, fs, imgui, ui
+from talon import Context, Module, actions, app, ctrl, fs, imgui, ui
 
 # Construct at startup a list of overides for application names (similar to how homophone list is managed)
 # ie for a given talon recognition word set  `one note`, recognized this in these switcher functions as `ONENOTE`
@@ -26,6 +26,8 @@ overrides = {}
 # a list of the currently running application names
 running_application_dict = {}
 
+# a list of the most recent mouse locations in currently running apps
+app_mouse_location = {}
 
 mac_application_directories = [
     "/Applications",
@@ -182,7 +184,8 @@ def update_running_list():
     global running_application_dict
     running_application_dict = {}
     running = {}
-    for cur_app in ui.apps(background=False):
+    foreground_apps = ui.apps(background=False)
+    for cur_app in foreground_apps:
         running_application_dict[cur_app.name] = True
 
         if app.platform == "windows":
@@ -208,6 +211,9 @@ def update_running_list():
 
     # batch update lists
     ctx.lists.update(lists)
+
+    for quit_app in set(app_mouse_location) - set(foreground_apps):
+        del app_mouse_location[quit_app]
 
 
 def update_overrides(name, flags):
@@ -266,12 +272,19 @@ class Actions:
 
     def switcher_focus_app(app: ui.App):
         """Focus application and wait until switch is made"""
+        app_mouse_location[ui.active_window().app] = ctrl.mouse_pos()
         app.focus()
         t1 = time.perf_counter()
         while ui.active_app() != app:
             if time.perf_counter() - t1 > 1:
                 raise RuntimeError(f"Can't focus app: {app.name}")
             actions.sleep(0.1)
+
+        if not (old_location := app_mouse_location.get(app)):
+            return
+
+        ctrl.mouse_move(*old_location)
+        ctrl.cursor_visible(True)
 
     def switcher_focus_window(window: ui.Window):
         """Focus window and wait until switch is made"""
