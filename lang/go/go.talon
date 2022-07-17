@@ -78,6 +78,8 @@ interface <user.text> [over]:
 
 state slice: " []"
 slice of: "[]"
+[state] (no | nil): "nil"
+state (int | integer | ant) sixty four: " int64 "
 state tag:
   user.insert_between(" `", "`")
 field tag <user.text> [over]:
