@@ -1,4 +1,4 @@
-from talon import Context, Module, ui
+from talon import Context, Module, actions, ui
 
 mod = Module()
 ctx = Context()
@@ -25,8 +25,10 @@ class UserActions:
                 viewer.element.AXHidden = False
             for window in viewer.windows():
                 if window.element.get("AXSubrole") == "AXStandardWindow":
+                    actions.user.switcher_save_mouse_pos()
                     viewer.focus()
                     window.focus()
+                    actions.user.switcher_restore_mouse_pos(window.app)
                     return
             if was_hidden:
                 viewer.element.AXHidden = True
