@@ -16,6 +16,10 @@ file hunt [<user.text>]:
     key(cmd-p)
     insert(text or "")
 
+symbol hunt [<user.text>]:
+    key(cmd-shift-r)
+    insert(text or "")
+
 please [<user.text>]:
     key(cmd-shift-p)
     insert(text or "")
@@ -30,6 +34,8 @@ project symbol [<user.text>]:
 
 complete: key(ctrl-space)
 ( comment | uncomment ) that: code.toggle_comment()
+
+definition show: key(cmd-alt-down)
 
 slap: key(cmd-enter)
 

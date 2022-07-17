@@ -14,6 +14,10 @@ file hunt [<user.text>]:
     key(ctrl-p)
     insert(text or "")
 
+symbol hunt [<user.text>]:
+    key(ctrl-shift-r)
+    insert(text or "")
+
 please [<user.text>]:
     key(ctrl-shift-p)
     insert(text or "")
