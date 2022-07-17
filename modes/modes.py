@@ -17,7 +17,7 @@ for key, value in modes.items():
 
 
 def dictation_mode_active() -> bool:
-    return "dictation" in scope.get("mode")
+    return "dictation" in scope.get("mode", ())
 
 
 @mod.action_class
