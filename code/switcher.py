@@ -26,8 +26,8 @@ overrides = {}
 # a list of the currently running application names
 running_application_dict = {}
 
-# a list of the most recent mouse locations in currently running apps
-app_mouse_location = {}
+# per-app recent mouse positions
+app_mouse_pos = {}
 
 mac_application_directories = [
     "/Applications",
@@ -212,8 +212,8 @@ def update_running_list():
     # batch update lists
     ctx.lists.update(lists)
 
-    for quit_app in set(app_mouse_location) - set(foreground_apps):
-        del app_mouse_location[quit_app]
+    for quit_app in set(app_mouse_pos) - set(foreground_apps):
+        del app_mouse_pos[quit_app]
 
 
 def update_overrides(name, flags):
@@ -270,9 +270,21 @@ class Actions:
             return
         actions.user.switcher_focus_app(app)
 
+    def switcher_save_mouse_pos():
+        """Save the mouse position for the current app before switching"""
+        app_mouse_pos[ui.active_window().app] = ctrl.mouse_pos()
+
+    def switcher_restore_mouse_pos(app: ui.App):
+        """Save the mouse position for the current app after switching"""
+        if not (old_location := app_mouse_pos.get(app)):
+            return
+
+        ctrl.mouse_move(*old_location)
+        ctrl.cursor_visible(True)
+
     def switcher_focus_app(app: ui.App):
         """Focus application and wait until switch is made"""
-        app_mouse_location[ui.active_window().app] = ctrl.mouse_pos()
+        actions.user.switcher_save_mouse_pos()
         app.focus()
         t1 = time.perf_counter()
         while ui.active_app() != app:
@@ -280,11 +292,7 @@ class Actions:
                 raise RuntimeError(f"Can't focus app: {app.name}")
             actions.sleep(0.1)
 
-        if not (old_location := app_mouse_location.get(app)):
-            return
-
-        ctrl.mouse_move(*old_location)
-        ctrl.cursor_visible(True)
+        actions.user.switcher_restore_mouse_pos(app)
 
     def switcher_focus_window(window: ui.Window):
         """Focus window and wait until switch is made"""
