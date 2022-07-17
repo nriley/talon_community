@@ -9,7 +9,18 @@ add [<user.text>]:
 	text = text or ""
 	"{user.formatted_text(text, 'CAPITALIZE_FIRST_WORD')}"
 
-done: "x"
-edit: "e"
-favorite: "f"
+checked: key(h)
+
+check|done: key(x)
+edit:
+	key(e)
+	sleep(300ms)
+	key(shift-tab)
+favorite: key(f)
 save: key(cmd-enter)
+
+less: key(-)
+more: key(=)
+
+previous|up: key(up)
+next|down: key(down)
