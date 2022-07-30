@@ -243,3 +243,7 @@ cut (word (right | next) | east):
 cut line:
     edit.select_line()
     edit.cut()
+
+(pace | paste) all:
+  edit.select_all()
+  edit.paste()

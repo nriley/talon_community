@@ -12,6 +12,7 @@ nope | ((i do | and do | undo) that): edit.undo()
 paste match: edit.paste_match_style()
 file open: user.file_open()
 file save: edit.save()
+file save all: edit.save_all()
 (pad | padding): user.insert_between(" ", " ")
 slap: edit.line_insert_down()
 new paragraph:
