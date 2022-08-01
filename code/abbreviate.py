@@ -78,6 +78,7 @@ abbreviations = {
     "dupe": "dup",
     "duplicate": "dup",
     "dynamic": "dyn",
+    "ecease": "eCEASE",
     "encode": "enc",
     "entry": "ent",
     "enumerate": "enum",
