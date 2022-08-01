@@ -112,3 +112,9 @@ class UserActions:
 
     def tab_overview():
         actions.key("cmd-shift-\\")
+
+
+@ctx.action_class("app")
+class AppActions:
+    def window_close():
+        actions.key("cmd-shift-w")
