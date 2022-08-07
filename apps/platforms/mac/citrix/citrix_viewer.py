@@ -39,6 +39,15 @@ class UserActions:
         use_all_displays_in_full_screen_item.perform("AXPress")
 
 
+@ctx.action_class("app")
+class AppActions:
+    def window_next():
+        actions.key("alt-tab")
+
+    def window_previous():
+        actions.key("alt-shift-tab")
+
+
 @ctx.action_class("edit")
 class EditActions:
     def selected_text() -> str:
