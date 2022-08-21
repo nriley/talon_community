@@ -1,5 +1,6 @@
 app: eaglefiler
 -
+tag(): user.file_manager
 
 record first: user.eaglefiler_select_first_displayed_record()
 
