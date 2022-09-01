@@ -6,3 +6,6 @@ full screen: key(f11)
 window minimize: key(super-down:2)
 window maximize: key(super-up)
 refresh: key(f5)
+
+# Windows logo key shortcuts
+^(action | note | notification) center$: key(super-a)
