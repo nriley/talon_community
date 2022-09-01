@@ -1,6 +1,8 @@
 os: windows
 and app.exe: OUTLOOK.EXE
 -
+tag(): user.find_and_replace
+
 archive: key(backspace)
 flag: key(alt-h u a)
 unflag:	key(alt-h u e)
