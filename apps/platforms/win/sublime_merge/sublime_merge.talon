@@ -1,6 +1,8 @@
 os: windows
 and app.exe: sublime_merge.exe
 -
+tag(): user.tabs
+
 please [<user.text>]:
 	key(ctrl-shift-p)
 	insert(user.text or "")
@@ -26,6 +28,11 @@ stage all:
 	key(ctrl-shift-a)
 	sleep(100ms)
 stage untracked: key(ctrl-k ctrl-a)
+
+stash: key(ctrl-s)
+
+^repo next: key(ctrl-tab)
+^repo previous: key(shift-ctrl-tab)
 
 ^repo [<user.text>]:
 	key(ctrl-shift-o)
