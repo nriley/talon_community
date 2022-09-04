@@ -1,6 +1,7 @@
 app.bundle: com.sublimemerge
 -
 tag(): user.tabs
+tag(): user.file_manager
 
 please [<user.text>]:
 	key(cmd-shift-p)
