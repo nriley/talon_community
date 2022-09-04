@@ -11,8 +11,8 @@ os: mac
 
 @mod.action_class
 class Action:
-    def citrix_focus_desktop():
-        """Focus the Citrix desktop"""
+    def citrix_focus_desktop() -> bool:
+        """Focus the Citrix desktop, returning whether successful"""
 
 
 @ctx.action_class("user")
@@ -29,6 +29,8 @@ class UserActions:
                     viewer.focus()
                     window.focus()
                     actions.user.switcher_restore_mouse_pos(window.app)
-                    return
+                    return True
             if was_hidden:
                 viewer.element.AXHidden = True
+        else:
+            return False
