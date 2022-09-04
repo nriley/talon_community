@@ -63,5 +63,8 @@ settings():
     # Enable notification debug logging.
     user.notification_debug = 0
 
+    # Display the talon-gaze-ocr debugging overlay for longer
+    user.ocr_debug_display_seconds = 5
+
 # Uncomment this to enable the curse yes/curse no commands (show hide mouse cursor). See issue #688.
 # tag(): user.mouse_cursor_commands_enable
