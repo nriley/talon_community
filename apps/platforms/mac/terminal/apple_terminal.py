@@ -83,10 +83,10 @@ class EditActions:
         actions.key("ctrl-e")
 
     def page_down():
-        actions.key("command-pagedown")
+        actions.key("cmd-pagedown")
 
     def page_up():
-        actions.key("command-pageup")
+        actions.key("cmd-pageup")
 
     def undo():
         actions.key("ctrl-_")
