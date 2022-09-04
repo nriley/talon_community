@@ -36,10 +36,17 @@ class UserActions:
 
     def file_manager_current_path():
         browser_window = eaglefiler_front_browser_window()
-        selected_records = browser_window.selected_records()
-        if not selected_records:
+        try:
+            if not (records := browser_window.selected_records()):
+                if not (records := browser_window.current_records()):
+                    return None
+        except CommandError:
             return None
-        return selected_records[0].file().path
+
+        # XXX work around https://github.com/talonvoice/appscript/issues/1
+        from urllib.parse import unquote
+
+        return unquote(records[0].file().path)
 
     def file_manager_show_properties():
         actions.key("cmd-i")
