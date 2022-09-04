@@ -1,3 +1,4 @@
+from appscript.reference import CommandError
 from talon import Context, Module, actions, ui
 
 ctx = Context()
@@ -22,8 +23,13 @@ def eaglefiler_front_browser_window():
 class UserActions:
     def eaglefiler_select_first_displayed_record():
         browser_window = eaglefiler_front_browser_window()
-        first_displayed_record = browser_window.displayed_records()[0]
-        browser_window.selected_records = [first_displayed_record]
+        try:
+            if not (displayed_records := browser_window.displayed_records()):
+                return None
+        except CommandError:
+            return None
+
+        browser_window.selected_records.set(displayed_records[0])
 
     def file_manager_open_parent():
         actions.key("cmd-up")
