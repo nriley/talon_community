@@ -1,6 +1,7 @@
 os: mac
 app.bundle: com.sublimetext.4
 -
+tag(): user.file_manager
 tag(): user.find_and_replace
 tag(): user.line_commands
 tag(): user.multiple_cursors
