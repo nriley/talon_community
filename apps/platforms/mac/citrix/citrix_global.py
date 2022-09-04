@@ -2,8 +2,6 @@ from talon import Context, Module, actions, ui
 
 mod = Module()
 ctx = Context()
-
-ctx = Context()
 ctx.matches = """
 os: mac
 """
