@@ -5,6 +5,7 @@ tag(): user.file_manager
 tag(): user.tabs
 preferences: key(cmd-,)
 options: key(cmd-j)
+inspector: key(cmd-alt-i)
 search: key(cmd-alt-f)
 
 # bit of a mouthful, but it's probably not the kind of thing you'd be saying frequently
@@ -27,3 +28,9 @@ empty trash: key(cmd-shift-backspace)
 
 open that: key(cmd-down)
 move that here: key(cmd-alt-v)
+
+open close: key(cmd-alt-down)
+go parent close: key(cmd-alt-up)
+
+# The default command for this doesn't match Mac standard terminology
+get info: user.file_manager_show_properties()
