@@ -1,5 +1,9 @@
-from appscript.reference import CommandError
 from talon import Context, Module, actions, ui
+
+try:
+    from appscript.reference import CommandError
+except ImportError:
+    pass
 
 ctx = Context()
 mod = Module()
