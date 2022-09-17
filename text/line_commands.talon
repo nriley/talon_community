@@ -36,7 +36,8 @@ cut <number> through <number>:
     user.select_range(number_1, number_2)
     edit.paste()
 (select | cell | sell) [line] <number>: user.select_range(number, number)
-(select | cell | sell) <number> through <number>: user.select_range(number_1, number_2)
+(select | cell | sell) <number> through <number>:
+    user.select_range(number_1, number_2)
 move right: edit.indent_more()
 move right <number>:
     edit.jump_line(number)
@@ -65,7 +66,7 @@ move down <number>:
 move down <number> through <number>:
     user.select_range(number_1, number_2)
     edit.line_swap_down()
-clone (line|that): edit.line_clone()
+clone (line | that): edit.line_clone()
 clone [line] <number>:
     user.select_range(number, number)
     edit.select_line()

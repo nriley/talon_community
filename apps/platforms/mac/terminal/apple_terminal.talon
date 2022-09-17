@@ -16,15 +16,11 @@ tag(): user.git
 tag(): user.tabs
 tag(): user.file_manager
 
-suspend:
-    key(ctrl-z)
+suspend: key(ctrl-z)
 resume:
     insert("fg")
     key(enter)
 
-clear:
-    key(cmd-k)
-clear (word (left | previous) | west):
-    key(alt-backspace)
-clear (word (right | next) | east):
-    key(alt-d)
+clear: key(cmd-k)
+clear (word (left | previous) | west): key(alt-backspace)
+clear (word (right | next) | east): key(alt-d)

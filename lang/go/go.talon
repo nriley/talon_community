@@ -39,8 +39,8 @@ variable [<user.text>] [over]:
 state (chan | channel): " chan "
 state go: "go "
 spawn <user.text> [over]:
-  insert("go ")
-  insert(user.formatted_text(text, "PRIVATE_CAMEL_CASE"))
+    insert("go ")
+    insert(user.formatted_text(text, "PRIVATE_CAMEL_CASE"))
 
 state format: "fmt"
 format <user.text> [over]:
@@ -60,8 +60,8 @@ type <user.text> [over]:
     insert(user.formatted_text(text, "PUBLIC_CAMEL_CASE"))
 
 state (start | struct | struck):
-  insert(" struct {")
-  key("enter")
+    insert(" struct {")
+    key("enter")
 (struct | struck) <user.text> [over]:
     insert(" struct {")
     key("enter")
@@ -69,8 +69,8 @@ state (start | struct | struck):
 
 [state] empty interface: " interface{} "
 state interface:
-  insert(" interface {")
-  key("enter")
+    insert(" interface {")
+    key("enter")
 interface <user.text> [over]:
     insert(" interface {")
     key("enter")
@@ -80,8 +80,7 @@ state slice: " []"
 slice of: "[]"
 [state] (no | nil): "nil"
 state (int | integer | ant) sixty four: " int64 "
-state tag:
-  user.insert_between(" `", "`")
+state tag: user.insert_between(" `", "`")
 field tag <user.text> [over]:
     user.insert_between(" `", "`")
     sleep(100ms)
@@ -117,8 +116,8 @@ loop over [<user.text>] [over]:
     insert(user.formatted_text(text, "PRIVATE_CAMEL_CASE"))
 
 item <user.text> [over]:
-  insert(", ")
-  insert(user.formatted_text(text, "PRIVATE_CAMEL_CASE"))
+    insert(", ")
+    insert(user.formatted_text(text, "PRIVATE_CAMEL_CASE"))
 
 value <user.text> [over]:
     insert(": ")
