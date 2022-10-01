@@ -2,7 +2,7 @@ from pathlib import Path
 
 from talon import Module, actions
 
-from .switcher import override_file_path
+from .app_switcher.app_switcher import override_file_path
 from .user_settings import SETTINGS_DIR
 
 mod = Module()
