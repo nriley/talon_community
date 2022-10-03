@@ -49,11 +49,11 @@ table select: user.onenote_ribbon_select("jls")
 
 # for consistency with Mac version, where collapsing will collapse to level 1
 collapse: key(alt-shift-1)
-expand [this]: key(alt-shift-+)
+expand [this | that]: key(alt-shift-+)
 expand all: key(alt-shift-0)
 
 # but add option to just collapse a single level
-collapse this: key(alt-shift--)
+collapse (this | that): key(alt-shift--)
 
 go (notebook | notebooks): key(ctrl-g)
 
