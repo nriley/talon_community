@@ -49,4 +49,4 @@ repos:
     rev: 8d252caf159b81ce46bdb6912b739b551b816892
     hooks:
       - id: talonfmt
-        args: ["--in-place", "--max-line-width=80"]
+        args: ["--in-place", "--max-line-width=88"]
