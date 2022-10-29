@@ -31,11 +31,15 @@ def month(m) -> int:
     return months[m[0]]
 
 
-@mod.capture(rule="<number_small> | (twenty | thirty [<digits>])")
+digit_words = "one two three four five six seven eight nine".split()
+digits = {word: number for number, word in enumerate(digit_words, 1)}
+
+
+@mod.capture(rule=f'<number_small> | (twenty | thirty [{"|".join(digit_words)}])')
 def day(m) -> int:
     if hasattr(m, "number_small"):
         return m.number_small
-    day = getattr(m, "digits", 0)
+    day = digits[m[1]] if len(m) > 1 else 0
     if m[0] == "twenty":
         day += 20
     elif m[0] == "thirty":
