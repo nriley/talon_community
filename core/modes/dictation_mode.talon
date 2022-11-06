@@ -76,3 +76,6 @@ spell that <user.formatters> <user.letters>:
 
 # Escape, type things that would otherwise be commands
 ^escape <user.text>$: auto_insert(user.text)
+
+settings():
+    speech.timeout = 0.2
