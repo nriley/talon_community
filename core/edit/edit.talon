@@ -156,13 +156,9 @@ copy word:
     edit.select_word()
     edit.copy()
 
-copy (word (left | previous) | west):
-    edit.extend_word_left()
-    edit.copy()
+copy (word (left | previous) | west): user.copy_word_left()
 
-copy (word (right | next) | east):
-    edit.extend_word_right()
-    edit.copy()
+copy (word (right | next) | east): user.copy_word_right()
 
 copy line:
     edit.select_line()
@@ -190,17 +186,11 @@ cut word:
     edit.select_word()
     edit.cut()
 
-cut (word (left | previous) | west):
-    edit.extend_word_left()
-    edit.cut()
+cut (word (left | previous) | west): user.cut_word_left()
 
-cut (word (right | next) | east):
-    edit.extend_word_right()
-    edit.cut()
+cut (word (right | next) | east): user.cut_word_right()
 
-cut line:
-    edit.select_line()
-    edit.cut()
+cut line: user.cut_line()
 
 (pace | paste) all:
     edit.select_all()

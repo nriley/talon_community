@@ -30,8 +30,8 @@ option key: user.paste("⌥")
 new line: "\\n"
 carriage return: "\\r"
 line feed: "\\r\\n"
-empty dubstring: user.insert_between('"', '"')
-empty escaped (dubstring | dub quotes): user.insert_between('\\"', '\\"')
+empty dub string: user.insert_between('"', '"')
+empty escaped (dub string | dub quotes): user.insert_between('\\"', '\\"')
 empty string: user.insert_between("'", "'")
 empty escaped string: user.insert_between("\\'", "\\'")
 inside angle brackets: user.insert_between("<", ">")
@@ -40,7 +40,7 @@ inside (brackets | square brackets | list): user.insert_between("[", "]")
 inside (braces | curly brackets): user.insert_between("{", "}")
 inside percent: user.insert_between("%", "%")
 inside (quotes | string): user.insert_between("'", "'")
-inside dubquotes: user.insert_between('"', '"')
+inside dub quotes: user.insert_between('"', '"')
 inside back ticks: user.insert_between("`", "`")
 angle that:
     text = edit.selected_text()
@@ -60,7 +60,7 @@ percent that:
 quote that:
     text = edit.selected_text()
     user.paste("'{text}'")
-(double quote | dubquote) that:
+(double quote | dub quote) that:
     text = edit.selected_text()
     user.paste('"{text}"')
 back tick that:

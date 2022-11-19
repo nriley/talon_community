@@ -9,3 +9,4 @@ __pycache__
 .vscode/settings.json
 # Platform-specific
 settings/system_paths.csv
+.DS_Store

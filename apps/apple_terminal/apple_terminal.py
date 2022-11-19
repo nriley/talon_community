@@ -1,4 +1,6 @@
-from talon import Context, Module, actions, cron, ui
+from talon import Context, Module, actions, ui
+
+# TODO: fit this to terminal.py
 
 mod = Module()
 ctx = Context()
