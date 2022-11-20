@@ -1,12 +1,10 @@
-.DS_Store
-*~
-
 # Dev stuff
 __pycache__
 *.sw?
 .idea/
 # Locally generated
 .vscode/settings.json
+.DS_Store
+*~
 # Platform-specific
 settings/system_paths.csv
-.DS_Store
