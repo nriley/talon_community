@@ -398,3 +398,9 @@ class UserActions:
         actions.user.vscode("cursorWordPartRight")
 
     # line_commands.py support end
+
+    def insert_between(before: str, after: str):
+        # Use paste to avoid issue with docstrings inserting too many "s
+        actions.user.paste(before + after)
+        for _ in after:
+            actions.edit.left()
