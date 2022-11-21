@@ -12,6 +12,9 @@ class Action:
     def citrix_focus_desktop() -> bool:
         """Focus the Citrix desktop, returning whether successful"""
 
+    def citrix_focus_workspace():
+        """Focus Citrix Workspace"""
+
 
 @ctx.action_class("user")
 class UserActions:
@@ -32,3 +35,6 @@ class UserActions:
                 viewer.element.AXHidden = True
         else:
             return False
+
+    def citrix_focus_workspace():
+        actions.user.launch_or_focus_bundle("com.citrix.receiver.nomas")
