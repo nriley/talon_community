@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, ui
+from talon import Context, Module, actions, cron, ui
 
 # TODO: fit this to terminal.py
 
