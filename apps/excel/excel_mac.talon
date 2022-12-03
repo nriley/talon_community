@@ -81,6 +81,12 @@ select all: key(cmd-a cmd-a cmd-a)
 sheet new: key(shift-f11)
 sheet previous: key(alt-left)
 sheet next: key(alt-right)
+sheet rename:
+    key(esc)
+    user.menu_select("Format|Sheet|Rename")
+
+pivot that: user.menu_select("Data|Summarize with PivotTable")
+mail this: user.menu_select("File|Share|Send Workbook")
 
 ribbon: key(cmd-alt-r)
 
