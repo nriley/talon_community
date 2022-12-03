@@ -13,7 +13,7 @@ mode: all
     user.mouse_sleep()
     speech.disable()
     user.engine_sleep()
-^(talon | talent | talents | towns) sleep [<phrase>]$:
+^drowse [<phrase>]$:
     speech.disable()
     user.enable_fd()
 ^(talon | talent | talents | towns) wake$:

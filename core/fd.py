@@ -36,6 +36,9 @@ class FallbackUserActions:
     def disable_fd():
         pass
 
+    def enable_fd():
+        pass
+
 
 @ctx.action_class("user")
 class UserActions:
