@@ -32,6 +32,7 @@ stage all:
 stage untracked: key(cmd-k cmd-a)
 
 stash: key(cmd-s)
+stash pop: key(cmd-shift-s)
 
 ^repo next: key(ctrl-tab)
 ^repo previous: key(shift-ctrl-tab)
