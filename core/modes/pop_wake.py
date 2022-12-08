@@ -10,6 +10,8 @@ mode: sleep
 def on_pop(active):
     if ctx not in registry.active_contexts():
         return
+    if actions.user.fd_is_listening():
+        return
     actions.user.disable_fd()
     actions.speech.enable()
     print('+ Enabled speech on pop')

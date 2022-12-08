@@ -24,6 +24,10 @@ class Actions:
         """Is Fluency Direct running?"""
         return False
 
+    def fd_is_listening() -> bool:
+        """Is Fluency Direct listening?"""
+        return False
+
     def disable_fd():
         """Disable Fluency Direct"""
 
@@ -42,12 +46,14 @@ class FallbackUserActions:
 
 @ctx.action_class("user")
 class UserActions:
-    def fd_is_running() -> bool:
-        """Is Fluency Direct running?"""
+    def fd_is_running():
         if fda is None:
             return False
         return fda.IsRunning()
 
+    def fd_is_listening():
+        return fd_listening()
+    
     def disable_fd():
         if fda is None:
             return
@@ -92,18 +98,21 @@ def fd_window():
         return None
 
 
+def fd_listening():
+    window = fd_window()
+    if not window:
+        return False
+
+    return actions.user.mouse_helper_find_template_relative(
+        "fd_listening.png", region=window.rect
+    )
+
+
 def disable_talon_if_fd_listening():
     if not actions.speech.enabled():
         return
 
-    window = fd_window()
-    if not window:
-        return
-
-    fd_listening = actions.user.mouse_helper_find_template_relative(
-        "fd_listening.png", region=window.rect
-    )
-    if fd_listening:
+    if fd_listening():
         print("FD listening - disabling Talon")
         actions.speech.disable()
 

@@ -15,7 +15,6 @@ mode: all
     user.engine_sleep()
 ^drowse [<phrase>]$:
     speech.disable()
-    user.enable_fd()
 ^(talon | talent | talents | towns) wake$:
     user.disable_fd()
     speech.enable()
