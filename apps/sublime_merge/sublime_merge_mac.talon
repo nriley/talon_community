@@ -38,5 +38,5 @@ stash pop: key(cmd-shift-s)
 ^repo previous: key(shift-ctrl-tab)
 
 ^repo [<user.text>]:
-    key(ctrl-cmd-p)
+    key(escape ctrl-cmd-p)
     insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
