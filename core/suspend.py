@@ -16,10 +16,10 @@ disabling_app_bundle_ids = set()
 
 def app_launched(app):
     global was_enabled_globally, disabling_app_bundle_ids
-    launched_app_bundle_id = app.bundle
-    # print(f'launched {launched_app_bundle_id}')
-    # print(f'was_enabled_globally: {was_enabled_globally}')
-    # print(f'disabling_app_bundle_ids: {disabling_app_bundle_ids}')
+    if not (launched_app_bundle_id := app.bundle):
+        return
+    print(f"+ launched {launched_app_bundle_id}; {was_enabled_globally=}")
+    print(f"disabling_app_bundle_ids: {disabling_app_bundle_ids}")
     if launched_app_bundle_id not in DEFAULT_DISABLE_BUNDLE_IDS:
         return
     was_enabled_globally = actions.speech.enabled()
@@ -34,10 +34,10 @@ def app_launched(app):
 
 def app_quit(app):
     global was_enabled_globally, disabling_app_bundle_ids
-    quit_app_bundle_id = app.bundle
-    # print(f'quit {quit_app_bundle_id}')
-    # print(f'was_enabled_globally: {was_enabled_globally}')
-    # print(f'disabling_app_bundle_ids: {disabling_app_bundle_ids}')
+    if not (quit_app_bundle_id := app.bundle):
+        return
+    print(f"- quit {quit_app_bundle_id}; {was_enabled_globally=}")
+    print(f"disabling_app_bundle_ids: {disabling_app_bundle_ids}")
     if quit_app_bundle_id not in disabling_app_bundle_ids:
         return
     disabling_app_bundle_ids.discard(quit_app_bundle_id)
