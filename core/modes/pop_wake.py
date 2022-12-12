@@ -12,9 +12,11 @@ def on_pop(active):
         return
     if actions.user.fd_is_listening():
         return
+    if actions.user.dictation_suspended():
+        return
     actions.user.disable_fd()
     actions.speech.enable()
-    print('+ Enabled speech on pop')
+    print("+ Enabled speech on pop")
 
 
 noise.register("pop", on_pop)

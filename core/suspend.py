@@ -1,4 +1,4 @@
-from talon import actions, ui
+from talon import Module, actions, ui
 
 DEFAULT_DISABLE_BUNDLE_IDS = frozenset(
     {
@@ -13,6 +13,18 @@ DEFAULT_DISABLE_BUNDLE_IDS = frozenset(
 
 was_enabled_globally = False
 disabling_app_bundle_ids = set()
+
+mod = Module()
+
+
+@mod.action_class
+class Actions:
+    def dictation_suspended() -> bool:
+        """Returns whether speech recognition is suspended due to an in-progress call"""
+        for bundle_id in disabling_app_bundle_ids:
+            if ui.apps(bundle=bundle_id):
+                return True
+        return False
 
 
 def app_launched(app):
