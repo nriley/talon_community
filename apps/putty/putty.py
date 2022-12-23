@@ -15,6 +15,21 @@ app: putty
 mod.list("putty_session", "PuTTY saved sessions")
 
 
+@mod.action_class
+class Actions:
+    def putty_open_menu():
+        """Open the PuTTY system menu"""
+
+
+@ctx.action_class("user")
+class UserActions:
+    def putty_open_menu():
+        # When something resembling Windows accessibility is available,
+        # plan to migrate to this; in the meantime, assumes that
+        # Window > Behaviour > System menu appears on ALT-Space is set
+        actions.key("alt-space")
+
+
 def ready():
     import winreg
     from urllib.parse import unquote
