@@ -8,6 +8,13 @@ os: mac
 """
 
 
+def fantastical_calendar_window():
+    window = ui.active_window()
+    if not window or window.element.AXSubrole != "AXStandardWindow":
+        return None
+    return window
+
+
 @ctx.action_class("user")
 class UserActions:
     def fantastical_parse(text: str):
@@ -25,9 +32,28 @@ class UserActions:
 
         webbrowser.open(f"x-fantastical3://show/calendar")
 
+    def fantastical_show_notifications():
+        if not (window := fantastical_calendar_window()):
+            return
+
+        if window.element.get("AXIdentifier") == "mini window":
+            buttons = window.children.find(AXRole="AXButton", max_depth=0)
+        else:
+            buttons = (
+                window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+                .children.find_one(AXRole="AXToolbar", max_depth=0)
+                .children.find(AXRole="AXButton", max_depth=0)
+            )
+
+        for button in buttons:
+            if (title := button.get("AXTitle")) is None:
+                continue
+
+            if title.isnumeric() or title == "!":
+                button.perform("AXPress")
+
     def fantastical_select_calendar_set(text):
-        window = ui.active_window()
-        if not window or window.element.AXSubrole != "AXStandardWindow":
+        if not (window := fantastical_calendar_window()):
             return
 
         try:
@@ -66,3 +92,6 @@ class Actions:
 
     def fantastical_show_calendar():
         """Shows the calendar window"""
+
+    def fantastical_show_notifications():
+        """Shows the notifications/invitations popover"""
