@@ -46,7 +46,7 @@ class UserActions:
             )
 
         for button in buttons:
-            if (title := button.get("AXTitle")) is None:
+            if not (title := button.get("AXTitle")):
                 continue
 
             if title.isnumeric() or title == "!":
