@@ -10,7 +10,17 @@ today: key(cmd-t)
 calendar set [<user.text>]: user.fantastical_select_calendar_set(text or "")
 
 toggle sidebar: key(cmd-alt-s)
-pending: user.fantastical_show_notifications()
+pending:
+    user.fantastical_show_notifications()
+    key(down)
+
+dismiss: key(cmd-enter down)
+dismiss all: key(cmd-alt-enter down)
+
+# XXX These currently cause Fantastical to crash
+accept: key(cmd-alt-1 down)
+maybe: key(cmd-alt-2 down)
+decline: key(cmd-alt-3 down)
 
 # XXX eliminate duplication with date_time.talon
 
