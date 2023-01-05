@@ -13,8 +13,7 @@ mode: all
     user.mouse_sleep()
     speech.disable()
     user.engine_sleep()
-^drowse [<phrase>]$:
-    speech.disable()
+^snore [<phrase>]$: speech.disable()
 ^(talon | talent | talents | towns) wake$:
     user.disable_fd()
     speech.enable()
