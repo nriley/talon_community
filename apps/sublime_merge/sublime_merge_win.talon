@@ -30,6 +30,7 @@ stage all:
 stage untracked: key(ctrl-k ctrl-a)
 
 stash: key(ctrl-s)
+stash pop: key(ctrl-shift-s)
 
 ^repo next: key(ctrl-tab)
 ^repo previous: key(shift-ctrl-tab)
