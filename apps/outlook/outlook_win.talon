@@ -8,6 +8,9 @@ flag: key(alt-h u a)
 unflag: key(alt-h u e)
 junk: key(alt-h j b)
 
+new message: key(ctrl-n)
+send [this] message: key(alt-s)
+
 move: key(ctrl-shift-v)
 
 move to [<user.text>]:
