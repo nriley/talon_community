@@ -37,20 +37,22 @@ class UserActions:
             return
 
         if window.element.get("AXIdentifier") == "mini window":
-            buttons = window.children.find(AXRole="AXButton", max_depth=0)
+            buttons = window.children.find(
+                AXRole="AXButton", AXIdentifier="notifications", max_depth=0
+            )
         else:
             buttons = (
                 window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
                 .children.find_one(AXRole="AXToolbar", max_depth=0)
-                .children.find(AXRole="AXButton", max_depth=0)
+                .children.find(
+                    AXRole="AXButton", AXIdentifier="notifications", max_depth=0
+                )
             )
 
-        for button in buttons:
-            if not (title := button.get("AXTitle")):
-                continue
+        if not buttons:
+            return
 
-            if title.isnumeric() or title == "!":
-                button.perform("AXPress")
+        buttons[0].perform("AXPress")
 
     def fantastical_select_calendar_set(text):
         if not (window := fantastical_calendar_window()):
