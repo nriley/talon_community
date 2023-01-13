@@ -54,6 +54,15 @@ class UserActions:
 
         buttons[0].perform("AXPress")
 
+        for attempt in range(10):
+            actions.sleep("50ms")
+            if buttons[0].children:
+                break
+        else:
+            return
+
+        buttons[0].children[0].children.find_one(AXRole="AXRow").AXSelected = True
+
     def fantastical_select_calendar_set(text):
         if not (window := fantastical_calendar_window()):
             return
