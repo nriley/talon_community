@@ -12,6 +12,7 @@ class UserActions:
         if (
             len(ctx.tags) > 0
             and (focused_element := ui.focused_element())
+            # TODO(nriley): focused_element.window sometimes raises a UIErr
             and win_is_homerow_search_bar(focused_element.window)
         ):
             focused_element.AXValue = text.lower()
