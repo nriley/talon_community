@@ -56,8 +56,11 @@ class UserActions:
 
         for attempt in range(10):
             actions.sleep("50ms")
-            if buttons[0].children:
-                break
+            try:
+                if buttons[0].children:
+                    break
+            except AttributeError:  # XXX Talon bug?
+                pass
         else:
             return
 
