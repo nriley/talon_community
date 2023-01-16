@@ -13,7 +13,7 @@ toggle sidebar: key(cmd-alt-s)
 pending: user.fantastical_show_notifications()
 
 dismiss: key(cmd-enter down)
-dismiss all: key(cmd-alt-enter down)
+dismiss all: key(alt:down cmd-enter alt:up)
 
 # XXX These currently cause Fantastical to crash
 accept: key(cmd-alt-1 down)
