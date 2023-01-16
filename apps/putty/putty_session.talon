@@ -18,6 +18,7 @@ session saved:
 session clear:
     user.putty_open_menu()
     "t"
+    sleep(200ms)
     user.putty_open_menu()
     "l"
 
