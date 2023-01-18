@@ -56,3 +56,12 @@ class UserActions:
         actions.edit.find(text)
         actions.edit.find_next()
         actions.key("esc")
+
+    def outlook_focus_message_list():
+        actions.key("ctrl-1 alt f6:3")
+
+    def outlook_focus_folder_list():
+        actions.key("ctrl-1 alt f6:2")
+
+    def outlook_focus_message_body():
+        actions.key("ctrl-1 alt f6:4")
