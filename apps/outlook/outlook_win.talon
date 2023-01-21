@@ -7,7 +7,7 @@ archive:
     user.outlook_focus_message_list()
     key(backspace)
 flag: key(alt-h u a)
-unflag: key(alt-h u e)
+unflag: key(alt-h u e esc:3)
 junk: key(alt-h j b)
 
 new message: key(ctrl-n)
