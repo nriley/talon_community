@@ -9,14 +9,18 @@ mod.tag("homerow_search")
 @ctx.action_class("user")
 class UserActions:
     def homerow_search(text: str):
-        if (
-            len(ctx.tags) > 0
-            and (focused_element := ui.focused_element())
-            # TODO(nriley): focused_element.window sometimes raises a UIErr
-            and win_is_homerow_search_bar(focused_element.window)
-        ):
-            focused_element.AXValue = text.lower()
-            return
+        try:
+            if (
+                len(ctx.tags) > 0
+                and (focused_element := ui.focused_element())
+                and win_is_homerow_search_bar(focused_element.window)
+            ):
+                focused_element.AXValue = text.lower()
+                return
+        except ui.UIErr:
+            # focused_element.window sometimes raises a UIErr
+            # (when the Homerow search window is not visible)
+            pass
 
         # TODO(nriley): Consider always using accessibility?
         actions.key("ctrl-alt-shift-h")
