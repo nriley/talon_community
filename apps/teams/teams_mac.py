@@ -5,7 +5,10 @@ def app_launched(app):
     if not app.bundle == "com.microsoft.teams":
         return
 
-    app.element.AXEnhancedUserInterface = True
+    try:
+        app.element.AXManualAccessibility = True
+    except ui.UIErr as e:
+        pass  # expect "Error setting element attribute" even on success
 
 
 if app.platform == "mac":
