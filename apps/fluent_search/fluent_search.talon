@@ -1,17 +1,17 @@
 os: windows
 -
 # Fluent Search provides equivalents to my common uses of
-# LaunchBar, Contexts, Vimac and menu search on Mac.
+# LaunchBar, Contexts, Homerow and menu search on Mac.
 
 # If you have different keyboard shortcuts configured, you will need
 # to replace them here.
 
-# -- Vimac
-# Search in-app using Screen hotkey
-^nav$: key(alt-;)
+# -- Homerow
+# Search in-app using Screen hotkey (displays labels; frontmost app)
+^ax$: key(alt-;)    
 
-# Search using Screen hotkey on (single) screen
-^nav screen$: key(ctrl-alt-;)
+# Search using Screen hotkey (displays labels; screen 1 only)
+^ax screen$: key(ctrl-alt-;)
 
 # -- LaunchBar
 # Search hotkey (in fluent_search.py)
