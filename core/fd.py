@@ -108,8 +108,17 @@ def fd_listening():
     )
 
 
-def disable_talon_if_fd_listening():
+def toggle_talon_by_fd_listening():
     if not actions.speech.enabled():
+        # SpeechMike does not listen unless I hold it up - can switch back and forth
+        # Other microphones currently require I manually reenable Talon with a voice or
+        # keyboard command
+        if (
+            "SpeechMike III" in actions.sound.active_microphone()
+            and not fd_listening()
+            and not actions.user.dictation_suspended()
+        ):
+            actions.speech.enable()
         return
 
     if fd_listening():
@@ -118,4 +127,4 @@ def disable_talon_if_fd_listening():
 
 
 if app.platform == "windows":
-    app.register("ready", lambda: cron.interval("2s", disable_talon_if_fd_listening))
+    app.register("ready", lambda: cron.interval("2s", toggle_talon_by_fd_listening))
