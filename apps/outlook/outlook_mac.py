@@ -23,8 +23,10 @@ def outlook_focused_element():
             return element
         # XXX relative of https://github.com/talonvoice/talon/issues/480
         element = ui.focused_element()
+        if element and getattr(element, "AXRole", None):
+            return element
         if not seen_nothing:
-            # attempt to work around Outlook issue where nothing apepars focused
+            # attempt to work around Outlook issue where nothing appears focused
             # (via either method; outlook.element.AXFocusedUIElement is None)
             actions.key("ctrl-shift-[ ctrl-shift-]")
             seen_nothing = True
