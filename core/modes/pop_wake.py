@@ -14,6 +14,8 @@ def on_pop(active):
         return
     if actions.user.dictation_suspended():
         return
+    if "SpeechMike III" in actions.sound.active_microphone():
+        return
     actions.user.disable_fd()
     actions.speech.enable()
     print("+ Enabled speech on pop")
