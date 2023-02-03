@@ -7,8 +7,8 @@ settings():
 archive: user.outlook_archive()
 delete: key(cmd-backspace)
 ^delete all$: user.menu_select("Edit|Delete All")
-flag: key(ctrl-o)
-unflag: key(cmd-ctrl-o)
+flag: key(ctrl-5)
+unflag: key(cmd-ctrl-')
 junk: key(cmd-shift-j)
 download:
     user.outlook_download_images()
