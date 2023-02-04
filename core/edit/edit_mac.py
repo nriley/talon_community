@@ -88,10 +88,10 @@ class EditActions:
         actions.key("shift-alt-right")
 
     def file_end():
-        actions.key("cmd-down cmd-left")
+        actions.key("cmd-down")
 
     def file_start():
-        actions.key("cmd-up cmd-left")
+        actions.key("cmd-up")
 
     def find(text: str = None):
         if text is not None:
