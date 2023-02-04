@@ -16,6 +16,9 @@ class AppActions:
     def tab_next():
         actions.key("cmd-shift-]")
 
+    def window_close():
+        actions.key("cmd-shift-w")
+
 
 @ctx.action_class("code")
 class CodeActions:
