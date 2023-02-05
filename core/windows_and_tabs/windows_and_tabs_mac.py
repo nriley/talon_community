@@ -1,4 +1,4 @@
-from talon import Context, actions
+from talon import Context, actions, ui
 
 ctx = Context()
 ctx.matches = r"""
@@ -32,7 +32,7 @@ class AppActions:
         actions.key("cmd-w")
 
     def window_hide():
-        actions.key("cmd-h")
+        ui.active_app().element.AXHidden = True
 
     def window_hide_others():
         actions.key("cmd-alt-h")
