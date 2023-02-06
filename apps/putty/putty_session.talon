@@ -25,3 +25,7 @@ session clear:
 session copy:
     user.putty_open_menu()
     "o"
+
+session restart:
+    user.putty_open_menu()
+    "r"
