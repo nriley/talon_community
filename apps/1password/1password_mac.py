@@ -1,7 +1,4 @@
-import webbrowser
-from urllib.parse import quote
-
-from talon import Context, actions
+from talon import Context, actions, ui
 
 ctx = Context()
 
@@ -34,4 +31,18 @@ class UserActions:
         actions.key("cmd-backspace")
 
     def password_search(text: str):
-        webbrowser.open("onepassword://extension/search/" + quote(text))
+        actions.user.password_show()
+        for attempt in range(10):
+            actions.sleep("50ms")
+            try:
+                focused_element = ui.focused_element()
+                if (
+                    focused_element.AXRole == "AXTextField"
+                    and focused_element.AXDOMIdentifier == "quick-access-search"
+                ):
+                    break
+            except:
+                pass
+        else:
+            return
+        focused_element.AXValue = text
