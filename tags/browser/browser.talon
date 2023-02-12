@@ -25,6 +25,8 @@ history show: browser.show_history()
 cache show: browser.show_clear_cache()
 dev tools [show]: browser.toggle_dev_tools()
 
+page: browser.focus_page()
+
 # Legacy [verb noun] commands to be removed at a later time
 show downloads: browser.show_downloads()
 show extensions: browser.show_extensions()

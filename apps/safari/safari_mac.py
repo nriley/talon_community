@@ -47,10 +47,17 @@ class BrowserActions:
     # 	key(ctrl-shift-b)
     def focus_address():
         actions.key("cmd-l")
-        # action(browser.focus_page):
 
     def focus_page():
-        actions.key("escape:2")
+        window = ui.active_window()
+        if not window:
+            return
+        if not (sections := getattr(window.element, "AXSections")):
+            return
+        content = next(
+            o["SectionObject"] for o in sections if o["SectionUniqueID"] == "AXContent"
+        )
+        content.AXFocused = True
 
     def focus_search():
         actions.browser.focus_address()
