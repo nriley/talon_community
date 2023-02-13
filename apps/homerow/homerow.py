@@ -22,10 +22,16 @@ class UserActions:
             # (when the Homerow search window is not visible)
             pass
 
-        # TODO(nriley): Consider always using accessibility?
         actions.key("ctrl-alt-shift-h")
-        actions.sleep("50ms")
-        actions.insert(text.lower())
+        for attempt in range(10):
+            actions.sleep("50ms")
+            try:
+                focused_element = ui.focused_element()
+                if win_is_homerow_search_bar(focused_element.window):
+                    focused_element.AXValue = text.lower()
+                    return
+            except:
+                pass
 
     def homerow_pick(label: str):
         actions.insert(label.upper())
