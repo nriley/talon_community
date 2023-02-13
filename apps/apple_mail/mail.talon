@@ -22,6 +22,8 @@ message (last | lost | lust):
     key(end)
     user.mail_select_last_message()
 
+normal: user.menu_select("Format|Style|Remove Style")
+
 # MsgFiler
 move: key(ctrl-s)
 
