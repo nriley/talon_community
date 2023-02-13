@@ -5,7 +5,7 @@ window top right: user.moom_keys("w")
 window top left: user.moom_keys("q")
 window bottom left: user.moom_keys("a")
 window bottom right: user.moom_keys("s")
-window center: user.moom_key("space")
+window center: user.moom_center_frontmost_window()
 
 # resize and move window
 window fill left: user.moom_key("cmd-left")
@@ -15,14 +15,11 @@ window fill bottom: user.moom_key("cmd-down")
 
 # resize window relative
 window grow left [<user.ordinals>]: user.moom_keys("ctrl-left", ordinals or 1)
-window grow right [<user.ordinals>]:
-    user.moom_keys("ctrl-right", ordinals or 1)
+window grow right [<user.ordinals>]: user.moom_keys("ctrl-right", ordinals or 1)
 window grow up [<user.ordinals>]: user.moom_keys("ctrl-up", ordinals or 1)
 window grow down [<user.ordinals>]: user.moom_keys("ctrl-down", ordinals or 1)
-window shrink left [<user.ordinals>]:
-    user.moom_keys("alt-right", ordinals or 1)
-window shrink right [<user.ordinals>]:
-    user.moom_keys("alt-left", ordinals or 1)
+window shrink left [<user.ordinals>]: user.moom_keys("alt-right", ordinals or 1)
+window shrink right [<user.ordinals>]: user.moom_keys("alt-left", ordinals or 1)
 window shrink top [<user.ordinals>]: user.moom_keys("alt-down", ordinals or 1)
 window shrink bottom [<user.ordinals>]: user.moom_keys("alt-up", ordinals or 1)
 
