@@ -44,5 +44,11 @@ class UserActions:
             except:
                 pass
         else:
+            print("Gave up waiting for quick access search")
             return
-        focused_element.AXValue = text
+        for attempt in range(10):
+            focused_element.AXValue = text
+            actions.sleep("50ms")
+            if focused_element.AXValue == text:
+                return
+        print("Gave up waiting to set search string")
