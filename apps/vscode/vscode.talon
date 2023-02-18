@@ -134,6 +134,10 @@ go recent [<user.text>]:
     sleep(250ms)
 go edit: user.vscode("workbench.action.navigateToLastEditLocation")
 
+# navigate through multifile search (match) results
+(match | result) next: user.vscode("search.action.focusNextSearchResult")
+(match | result) previous: user.vscode("search.action.focusPreviousSearchResult")
+
 # Bookmarks. Requires Bookmarks plugin
 go marks: user.vscode("workbench.view.extension.bookmarks")
 toggle mark: user.vscode("bookmarks.toggle")
