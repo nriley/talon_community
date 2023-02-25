@@ -25,11 +25,11 @@ message (last | lost | lust):
 normal: user.menu_select("Format|Style|Remove Style")
 
 # MsgFiler
-move: key(ctrl-s)
+move: user.focus_bundle("com.atow.msgfiler")
 
 (save to | move to | folder) [<user.text>]:
-    key(ctrl-s)
-    sleep(200ms)
+    user.focus_bundle("com.atow.msgfiler")
+    key(cmd-a)
     insert(user.text or "")
 
 # Add to OmniFocus
