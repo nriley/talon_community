@@ -10,6 +10,7 @@ delete: key(cmd-backspace)
 flag: key(ctrl-5)
 unflag: key(cmd-ctrl-')
 junk: key(cmd-shift-j)
+not junk: key(cmd-shift-alt-j)
 download:
     user.outlook_download_images()
     user.outlook_focus_message_body()
