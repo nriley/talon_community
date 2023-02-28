@@ -1,7 +1,7 @@
 tag: browser
 -
-location: browser.focus_address()
-copy location:
+(location | address): browser.focus_address()
+copy (location | address):
     browser.focus_address()
     sleep(50ms)
     edit.copy()
