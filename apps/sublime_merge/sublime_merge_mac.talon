@@ -21,7 +21,10 @@ go locations: key(cmd-1)
 go commits: key(cmd-2)
 go files: key(cmd-3)
 
-commit: key(cmd-enter)
+commit:
+    key(cmd-9)
+    sleep(100ms)
+    key(cmd-enter)
 push: key(cmd-alt-up)
 pull: key(cmd-alt-down)
 # XXX broken - see https://github.com/sublimehq/sublime_merge/issues/778
