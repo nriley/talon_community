@@ -80,11 +80,15 @@ class UserActions:
     def outlook_focus_message_list():
         outlook = outlook_app()
 
-        if outlook_focused_element().AXRole == "AXGroup":
-            # Work around state in which keyboard controls message list but focus is in message body
-            # (likely intended, but confusing when inspecting). Focus flashes without this.
-            actions.key("ctrl-shift-] ctrl-shift-[")
-            actions.sleep("100ms")
+        element = outlook_focused_element()
+        if (
+            element.AXRole == "AXGroup"
+            and element.get("AXIdentifier") == "Email Renderer View"
+        ):
+            # Outlook is in a state in which keyboard controls message list but focus
+            # is in the message body (likely intended, but confusing when inspecting).
+            # This is the case immediately after selecting a folder, for example.
+            return
 
         last_focused_element = None
         for attempt in range(10):
