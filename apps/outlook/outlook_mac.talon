@@ -32,7 +32,7 @@ move to [<user.text>]:
 reply: key(cmd-r)
 reply all: key(cmd-shift-r)
 forward: key(cmd-j)
-defer | snooze | postpone: user.menu_select("Message|Snooze|Choose a date")
+defer | snooze | postpone: user.menu_select("Message|Snooze|Choose a Date")
 
 hunt all: key(cmd-shift-f)
 
