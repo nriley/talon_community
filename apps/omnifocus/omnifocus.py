@@ -1,7 +1,7 @@
 from typing import Optional
 
-from talon import Context, Module, actions
-from talon.mac import applescript
+from appscript import k
+from talon import Context, Module, actions, cron, ui
 
 mod = Module()
 ctx = Context()
@@ -12,16 +12,25 @@ and app.bundle: com.omnigroup.OmniFocus3.MacAppStore
 """
 
 
+def omnifocus_app():
+    return ui.apps(bundle="com.omnigroup.OmniFocus3.MacAppStore")[0]
+
+
 @ctx.action_class("user")
 class UserActions:
     def omnifocus_complete():
-        applescript.run(
-            """tell application id "com.omnigroup.OmniFocus3.MacAppStore"
-			set _content to window 1's content
-			set _selectedTrees to _content's selected trees
-			mark complete (_content's selected trees's value)
-			set _content's selected trees to _selectedTrees
-		end tell"""
+        content = omnifocus_app().appscript().windows[1].content
+        # get the selected trees (by index)
+        selected_trees = content.selected_trees()
+        # mark each tree (by ID) as complete
+        content.selected_trees.value.mark_complete()
+        # restore the selected trees
+        # (which may be different now if cleanup happens immediately)
+        cron.after(
+            "300ms",
+            lambda: content.selected_trees.set(
+                [tree for tree in selected_trees if tree.exists()]
+            ),
         )
 
     def omnifocus_postpone(days: Optional[int]):
@@ -30,6 +39,8 @@ class UserActions:
             actions.insert(str(days))
 
     def omnifocus_select_tree(tree: str):
+        from talon.mac import applescript
+
         applescript.run(
             f'tell application id "com.omnigroup.OmniFocus3.MacAppStore" to tell window 1\'s content to set selected trees to {{{tree}}}'
         )
