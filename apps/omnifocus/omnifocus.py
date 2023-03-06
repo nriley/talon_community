@@ -51,8 +51,26 @@ class UserActions:
         actions.insert(text)
 
 
+ctx_global = Context()
+
+ctx_global.matches = r"""
+os: mac
+"""
+
+
+@ctx_global.action_class("user")
+class Actions:
+    def omnifocus_create_task(name: str):
+        quick_entry = omnifocus_app().appscript().quick_entry
+        quick_entry.make(new=k.inbox_task, with_properties={k.name: name})
+        quick_entry.open()
+
+
 @mod.action_class
 class Actions:
+    def omnifocus_create_task(name: str):
+        """Create a task using the Quick Entry window"""
+
     def omnifocus_complete():
         """Mark the selection as completed while preserving the selection"""
 
