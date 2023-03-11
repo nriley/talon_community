@@ -12,10 +12,23 @@ os: mac
 class UserActions:
     def fastscripts_search(text: str):
         fastscripts = ui.apps(bundle="com.red-sweater.fastscripts3")[0]
-        fastscripts.children.find_one(
+        menu_extra = fastscripts.children.find_one(
             AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=1
-        ).perform("AXPress")
-        actions.insert(text)
+        )
+        menu_extra.perform("AXPress")
+        for attempt in range(10):
+            actions.sleep("50ms")
+            try:
+                search_field = menu_extra.children.find_one(
+                    AXRole="AXTextField", AXSubrole="AXSearchField"
+                )
+                break
+            except:
+                pass
+        else:
+            print("Unable to find FastScripts search field")
+            return
+        search_field.AXValue = text
 
 
 @mod.action_class
