@@ -2,7 +2,7 @@ app: safari
 -
 # dictation mode gets confused when typing too fast
 settings():
-    key_wait = 3
+    insert_wait = 3
 
 tab group previous: key(cmd-shift-up)
 tab group next: key(cmd-shift-down)
