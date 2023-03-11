@@ -27,6 +27,25 @@ class UserActions:
         else:
             app.notify("Gave up while waiting for window")
             return
+
+        # Log in with web view (makes some assumptions about form elements)
+        if web_area := window.children.find_one(AXRole="AXWebArea", max_depth=3):
+            # Store both username and password in password field
+            # as there is no way to retrieve the username with Talon's
+            # keyboard API <https://github.com/talonvoice/talon/issues/577>
+            username, password = keychain.find(web_area.AXURL, "").split("|", 2)
+            login = web_area.children.find_one(AXRole="AXTextField", AXSubrole=None)
+            login.AXValue = username
+            passwd = web_area.children.find_one(
+                AXRole="AXTextField", AXSubrole="AXSecureTextField"
+            )
+            passwd.AXFocused = True
+            actions.paste(password)
+            submit = web_area.children.find_one(AXRole="AXButton")
+            submit.perform("AXPress")
+            return
+
+        # Log in with native UI
         login = window.children.find_one(
             AXRole="AXTextField", AXRoleDescription="login"
         )
