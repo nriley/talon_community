@@ -49,11 +49,11 @@ class UserActions:
         login = window.children.find_one(
             AXRole="AXTextField", AXRoleDescription="login"
         )
-        username = login["AXValue"]
+        username = login.AXValue
         passwd = window.children.find_one(
             AXRole="AXTextField", AXRoleDescription="passwd"
         )
-        passwd["AXValue"] = keychain.find("Citrix Workspace", username)
+        passwd.AXValue = keychain.find("Citrix Workspace", username)
         submit = window.children.find_one(AXRole="AXButton", AXRoleDescription="submit")
         submit.perform("AXPress")
 
