@@ -27,9 +27,6 @@ shift key: user.paste("⇧")
 command key: user.paste("⌘")
 control key: user.paste("⌃")
 option key: user.paste("⌥")
-new line: "\\n"
-carriage return: "\\r"
-line feed: "\\r\\n"
 empty dub string: user.insert_between('"', '"')
 empty escaped (dub string | dub quotes): user.insert_between('\\"', '\\"')
 empty string: user.insert_between("'", "'")

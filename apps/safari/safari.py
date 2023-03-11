@@ -11,7 +11,6 @@ and app.bundle: com.apple.Safari
 ctx.matches = r"""
 app: safari
 """
-ctx.tags = ["browser", "user.tabs"]
 
 
 @ctx.action_class("browser")
@@ -38,13 +37,13 @@ class BrowserActions:
         actions.key("cmd-d")
 
     def bookmark_tabs():
-        actions.key("cmd-shift-d")
+        raise NotImplementedError(
+            "Safari doesn't have a default shortcut for this functionality but it can be configured"
+        )
 
     def bookmarks():
         actions.key("cmd-alt-b")
 
-    # action(browser.bookmarks_bar):
-    # 	key(ctrl-shift-b)
     def focus_address():
         actions.key("cmd-l")
 
@@ -87,29 +86,32 @@ class BrowserActions:
         actions.key("cmd-r")
 
     def reload_hard():
-        actions.key("cmd-shift-r")
+        actions.key("cmd-alt-r")
 
-    # action(browser.reload_hardest):
-    # action(browser.show_clear_cache):
-    # 	key(cmd-shift-delete)
+    def show_clear_cache():
+        raise NotImplementedError("Safari doesn't support this functionality")
+
     def show_downloads():
         actions.key("cmd-alt-l")
 
-    # def show_extensions():
-    #     actions.key('ctrl-shift-a')
+    def show_extensions():
+        raise NotImplementedError()
+
     def show_history():
         actions.key("cmd-y")
 
     def submit_form():
         actions.key("enter")
 
-    # action(browser.title)
     def toggle_dev_tools():
         actions.key("cmd-alt-i")
 
 
 @ctx.action_class("user")
 class UserActions:
+    def browser_open_address_in_new_tab():
+        actions.key("cmd-enter")
+
     def tab_jump(number: int):
         if number < 9:
             actions.key(f"cmd-{number}")

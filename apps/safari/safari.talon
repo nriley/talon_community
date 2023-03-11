@@ -1,5 +1,8 @@
 app: safari
 -
+tag(): browser
+tag(): user.tabs
+
 # dictation mode gets confused when typing too fast
 settings():
     insert_wait = 3
