@@ -41,6 +41,9 @@ class UserActions:
 
 @ctx.action_class("app")
 class AppActions:
+    def window_close():
+        actions.key("alt-f4")
+
     def window_next():
         actions.key("alt-tab")
 
