@@ -30,10 +30,10 @@ window move up [<user.ordinals>]: user.moom_keys("up", ordinals or 1)
 window move down [<user.ordinals>]: user.moom_keys("down", ordinals or 1)
 
 # move window between screens
-window screen up: user.moom_keys("-")
-window screen down: user.moom_keys(";")
-window screen left: user.moom_keys("o")
-window screen right: user.moom_keys("p")
+window screen up [<user.ordinals>]: user.moom_keys("-", ordinals or 1)
+window screen down [<user.ordinals>]: user.moom_keys(";", ordinals or 1)
+window screen left [<user.ordinals>]: user.moom_keys("o", ordinals or 1)
+window screen right [<user.ordinals>]: user.moom_keys("p", ordinals or 1)
 
 # undo after moving or resizing
 window undo: user.moom_key("esc")
