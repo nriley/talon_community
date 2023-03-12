@@ -8,10 +8,10 @@ window bottom right: user.moom_keys("s")
 window center: user.moom_center_frontmost_window()
 
 # resize and move window
-window fill left: user.moom_key("cmd-left")
-window fill right: user.moom_key("cmd-right")
-window fill top: user.moom_key("cmd-up")
-window fill bottom: user.moom_key("cmd-down")
+window fill left: user.moom("cmd-left")
+window fill right: user.moom("cmd-right")
+window fill top: user.moom("cmd-up")
+window fill bottom: user.moom("cmd-down")
 
 # resize window relative
 window grow left [<user.ordinals>]: user.moom_keys("ctrl-left", ordinals or 1)
@@ -36,4 +36,4 @@ window screen left [<user.ordinals>]: user.moom_keys("o", ordinals or 1)
 window screen right [<user.ordinals>]: user.moom_keys("p", ordinals or 1)
 
 # undo after moving or resizing
-window undo: user.moom_key("esc")
+window undo: user.moom("esc")
