@@ -3,6 +3,7 @@ app: excel_win
 # tag(): user.find_and_replace
 
 # save as excel: user.excel_save_as_format("Excel Workbook (.xlsx)")
+password: key(alt-f i p e)
 
 fill down: key(ctrl-d)
 fill right: key(ctrl-r)
@@ -60,9 +61,9 @@ underline: key(ctrl-u)
 # column delete: key(ctrl-space cmd--)
 # column top: key(cmd-up)
 # column bottom: key(cmd-down)
-# column fit: key(alt-h o i)
+column fit: key(alt-h o i)
 # column filter: key(cmd-down cmd-up alt-down)
-# column width: user.menu_select("Format|Column|Width...")
+column width: key(alt-h o w)
 
 # row hide: key(ctrl-9)
 # row unhide: key(ctrl-shift-9)
@@ -71,11 +72,11 @@ underline: key(ctrl-u)
 # row delete: key(shift-space cmd--)
 # row start: key(cmd-left)
 # row end: key(cmd-right)
-# row fit: user.menu_select("Format|Row|AutoFit")
-# row height: user.menu_select("Format|Row|Height...")
+row fit: key(alt-h o a)
+row height: key(alt-h o h)
 
-# table select: key(cmd-a)
-# select all: key(cmd-a cmd-a cmd-a)
+table select: key(ctrl-a)
+select all: key(ctrl-a:3)
 
 # sheet new: key(shift-f11)
 # sheet previous: key(alt-left)
