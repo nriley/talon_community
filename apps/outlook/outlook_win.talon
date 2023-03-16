@@ -10,6 +10,9 @@ flag: key(alt-h u a)
 unflag: key(alt-h u e esc:3)
 junk: key(alt-h j b)
 
+mark [as] read: key(ctrl-q)
+mark [as] unread: key(ctrl-u)
+
 new message: key(ctrl-n)
 send [this] message: key(alt-s)
 
