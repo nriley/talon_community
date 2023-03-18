@@ -53,7 +53,7 @@ class UserActions:
 
     def fd_is_listening():
         return fd_listening()
-    
+
     def disable_fd():
         if fda is None:
             return
