@@ -36,7 +36,7 @@ class UserActions:
         if web_area is not None:
             # Store both username and password in password field
             # as there is no way to retrieve the username with Talon's
-            # keyboard API <https://github.com/talonvoice/talon/issues/577>
+            # keychain API <https://github.com/talonvoice/talon/issues/577>
             username, password = keychain.find(web_area.AXURL, "").split("|", 2)
             login = web_area.children.find_one(AXRole="AXTextField", AXSubrole=None)
             login.AXValue = username
