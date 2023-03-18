@@ -26,10 +26,17 @@ def citrix_view_menu():
 class UserActions:
     def window_toggle_full_screen():
         view_menu = citrix_view_menu()
-        full_screen_item = view_menu.children.find_one(
-            AXRole="AXMenuItem", AXTitle="Enter Full Screen", max_depth=0
-        )
-        full_screen_item.perform("AXPress")
+        menu_items = view_menu.children.find(AXRole="AXMenuItem", max_depth=0)
+
+        if full_screen_item := next(
+            (
+                item
+                for item in menu_items
+                if item.AXTitle in ("Enter Full Screen", "Exit Full Screen")
+            ),
+            None,
+        ):
+            full_screen_item.perform("AXPress")
 
     def citrix_use_all_displays_in_full_screen():
         view_menu = citrix_view_menu()
