@@ -29,7 +29,11 @@ class UserActions:
             return
 
         # Log in with web view (makes some assumptions about form elements)
-        if web_area := window.children.find_one(AXRole="AXWebArea", max_depth=3):
+        try:
+            web_area = window.children.find_one(AXRole="AXWebArea", max_depth=3)
+        except ui.UIErr:
+            web_area = None
+        if web_area is not None:
             # Store both username and password in password field
             # as there is no way to retrieve the username with Talon's
             # keyboard API <https://github.com/talonvoice/talon/issues/577>
