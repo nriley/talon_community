@@ -1,6 +1,5 @@
 from typing import Optional
 
-from appscript import k
 from talon import Context, Module, actions, cron, ui
 
 mod = Module()
@@ -61,6 +60,8 @@ os: mac
 @ctx_global.action_class("user")
 class Actions:
     def omnifocus_create_task(name: str):
+        from appscript import k
+
         quick_entry = omnifocus_app().appscript().quick_entry
         quick_entry.make(new=k.inbox_task, with_properties={k.name: name})
         quick_entry.open()
