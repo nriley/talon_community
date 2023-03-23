@@ -3,9 +3,7 @@ and app.exe: OUTLOOK.EXE
 -
 tag(): user.find_and_replace
 
-archive:
-    user.outlook_focus_message_list()
-    key(backspace)
+archive: key(alt-h o 1)
 flag: key(alt-h u a)
 unflag: key(alt-h u e esc:3)
 junk: key(alt-h j b)
