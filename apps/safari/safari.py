@@ -5,12 +5,29 @@ mod = Module()
 apps = mod.apps
 mod.apps.safari = """
 os: mac
-and app.bundle: com.apple.Safari
+app.bundle: com.apple.Safari
+app.bundle: com.apple.SafariTechnologyPreview
 """
 
 ctx.matches = r"""
 app: safari
 """
+
+
+@ctx.action_class("user")
+class UserActions:
+    def browser_open_address_in_new_tab():
+        actions.key("cmd-enter")
+
+    def tab_jump(number: int):
+        if number < 9:
+            actions.key(f"cmd-{number}")
+
+    def tab_final():
+        actions.key("cmd-9")
+
+    def tab_overview():
+        actions.key("cmd-shift-\\")
 
 
 @ctx.action_class("browser")
@@ -105,22 +122,6 @@ class BrowserActions:
 
     def toggle_dev_tools():
         actions.key("cmd-alt-i")
-
-
-@ctx.action_class("user")
-class UserActions:
-    def browser_open_address_in_new_tab():
-        actions.key("cmd-enter")
-
-    def tab_jump(number: int):
-        if number < 9:
-            actions.key(f"cmd-{number}")
-
-    def tab_final():
-        actions.key("cmd-9")
-
-    def tab_overview():
-        actions.key("cmd-shift-\\")
 
 
 @ctx.action_class("app")
