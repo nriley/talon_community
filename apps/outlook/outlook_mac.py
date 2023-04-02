@@ -84,6 +84,8 @@ class UserActions:
             # Outlook is in a state in which keyboard controls message list but focus
             # is in the message body (likely intended, but confusing when inspecting).
             # This is the case immediately after selecting a folder, for example.
+            # XXX ...unfortunately, sometimes this is NOT the case and I don't know
+            # XXX how to tell the difference from accessibility
             return
 
         last_focused_element = None
