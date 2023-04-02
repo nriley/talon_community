@@ -5,6 +5,8 @@ and app.bundle: com.flexibits.fantastical2.mac
 -
 next: key(cmd-right)
 previous: key(cmd-left)
+tomorrow: key(shift-right)
+yesterday: key(shift-left)
 today: key(cmd-t)
 
 calendar set [<user.text>]: user.fantastical_select_calendar_set(text or "")
