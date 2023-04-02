@@ -126,6 +126,10 @@ class UserActions:
             last_focused_element = focused_element
             actions.sleep("50ms")
 
+        app.notify(
+            "Unable to focus Outlook folder list",
+            body="If this keeps happening, consider closing and reopening the Outlook window",
+        )
         raise Exception("Unable to focus Outlook folder list")
 
     def outlook_download_images():
