@@ -32,23 +32,35 @@ class UserActions:
 
     def password_search(text: str):
         actions.user.password_show()
+        focused_element = None
+        search_field = None
         for attempt in range(10):
             actions.sleep("50ms")
             try:
                 focused_element = ui.focused_element()
-                if (
+                if (  # empty search field
                     focused_element.AXRole == "AXTextField"
                     and focused_element.AXDOMIdentifier == "quick-access-search"
                 ):
+                    search_field = focused_element
+                    break
+                if (  # autofill suggestion
+                    focused_element.AXRole == "AXStaticText"
+                    and focused_element.AXDOMIdentifier.endswith("-search-result")
+                ):
+                    search_field = focused_element.window.children.find_one(
+                        AXRole="AXTextField", AXDOMIdentifier="quick-access-search"
+                    )
                     break
             except:
                 pass
         else:
             print("Gave up waiting for quick access search")
+            print(f"Found focused element: {focused_element.dump()}")
             return
         for attempt in range(10):
-            focused_element.AXValue = text
+            search_field.AXValue = text
             actions.sleep("50ms")
-            if focused_element.AXValue == text:
+            if search_field.AXValue == text:
                 return
         print("Gave up waiting to set search string")
