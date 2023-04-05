@@ -1,6 +1,8 @@
 os: windows
 and app.exe: ONENOTE.EXE
 -
+refresh: key(ctrl-pagedown ctrl-pageup)
+
 bold: key(ctrl-b)
 italic: key(ctrl-i)
 strike through: key(ctrl--)
