@@ -65,3 +65,8 @@ class UserActions:
 
     def outlook_focus_message_body():
         actions.key("ctrl-1 alt f6:4")
+
+    def outlook_set_selected_folder(folder: str):
+        actions.key("ctrl-y")
+        actions.insert(actions.user.formatted_text(folder, "ALL_LOWERCASE"))
+        actions.key("return")
