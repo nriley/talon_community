@@ -21,7 +21,7 @@ go locations: key(ctrl-1)
 go commits: key(ctrl-2)
 go files: key(ctrl-3)
 
-commit: key(ctrl-enter)
+commit: key(ctrl-9 ctrl-enter)
 push: key(ctrl-alt-up)
 pull: key(ctrl-alt-down)
 stage all:
