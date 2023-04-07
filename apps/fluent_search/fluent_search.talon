@@ -28,5 +28,4 @@ launch running: key(ctrl-alt-shift-space)
 # -- Menu search
 # In-app search hotkey
 ^menu [<user.text>]$:
-    key(alt-shift-/)
-    user.paste(text or "")
+    user.fluent_search_in_app(text or "", false)
