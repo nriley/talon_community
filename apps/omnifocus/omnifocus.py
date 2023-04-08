@@ -5,14 +5,24 @@ from talon import Context, Module, actions, cron, ui
 mod = Module()
 ctx = Context()
 
+bundle_ids = {"com.omnigroup.OmniFocus3.MacAppStore", "com.omnigroup.OmniFocus4"}
+
+for bundle_id in bundle_ids:
+    mod.apps.omnifocus = "app.bundle: " + bundle_id
+
 ctx.matches = """
-os: mac
-and app.bundle: com.omnigroup.OmniFocus3.MacAppStore
+app: omnifocus
 """
 
 
 def omnifocus_app():
-    return ui.apps(bundle="com.omnigroup.OmniFocus3.MacAppStore")[0]
+    app = ui.active_app()
+    if app.bundle in bundle_ids:
+        return app
+    for bundle_id in bundle_ids:
+        apps = ui.apps(bundle=bundle_id)
+        if apps:
+            return apps[0]
 
 
 @ctx.action_class("user")

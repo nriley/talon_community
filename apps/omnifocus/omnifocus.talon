@@ -1,5 +1,4 @@
-os: mac
-app.bundle: com.omnigroup.OmniFocus3.MacAppStore
+app: omnifocus
 -
 tag(): user.find_and_replace
 
