@@ -69,8 +69,8 @@ def moom_controls_if_focused():
 class Actions:
     def moom(key: Union[str, MoomControl]):
         """Press the corresponding Moom control [key]"""
-        global moom_controls
-        if not moom_controls:
+        global focused_handler, moom_controls
+        if not focused_handler:
             moom_controls_if_focused()
             actions.key("ctrl-alt-m")
         moom_controls.append(
