@@ -20,8 +20,12 @@ show_help = False
 
 ctx = Context()
 mod = Module()
-mod.mode("homophones")
+
 mod.list("homophones_canonicals", desc="list of words ")
+mod.tag(
+    "homophones_open",
+    desc="Tag for enabling homophones commands when the associated gui is open",
+)
 
 main_screen = ui.main_screen()
 
@@ -57,7 +61,7 @@ is_selection = False
 
 def close_homophones():
     gui.hide()
-    actions.mode.disable("user.homophones")
+    ctx.tags = []
 
 
 PHONES_FORMATTERS = [
@@ -146,7 +150,7 @@ def raise_homophones(word_to_find_homophones_for, forced=False, selection=False)
     elif is_selection and (prefix or suffix):
         active_word_list = [f"{prefix}{new}{suffix}" for new in active_word_list]
 
-    actions.mode.enable("user.homophones")
+    ctx.tags = ["user.homophones_open"]
     show_help = False
     gui.show()
 
@@ -196,7 +200,7 @@ class Actions:
         """Show homophones for selection, or current word if selection is empty."""
         text = actions.edit.selected_text()
         if text:
-            actions.user.homophones_show(text)
+            raise_homophones(text, False, True)
         else:
             actions.edit.select_word()
             actions.user.homophones_show_selection()
