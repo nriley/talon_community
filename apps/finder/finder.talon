@@ -7,6 +7,7 @@ preferences: key(cmd-,)
 options: key(cmd-j)
 inspector: key(cmd-alt-i)
 search: key(cmd-alt-f)
+toolbar: key(cmd-alt-t)
 
 # bit of a mouthful, but it's probably not the kind of thing you'd be saying frequently
 sort by none: key(ctrl-alt-cmd-0)
