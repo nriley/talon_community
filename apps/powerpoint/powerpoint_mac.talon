@@ -34,3 +34,6 @@ send backward: key(cmd-alt-shift-b)
 
 group that: key(cmd-alt-g)
 un group that: key(cmd-alt-shift-g)
+
+copy style: key(cmd-shift-c)
+paste style: key(cmd-shift-v)
