@@ -12,6 +12,8 @@ italic: key(cmd-i)
 underline: key(cmd-u)
 strike through: key(cmd-shift-x)
 
+mail this: user.menu_select("File|Share|Send Document")
+
 ribbon: key(cmd-alt-r)
 
 window (new | open): user.menu_select("Window|New Window")
