@@ -291,6 +291,11 @@ class Actions:
                 raise RuntimeError(f"Can't focus app: {app.name}")
             actions.sleep(0.1)
 
+        for window in app.windows():
+            if window.fullscreen:
+                window.focus()
+                break
+
         actions.user.switcher_restore_mouse_pos(app)
 
     def switcher_focus_window(window: ui.Window):
