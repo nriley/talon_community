@@ -92,6 +92,14 @@ class UserActions:
             actions.key("home")
             actions.insert(text)
 
+    def fantastical_show_menu():
+        fantastical_helper = ui.apps(
+            bundle="85C27NK92C.com.flexibits.fantastical2.mac.helper"
+        )[0]
+        fantastical_helper.children.find_one(
+            AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=1
+        ).perform("AXPress")
+
 
 @mod.action_class
 class Actions:
@@ -109,3 +117,6 @@ class Actions:
 
     def fantastical_show_notifications():
         """Shows the notifications/invitations popover"""
+
+    def fantastical_show_menu():
+        """Show the Fantastical menu"""

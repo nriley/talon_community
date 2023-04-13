@@ -10,3 +10,5 @@ fantastical <user.text> over:
 calendar mini: user.fantastical_show_mini_calendar()
 
 calendar open: user.fantastical_show_calendar()
+
+calendar join: user.fantastical_show_menu()
