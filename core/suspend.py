@@ -37,11 +37,12 @@ def app_launched(app):
         return
     was_enabled_globally = actions.speech.enabled()
     if was_enabled_globally:
-        actions.user.switcher_hide_running()
-        actions.user.history_disable()
-        actions.user.homophones_hide()
-        actions.user.help_hide()
-        actions.speech.disable()
+        if not actions.user.microphone_select_during_call():
+            actions.user.switcher_hide_running()
+            actions.user.history_disable()
+            actions.user.homophones_hide()
+            actions.user.help_hide()
+            actions.speech.disable()
         disabling_app_bundle_ids.add(launched_app_bundle_id)
 
 
@@ -58,6 +59,7 @@ def app_quit(app):
         if len(disabling_app_bundle_ids) == 0:
             # print(f'enabling...')
             actions.speech.enable()
+            actions.user.microphone_restore_after_call()
 
 
 def register_events():

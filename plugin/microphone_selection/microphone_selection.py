@@ -4,6 +4,8 @@ from talon.lib import cubeb
 ctx = cubeb.Context()
 mod = Module()
 
+CALL_MICROPHONE = "SpeechMike III"
+pre_call_microphone = None
 
 microphone_device_list = []
 
@@ -61,6 +63,25 @@ class Actions:
             actions.sound.set_microphone(microphone_device_list[index - 1])
             app.notify(f"Activating microphone: {microphone_device_list[index - 1]}")
             gui.hide()
+
+    def microphone_select_during_call() -> bool:
+        """Selects a secondary microphone for use during a call (returning success)"""
+        global CALL_MICROPHONE, pre_call_microphone
+        microphones = actions.sound.microphones()
+        pre_call_microphone = actions.sound.active_microphone()
+        for microphone in microphones:
+            if CALL_MICROPHONE in microphone:
+                if CALL_MICROPHONE in pre_call_microphone:
+                    return False  # same microphone
+                actions.sound.set_microphone(microphone)
+                app.notify("Switched microphone during call", microphone)
+                break
+        return False
+
+    def microphone_restore_after_call():
+        """Restores the primary microphone after a call"""
+        actions.sound.set_microphone(pre_call_microphone)
+        app.notify("Restored microphone after call", pre_call_microphone)
 
 
 def on_ready():
