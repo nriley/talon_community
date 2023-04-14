@@ -34,7 +34,7 @@ class UserActions:
         actions.user.password_show()
         focused_element = None
         search_field = None
-        for attempt in range(10):
+        for attempt in range(100):
             actions.sleep("50ms")
             try:
                 focused_element = ui.focused_element()
