@@ -37,7 +37,7 @@ def app_launched(app):
         return
     was_enabled_globally = actions.speech.enabled()
     if was_enabled_globally:
-        if not actions.user.microphone_switch_during_call():
+        if not actions.user.microphone_switch():
             actions.user.switcher_hide_running()
             actions.user.history_disable()
             actions.user.homophones_hide()

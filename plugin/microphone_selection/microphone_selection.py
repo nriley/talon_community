@@ -64,15 +64,16 @@ class Actions:
             app.notify(f"Activating microphone: {microphone_device_list[index - 1]}")
             gui.hide()
 
-    def microphone_switch_during_call() -> bool:
+    def microphone_switch() -> bool:
         """Switches to a secondary microphone for use during a call (returning success)"""
         global CALL_MICROPHONE, pre_call_microphone
         microphones = actions.sound.microphones()
-        pre_call_microphone = actions.sound.active_microphone()
         for microphone in microphones:
             if CALL_MICROPHONE in microphone:
-                if CALL_MICROPHONE in pre_call_microphone:
+                current_microphone = actions.sound.active_microphone()
+                if microphone == current_microphone:
                     return False  # same microphone
+                pre_call_microphone = current_microphone
                 actions.sound.set_microphone(microphone)
                 app.notify(title="Switched microphone during call", body=microphone)
                 return True
