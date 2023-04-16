@@ -37,3 +37,6 @@ un group that: key(cmd-alt-shift-g)
 
 copy style: key(cmd-shift-c)
 paste style: key(cmd-shift-v)
+
+mail this: user.menu_select("File|Share|Send Presentation")
+mail p d f: user.menu_select("File|Share|Send PDF")
