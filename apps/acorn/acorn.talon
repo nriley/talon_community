@@ -30,10 +30,13 @@ rectangle: key(r)
 oval: key(o)
 color | eyedropper: key(ctrl-c)
 
+trim to edges: key(cmd-ctrl-t)
+
 toggle fill: key(F)
 toggle stroke: key(B)
 
 toggle guides: key(cmd-alt-;)
+new guide: user.menu_select("View|Guides and Grids|New Guide…")
 
 toggle palettes: key(tab)
 
@@ -44,8 +47,7 @@ snap to shapes: user.menu_select("View|Guides and Grids|Snap To Shapes")
 snap to layers: user.menu_select("View|Guides and Grids|Snap To Layers")
 snap to canvas: user.menu_select("View|Guides and Grids|Snap To Canvas")
 
-zoom to fit: key(cmd-0)
-one hundred percent: key(cmd-1)
+one hundred percent: edit.zoom_reset()
 two hundred percent: key(cmd-2)
 four hundred percent: key(cmd-3)
 eight hundred percent: key(cmd-4)
