@@ -38,7 +38,7 @@ stash: key(cmd-s)
 stash pop: key(cmd-shift-s)
 
 branch: key(cmd-b)
-branch create: key(cmd-shift-b)
+branch new: key(cmd-shift-b)
 
 ^repo next: key(ctrl-tab)
 ^repo previous: key(shift-ctrl-tab)
