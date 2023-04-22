@@ -116,7 +116,7 @@ def toggle_talon_by_fd_listening():
         if (
             "SpeechMike III" in actions.sound.active_microphone()
             and not fd_listening()
-            and not actions.user.dictation_suspended()
+            and not actions.user.speech_suspended()
         ):
             actions.speech.enable()
         return

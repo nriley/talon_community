@@ -1,13 +1,11 @@
-from talon import Module, actions, ui
+from talon import Context, Module, actions, ui
 
 DEFAULT_DISABLE_BUNDLE_IDS = frozenset(
     {
         "com.apple.FaceTime",
         "com.bluejeansnet.Blue",
         "com.hnc.Discord",
-        "com.microsoft.teams",
         "com.webex.meetingmanager",
-        "us.zoom.xos",
     }
 )
 
@@ -15,11 +13,23 @@ was_enabled_globally = False
 disabling_app_bundle_ids = set()
 
 mod = Module()
+ctx = Context()
+
+
+@ctx.action_class("user")
+class UserActions:
+    def meeting_started(app, window):
+        suspend_by_app(window.app)
+        actions.next(app, window)
+
+    def meeting_ended(app, window):
+        resume_if_suspended_by_app(window.app)
+        actions.next(app, window)
 
 
 @mod.action_class
 class Actions:
-    def dictation_suspended() -> bool:
+    def speech_suspended() -> bool:
         """Returns whether speech recognition is suspended due to an in-progress call"""
         for bundle_id in disabling_app_bundle_ids:
             if ui.apps(bundle=bundle_id):
@@ -27,14 +37,9 @@ class Actions:
         return False
 
 
-def app_launched(app):
+def suspend_by_app(app):
     global was_enabled_globally, disabling_app_bundle_ids
-    if not (launched_app_bundle_id := app.bundle):
-        return
-    # print(f"+ launched {launched_app_bundle_id}; {was_enabled_globally=}")
-    # print(f"disabling_app_bundle_ids: {disabling_app_bundle_ids}")
-    if launched_app_bundle_id not in DEFAULT_DISABLE_BUNDLE_IDS:
-        return
+
     was_enabled_globally = actions.speech.enabled()
     if was_enabled_globally:
         if not actions.user.microphone_switch():
@@ -43,18 +48,29 @@ def app_launched(app):
             actions.user.homophones_hide()
             actions.user.help_hide()
             actions.speech.disable()
-        disabling_app_bundle_ids.add(launched_app_bundle_id)
+        disabling_app_bundle_ids.add(app.bundle)
 
 
-def app_quit(app):
-    global was_enabled_globally, disabling_app_bundle_ids
-    if not (quit_app_bundle_id := app.bundle):
+def app_launched(app):
+    if not (launched_app_bundle_id := app.bundle):
         return
-    # print(f"- quit {quit_app_bundle_id}; {was_enabled_globally=}")
+    # print(f"+ launched {launched_app_bundle_id}; {was_enabled_globally=}")
     # print(f"disabling_app_bundle_ids: {disabling_app_bundle_ids}")
-    if quit_app_bundle_id not in disabling_app_bundle_ids:
+    if launched_app_bundle_id not in DEFAULT_DISABLE_BUNDLE_IDS:
         return
-    disabling_app_bundle_ids.discard(quit_app_bundle_id)
+
+    suspend_by_app(app)
+
+
+def resume_if_suspended_by_app(app):
+    global was_enabled_globally, disabling_app_bundle_ids
+    if not (app_bundle_id := app.bundle):
+        return
+    # print(f"- left meeting in {app_bundle_id}; {was_enabled_globally=}")
+    # print(f"disabling_app_bundle_ids: {disabling_app_bundle_ids}")
+    if app_bundle_id not in disabling_app_bundle_ids:
+        return
+    disabling_app_bundle_ids.discard(app_bundle_id)
     if was_enabled_globally:
         if len(disabling_app_bundle_ids) == 0:
             # print(f'enabling...')
@@ -64,7 +80,7 @@ def app_quit(app):
 
 def register_events():
     ui.register("app_launch", app_launched)
-    ui.register("app_close", app_quit)
+    ui.register("app_close", resume_if_suspended_by_app)
 
 
 # if we try to do this on module load at startup, the action speech.enabled is not yet defined
