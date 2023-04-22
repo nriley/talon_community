@@ -1,6 +1,6 @@
 import logging
 
-from talon import Context, Module, actions
+from talon import Context, Module, actions, ui
 
 mod = Module()
 setting_meta = mod.setting(
@@ -334,8 +334,12 @@ class CodeActions:
 
 @ctx.action_class("win")
 class WinActions:
-    # This assumes the title is/contains the filename.
-    # To do this, put this in init.el:
-    # (setq-default frame-title-format '((:eval (buffer-name (window-buffer (minibuffer-selected-window))))))
     def filename():
+        # On macOS, can get the filename directly
+        if doc := getattr(ui.active_window(), "doc"):
+            return doc
+
+        # This assumes the title is/contains the filename.
+        # To do this, put this in init.el:
+        # (setq-default frame-title-format '((:eval (buffer-name (window-buffer (minibuffer-selected-window))))))
         return actions.win.title()
