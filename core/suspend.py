@@ -5,7 +5,6 @@ DEFAULT_DISABLE_BUNDLE_IDS = frozenset(
         "com.apple.FaceTime",
         "com.bluejeansnet.Blue",
         "com.hnc.Discord",
-        "com.webex.meetingmanager",
     }
 )
 
