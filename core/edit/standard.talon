@@ -5,8 +5,8 @@ scroll up: edit.page_up()
 scroll down: edit.page_down()
 copy (that | bat): edit.copy()
 cut that: edit.cut()
-(pace | paste) that: edit.paste()
-(pace | paste) enter:
+(pist | paste) that: edit.paste()
+(pist | paste) enter:
     edit.paste()
     key(enter)
 clear that: key(backspace)
