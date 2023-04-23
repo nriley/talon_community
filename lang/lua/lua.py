@@ -120,8 +120,8 @@ class UserActions:
         actions.insert("break ")
 
     # Assumes a ::continue:: label
-    def code_state_continue():
-        actions.insert("goto continue")
+    # def code_state_continue():
+    #     actions.insert("goto continue")
 
     def code_try_catch():
         actions.user.insert_between("pcall(", ")")
