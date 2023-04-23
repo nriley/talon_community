@@ -12,8 +12,8 @@ os: mac
 class UserActions:
     def fastscripts_search(text: str):
         fastscripts = ui.apps(bundle="com.red-sweater.fastscripts3")[0]
-        menu_extra = fastscripts.children.find_one(
-            AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=1
+        menu_extra = fastscripts.element.AXExtrasMenuBar.children.find_one(
+            AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=0
         )
         menu_extra.perform("AXPress")
         for attempt in range(10):
