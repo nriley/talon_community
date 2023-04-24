@@ -192,7 +192,7 @@ cut (word (right | next) | east): user.cut_word_right()
 
 cut line: user.cut_line()
 
-(pace | paste) all:
+(pist | paste) all:
     edit.select_all()
     edit.paste()
 
