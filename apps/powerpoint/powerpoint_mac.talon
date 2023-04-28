@@ -5,12 +5,20 @@ app: powerpoint_mac
 settings():
     insert_wait = 0.1
 
+(slide | normal) view: key(cmd-1)
+slide sorter: key(cmd-2)
+notes page: key(cmd-3)
+outline view: key(cmd-4)
+reading view: key(cmd-5)
 presenter view: key(esc alt-enter)
 
 slideshow: key(cmd-enter)
 slideshow from start: key(cmd-shift-enter)
 
 slide new: key(cmd-shift-n)
+
+slide hide: user.menu_select("Slide Show|Hide Slide")
+slide unhide: user.menu_select("Slide Show|Unhide Slide")
 
 align left: key(cmd-l)
 align center: key(cmd-e)
