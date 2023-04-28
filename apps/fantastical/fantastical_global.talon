@@ -11,4 +11,6 @@ calendar mini: user.fantastical_show_mini_calendar()
 
 calendar open: user.fantastical_show_calendar()
 
-calendar join: user.fantastical_show_menu()
+calendar join:
+    user.fantastical_show_menu()
+    key(down)

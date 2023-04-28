@@ -96,9 +96,12 @@ class UserActions:
         fantastical_helper = ui.apps(
             bundle="85C27NK92C.com.flexibits.fantastical2.mac.helper"
         )[0]
-        fantastical_helper.children.find_one(
-            AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=1
-        ).perform("AXPress")
+        try:
+            fantastical_helper.children.find_one(
+                AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=1
+            ).perform("AXPress")
+        except:
+            pass  # XXX generates talon.mac.ui.ActionFailed
 
 
 @mod.action_class
