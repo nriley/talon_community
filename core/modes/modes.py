@@ -6,10 +6,8 @@ mod = Module()
 modes = {
     "admin": "enable extra administration commands terminal (docker, etc)",
     "debug": "a way to force debugger commands to be loaded",
-    "gdb": "a way to force gdb commands to be loaded",
     "ida": "a way to force ida commands to be loaded",
     "presentation": "a more strict form of sleep where only a more strict wake up command works",
-    "windbg": "a way to force windbg commands to be loaded",
 }
 
 for key, value in modes.items():
@@ -58,7 +56,7 @@ class Actions:
         actions.mode.enable("command")  # mixed mode
         actions.mode.enable("dictation")
         actions.user.code_clear_language_mode()
-        actions.mode.disable("user.gdb")
+        actions.user.gdb_disable()
 
     def command_mode():
         """Switch to command mode."""
