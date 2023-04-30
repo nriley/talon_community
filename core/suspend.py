@@ -39,6 +39,9 @@ class Actions:
 def suspend_by_app(app):
     global was_enabled_globally, disabling_app_bundle_ids
 
+    if app.bundle in disabling_app_bundle_ids:
+        return
+
     was_enabled_globally = actions.speech.enabled()
     if was_enabled_globally:
         if not actions.user.microphone_switch():
