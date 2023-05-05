@@ -51,3 +51,6 @@ hunt pie [<user.text>]$:
 hunt talon [<user.text>]$:
     text = text or ""
     user.sublime_text_find_in_project_files(text, "*.talon")
+
+# Win+down x2 does not reliably minimize the window
+window minimize: key(alt-space n)

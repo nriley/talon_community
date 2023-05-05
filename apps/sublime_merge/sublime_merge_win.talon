@@ -38,3 +38,6 @@ stash pop: key(ctrl-shift-s)
 ^repo [<user.text>]:
     key(ctrl-shift-o)
     insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
+
+# Win+down x2 does not reliably minimize the window
+window minimize: key(alt-space n)
