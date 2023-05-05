@@ -57,6 +57,8 @@ expand all: key(alt-shift-0)
 # but add option to just collapse a single level
 collapse (this | that): key(alt-shift--)
 
+mail this: user.onenote_ribbon_select("hm1")
+
 window (new | open): user.onenote_ribbon_select("wn")
 
 go (notebook | notebooks): key(ctrl-g)
