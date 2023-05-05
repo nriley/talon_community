@@ -9,3 +9,4 @@ refresh: key(f5)
 
 # Windows logo key shortcuts
 ^(action | note | notification) center$: key(super-a)
+launch paste: key(super-v)
