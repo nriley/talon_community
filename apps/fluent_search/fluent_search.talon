@@ -25,7 +25,7 @@ launch running: key(ctrl-alt-shift-space)
 # -- Contexts
 ^con [<user.text>]: user.fluent_search(text or "")
 
-# -- Menu search
+# -- Menu search / Homerow
 # In-app search hotkey
-^menu [<user.text>]$:
+^(ax|menu) [<user.text>]$:
     user.fluent_search_in_app(text or "", false)
