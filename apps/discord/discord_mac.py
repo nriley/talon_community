@@ -90,7 +90,7 @@ class UserActions:
         actions.key("esc")
 
     def discord_go_current_call():
-        actions.key("cmd-alt-a")
+        actions.key("cmd-alt-shift-v")
 
     def discord_toggle_dms():
         actions.key("cmd-alt-right")
