@@ -41,8 +41,8 @@ class UserActions:
     def file_manager_current_path():
         browser_window = eaglefiler_front_browser_window()
         try:
-            if not (records := browser_window.selected_records()):
-                if not (records := browser_window.current_records()):
+            if not (records := browser_window.selected_records(timeout=0.1)):
+                if not (records := browser_window.current_records(timeout=0.1)):
                     return None
         except CommandError:
             return None
