@@ -55,6 +55,8 @@ expand: key(ctrl-shift-+)
 
 ribbon: key(cmd-alt-r)
 
+mail this: user.menu_select("File|Share|Send Page as Email Message")
+
 # cmd-n is "page new", below
 window (new | open): key(ctrl-m)
 
