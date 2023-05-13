@@ -29,6 +29,7 @@ empty trash: key(cmd-shift-backspace)
 
 open that: key(cmd-down)
 move that here: key(cmd-alt-v)
+eject that: key(cmd-e)
 
 open close: key(cmd-alt-down)
 go parent close: key(cmd-alt-up)
