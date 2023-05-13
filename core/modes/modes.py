@@ -142,7 +142,11 @@ def draw_mode(canvas):
     text = "Dictation Mode"
     _, text_rect = paint.measure_text(text)
 
-    screen = ui.screen_containing(canvas.x, canvas.y)
+    try:
+        screen = ui.screen_containing(canvas.x, canvas.y)
+    except ValueError:  # screen not found?
+        return
+
     screen_rect = screen.visible_rect
     padding_x = 4
     padding_y = 4
