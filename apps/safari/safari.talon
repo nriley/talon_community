@@ -8,8 +8,8 @@ settings():
     insert_wait = 3
     key_wait = 3
 
-tab group previous: key(cmd-shift-up)
-tab group next: key(cmd-shift-down)
+tab group previous: key(cmd-alt-[)
+tab group next: key(cmd-alt-])
 
 window reopen: key(cmd-shift-t)
 window reopen all: user.menu_select("History|Reopen All Windows from Last Session")
