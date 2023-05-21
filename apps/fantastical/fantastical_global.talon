@@ -1,7 +1,7 @@
 os: mac
 -
-fantastical <user.text>:
-    user.fantastical_parse(user.formatted_text(user.text, "CAPITALIZE_FIRST_WORD"))
+fantastical [<user.text>]:
+    user.fantastical_parse(user.formatted_text("{text or ''}", "CAPITALIZE_FIRST_WORD"))
 
 fantastical <user.text> over:
     user.fantastical_parse("{user.formatted_text(user.text, 'CAPITALIZE_FIRST_WORD')} ")
