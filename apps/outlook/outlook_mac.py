@@ -95,7 +95,7 @@ class UserActions:
             if focused_element != last_focused_element:
                 if role == "AXTable":
                     return
-                actions.key("ctrl-shift-[")
+                actions.key("ctrl-shift-]")
             last_focused_element = focused_element
             actions.sleep("50ms")
 
@@ -149,28 +149,16 @@ class UserActions:
 
     def outlook_focus_message_body():
         outlook = outlook_app()
-        role = outlook_focused_element().AXRole
-        message_roles = ("AXGroup", "AXTextArea", "AXWebArea")
 
-        if role in message_roles:
-            return
-
-        if role in ("AXOutline", "AXWindow"):  # folder list in new Outlook
-            actions.key("ctrl-shift-[")  # wrap around
-        else:
-            actions.key("ctrl-shift-]")
-
-        saw_button = False
+        last_focused_element = None
         for attempt in range(10):
             focused_element = outlook_focused_element()
             role = focused_element.AXRole
-            if role in message_roles:
-                return
-            if not saw_button:
-                if role == "AXButton":  # message toolbar / "hide task pane" button
-                    actions.key("ctrl-shift-]")  # not a pane - work around bug
-                    saw_button = True
-                    continue
+            if focused_element != last_focused_element:
+                if role in ("AXGroup", "AXTextArea", "AXWebArea"):
+                    return
+                actions.key("ctrl-shift-[")
+            last_focused_element = focused_element
             actions.sleep("50ms")
 
         raise Exception("Unable to focus Outlook message body")
