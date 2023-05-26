@@ -1,5 +1,7 @@
 app.bundle: com.apple.mail
 -
+tag(): user.find_and_replace
+
 archive: key(ctrl-cmd-a)
 delete: key(backspace)
 # This toggles; OK for now

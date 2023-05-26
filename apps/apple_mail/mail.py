@@ -1,4 +1,4 @@
-from talon import Context, Module, ui
+from talon import Context, Module, actions, ui
 
 mod = Module()
 ctx = Context()
@@ -55,6 +55,10 @@ class UserActions:
                 return
 
         children[desired_index].AXSelected = True
+
+    def find_everywhere(text: str):
+        actions.key("cmd-alt-f")
+        actions.insert(text)
 
 
 @mod.action_class
