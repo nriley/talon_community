@@ -26,6 +26,10 @@ commit:
     sleep(100ms)
     key(cmd-enter)
 push: key(cmd-alt-up)
+push force:
+    key(shift-f8)
+    "--force-with-lease"
+    key(enter)
 pull: key(cmd-alt-down)
 # XXX broken - see https://github.com/sublimehq/sublime_merge/issues/778
 # stage: key(shift-enter)
