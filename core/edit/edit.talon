@@ -1,4 +1,3 @@
-
 # Zoom
 zoom in: edit.zoom_in()
 zoom out: edit.zoom_out()
@@ -168,16 +167,16 @@ cut (word right | east): user.cut_word_right()
 #     edit.cut()
 
 # Paste
-(pace | paste) that: edit.paste()
-(pace | paste) enter:
+(pace | pist | paste) that: edit.paste()
+(pace | pist | paste) enter:
     edit.paste()
     key(enter)
-paste match: edit.paste_match_style()
-(pace | paste) all: user.paste_all()
-(pace | paste) line: user.paste_line()
-(pace | paste) line start: user.paste_line_start()
-(pace | paste) line end: user.paste_line_end()
-(pace | paste) word: user.paste_word()
+(pace | pist | paste) match: edit.paste_match_style()
+(pace | pist | paste) all: user.paste_all()
+(pace | pist | paste) line: user.paste_line()
+(pace | pist | paste) line start: user.paste_line_start()
+(pace | pist | paste) line end: user.paste_line_end()
+(pace | pist | paste) word: user.paste_word()
 
 # Duplication
 clone that: edit.selection_clone()
