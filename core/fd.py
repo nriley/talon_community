@@ -103,9 +103,10 @@ def fd_listening():
     if not window:
         return False
 
-    return actions.user.mouse_helper_find_template_relative(
+    found_listening = actions.user.mouse_helper_find_template_relative(
         "fd_listening.png", region=window.rect
     )
+    return len(found_listening) == 1
 
 
 def toggle_talon_by_fd_listening():
