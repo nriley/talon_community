@@ -125,14 +125,11 @@ formatters_dict = {
     "DOT_SEPARATED": words_with_joiner("."),
     "DOT_SNAKE": (NOSEP, lambda i, word, _: "." + word if i == 0 else "_" + word),
     "SLASH_SEPARATED": (NOSEP, every_word(lambda w: "/" + w)),
-    "CAPITALIZE_FIRST_WORD": (
-        SEP,
-        first_vs_rest(lambda w: w.capitalize() if w.islower() else w),
-    ),
+    "CAPITALIZE_FIRST_WORD": (SEP, first_vs_rest(lambda w: w[:1].upper() + w[1:])),
     "CAPITALIZE_ALL_WORDS": (
         SEP,
-        lambda i, word, _: word.capitalize()
-        if word.islower() and (i == 0 or word not in words_to_keep_lowercase)
+        lambda i, word, _: word[:1].upper() + word[1:]
+        if i == 0 or word not in words_to_keep_lowercase
         else word,
     ),
 }
@@ -299,6 +296,5 @@ ctx.lists["self.formatters"] = formatters_words.keys()
 ctx.lists["self.prose_formatter"] = {
     "say": "NOOP",
     "speak": "NOOP",
-    "remark": "CAPITALIZE_FIRST_WORD",
     "sentence": "CAPITALIZE_FIRST_WORD",
 }
