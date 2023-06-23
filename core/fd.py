@@ -1,15 +1,12 @@
 from talon import Context, Module, actions, app, cron, ui
-from talon.experimental.locate import locate_in_image
 
-fda = None
+FDLINK_APPLICATION = None
 
 if app.platform == "windows":
-    import win32api
     import win32com.client
+    from pywintypes import com_error
 
-    # needed? On Win10, this is in C:\ProgramData\MModal\DesktopDictationClient\Versions\[...]
-    win32api.SetDllDirectory(r"C:\MModal\Server")
-    fda = win32com.client.Dispatch("FDLink.Application")
+    FDLINK_APPLICATION = win32com.client.Dispatch("FDLink.Application")
 
 mod = Module()
 ctx = Context()
@@ -32,7 +29,7 @@ class Actions:
         """Disable Fluency Direct"""
 
     def enable_fd():
-        """Enable Fluency Direct via a keyboard shortcut."""
+        """Enable Fluency Direct via a keyboard shortcut"""
 
 
 @Context().action_class("user")
@@ -47,33 +44,19 @@ class FallbackUserActions:
 @ctx.action_class("user")
 class UserActions:
     def fd_is_running():
-        if fda is None:
+        if FDLINK_APPLICATION is None:
             return False
-        return fda.IsRunning()
+        return FDLINK_APPLICATION.IsRunning()
 
     def fd_is_listening():
         return fd_listening()
 
     def disable_fd():
-        if fda is None:
-            return
-
-        if not actions.user.fd_is_running():
-            return
-
-        fdas = fda.Connect()
-        if fdas is None:
-            return  # unable to connect
-
-        # this just turns on/off dictation; leaves commands enabled
-        # fddc = fdas.GetDictationControl()
-        # fddc.SetEnabled(True)
-
-        # can't enable from FD UI while recording is disabled
-        fdrc = fdas.GetRecordingControl()
-        fdrc.EnableRecording(False)
-        # however, recording remains off after reenabled
-        fdrc.EnableRecording(True)
+        if fdrc := fd_recording_control():
+            # can't enable from FD UI while recording is disabled
+            fdrc.EnableRecording(False)
+            # however, recording remains off after reenabled
+            fdrc.EnableRecording(True)
 
     def enable_fd():
         if not actions.user.fd_is_running():
@@ -83,30 +66,34 @@ class UserActions:
         actions.key("`")
 
 
-def fd_window():
-    fd_app = ui.apps(name="M*Modal Fluency Direct")
-    if not fd_app:
-        return None
-    fd_app = fd_app[0]
-    try:
-        return next(
-            window
-            for window in fd_app.windows()
-            if window.title == "M*Modal Fluency Direct"
-        )
-    except StopIteration:
+FD_RECORDING_CONTROL = None
+
+def fd_recording_control():
+    global FD_RECORDING_CONTROL
+
+    if not actions.user.fd_is_running():
+        FD_RECORDING_CONTROL = None
         return None
 
+    if FD_RECORDING_CONTROL is None:
+        fdas = FDLINK_APPLICATION.Connect()
+        if fdas is None:
+            return None
+
+        FD_RECORDING_CONTROL = fdas.GetRecordingControl()
+        if FD_RECORDING_CONTROL is None:
+            return None
+
+    return FD_RECORDING_CONTROL
 
 def fd_listening():
-    window = fd_window()
-    if not window:
-        return False
-
-    found_listening = actions.user.mouse_helper_find_template_relative(
-        "fd_listening.png", region=window.rect
-    )
-    return len(found_listening) == 1
+    if fdrc := fd_recording_control():
+        try:
+            return fdrc.GetRecognizerStatus() == 1
+        except com_error:
+            FD_RECORDING_CONTROL = None
+    
+    return False
 
 
 def toggle_talon_by_fd_listening():
@@ -127,5 +114,5 @@ def toggle_talon_by_fd_listening():
         actions.speech.disable()
 
 
-if app.platform == "windows":
-    app.register("ready", lambda: cron.interval("2s", toggle_talon_by_fd_listening))
+if FDLINK_APPLICATION:
+    app.register("ready", lambda: cron.interval("500ms", toggle_talon_by_fd_listening))
