@@ -44,6 +44,10 @@ stash pop: key(cmd-shift-s)
 branch: key(cmd-b)
 branch new: key(cmd-shift-b)
 
+^branch [<user.text>]:
+    key(escape cmd-b)
+    insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
+
 ^repo next: key(ctrl-tab)
 ^repo previous: key(shift-ctrl-tab)
 
