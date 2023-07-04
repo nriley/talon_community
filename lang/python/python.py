@@ -214,6 +214,9 @@ class UserActions:
     def code_operator_or():
         actions.auto_insert(" or ")
 
+    def code_operator_not():
+        actions.auto_insert("not ")
+
     def code_operator_in():
         actions.auto_insert(" in ")
 
