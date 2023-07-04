@@ -465,6 +465,13 @@ class UserActions:
         rect = window.rect
         scale = window.screen.scale
 
+        # Deselect anything and move the mouse pointer out of the way of the content
+        # to avoid an accidental match later
+        actions.edit.right()
+        actions.edit.left()
+        saved_mouse_pos = ctrl.mouse_pos()
+        ctrl.mouse_move(rect.x, rect.y)
+
         # Save ribbon state and zoom level
         ribbon = window.children.find_one(AXRole="AXTabGroup", max_depth=0)
         open_tab = ribbon.get("AXValue")
@@ -475,15 +482,18 @@ class UserActions:
                 body=f"Could not find Zoom combo box",
                 title="OneNote",
             )
+            ctrl.mouse_move(*saved_mouse_pos)
             return
         zoom_level = zoom_combo_box.AXValue
         if zoom_level != "100%":
             actions.edit.zoom_reset()
-            actions.sleep("100ms")  # XXX this is sometimes not long enough to wait
+            actions.sleep("100ms")  # XXX sometimes not long enough to wait
+        elif open_tab:
+            open_tab.perform("AXPress")
+        else:  # better to do this sooner as it reduces the likelihood of a race
+            ribbon.AXValue.perform("AXPress")
 
-        # Ensure only one "thing" is selected
-        actions.edit.right()
-        actions.edit.left()
+        # Select what we are going to collapse into
         actions.edit.select_all()
 
         matches = onenote_image_matches_in_notebook_window(
@@ -497,9 +507,9 @@ class UserActions:
                 body=f"Could not find top left corner of highlighted area",
                 title="OneNote",
             )
+            ctrl.mouse_move(*saved_mouse_pos)
             return
 
-        saved_mouse_pos = ctrl.mouse_pos()
         ctrl.mouse_move(
             rect.x + matches[0].right / scale, rect.y + matches[0].bot / scale
         )
@@ -510,24 +520,23 @@ class UserActions:
             attempts=10,
             delay="10ms",
         )
-        if len(matches) != 1:
+        if len(matches) == 1:
+            ctrl.mouse_move(
+                rect.x + matches[0].right / scale, rect.y + matches[0].bot / scale
+            )
+
+            actions.sleep("30ms")
+            ctrl.mouse_click(button=0)
+            ctrl.mouse_click(button=0)
+        else:
             app.notify(
                 body=f"Could not find top left corner of outline handle",
                 title="OneNote",
             )
-            ctrl.mouse_move(*saved_mouse_pos)
-            return
-        ctrl.mouse_move(
-            rect.x + matches[0].right / scale, rect.y + matches[0].bot / scale
-        )
-
-        actions.sleep("50ms")
-        ctrl.mouse_click(button=0)
-        ctrl.mouse_click(button=0)
 
         ctrl.mouse_move(*saved_mouse_pos)
 
-        # Restore zoom level and ribbon state, if we had to change them
+        # Restore zoom level and ribbon state, if we had to change the zoom level
         if zoom_level != "100%":
             zoom_combo_box.AXFocused = True
             zoom_combo_box.AXValue = zoom_level
