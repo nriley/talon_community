@@ -1,4 +1,9 @@
-from talon import Context, Module, actions, app, clip, cron, ui
+from pathlib import Path
+
+from talon import Context, Module, actions, app, clip, cron, ctrl, ui
+from talon.experimental.locate import locate_in_image
+from talon.screen import capture
+from talon.skia.image import Image
 
 mod = Module()
 ctx = Context()
@@ -6,6 +11,8 @@ ctx = Context()
 ctx.matches = r"""
 app.bundle: com.microsoft.onenote.mac
 """
+
+MATCHES = __import__("collections").defaultdict(int)
 
 
 @ctx.action_class("edit")
@@ -88,6 +95,9 @@ class Actions:
     def onenote_go_recent(offset: int):
         """Navigate to recent notes"""
 
+    def onenote_collapse_this():
+        """Collapse the current outline in OneNote"""
+
 
 def onenote_app():
     return ui.apps(bundle="com.microsoft.onenote.mac")[0]
@@ -156,6 +166,72 @@ def onenote_font_size_combo_box():
     return onenote_ribbon_combo_box(
         0, "Home", "Font Size", lambda combo_box: str.isnumeric(combo_box.AXValue)
     )
+
+
+def onenote_zoom_combo_box():
+    def is_zoom_combo_box(combo_box):
+        value = combo_box.AXValue
+        return len(value) > 0 and str.isnumeric(value[:-1])
+
+    return onenote_ribbon_combo_box(3, "View", "Zoom", is_zoom_combo_box)
+
+
+def onenote_image_matches_in_notebook_window(
+    window, *image_names, attempts=1, delay=None
+):
+    global MATCHES
+
+    for attempt in range(attempts):
+        haystack = capture.__self__.capture_window_mac(window.id)
+
+        for image_name in image_names:
+            needle = Image.from_file(
+                str(Path(__file__).parent / "images" / (image_name + ".png"))
+            )
+            matches = locate_in_image(haystack, needle, threshold=0.99)
+            print(attempt, image_name, matches)
+
+            if len(matches) == 1:
+                MATCHES[image_name] += 1
+                print(sorted(MATCHES.items()))
+                return matches
+
+            if len(matches) > 1:
+                print(f">1 match for {image_name}: {matches}")
+
+                excess_matches = Path(__file__).parent / "excess_matches"
+                excess_matches.mkdir(exist_ok=True)
+
+                from datetime import datetime
+
+                now = datetime.now().isoformat()
+                for rect in matches:
+                    path = excess_matches / f"{now} {image_name} {rect}.png"
+                    capture(*rect, retina=False).write_file(path)
+
+                needle.write_file(excess_matches / f"{now} {image_name}.png")
+                haystack.write_file(excess_matches / f"{now} haystack.png")
+                return []
+
+            if not matches:
+                continue
+
+        if attempt != attempts - 1:
+            actions.sleep(delay)
+
+    if not matches:
+        print(f"0 matches for {image_names}")
+
+        no_matches = Path(__file__).parent / "no_matches"
+        no_matches.mkdir(exist_ok=True)
+
+        from datetime import datetime
+
+        now = datetime.now().isoformat()
+        needle.write_file(no_matches / f"{now} {image_name}.png")
+        haystack.write_file(no_matches / f"{now} haystack.png")
+
+    return matches
 
 
 @ctx.action_class("user")
@@ -377,3 +453,91 @@ class UserActions:
                 AXRole="AXMenuItem", AXTitle="Zoom to Page Width", max_depth=0
             )
         ).perform("AXPress")
+
+    def onenote_collapse_this():
+        # This code is very fragile, depending on:
+        # - Retina display
+        # - Accent color being set to Multicolor (so OneNote's highlight color is lavender)
+        # - White background for note
+        # - 100% zoom level (ensured below)
+        # - (Potentially) font size
+        window = onenote_notebook_window()
+        rect = window.rect
+        scale = window.screen.scale
+
+        # Save ribbon state and zoom level
+        ribbon = window.children.find_one(AXRole="AXTabGroup", max_depth=0)
+        open_tab = ribbon.get("AXValue")
+
+        zoom_combo_box = onenote_zoom_combo_box()
+        if zoom_combo_box is None:
+            app.notify(
+                body=f"Could not find Zoom combo box",
+                title="OneNote",
+            )
+            return
+        zoom_level = zoom_combo_box.AXValue
+        if zoom_level != "100%":
+            actions.edit.zoom_reset()
+            actions.sleep("100ms")  # XXX this is sometimes not long enough to wait
+
+        # Ensure only one "thing" is selected
+        actions.edit.right()
+        actions.edit.left()
+        actions.edit.select_all()
+
+        matches = onenote_image_matches_in_notebook_window(
+            window,
+            *[f"onenote_highlight_top_left_{x}" for x in range(1, 7)],
+            attempts=10,
+            delay="10ms",
+        )
+        if len(matches) != 1:
+            app.notify(
+                body=f"Could not find top left corner of highlighted area",
+                title="OneNote",
+            )
+            return
+
+        saved_mouse_pos = ctrl.mouse_pos()
+        ctrl.mouse_move(
+            rect.x + matches[0].right / scale, rect.y + matches[0].bot / scale
+        )
+
+        matches = onenote_image_matches_in_notebook_window(
+            window,
+            *[f"onenote_outline_handle_top_left_{x}" for x in range(1, 4)],
+            attempts=10,
+            delay="10ms",
+        )
+        if len(matches) != 1:
+            app.notify(
+                body=f"Could not find top left corner of outline handle",
+                title="OneNote",
+            )
+            ctrl.mouse_move(*saved_mouse_pos)
+            return
+        ctrl.mouse_move(
+            rect.x + matches[0].right / scale, rect.y + matches[0].bot / scale
+        )
+
+        actions.sleep("50ms")
+        ctrl.mouse_click(button=0)
+        ctrl.mouse_click(button=0)
+
+        ctrl.mouse_move(*saved_mouse_pos)
+
+        # Restore zoom level and ribbon state, if we had to change them
+        if zoom_level != "100%":
+            zoom_combo_box.AXFocused = True
+            zoom_combo_box.AXValue = zoom_level
+            for attempt in range(10):
+                actions.sleep("50ms")
+                if zoom_combo_box.AXFocused == True:
+                    break
+            # XXX This still happens too early sometimes, but at least tab isn't destructive
+            actions.key("tab")
+            if open_tab:
+                open_tab.perform("AXPress")
+            else:
+                actions.user.onenote_hide_ribbon()

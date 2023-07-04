@@ -53,6 +53,9 @@ table select: user.menu_select("Format|Table|Select Table")
 collapse: key(ctrl-shift--)
 expand: key(ctrl-shift-+)
 
+# just collapse a single level
+collapse (this | that): user.onenote_collapse_this()
+
 ribbon: key(cmd-alt-r)
 
 mail this: user.menu_select("File|Share|Send Page as Email Message")
