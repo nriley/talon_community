@@ -488,10 +488,11 @@ class UserActions:
         if zoom_level != "100%":
             actions.edit.zoom_reset()
             actions.sleep("100ms")  # XXX sometimes not long enough to wait
-        elif open_tab:
-            open_tab.perform("AXPress")
-        else:  # better to do this sooner as it reduces the likelihood of a race
+        elif not open_tab:
+            # better to do this sooner as it reduces the likelihood of a race
             ribbon.AXValue.perform("AXPress")
+        elif open_tab.AXTitle != "View":
+            open_tab.perform("AXPress")
 
         # Select what we are going to collapse into
         actions.edit.select_all()
@@ -546,7 +547,7 @@ class UserActions:
                     break
             # XXX This still happens too early sometimes, but at least tab isn't destructive
             actions.key("tab")
-            if open_tab:
+            if not open_tab:
+                ribbon.AXValue.perform("AXPress")
+            elif open_tab.AXTitle != "View":
                 open_tab.perform("AXPress")
-            else:
-                actions.user.onenote_hide_ribbon()
