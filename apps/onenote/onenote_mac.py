@@ -48,45 +48,45 @@ def now_entry(m) -> str:
 @mod.action_class
 class Actions:
     def onenote_focus():
-        """Bring OneNote to the front."""
+        """Bring OneNote to the front"""
         return actions.user.launch_or_focus_bundle("com.microsoft.onenote.mac")
 
     def onenote_now(entry: str = ""):
-        """Insert timestamped bullet list item into OneNote."""
+        """Insert timestamped bullet list item into OneNote"""
         # XXX work around inability to focus and insert in a single action
         # XXX potentially related to https://github.com/talonvoice/talon/issues/305?
         if actions.user.onenote_focus():
             cron.after("200ms", lambda: actions.user.onenote_now(entry))
 
     def onenote_font(font: str = ""):
-        """Change the font in OneNote."""
+        """Change the font in OneNote"""
 
     def onenote_font_size(size: int):
-        """Change the font size in OneNote (or edit it, if size is 0)."""
+        """Change the font size in OneNote (or edit it, if size is 0)"""
 
     def onenote_font_size_adjust(offset: int):
-        """Adjust the font size in OneNote."""
+        """Adjust the font size in OneNote"""
 
     def onenote_checkbox():
-        """Insert indented checkbox into OneNote."""
+        """Insert indented checkbox into OneNote"""
 
     def onenote_heading_1():
-        """Insert a first-level heading into OneNote."""
+        """Insert a first-level heading into OneNote"""
 
     def onenote_hide_navigation():
-        """Hide the navigation panes in OneNote."""
+        """Hide the navigation panes in OneNote"""
 
     def onenote_hide_ribbon():
-        """Hide the Ribbon in OneNote."""
+        """Hide the Ribbon in OneNote"""
 
     def onenote_copy_link():
-        """Copy a link to the current paragraph in OneNote."""
+        """Copy a link to the current paragraph in OneNote"""
 
     def onenote_go_progress():
-        """Go to the first section of the first notebook."""
+        """Go to the first section of the first notebook"""
 
     def onenote_go_recent(offset: int):
-        """Navigate to recent notes."""
+        """Navigate to recent notes"""
 
 
 def onenote_app():
