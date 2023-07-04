@@ -349,7 +349,8 @@ class UserActions:
 
         combo_box.AXFocused = True
         if size:
-            actions.insert(f"{size}\n")
+            combo_box.AXValue = str(size)
+            actions.key("return")
 
     def onenote_font_size_adjust(offset):
         combo_box = onenote_font_size_combo_box()
@@ -360,10 +361,11 @@ class UserActions:
         if not str.isnumeric(font_size):
             app.notify(body="Unable to determine current font size", title="OneNote")
             return
-        font_size = int(font_size)
+        font_size = str(int(font_size) + offset)
 
+        combo_box.AXValue = font_size
         combo_box.AXFocused = True
-        actions.insert(f"{font_size + offset}\n")
+        actions.key("return")
 
     def zoom_to_fit_width():
         onenote = onenote_app()
