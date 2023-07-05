@@ -28,10 +28,13 @@ reset control points: key(C)
 line: key(;)
 rectangle: key(r)
 oval: key(o)
-color | eyedropper: key(ctrl-c)
+color pick | eyedropper: key(ctrl-c)
 
-trim to edges: key(cmd-ctrl-t)
+trim [to edges]: key(cmd-ctrl-t)
 
+colors: key(cmd-shift-c)
+color reset: key(d)
+color swap: key(x)
 toggle fill: key(F)
 toggle stroke: key(B)
 
@@ -52,3 +55,7 @@ two hundred percent: key(cmd-2)
 four hundred percent: key(cmd-3)
 eight hundred percent: key(cmd-4)
 fifty percent: key(cmd-5)
+
+please [<user.text>]:
+    key(cmd-shift-o)
+    insert(user.text or "")
