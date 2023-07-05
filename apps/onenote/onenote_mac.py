@@ -467,10 +467,10 @@ class UserActions:
 
         # Deselect anything and move the mouse pointer out of the way of the content
         # to avoid an accidental match later
-        actions.edit.right()
-        actions.edit.left()
         saved_mouse_pos = ctrl.mouse_pos()
         ctrl.mouse_move(rect.x, rect.y)
+        actions.edit.right()
+        actions.edit.left()
 
         # Save ribbon state and zoom level
         ribbon = window.children.find_one(AXRole="AXTabGroup", max_depth=0)
@@ -514,6 +514,10 @@ class UserActions:
         ctrl.mouse_move(
             rect.x + matches[0].right / scale, rect.y + matches[0].bot / scale
         )
+
+        # XXX Despite everything above, sometimes this is still matching
+        # based on the original mouse position - so delay for now
+        actions.sleep("100ms")
 
         matches = onenote_image_matches_in_notebook_window(
             window,
