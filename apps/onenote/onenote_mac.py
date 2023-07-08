@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 
 from talon import Context, Module, actions, app, clip, cron, ctrl, ui
@@ -177,17 +178,22 @@ def onenote_zoom_combo_box():
 
 
 def onenote_image_matches_in_notebook_window(
-    window, *image_names, attempts=1, delay=None
+    window, image_name, attempts=1, delay=None
 ):
     global MATCHES
+
+    image_dir = Path(__file__).parent / "images"
+    if window.screen.scale == 1:
+        image_name += "@1x"
+    images = {
+        image_path.stem: Image.from_file(str(image_path))
+        for image_path in sorted(image_dir.glob(f"{image_name}_*.png"))
+    }
 
     for attempt in range(attempts):
         haystack = capture.__self__.capture_window_mac(window.id)
 
-        for image_name in image_names:
-            needle = Image.from_file(
-                str(Path(__file__).parent / "images" / (image_name + ".png"))
-            )
+        for image_name, needle in images.items():
             matches = locate_in_image(haystack, needle, threshold=0.99)
             print(attempt, image_name, matches)
 
@@ -201,8 +207,6 @@ def onenote_image_matches_in_notebook_window(
 
                 excess_matches = Path(__file__).parent / "excess_matches"
                 excess_matches.mkdir(exist_ok=True)
-
-                from datetime import datetime
 
                 now = datetime.now().isoformat()
                 for rect in matches:
@@ -220,12 +224,10 @@ def onenote_image_matches_in_notebook_window(
             actions.sleep(delay)
 
     if not matches:
-        print(f"0 matches for {image_names}")
+        print(f"0 matches for {image_name}")
 
         no_matches = Path(__file__).parent / "no_matches"
         no_matches.mkdir(exist_ok=True)
-
-        from datetime import datetime
 
         now = datetime.now().isoformat()
         needle.write_file(no_matches / f"{now} {image_name}.png")
@@ -455,9 +457,9 @@ class UserActions:
         ).perform("AXPress")
 
     def onenote_collapse_this():
-        # This code is very fragile, depending on:
-        # - Retina display
+        # This code is somewhat fragile, depending on:
         # - Accent color being set to Multicolor (so OneNote's highlight color is lavender)
+        # - No other use of the highlight color/outline handle image in the OneNote window
         # - White background for note
         # - 100% zoom level (ensured below)
         # - (Potentially) font size
@@ -499,7 +501,7 @@ class UserActions:
 
         matches = onenote_image_matches_in_notebook_window(
             window,
-            *[f"onenote_highlight_top_left_{x}" for x in range(1, 7)],
+            "onenote_highlight_top_left",
             attempts=10,
             delay="10ms",
         )
@@ -521,7 +523,7 @@ class UserActions:
 
         matches = onenote_image_matches_in_notebook_window(
             window,
-            *[f"onenote_outline_handle_top_left_{x}" for x in range(1, 4)],
+            "onenote_outline_handle_top_left",
             attempts=10,
             delay="10ms",
         )
