@@ -545,14 +545,15 @@ class UserActions:
 
         # Restore zoom level and ribbon state, if we had to change the zoom level
         if zoom_level != "100%":
-            zoom_combo_box.AXFocused = True
             zoom_combo_box.AXValue = zoom_level
-            for attempt in range(10):
-                actions.sleep("50ms")
+            # Usually this takes two tries
+            for attempt in range(5):
+                zoom_combo_box.AXFocused = True
                 if zoom_combo_box.AXFocused == True:
+                    actions.key("tab")
                     break
-            # XXX This still happens too early sometimes, but at least tab isn't destructive
-            actions.key("tab")
+            else:
+                app.notify(body=f"Unable to focus zoom combo box", title="OneNote")
             if not open_tab:
                 ribbon.AXValue.perform("AXPress")
             elif open_tab.AXTitle != "View":
