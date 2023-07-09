@@ -32,7 +32,7 @@ time one thousand: insert("10:00")
 
 time two thousand: insert("20:00")
 
-insert date: user.insert_date()
+insert date: user.insert_date(0, "%-m/%-d/%Y")
 
 insert time: user.insert_time_ampm()
 
