@@ -1,4 +1,3 @@
-from datetime import datetime
 from pathlib import Path
 
 from talon import Context, Module, actions, app, clip, cron, ctrl, ui
@@ -208,7 +207,7 @@ def onenote_image_matches_in_notebook_window(
                 excess_matches = Path(__file__).parent / "excess_matches"
                 excess_matches.mkdir(exist_ok=True)
 
-                now = datetime.now().isoformat()
+                now = actions.user.time_format()
                 for rect in matches:
                     path = excess_matches / f"{now} {image_name} {rect}.png"
                     capture(*rect, retina=False).write_file(path)
@@ -229,7 +228,7 @@ def onenote_image_matches_in_notebook_window(
         no_matches = Path(__file__).parent / "no_matches"
         no_matches.mkdir(exist_ok=True)
 
-        now = datetime.now().isoformat()
+        now = actions.user.time_format()
         needle.write_file(no_matches / f"{now} {image_name}.png")
         haystack.write_file(no_matches / f"{now} haystack.png")
 
@@ -406,7 +405,7 @@ class UserActions:
         actions.key("cmd-alt-0")  # custom shortcut for "Remove Tag"
         actions.key("cmd-/ cmd-.")
         actions.key("shift-tab:5 tab:2")
-        actions.user.paste(time.strftime("%-I:%M %p"))
+        actions.user.paste(actions.user.time_format("%-I:%M %p"))
         actions.insert(" - ")
         if entry:
             actions.mimic(entry)
