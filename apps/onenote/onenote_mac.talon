@@ -6,6 +6,7 @@ tag(): user.find_and_replace
 # and lack of exposure though accessibility
 settings():
     user.context_sensitive_dictation = 0
+    insert_wait = 1
 
 bold: key(cmd-b)
 italic: key(cmd-i)
