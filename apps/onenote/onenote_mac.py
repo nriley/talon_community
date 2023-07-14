@@ -405,7 +405,7 @@ class UserActions:
         actions.key("cmd-alt-0")  # custom shortcut for "Remove Tag"
         actions.key("cmd-/ cmd-.")
         actions.key("shift-tab:5 tab:2")
-        actions.user.paste(actions.user.time_format("%-I:%M %p"))
+        actions.user.insert_time_ampm()
         actions.insert(" - ")
         if entry:
             actions.mimic(entry)
