@@ -60,6 +60,11 @@ class UserActions:
         actions.sleep("500ms")
         actions.insert(name)
 
+    def find_everywhere(text: str):
+        if text:
+            clip.set_text(text, mode="find")
+        actions.key("cmd-alt-f")
+
 
 @mod.action_class
 class Actions:
