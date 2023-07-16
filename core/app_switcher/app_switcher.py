@@ -10,7 +10,7 @@ from talon import Context, Module, actions, app, ctrl, fs, imgui, ui
 # Construct at startup a list of overides for application names (similar to how homophone list is managed)
 # ie for a given talon recognition word set  `one note`, recognized this in these switcher functions as `ONENOTE`
 # the list is a comma seperated `<Recognized Words>, <Overide>`
-# TODO: Consider put list csv's (homophones.csv, app_name_overrides.csv) files together in a seperate directory,`knausj_talon/lists`
+# TODO: Consider put list csv's (homophones.csv, app_name_overrides.csv) files together in a seperate directory,`community/lists`
 overrides_directory = os.path.dirname(os.path.realpath(__file__))
 override_file_name = f"app_name_overrides.{talon.app.platform}.csv"
 override_file_path = os.path.join(overrides_directory, override_file_name)
@@ -187,22 +187,28 @@ if app.platform == "linux":
             if os.path.isdir(base):
                 for entry in os.scandir(base):
                     if entry.name.endswith(".desktop"):
-                        config = configparser.ConfigParser(interpolation=None)
-                        config.read(entry.path)
-                        # only parse shortcuts that are not hidden
-                        if config.has_option("Desktop Entry", "NoDisplay") == False:
-                            name_key = config["Desktop Entry"]["Name"]
-                            exec_key = config["Desktop Entry"]["Exec"]
-                            # remove extra quotes from exec
-                            if exec_key[0] == '"' and exec_key[-1] == '"':
-                                exec_key = re.sub('"', "", exec_key)
-                            # remove field codes and add full path if necessary
-                            if exec_key[0] == "/":
-                                items[name_key] = re.sub(args_pattern, "", exec_key)
-                            else:
-                                items[name_key] = "/usr/bin/" + re.sub(
-                                    args_pattern, "", exec_key
-                                )
+                        try:
+                            config = configparser.ConfigParser(interpolation=None)
+                            config.read(entry.path)
+                            # only parse shortcuts that are not hidden
+                            if config.has_option("Desktop Entry", "NoDisplay") == False:
+                                name_key = config["Desktop Entry"]["Name"]
+                                exec_key = config["Desktop Entry"]["Exec"]
+                                # remove extra quotes from exec
+                                if exec_key[0] == '"' and exec_key[-1] == '"':
+                                    exec_key = re.sub('"', "", exec_key)
+                                # remove field codes and add full path if necessary
+                                if exec_key[0] == "/":
+                                    items[name_key] = re.sub(args_pattern, "", exec_key)
+                                else:
+                                    items[name_key] = "/usr/bin/" + re.sub(
+                                        args_pattern, "", exec_key
+                                    )
+                        except:
+                            print(
+                                "get_linux_apps: skipped parsing application file ",
+                                entry.name,
+                            )
         return items
 
 
