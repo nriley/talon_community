@@ -1,4 +1,4 @@
-import time
+import sys, time
 from datetime import date, timedelta
 from typing import Optional
 
@@ -66,4 +66,6 @@ class Actions:
 
     def insert_date(days: Optional[int] = 0, format: Optional[str] = "%x"):
         """Inserts the date offset by the specified number of days"""
+        if sys.platform == "win32":
+            format = format.replace("%-", "%#")
         actions.insert((date.today() + timedelta(days=days)).strftime(format))
