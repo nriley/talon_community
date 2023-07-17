@@ -61,9 +61,6 @@ ribbon: key(cmd-alt-r)
 
 mail this: user.menu_select("File|Share|Send Page as Email Message")
 
-# cmd-n is "page new", below
-window (new | open): key(ctrl-m)
-
 go (notebook | notebooks): key(ctrl-g)
 
 go (section | sections): key(ctrl-shift-g)

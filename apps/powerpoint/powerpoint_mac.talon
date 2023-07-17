@@ -51,5 +51,3 @@ mail p d f: user.menu_select("File|Share|Send PDF")
 
 ribbon: key(cmd-alt-r)
 ruler: user.menu_select("View|Ruler")
-
-window (new | open): user.menu_select("Window|New Window")

@@ -89,5 +89,3 @@ pivot that: user.menu_select("Data|Summarize with PivotTable")
 mail this: user.menu_select("File|Share|Send Workbook")
 
 ribbon: key(cmd-alt-r)
-
-window (new | open): user.menu_select("Window|New Window")

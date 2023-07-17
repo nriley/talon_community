@@ -8,6 +8,11 @@ os: windows
 and app.exe: ONENOTE.EXE
 """
 
+@ctx.action_class("app")
+class AppActions:
+    def window_open():
+        actions.user.onenote_ribbon_select("wn")
+
 
 @ctx.action_class("edit")
 class EditActions:

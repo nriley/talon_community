@@ -86,5 +86,3 @@ pivot that: key(alt-n v t)
 # mail this: user.menu_select("File|Share|Send Workbook")
 
 ribbon: key(ctrl-f1)
-
-window (new | open): key(alt-w n)

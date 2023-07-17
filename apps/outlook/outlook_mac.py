@@ -35,6 +35,12 @@ def outlook_focused_element():
         raise Exception("Unable to determine focused element in Outlook")
 
 
+@ctx.action_class("app")
+class AppActions:
+    def window_open():
+        actions.user.menu_select("File|New|Main Window")
+
+
 @ctx.action_class("user")
 class UserActions:
     def outlook_set_selected_folder(folder: str):

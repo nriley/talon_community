@@ -40,9 +40,6 @@ sync: key(cmd-ctrl-k)
 
 toggle sidebar: key(cmd-alt-s)
 
-# cmd-n is "page new", below
-window (new | open): user.menu_select("File|New|Main Window")
-
 # not tested in "old Outlook"
 # can use Control-[/] for previous/next though that does not focus the message list
 next:

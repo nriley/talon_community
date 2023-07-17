@@ -14,6 +14,11 @@ app.bundle: com.microsoft.onenote.mac
 
 MATCHES = __import__("collections").defaultdict(int)
 
+@ctx.action_class("app")
+class AppActions:
+    def window_open():
+        actions.user.key("ctrl-m")
+
 
 @ctx.action_class("edit")
 class EditActions:
