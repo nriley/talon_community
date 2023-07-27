@@ -1,6 +1,7 @@
 from talon import Context, Module, actions, app, cron, ui
 
 FDLINK_APPLICATION = None
+FD_RECORDING_CONTROL = None
 
 if app.platform == "windows":
     import win32com.client
@@ -52,11 +53,16 @@ class UserActions:
         return fd_listening()
 
     def disable_fd():
+        global FD_RECORDING_CONTROL
+
         if fdrc := fd_recording_control():
-            # can't enable from FD UI while recording is disabled
-            fdrc.EnableRecording(False)
-            # however, recording remains off after reenabled
-            fdrc.EnableRecording(True)
+            try:
+                # can't enable from FD UI while recording is disabled
+                fdrc.EnableRecording(False)
+                # however, recording remains off after reenabled
+                fdrc.EnableRecording(True)
+            except com_error:
+                FD_RECORDING_CONTROL = None
 
     def enable_fd():
         if not actions.user.fd_is_running():
@@ -65,8 +71,6 @@ class UserActions:
         actions.user.disable_fd()
         actions.key("`")
 
-
-FD_RECORDING_CONTROL = None
 
 def fd_recording_control():
     global FD_RECORDING_CONTROL
