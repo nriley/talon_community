@@ -12,7 +12,19 @@ and app.bundle: com.citrix.AuthManagerMac
 @ctx.action_class("user")
 class UserActions:
     def citrix_sign_in():
-        window = ui.apps(bundle="com.citrix.AuthManagerMac")[0].active_window
+        auth_managers = ui.apps(bundle="com.citrix.AuthManagerMac")
+        if len(auth_managers) == 1:
+            auth_manager = auth_managers[0]
+        elif (
+            auth_manager := ui.active_app()
+        ) and auth_manager.bundle == "com.citrix.AuthManagerMac":
+            pass
+        else:
+            app.notify(
+                "Unable to identify unique Citrix Workspace Authentication app; try activating it first"
+            )
+            return
+        window = auth_manager.active_window
 
         # Log in with web view (makes some assumptions about form elements)
         try:
