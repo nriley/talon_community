@@ -50,7 +50,7 @@ class UserActions:
                 AXRole="AXTextField", AXSubrole="AXSecureTextField"
             )
             passwd.AXFocused = True
-            actions.paste(password)
+            actions.user.paste(password)
             submit = web_area.children.find_one(AXRole="AXButton")
             submit.perform("AXPress")
             return
