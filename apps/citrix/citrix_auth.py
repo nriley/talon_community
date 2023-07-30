@@ -1,3 +1,5 @@
+from urllib.parse import urlsplit, urlunsplit
+
 from talon import Context, Module, actions, app, keychain, ui
 
 mod = Module()
@@ -35,7 +37,13 @@ class UserActions:
             # Store both username and password in password field
             # as there is no way to retrieve the username with Talon's
             # keychain API <https://github.com/talonvoice/talon/issues/577>
-            username, password = keychain.find(web_area.AXURL, "").split("|", 2)
+            host_url = urlsplit(web_area.AXURL)
+            host_url = urlunsplit((host_url.scheme, host_url.netloc, "/", "", ""))
+            try:
+                username, password = keychain.find(host_url, "").split("|", 2)
+            except keychain.KeychainErr:
+                app.notify(f"Failed to get keychain item for {host_url}")
+                raise
             login = web_area.children.find_one(AXRole="AXTextField", AXSubrole=None)
             login.AXValue = username
             passwd = web_area.children.find_one(
