@@ -32,6 +32,13 @@ stage untracked: key(ctrl-k ctrl-a)
 stash: key(ctrl-s)
 stash pop: key(ctrl-shift-s)
 
+branch: key(ctrl-b)
+branch new: key(ctrl-shift-b)
+
+^branch [<user.text>]:
+    key(escape ctrl-b)
+    insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
+
 ^repo next: key(ctrl-tab)
 ^repo previous: key(shift-ctrl-tab)
 
