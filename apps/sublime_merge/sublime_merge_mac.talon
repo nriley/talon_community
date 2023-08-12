@@ -46,6 +46,7 @@ branch new: key(cmd-shift-b)
 
 ^branch [<user.text>]:
     key(escape cmd-b)
+    sleep(100ms)
     insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
 
 ^repo next: key(ctrl-tab)
