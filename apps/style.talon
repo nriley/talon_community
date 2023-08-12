@@ -1,4 +1,4 @@
 os: mac
 -
 copy style: key(cmd-alt-c)
-paste style: key(cmd-alt-v)
+(pace | pist | paste) style: key(cmd-alt-v)
