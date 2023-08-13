@@ -41,13 +41,15 @@ stage untracked: key(cmd-k cmd-a)
 stash: key(cmd-s)
 stash pop: key(cmd-shift-s)
 
-branch: key(cmd-b)
-branch new: key(cmd-shift-b)
-
 ^branch [<user.text>]:
     key(escape cmd-b)
     sleep(100ms)
-    insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
+    insert('{user.formatted_text(text or "", "DASH_SEPARATED")}')
+
+^branch new [<user.text>]:
+    key(escape cmd-shift-b)
+    sleep(100ms)
+    insert('{user.formatted_text(text or "", "DASH_SEPARATED")}')
 
 ^repo next: key(ctrl-tab)
 ^repo previous: key(shift-ctrl-tab)
