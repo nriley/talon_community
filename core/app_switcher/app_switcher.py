@@ -340,9 +340,12 @@ class Actions:
             actions.sleep(0.1)
 
         for window in app.windows():
-            if window.fullscreen:
-                window.focus()
-                break
+            try:
+                if window.fullscreen:
+                    window.focus()
+                    break
+            except AttributeError:  # AXFullScreen may not exist on every window
+                pass
 
         actions.user.switcher_restore_mouse_pos(app)
 
