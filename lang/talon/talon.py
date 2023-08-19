@@ -38,6 +38,7 @@ ctx.lists["user.code_common_function"] = {
     "key": "key",
     "print": "print",
     "repeat": "repeat",
+    "sleep": "sleep",
 }
 
 
