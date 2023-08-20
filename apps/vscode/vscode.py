@@ -404,3 +404,7 @@ class UserActions:
         actions.user.paste(before + after)
         for _ in after:
             actions.edit.left()
+
+    # comment_block.py
+    def code_comment_block():
+        actions.user.vscode("editor.action.blockComment")
