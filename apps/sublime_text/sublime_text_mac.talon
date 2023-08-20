@@ -34,21 +34,22 @@ project symbol [<user.text>]:
     insert(text or "")
 
 complete: key(ctrl-space)
-( comment | uncomment ) that: code.toggle_comment()
 
 definition show: key(cmd-alt-down)
 
 slap: key(cmd-enter)
 
 # navigate through multifile search (match) results
-(match|result) next: key(f4 cmd-g)
-(match|result) previous: key(shift-f4 cmd-g)
+(match | result) next: key(f4 cmd-g)
+(match | result) previous: key(shift-f4 cmd-g)
 
 # history navigation
 go back: key(ctrl--)
 go forward: key(ctrl-shift--)
 
-^repository | repo$:
+# talonfmt barfs if the parentheses below are missing:
+# https://github.com/wenkokke/talonfmt/issues/93
+^(repository | repo)$:
     key(cmd-shift-p)
     insert("Sublime Merge: Open Repository")
     key(enter)
