@@ -19,7 +19,7 @@ mark [as] read: key(cmd-t)
 mark [as] unread: key(cmd-shift-t)
 
 # verb-noun vs noun-verb, retained for consistency with other
-# knausj email apps
+# email apps' command sets defined in community
 new message: key(cmd-n)
 send [this] message: key(cmd-enter)
 
