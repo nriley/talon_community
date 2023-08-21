@@ -87,3 +87,7 @@ bullet: user.menu_select("Format|Bulleted List")
 
 move right: key(cmd-])
 move left: key(cmd-[)
+
+go mail: key(cmd-1)
+go calendar: key(cmd-2)
+go people: key(cmd-3)
