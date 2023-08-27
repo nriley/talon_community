@@ -74,14 +74,20 @@ def word(m) -> str:
         )
 
 
-@mod.capture(rule="({user.vocabulary} | <phrase>)+")
+@mod.capture(rule="(letter | {self.letter}) {self.letter}+")
+def spelled_word(m) -> str:
+    """A single word composed of letters from the Talon alphabet."""
+    return "".join(m.letter_list)
+
+
+@mod.capture(rule="({user.vocabulary} | <user.spelled_word> | <phrase>)+")
 def text(m) -> str:
     """A sequence of words, including user-defined vocabulary."""
     return format_phrase(m)
 
 
 @mod.capture(
-    rule="({user.vocabulary} | {user.punctuation} | {user.prose_snippets} | <phrase> | <user.prose_number> | <user.prose_modifier>)+"
+    rule="({user.vocabulary} | {user.punctuation} | {user.prose_snippets} | <user.spelled_word> | <phrase> | <user.prose_number> | <user.prose_modifier>)+"
 )
 def prose(m) -> str:
     """Mixed words and punctuation, auto-spaced & capitalized."""
