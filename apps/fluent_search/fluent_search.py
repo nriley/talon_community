@@ -31,8 +31,9 @@ class UserActions:
         # automate the way we do with LaunchBar
         # If you have a different search keyboard shortcut configured,
         # replace ctrl-alt-space with it below.
-        actions.key("ctrl-alt-space backspace")
+        actions.key("ctrl-alt-space")
         wait_for_fluent_search_window()
+        actions.key("backspace")
         if "\t" in text:
             plugin, text = text.split("\t", 1)
             actions.insert(plugin + "\t")
