@@ -1,7 +1,3 @@
-app: putty
-and win.title: PuTTY Configuration
+app: putty_configuration
 -
-open {user.putty_session}:
-    key(alt-e)
-    insert(putty_session)
-    key(alt-l alt-o)
+open {user.putty_session}: user.putty_open_session(putty_session)

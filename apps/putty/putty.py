@@ -2,14 +2,24 @@ from talon import Context, Module, actions, app, keychain, registry, ui
 
 mod = Module()
 ctx = Context()
+ctx_configuration = Context()
 
 mod.apps.putty = """
 os: windows
 and app.exe: putty.exe
 """
 
+mod.apps.putty_configuration = """
+app: putty
+and win.class: PuTTYConfigBox
+"""
+
 ctx.matches = """
 app: putty
+"""
+
+ctx_configuration.matches = """
+app: putty_configuration
 """
 
 mod.list("putty_session", "PuTTY saved sessions")
@@ -20,6 +30,8 @@ class Actions:
     def putty_open_menu():
         """Open the PuTTY system menu"""
 
+    def putty_open_session(putty_session: str):
+        """Open the named PuTTY session"""
 
 @ctx.action_class("user")
 class UserActions:
@@ -29,6 +41,13 @@ class UserActions:
         # Window > Behaviour > System menu appears on ALT-Space is set
         actions.key("alt-space")
 
+@ctx_configuration.action_class("user")
+class UserActions:
+    def putty_open_session(putty_session: str):
+        actions.key("alt-e")
+        actions.insert(putty_session)
+        actions.key("alt-l alt-o")
+        
 
 def ready():
     import winreg
