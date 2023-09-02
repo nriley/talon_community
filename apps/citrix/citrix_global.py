@@ -21,7 +21,7 @@ class UserActions:
     def citrix_focus_desktop():
         for viewer in ui.apps(bundle="com.citrix.receiver.icaviewer.mac"):
             # XXX work around the subrole being AXDialog when the app is hidden
-            was_hidden = viewer.element.AXHidden
+            was_hidden = getattr(viewer.element, "AXHidden", False)
             if was_hidden is True:
                 viewer.element.AXHidden = False
             for window in viewer.windows():
