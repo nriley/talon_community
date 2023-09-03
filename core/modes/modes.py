@@ -181,9 +181,6 @@ def on_screen_change(screens):
     if not mode_canvases:
         return
 
-    # XXX debugging until this is working more reliably
-    print(f"screen_change {screens}")
-
     for mode_canvas in mode_canvases:
         mode_canvas.unregister("draw", draw_mode)
         mode_canvas.close()
@@ -194,6 +191,4 @@ def on_screen_change(screens):
         show_mode()
 
 
-# XXX doesn't work when display configuration is changed
-# see https://github.com/talonvoice/talon/issues/248#issuecomment-877831551
 ui.register("screen_change", on_screen_change)
