@@ -50,6 +50,9 @@ def scan_small_numbers(l: list[str]) -> Iterator[Union[str, int]]:
         if n in tens_map and l and digits_map.get(l[-1], 0) != 0:
             d = l.pop()
             yield numbers_map[n] + numbers_map[d]
+        # already a number (ordinal)
+        elif type(n) == int:
+            yield n
         # turn small number terms into corresponding numbers
         elif n not in scales_map:
             yield numbers_map[n]
@@ -192,7 +195,9 @@ def digits(m) -> int:
     return int(m.digit_string)
 
 
-@mod.capture(rule=f"{number_word_leading} ([and] {number_word})*")
+@mod.capture(
+    rule=f"{number_word_leading} ([and] {number_word} | <user.ordinals_small>)*"
+)
 def number_string(m) -> str:
     """Parses a number phrase, returning that number as a string."""
     return parse_number(list(m))
