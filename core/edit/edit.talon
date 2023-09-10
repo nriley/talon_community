@@ -24,8 +24,8 @@ go right: edit.right()
 go up: edit.up()
 go down: edit.down()
 
-head | go line start: edit.line_start()
-tail | go line end: edit.line_end()
+go line start | head: edit.line_start()
+go line end | tail: edit.line_end()
 
 go paragraph start: edit.paragraph_start()
 go paragraph end: edit.paragraph_end()
