@@ -290,6 +290,9 @@ class UserActions:
     def code_operator_bitwise_and():
         actions.auto_insert(" & ")
 
+    def code_operator_in():
+        actions.auto_insert(r" %in% ")
+
     def code_insert_null():
         actions.auto_insert("NULL")
 
