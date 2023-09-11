@@ -6,6 +6,8 @@ ctx = Context()
 mod.apps.rstudio = r"""
 os: mac
 and app.bundle: com.rstudio.desktop
+os: windows
+and app.exe: rstudio.exe
 """
 
 ctx.matches = r"""
