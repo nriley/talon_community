@@ -96,7 +96,7 @@ ctx.tags = ["user.auto_lang"]
 class code_actions:
     def language():
         result = ""
-        file_extension = actions.win.file_ext()
+        file_extension = actions.win.file_ext().lower()
         if file_extension and file_extension in extension_lang_map:
             result = extension_lang_map[file_extension]
         return result
