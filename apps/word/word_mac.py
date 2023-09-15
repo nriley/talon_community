@@ -1,4 +1,7 @@
-from talon import Context, Module, actions
+from talon import Context, Module, actions, app, ui
+
+if app.platform == "mac":
+    from appscript import k
 
 ctx = Context()
 mod = Module()
@@ -7,10 +10,49 @@ ctx.matches = r"""
 app: word_mac
 """
 
+
+def word_app():
+    return ui.apps(bundle="com.microsoft.Word")[0]
+
+
+def word_document_window():
+    if not (active_window := ui.active_window()):
+        raise Exception("Can't determine active window")
+
+    word = word_app()
+
+    if active_window.app != word:
+        raise Exception("Word is not frontmost")
+
+    if not active_window.doc:
+        raise Exception("Frontmost window is not a document window")
+
+    return word.appscript().windows[k.active == True]
+
+
+def word_document_zoom():
+    return word_document_window().active_pane.view.zoom
+
+
 @ctx.action_class("app")
 class AppActions:
     def window_open():
         actions.user.menu_select("Window|New Window")
+
+
+@ctx.action_class("edit")
+class EditActions:
+    def zoom_in():
+        zoom = word_document_zoom()
+        zoom.percentage.set(zoom.percentage() * 1.25)
+
+    def zoom_out():
+        zoom = word_document_zoom()
+        zoom.percentage.set(zoom.percentage() / 1.25)
+
+    def zoom_reset():
+        word_document_zoom().percentage.set(100)
+
 
 @ctx.action_class("user")
 class UserActions:
@@ -61,3 +103,9 @@ class UserActions:
         actions.edit.find(text)
         actions.edit.find_next()
         actions.key("esc")
+
+    def zoom_to_fit():
+        word_document_zoom().page_fit.set(k.page_fit_full_page)
+
+    def zoom_to_fit_width():
+        word_document_zoom().page_fit.set(k.page_fit_best_fit)
