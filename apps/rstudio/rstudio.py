@@ -30,6 +30,11 @@ class AppActions:
 
 @ctx.action_class("code")
 class CodeActions:
+    def language():
+        # Default to R language.
+        # Could use ui.register to detect focusing a document/console tab (on Mac at least)
+        return "r"
+
     def toggle_comment():
         actions.key("cmd-shift-c")
 

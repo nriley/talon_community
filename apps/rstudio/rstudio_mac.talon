@@ -4,8 +4,6 @@ app: rstudio
 tag(): user.find_and_replace
 tag(): user.line_commands
 tag(): user.multiple_cursors
-# Default to R language; could use ui.register to detect focusing a document/console tab
-tag(): user.r
 tag(): user.tabs
 
 please [<user.text>]:
