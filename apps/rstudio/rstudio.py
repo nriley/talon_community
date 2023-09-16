@@ -39,6 +39,7 @@ class CodeActions:
 
 @ctx.action_class("edit")
 class EditActions:
+    # user.line_commands
     def jump_line(n):
         actions.key("cmd-shift-alt-g")
         actions.sleep("100ms")
@@ -101,8 +102,6 @@ class UserActions:
         actions.user.find(text)
         actions.user.find_next()
         actions.key("esc")
-
-    # user.line_commands
 
     # user.multiple_cursors
     def multi_cursor_disable():
