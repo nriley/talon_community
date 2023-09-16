@@ -21,9 +21,6 @@ class AppActions:
     def tab_open():
         actions.key("cmd-shift-n")
 
-    def tab_final():
-        actions.key("ctrl-shift-f12")
-
     def tab_next():
         actions.key("ctrl-f12")
 
@@ -115,3 +112,7 @@ class UserActions:
 
     def multi_cursor_add_to_line_ends():
         actions.key("ctrl-alt-a")
+
+    # user.tabs
+    def tab_final():
+        actions.key("ctrl-shift-f12")
