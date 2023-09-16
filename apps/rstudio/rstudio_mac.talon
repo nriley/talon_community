@@ -45,10 +45,8 @@ reformat R code: key(cmd-shift-a)
 line up:
     app.notify('ERROR: Command deprecated; please use "drag up"')
     edit.line_swap_up()
-    key(alt-up)
 line down:
     app.notify('ERROR: Command deprecated; please use "drag down"')
-    key(alt-down)
     edit.line_swap_down()
 duplicate line up:
     app.notify('ERROR: Command deprecated; please use "clone line up"')

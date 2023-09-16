@@ -52,6 +52,12 @@ class EditActions:
     def line_clone():
         actions.key("cmd-alt-down")
 
+    def line_swap_up():
+        actions.key("alt-up")
+
+    def line_swap_down():
+        actions.key("alt-down")
+
 
 @ctx.action_class("user")
 class UserActions:
