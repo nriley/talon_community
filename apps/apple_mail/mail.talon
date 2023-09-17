@@ -10,6 +10,9 @@ junk: key(cmd-shift-j)
 reply: key(cmd-r)
 reply all: key(cmd-shift-r)
 
+mark [as] read: user.mail_mark_as_read()
+mark [as] unread: user.mail_mark_as_unread()
+
 send [this] message: key(cmd-shift-d)
 
 # uses my favorite mailboxes

@@ -9,14 +9,36 @@ and app.bundle: com.apple.mail
 """
 
 
+def mail_app():
+    return ui.apps(bundle="com.apple.mail")[0]
+
+
 def mail_messages_table():
-    mail = ui.apps(bundle="com.apple.mail")[0]
+    mail = mail_app()
     try:
         return mail.active_window.children.find_one(
             AXRole="AXTable", AXDescription="messages", max_depth=3
         )
     except ui.UIErr:
         return None  # no messages table found
+
+
+def mail_front_message_viewer():
+    mail = mail_app().appscript()
+    front_window = mail.windows[1]()
+    for i, message_viewer_window in enumerate(mail.message_viewers.window()):
+        if message_viewer_window == front_window:
+            return mail.message_viewers[i]
+    else:
+        app.notify("Unable to locate front message viewer")
+        return None
+
+
+def mail_selected_messages():
+    if (message_viewer := mail_front_message_viewer()) is not None:
+        return message_viewer.selected_messages()
+
+    return None
 
 
 @ctx.action_class("user")
@@ -60,6 +82,14 @@ class UserActions:
         actions.key("cmd-alt-f")
         actions.insert(text)
 
+    def mail_mark_as_read():
+        for selected_message in mail_selected_messages():
+            selected_message.read_status.set(True)
+
+    def mail_mark_as_unread():
+        for selected_message in mail_selected_messages():
+            selected_message.read_status.set(False)
+
 
 @mod.action_class
 class Actions:
@@ -68,3 +98,9 @@ class Actions:
 
     def mail_select_message(offset: int):
         """Navigate to message offset from selected message"""
+
+    def mail_mark_as_read():
+        """Mark the selected messages as read"""
+
+    def mail_mark_as_unread():
+        """Mark the selected messages as unread"""
