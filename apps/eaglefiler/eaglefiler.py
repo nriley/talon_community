@@ -23,6 +23,18 @@ def eaglefiler_front_browser_window():
     return ef.appscript().browser_windows[1]
 
 
+@ctx.action_class("edit")
+class EditActions:
+    def zoom_in():
+        actions.key("cmd-ctrl-+")
+
+    def zoom_out():
+        actions.key("cmd-ctrl--")
+
+    def zoom_reset():
+        actions.key("cmd-ctrl-0")
+
+
 @ctx.action_class("user")
 class UserActions:
     def eaglefiler_select_first_displayed_record():
@@ -64,6 +76,9 @@ class UserActions:
         if text:
             clip.set_text(text, mode="find")
         actions.key("cmd-alt-f")
+
+    def zoom_to_fit():
+        actions.key("cmd-shift-ctrl--")
 
 
 @mod.action_class
