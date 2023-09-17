@@ -50,11 +50,12 @@ class Actions:
 
 def complete_homerow_search():
     ctx.tags = []
-    ui.unregister("element_focus", element_focus)
+    ui.unregister("win_close", win_close)
 
 
-def element_focus(element):
-    complete_homerow_search()
+def win_close(win):
+    if win_is_homerow_search_bar(win):
+        complete_homerow_search()
 
 
 def win_is_homerow_search_bar(win):
@@ -68,7 +69,7 @@ def win_open(win):
         return
     if len(ctx.tags) == 0:
         ctx.tags = ["user.homerow_search"]
-        ui.register("element_focus", element_focus)
+        ui.register("win_close", win_close)
 
 
 if app.platform == "mac":
