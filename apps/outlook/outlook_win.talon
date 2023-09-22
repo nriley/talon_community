@@ -24,6 +24,8 @@ move to [<user.text>]:
 
 reply: key(ctrl-r)
 reply all: key(ctrl-shift-r)
+forward: key(ctrl-f)
+defer | snooze | postpone: key(alt-h u c alt-r tab:2 space)
 
 next: key(ctrl-.)
 previous: key(ctrl-,)
