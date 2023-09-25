@@ -1,5 +1,4 @@
-os: windows
-and app.exe: ONENOTE.EXE
+app: onenote_win
 -
 refresh: key(ctrl-pagedown ctrl-pageup)
 
@@ -35,19 +34,19 @@ move down: key(alt-shift-down)
 move right: key(alt-shift-right)
 move left: key(alt-shift-left)
 
-cell select: user.onenote_ribbon_select("jlc")
+cell select: user.office_win_ribbon_select("jlc")
 
-column select: user.onenote_ribbon_select("jlm")
-column insert left: user.onenote_ribbon_select("jll")
+column select: user.office_win_ribbon_select("jlm")
+column insert left: user.office_win_ribbon_select("jll")
 column insert right: key(ctrl-alt-r)
-column delete: user.onenote_ribbon_select("jlu")
+column delete: user.office_win_ribbon_select("jlu")
 
-row select: user.onenote_ribbon_select("jlo")
-row insert up: user.onenote_ribbon_select("jlv")
-row insert down: user.onenote_ribbon_select("jle")
-row delete: user.onenote_ribbon_select("jlw")
+row select: user.office_win_ribbon_select("jlo")
+row insert up: user.office_win_ribbon_select("jlv")
+row insert down: user.office_win_ribbon_select("jle")
+row delete: user.office_win_ribbon_select("jlw")
 
-table select: user.onenote_ribbon_select("jls")
+table select: user.office_win_ribbon_select("jls")
 
 # for consistency with Mac version, where collapsing will collapse to level 1
 collapse: key(alt-shift-1)
@@ -57,7 +56,7 @@ expand all: key(alt-shift-0)
 # but add option to just collapse a single level
 collapse (this | that): key(alt-shift--)
 
-mail this: user.onenote_ribbon_select("hm1")
+mail this: user.office_win_ribbon_select("hm1")
 
 go (notebook | notebooks): key(ctrl-g)
 
