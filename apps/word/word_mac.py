@@ -24,8 +24,14 @@ def word_document_window():
     if active_window.app != word:
         raise Exception("Word is not frontmost")
 
-    if not active_window.doc:
-        raise Exception("Frontmost window is not a document window")
+    if not active_window.doc:  # remote documents don't return anything
+        e = active_window.element
+        if (
+            e.AXSubrole != "AXStandardWindow"
+            or e.get("AXFullScreenButton") is None
+            or e.get("AXDefaultButton") is not None
+        ):
+            raise Exception("Frontmost window is not a document window")
 
     return word.appscript().windows[k.active == True]
 
