@@ -13,5 +13,6 @@ underline: key(cmd-u)
 strike through: key(cmd-shift-x)
 
 mail this: user.menu_select("File|Share|Send Document")
+mail pdf: user.menu_select("File|Share|Send PDF")
 
 ribbon: key(cmd-alt-r)
