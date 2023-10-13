@@ -2,6 +2,7 @@ from talon import Context, Module, actions, app, ui
 
 mod = Module()
 ctx = Context()
+ctx_mac = Context()
 
 mod.apps.rstudio = r"""
 os: mac
@@ -11,12 +12,16 @@ and app.exe: rstudio.exe
 """
 
 ctx.matches = r"""
+app: rstudio
+"""
+
+ctx_mac.matches = r"""
 os: mac
 app: rstudio
 """
 
 
-@ctx.action_class("app")
+@ctx_mac.action_class("app")
 class AppActions:
     def tab_open():
         actions.key("cmd-shift-n")
@@ -35,11 +40,13 @@ class CodeActions:
         # Could use ui.register to detect focusing a document/console tab (on Mac at least)
         return "r"
 
+@ctx_mac.action_class("code")
+class CodeActions:
     def toggle_comment():
         actions.key("cmd-shift-c")
 
 
-@ctx.action_class("edit")
+@ctx_mac.action_class("edit")
 class EditActions:
     # user.line_commands
     def jump_line(n):
@@ -59,7 +66,7 @@ class EditActions:
         actions.key("alt-down")
 
 
-@ctx.action_class("user")
+@ctx_mac.action_class("user")
 class UserActions:
     # user.find_and_replace
     def find(text: str):
