@@ -66,7 +66,7 @@ settings():
 
     # Accessibility dictation settings.
     user.accessibility_dictation = 1
-    user.hiss_to_debug_accessibility = 1
+    user.hiss_to_debug_accessibility = 0
     # I am accidently triggering this far too frequently.
     user.hiss_to_debug_accessibility_threshold = 2
 
