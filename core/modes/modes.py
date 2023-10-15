@@ -72,12 +72,20 @@ class Actions:
         else:
             actions.user.dictation_mode()
 
+    def is_active_mode() -> bool:
+        """Returns whether we are in command and/or dictation mode, and not sleep mode"""
+        modes = scope.get("mode", ())
+        return "sleep" not in modes and ("dictation" in modes or "command" in modes)
+
 
 dictation_apps = set()
 
 
 def set_command_mode_on_app_deactivate(app):
     global dictation_apps
+
+    if not actions.user.is_active_mode():
+        return
 
     if dictation_mode_active():
         dictation_apps.add(app)
@@ -90,6 +98,9 @@ ui.register("app_deactivate", set_command_mode_on_app_deactivate)
 
 
 def restore_dictation_mode_on_app_activate(app):
+    if not actions.user.is_active_mode():
+        return
+
     if app in dictation_apps and not dictation_mode_active():
         actions.user.dictation_mode()
 
