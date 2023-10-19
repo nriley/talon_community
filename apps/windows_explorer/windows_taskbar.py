@@ -42,4 +42,3 @@ class UserActions:
             print("No matching taskbar button found - names found:")
             for e in toolbar.children:
                 print(f"\t- {e.name}")
-            return toolbar
