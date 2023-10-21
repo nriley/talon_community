@@ -56,7 +56,12 @@ class UserActions:
                 pass
         else:
             print("Gave up waiting for quick access search")
-            print(f"Found focused element: {focused_element.dump()}")
+            if focused_element is None:
+                print(
+                    f"Did not find any focused element, but frontmost window is {ui.active_window()}"
+                )
+            else:
+                print(f"Found focused element: {focused_element.dump()}")
             return
         for attempt in range(10):
             search_field.AXValue = text
