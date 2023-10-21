@@ -90,3 +90,7 @@ class Actions:
     def moom_center_frontmost_window():
         """Tell Moom to center the frontmost window the way macOS would"""
         moom_app().appscript().center_frontmost_window()
+
+    def moom_arrange_according_to_snapshot(snapshot: str):
+        """Tell Moom to arrange windows according to the specified snapshot"""
+        moom_app().appscript().arrange_windows_according_to_snapshot(snapshot)
