@@ -40,6 +40,7 @@ class CodeActions:
         # Could use ui.register to detect focusing a document/console tab (on Mac at least)
         return "r"
 
+
 @ctx_mac.action_class("code")
 class CodeActions:
     def toggle_comment():
@@ -51,7 +52,7 @@ class EditActions:
     # user.line_commands
     def jump_line(n):
         actions.key("cmd-shift-alt-g")
-        actions.sleep("100ms")
+        actions.sleep("200ms")
         actions.insert(n)
         actions.key("enter")
         actions.edit.line_start()
