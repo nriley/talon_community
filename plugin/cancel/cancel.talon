@@ -6,3 +6,4 @@ cancel cancel$: skip()
 ignore [<phrase>]$: app.notify("Command ignored")
 
 ^hey siri [<phrase>]$: app.notify("Ignoring “Hey Siri…”")
+^siri [<phrase>]$: app.notify("Ignoring “Siri…”")
