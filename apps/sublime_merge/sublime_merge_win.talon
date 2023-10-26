@@ -23,6 +23,10 @@ go files: key(ctrl-3)
 
 commit: key(ctrl-9 ctrl-enter)
 push: key(ctrl-alt-up)
+push force:
+    key(shift-f8)
+    "--force-with-lease"
+    key(enter)
 pull: key(ctrl-alt-down)
 stage all:
     key(ctrl-shift-a)
