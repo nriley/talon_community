@@ -104,6 +104,18 @@ class UserActions:
         except:
             pass  # XXX generates talon.mac.ui.ActionFailed
 
+        for attempt in range(10):
+            try:
+                join_item = menu_extra.children.find_one(
+                    AXRole="AXMenuItem", AXIdentifier="conferenceMenuItemSelected:"
+                )
+                break
+            except ui.UIErr:
+                pass
+            actions.sleep("10ms")
+        else:
+            raise Exception("Can't find conference menu item")
+
 
 @mod.action_class
 class Actions:
