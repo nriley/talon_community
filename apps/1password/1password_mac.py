@@ -36,24 +36,26 @@ class UserActions:
         search_field = None
         for attempt in range(100):
             actions.sleep("50ms")
-            try:
-                focused_element = ui.focused_element()
-                if (  # empty search field
-                    focused_element.AXRole == "AXTextField"
-                    and focused_element.AXDOMIdentifier == "quick-access-search"
-                ):
-                    search_field = focused_element
-                    break
-                if (  # autofill suggestion
-                    focused_element.AXRole == "AXStaticText"
-                    and focused_element.AXDOMIdentifier.endswith("-search-result")
-                ):
-                    search_field = focused_element.window.children.find_one(
-                        AXRole="AXTextField", AXDOMIdentifier="quick-access-search"
-                    )
-                    break
-            except:
-                pass
+            focused_element = ui.focused_element()
+            if focused_element is None:
+                continue
+            window = focused_element.window
+            if window.app.bundle != "com.1password.1password":
+                continue
+            window_element = focused_element.AXWindow
+            if window_element.get("AXModal") or window_element.get("AXCloseButton"):
+                continue  # not the Quick Access window
+            if (  # empty search field focused
+                focused_element.AXRole == "AXTextField"
+                and focused_element.AXSubrole == "AXSearchField"
+            ):
+                search_field = focused_element
+                break
+            # something else focused; find the search field
+            search_field = focused_element.window.children.find_one(
+                AXRole="AXTextField", AXSubrole="AXSearchField"
+            )
+            break
         else:
             print("Gave up waiting for quick access search")
             if focused_element is None:
