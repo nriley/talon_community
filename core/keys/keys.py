@@ -192,6 +192,7 @@ symbol_key_words = {
     "right bracket": "]",
     "close bracket": "]",
     "backslash": "\\",
+    "whack": "\\",
     "minus": "-",
     "equals": "=",
     "plus": "+",
