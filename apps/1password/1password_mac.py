@@ -36,7 +36,10 @@ class UserActions:
         search_field = None
         for attempt in range(100):
             actions.sleep("50ms")
-            focused_element = ui.focused_element()
+            try:
+                focused_element = ui.focused_element()
+            except RuntimeError:
+                continue
             if focused_element is None:
                 continue
             window = focused_element.window
