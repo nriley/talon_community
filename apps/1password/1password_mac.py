@@ -62,7 +62,7 @@ class UserActions:
             )
             break
         else:
-            print("Gave up waiting for quick access search")
+            print("Gave up waiting for 1Password Quick Access")
             if focused_element is None:
                 print(
                     f"Did not find any focused element, but frontmost window is {ui.active_window()}"
@@ -75,4 +75,4 @@ class UserActions:
             actions.sleep("50ms")
             if search_field.AXValue == text:
                 return
-        print("Gave up waiting to set search string")
+        print("Gave up waiting to set 1Password Quick Access search string")
