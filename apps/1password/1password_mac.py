@@ -13,9 +13,11 @@ os: mac
 @ctx.action_class("user")
 class UserActions:
     def password_fill():
+        # Autofill keyboard shortcut in General Settings
         actions.key("cmd-alt-shift-\\")
 
     def password_show():
+        # Show Quick Access keyboard shortcut in General Settings
         actions.key("cmd-alt-\\")
 
     def password_new():
