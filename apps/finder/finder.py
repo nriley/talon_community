@@ -28,21 +28,16 @@ class UserActions:
         if ui.active_window().title == "":
             return None  # likely a modal window
         try:
-            return applescript.run(
-                r"""
-                tell application id "com.apple.Finder"
-                    with timeout of 0.1 seconds
-                        if not (exists (front Finder window's target)) then return
-                        if front Finder window's target's class is not in {disk, folder} then return
-                        get front Finder window's target
-                        return (result as alias)'s POSIX path
-                    end timeout
-                end tell
-            """
-            )
-        except applescript.ApplescriptErr as e:
+            target = finder().Finder_windows[1].target
+            if not target.exists(timeout=0.1):
+                return None
+            if target.class_() not in {k.disk, k.folder}:
+                return None
+            return target.get(resulttype=k.alias, timeout=0.1).path
+        except CommandError:
+            # fails with some windows, e.g. AirDrop window
             print(
-                f'Unable to get path of frontmost Finder window "{ui.active_window().title}": {e}'
+                f'Unable to get path of frontmost Finder window "{ui.active_window().title}"'
             )
 
     def file_manager_terminal_here():
