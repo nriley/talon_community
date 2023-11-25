@@ -1,7 +1,7 @@
 from appscript import k
 from appscript.aem.mactypes import File
 from appscript.reference import CommandError
-from talon import Context, actions, ui
+from talon import Context, actions, app, ui
 
 ctx = Context()
 ctx.matches = r"""
@@ -76,9 +76,17 @@ class UserActions:
 
     def file_manager_new_folder(name: str):
         """Creates a new folder in a gui filemanager or inserts the command to do so for terminals"""
-        actions.key("cmd-shift-n")
-        actions.sleep("500ms")
-        actions.insert(name)
+        finder_app = finder()
+        try:
+            new_folder = finder_app.make(
+                new=k.folder,
+                at=finder_app.insertion_location(),
+                with_properties={k.name: name},
+            )
+        except CommandError as e:
+            app.notify(f"Unable to create folder named “{name}”", e.errormessage)
+            return
+        finder_app.select(new_folder)
 
     def file_manager_open_file(path: str):
         """opens the file"""

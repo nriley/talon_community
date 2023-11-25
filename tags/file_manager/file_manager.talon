@@ -29,6 +29,7 @@ go parent: user.file_manager_open_parent()
     user.file_manager_select_file(file_manager_files)
 
 #new folder
+folder new <user.format_text>: user.file_manager_new_folder(format_text)
 folder new <user.text>: user.file_manager_new_folder(text)
 
 #show properties
