@@ -1,3 +1,5 @@
+from appscript import k
+from appscript.reference import CommandError
 from talon import Context, actions, ui
 from talon.mac import applescript
 
@@ -5,6 +7,10 @@ ctx = Context()
 ctx.matches = r"""
 app: finder
 """
+
+
+def finder():
+    return ui.apps(bundle="com.apple.finder")[0].appscript()
 
 
 @ctx.action_class("user")
@@ -42,21 +48,17 @@ class UserActions:
     def file_manager_terminal_here():
         if ui.active_window().title == "":
             return  # likely a modal window
-        applescript.run(
-            r"""
-            try
-                with timeout of 0.1 seconds
-                    tell application id "com.apple.Finder" to set theTarget to (front Finder window's target as alias)
-                end timeout
-            on error -- fails with some windows, e.g. AirDrop window
-                return
-            end try
-            tell application id "com.apple.Terminal"
-                activate
-                open theTarget
-            end tell
-        """
-        )
+        try:
+            target = (
+                finder().Finder_windows[1].target.get(resulttype=k.alias, timeout=0.1)
+            )
+        except CommandError:
+            return  # fails with some windows, e.g. AirDrop window
+
+        terminal = actions.user.launch_or_focus_bundle(
+            bundle="com.apple.Terminal"
+        ).appscript()
+        terminal.open(target)
 
     def file_manager_show_properties():
         """Shows the properties for the file"""
