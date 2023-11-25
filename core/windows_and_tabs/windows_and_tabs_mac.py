@@ -1,4 +1,5 @@
 from talon import Context, actions, ui
+from talon.mac import applescript
 
 ctx = Context()
 ctx.matches = r"""
@@ -33,7 +34,13 @@ class AppActions:
         ui.active_app().element.AXHidden = True
 
     def window_hide_others():
-        actions.key("cmd-alt-h")
+        applescript.run(
+            """
+use framework "Foundation"
+set NSWorkspace to current application's class "NSWorkspace"
+NSWorkspace's sharedWorkspace's hideOtherApplications()
+"""
+        )
 
     def window_open():
         actions.key("cmd-n")
