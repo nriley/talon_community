@@ -1,4 +1,3 @@
--
 settings():
     # Adjust the scale of the imgui to my liking
     imgui.scale = 1
@@ -52,6 +51,10 @@ settings():
     speech.record_all = 1
     # default wav2letter timeout changed in 0.1.5 from 150 to 300 ms
     speech.timeout = 0.15
+
+    # Uncomment the below line to add a directory (relative to the Talon user dir) with additional .snippet files
+    # Changing this setting requires a restart of Talon
+    # user.snippets_dir = "snippets"
 
     # Uncomment the below to insert text longer than 10 characters (customizable) by
     # pasting from the clipboard. This is often faster than typing.

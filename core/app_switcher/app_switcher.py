@@ -310,12 +310,14 @@ class Actions:
 
     def switcher_focus(name: str):
         """Focus a new application by name"""
-        try:
-            app = actions.user.get_running_app(name)
-        except RuntimeError as e:
-            talon.app.notify("Unable to focus app", "\n".join(e.args))
-            return
-        actions.user.switcher_focus_app(app)
+        app = actions.user.get_running_app(name)
+
+        # Focus next window on same app
+        if app == ui.active_app():
+            actions.app.window_next()
+        # Focus new app
+        else:
+            actions.user.switcher_focus_app(app)
 
     def switcher_save_mouse_pos():
         """Save the mouse position for the current app before switching"""
