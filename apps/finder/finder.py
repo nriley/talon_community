@@ -34,8 +34,7 @@ class UserActions:
             if target.class_() not in {k.disk, k.folder}:
                 return None
             return target.get(resulttype=k.alias, timeout=0.1).path
-        except CommandError:
-            # fails with some windows, e.g. AirDrop window
+        except CommandError:  # fails with some windows, e.g. AirDrop window
             print(
                 f'Unable to get path of frontmost Finder window "{ui.active_window().title}"'
             )
