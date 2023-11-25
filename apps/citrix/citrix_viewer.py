@@ -14,7 +14,10 @@ app: citrix_viewer
 
 
 def citrix_view_menu():
-    citrix_viewer = ui.apps(bundle="com.citrix.receiver.icaviewer.mac")[0]
+    citrix_viewer = ui.active_app()
+    if citrix_viewer.bundle != "com.citrix.receiver.icaviewer.mac":
+        print("Citrix Viewer is not the active application")
+        return None
     menu_bar = citrix_viewer.children.find_one(AXRole="AXMenuBar", max_depth=0)
     view_menu = menu_bar.children.find_one(
         AXRole="AXMenuBarItem", AXTitle="View", max_depth=0
@@ -37,6 +40,10 @@ class UserActions:
             None,
         ):
             full_screen_item.perform("AXPress")
+        else:
+            print(
+                "Unable to find Citrix Viewer full screen menu item (non-English localization?)"
+            )
 
     def citrix_use_all_displays_in_full_screen():
         view_menu = citrix_view_menu()
