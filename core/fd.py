@@ -90,6 +90,7 @@ def fd_recording_control():
 
     return FD_RECORDING_CONTROL
 
+
 def fd_listening():
     global FD_RECORDING_CONTROL
 
@@ -98,7 +99,7 @@ def fd_listening():
             return fdrc.GetRecognizerStatus() == 1
         except com_error:
             FD_RECORDING_CONTROL = None
-    
+
     return False
 
 

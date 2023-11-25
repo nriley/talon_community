@@ -394,4 +394,3 @@ class UserActions:
 
     def insert_snippet(body: str):
         actions.user.run_rpc_command("editor.action.insertSnippet", {"snippet": body})
-

@@ -33,6 +33,7 @@ class Actions:
     def putty_open_session(putty_session: str):
         """Open the named PuTTY session"""
 
+
 @ctx.action_class("user")
 class UserActions:
     def putty_open_menu():
@@ -41,13 +42,14 @@ class UserActions:
         # Window > Behaviour > System menu appears on ALT-Space is set
         actions.key("alt-space")
 
+
 @ctx_configuration.action_class("user")
 class UserActions:
     def putty_open_session(putty_session: str):
         actions.key("alt-e")
         actions.insert(putty_session)
         actions.key("alt-l alt-o")
-        
+
 
 def ready():
     import winreg

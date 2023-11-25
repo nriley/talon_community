@@ -26,5 +26,4 @@ launch running: key(ctrl-alt-shift-space)
 
 # -- Menu search / Homerow
 # In-app search hotkey
-^(ax|menu) [<user.text>]$:
-    user.fluent_search_in_app(text or "", false)
+^(ax | menu) [<user.text>]$: user.fluent_search_in_app(text or "", false)

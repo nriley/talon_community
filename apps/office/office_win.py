@@ -30,10 +30,12 @@ ctx.matches = """
 app: office_win
 """
 
+
 @mod.action_class
 class Actions:
     def office_win_ribbon_select(keys: str):
         """Select from the ribbon on OneNote for Windows."""
+
 
 @ctx.action_class("user")
 class UserActions:

@@ -7,14 +7,16 @@ ctx.matches = """
 os: windows
 """
 
+
 def wait_for_fluent_search_window():
     for attempt in range(10):
         if ui.active_app().name == "FluentSearch":
             return True
         actions.sleep("50ms")
-    
+
     app.notify("Gave up while waiting for Fluent Search")
     return False
+
 
 @mod.action_class
 class Action:
@@ -23,6 +25,7 @@ class Action:
 
     def fluent_search_in_app(text: str, submit: bool):
         """Searches using Fluent Search’s In-app Search"""
+
 
 @ctx.action_class("user")
 class UserActions:

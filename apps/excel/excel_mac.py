@@ -8,6 +8,7 @@ ctx.matches = r"""
 app: excel_mac
 """
 
+
 @ctx.action_class("app")
 class AppActions:
     def window_open():

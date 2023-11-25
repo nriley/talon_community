@@ -1,4 +1,5 @@
-import sys, time
+import sys
+import time
 from datetime import date, timedelta
 from typing import Optional
 
