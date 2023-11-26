@@ -6,6 +6,10 @@ copy (location | address):
     browser.focus_address()
     edit.copy()
     browser.focus_page()
+copy link:
+    address = browser.address()
+    title = win.title()
+    user.copy_link(address, title)
 go home: browser.go_home()
 [go] forward: browser.go_forward()
 go (back | backward): browser.go_back()
