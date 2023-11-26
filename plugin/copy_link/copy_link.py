@@ -16,9 +16,10 @@ class Actions:
             + rb"}}}"
         )
         mime = clip.MimeData()
-        mime.urls = [url]
         mime.rtf = rtf.decode("ascii")
-        # XXX can't set text or it *adds* an item
+        # mime.text = url
+        # mime.urls = [url]
+        # XXX setting additional data types *adds* items <https://github.com/talonvoice/talon/issues/642>
         clip.set_mime(mime)
 
 
