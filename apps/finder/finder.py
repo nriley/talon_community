@@ -1,6 +1,10 @@
-from appscript import k
-from appscript.aem.mactypes import File
-from appscript.reference import CommandError
+try:
+    from appscript import k
+    from appscript.aem.mactypes import File
+    from appscript.reference import CommandError
+except ImportError:
+    pass
+
 from talon import Context, actions, app, ui
 
 ctx = Context()
