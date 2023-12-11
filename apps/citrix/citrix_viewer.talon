@@ -3,7 +3,7 @@ app: citrix_viewer
 
 # keys get dropped frequently, particularly during initial login
 settings():
-    insert_wait = 2
+    insert_wait = 4
 
 full screen: user.window_toggle_full_screen()
 
