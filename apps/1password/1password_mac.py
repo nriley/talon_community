@@ -47,32 +47,36 @@ class UserActions:
             window = focused_element.window
             if window.app.bundle != "com.1password.1password":
                 continue
-            window_element = focused_element.AXWindow
+            if not (window_element := focused_element.get("AXWindow")):
+                continue
             if window_element.get("AXModal") or window_element.get("AXCloseButton"):
                 continue  # not the Quick Access window
             if (  # empty search field focused
-                focused_element.AXRole == "AXTextField"
-                and focused_element.AXSubrole == "AXSearchField"
+                focused_element.get("AXRole") == "AXTextField"
+                and focused_element.get("AXSubrole") == "AXSearchField"
             ):
                 search_field = focused_element
                 break
             # something else focused; find the search field
-            search_field = focused_element.window.children.find_one(
-                AXRole="AXTextField", AXSubrole="AXSearchField"
-            )
+            try:
+                search_field = window_element.children.find_one(
+                    AXRole="AXTextField", AXSubrole="AXSearchField"
+                )
+            except ui.UIErr:
+                print(f"Unable to find search field in {window_element}")
+                continue
             break
         else:
-            print("Gave up waiting for 1Password Quick Access")
             if focused_element is None:
                 print(
                     f"Did not find any focused element, but frontmost window is {ui.active_window()}"
                 )
             else:
                 print(f"Found focused element: {focused_element.dump()}")
-            return
+            raise Exception("Gave up waiting for 1Password Quick Access")
         for attempt in range(10):
             search_field.AXValue = text
             actions.sleep("50ms")
             if search_field.AXValue == text:
                 return
-        print("Gave up waiting to set 1Password Quick Access search string")
+        raise Exception("Gave up waiting to set 1Password Quick Access search string")
