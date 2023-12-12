@@ -8,7 +8,7 @@ copy (location | address):
     browser.focus_page()
 copy link:
     address = browser.address()
-    title = win.title()
+    title = user.rango_get_bare_title()
     user.copy_link(address, title)
 go home: browser.go_home()
 [go] forward: browser.go_forward()
