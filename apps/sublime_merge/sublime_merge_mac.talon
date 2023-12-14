@@ -21,6 +21,12 @@ go locations: key(cmd-1)
 go commits: key(cmd-2)
 go files: key(cmd-3)
 
+# navigate to first hunk in file (or section in Summary tab)
+hunk:
+    key(cmd-shift-[ cmd-shift-])
+    sleep(150ms)
+    key(tab)
+
 commit:
     key(cmd-9)
     sleep(100ms)
@@ -31,11 +37,23 @@ push force:
     "--force-with-lease"
     key(enter)
 pull: key(cmd-alt-down)
-# XXX broken - see https://github.com/sublimehq/sublime_merge/issues/778
-# stage: key(shift-enter)
+
+# stage commands work when insertion point is in a hunk
+
+# this tends to get preferred to other stage commands (and can be destructive to your carefully curated
+# commit); feel free to uncomment if you don't see the conflict
+# ^stage | unstage$: key(shift-enter)
+
+(stage | unstage) (this | hunk | lines): key(enter)
+
+# stage command works in a file tab
+stage file: key(cmd-shift-[ cmd-shift-] tab shift-enter)
+
+# stage commands work anywhere in a commit
 stage all:
     key(cmd-shift-a)
     sleep(100ms)
+unstage all: key(cmd-shift-r)
 stage untracked: key(cmd-k cmd-a)
 
 stash: key(cmd-s)
@@ -57,3 +75,6 @@ stash pop: key(cmd-shift-s)
 ^repo [<user.text>]:
     key(escape ctrl-cmd-p)
     insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
+
+^file previous: key(cmd-shift-[)
+^file next: key(cmd-shift-])
