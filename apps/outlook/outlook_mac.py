@@ -43,6 +43,11 @@ class AppActions:
 
 @ctx.action_class("user")
 class UserActions:
+    def find_everywhere(text: str):
+        actions.key("cmd-shift-f")
+        if text:
+            actions.insert(text)
+
     def outlook_set_selected_folder(folder: str):
         # for "old Outlook" this uses the scripting dictionary
         # for "new Outlook" this currently uses the displayed folder name
