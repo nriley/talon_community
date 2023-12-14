@@ -7,6 +7,7 @@ delete: key(backspace)
 # This toggles; OK for now
 flag | unflag: key(cmd-shift-l)
 junk: key(cmd-shift-j)
+download: user.mail_download_images()
 reply: key(cmd-r)
 reply all: key(cmd-shift-r)
 

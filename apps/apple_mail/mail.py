@@ -90,6 +90,15 @@ class UserActions:
         for selected_message in mail_selected_messages():
             selected_message.read_status.set(False)
 
+    def mail_download_images():
+        mail = mail_app()
+        try:
+            mail.active_window.element.children.find_one(
+                AXRole="AXGroup", AXDescription="load failed proxy content banner"
+            ).children.find_one(AXRole="AXButton").perform("AXPress")
+        except ui.UIErr:
+            pass
+
 
 @mod.action_class
 class Actions:
@@ -104,3 +113,6 @@ class Actions:
 
     def mail_mark_as_unread():
         """Mark the selected messages as unread"""
+
+    def mail_download_images():
+        """Download images in Apple Mail"""
