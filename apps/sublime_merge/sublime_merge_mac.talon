@@ -78,3 +78,5 @@ stash pop: key(cmd-shift-s)
 
 ^file previous: key(cmd-shift-[)
 ^file next: key(cmd-shift-])
+
+^edit: key(cmd-enter)
