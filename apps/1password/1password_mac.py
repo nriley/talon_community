@@ -44,7 +44,11 @@ class UserActions:
                 continue
             if focused_element is None:
                 continue
-            window = focused_element.window
+            try:
+                window = focused_element.window
+            except ui.UIErr:
+                print(f"Unable to find window for focused element: {focused_element}")
+                continue
             if window.app.bundle != "com.1password.1password":
                 continue
             if not (window_element := focused_element.get("AXWindow")):
