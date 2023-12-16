@@ -17,6 +17,8 @@ auto_pop_that_phrases = [
     "undo that",
     "cursor more",
     "downer",
+    "next",
+    "previous",
 ]
 
 
