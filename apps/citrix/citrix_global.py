@@ -8,7 +8,7 @@ os: mac
 
 
 @mod.action_class
-class Action:
+class Actions:
     def citrix_focus_desktop() -> bool:
         """Focus the Citrix desktop, returning whether successful"""
 

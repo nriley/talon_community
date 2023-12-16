@@ -19,7 +19,7 @@ def wait_for_fluent_search_window():
 
 
 @mod.action_class
-class Action:
+class Actions:
     def fluent_search(text: str):
         """Searches using Fluent Search"""
 
