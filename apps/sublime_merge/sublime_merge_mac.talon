@@ -47,7 +47,7 @@ pull: key(cmd-alt-down)
 (stage | unstage) (this | hunk | lines): key(enter)
 
 # stage command works in a file tab
-stage file:
+file (stage | unstage):
     key(cmd-shift-[ cmd-shift-])
     sleep(100ms)
     key(tab shift-enter)
