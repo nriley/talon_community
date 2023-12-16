@@ -47,7 +47,10 @@ pull: key(cmd-alt-down)
 (stage | unstage) (this | hunk | lines): key(enter)
 
 # stage command works in a file tab
-stage file: key(cmd-shift-[ cmd-shift-] tab shift-enter)
+stage file:
+    key(cmd-shift-[ cmd-shift-])
+    sleep(100ms)
+    key(tab shift-enter)
 
 # stage commands work anywhere in a commit
 stage all:
