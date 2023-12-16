@@ -169,7 +169,7 @@ class EditActions:
         actions.key("cmd-s")
 
     def save_all():
-        actions.key("cmd-opt-s")
+        actions.key("cmd-alt-s")
 
     def select_all():
         actions.key("cmd-a")
