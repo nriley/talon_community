@@ -240,14 +240,17 @@ def update_running_list():
             # print(cur_app.exe)
             running_application_dict[cur_app.exe.split(os.path.sep)[-1]] = True
 
+    override_apps = frozenset([name.lower() for name in overrides.values()])
+    
     running = actions.user.create_spoken_forms_from_list(
-        [curr_app.name for curr_app in ui.apps(background=False)],
+        [curr_app.name for curr_app in ui.apps(background=False)
+         if curr_app.name.lower() not in override_apps
+         and curr_app.exe.lower() not in override_apps
+         and os.path.basename(curr_app.exe).lower() not in override_apps],
         words_to_exclude=words_to_exclude,
         generate_subsequences=True,
     )
 
-    # print(str(running_application_dict))
-    # todo: should the overrides remove the other spoken forms for an application?
     for override in overrides:
         if overrides[override] in running_application_dict:
             running[override] = overrides[override]
