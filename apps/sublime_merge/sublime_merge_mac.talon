@@ -82,4 +82,5 @@ stash pop: key(cmd-shift-s)
 ^file previous: key(cmd-shift-[)
 ^file next: key(cmd-shift-])
 
+# works only when a file/hunk is focused
 ^edit: key(cmd-enter)
