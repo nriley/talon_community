@@ -16,7 +16,7 @@ please [<user.text>]:
     key(ctrl-9)
     sleep(100ms)
     key(ctrl-; down)
-    
+
 go locations: key(ctrl-1)
 go commits: key(ctrl-2)
 go files: key(ctrl-3)
@@ -26,10 +26,6 @@ hunk:
     key(ctrl-pagedown ctrl-pageup)
     sleep(150ms)
     key(tab)
-
-go locations: key(ctrl-1)
-go commits: key(ctrl-2)
-go files: key(ctrl-3)
 
 commit: key(ctrl-9 ctrl-enter)
 push: key(ctrl-alt-up)
@@ -83,6 +79,6 @@ stash pop: key(ctrl-shift-s)
 
 # works only when a file/hunk is focused
 ^edit: key(ctrl-enter)
-    
+
 # Win+down x2 does not reliably minimize the window
 window minimize: key(alt-space n)
