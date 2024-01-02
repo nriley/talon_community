@@ -38,6 +38,17 @@ class UserActions:
         search_field = None
         for attempt in range(200):
             actions.sleep("50ms")
+            if apps := ui.apps(bundle="com.1password.1password"):
+                try:
+                    next(
+                        w
+                        for w in apps[0].windows()
+                        if w.title == "Quick Access — 1Password"
+                    )
+                except StopIteration:
+                    print("No Quick Access window — found only:", apps[0].windows())
+                    actions.user.password_show()
+                    continue
             try:
                 focused_element = ui.focused_element()
             except RuntimeError:
