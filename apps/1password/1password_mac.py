@@ -36,8 +36,8 @@ class UserActions:
         actions.user.password_show()
         focused_element = None
         search_field = None
-        for attempt in range(200):
-            actions.sleep("50ms")
+        for attempt in range(100):
+            actions.sleep("200ms")
             if apps := ui.apps(bundle="com.1password.1password"):
                 try:
                     next(
