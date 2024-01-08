@@ -1,5 +1,4 @@
-os: windows
-and app: sqltools
+app: sqltools
 -
 tag(): user.line_commands
 tag(): user.tabs

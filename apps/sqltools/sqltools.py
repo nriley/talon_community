@@ -6,11 +6,13 @@ ctx = Context()
 mod.apps.sqltools = """
 os: windows
 and app.exe: SQLToolsU.exe
+os: mac
+and app: citrix_desktop
+and code.language: sql
 """
 
 ctx.matches = """
-os: windows
-and app: sqltools
+app: sqltools
 """
 
 
