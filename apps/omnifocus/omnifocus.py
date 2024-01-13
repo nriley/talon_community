@@ -48,11 +48,10 @@ class UserActions:
             actions.insert(str(days))
 
     def omnifocus_select_tree(tree: str):
-        from talon.mac import applescript
+        content = omnifocus_app().appscript().windows[1].content
+        trees = [eval("content." + tree, dict(content=content), {})]
+        content.selected_trees.set(trees)
 
-        applescript.run(
-            f'tell application id "com.omnigroup.OmniFocus3.MacAppStore" to tell window 1\'s content to set selected trees to {{{tree}}}'
-        )
         actions.key("alt-cmd-2")
 
     def find_everywhere(text: str):
@@ -89,4 +88,4 @@ class Actions:
         """Postpone by a number of days"""
 
     def omnifocus_select_tree(tree: str):
-        """Select a tree in the outline (specified as AppleScript scoped to window content)"""
+        """Select a tree in the outline (specified as Python appscript expression scoped to window content)"""

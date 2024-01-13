@@ -9,14 +9,14 @@ action [<phrase>]:
 
 action first:
     key(home)
-    user.omnifocus_select_tree("first tree's first descendant tree")
+    user.omnifocus_select_tree("trees[1].descendant_trees[1]")
     # work around OmniFocus bug?
     sleep(100ms)
     key(home)
 
 tree first:
     key(home)
-    user.omnifocus_select_tree("item 1 of trees")
+    user.omnifocus_select_tree("trees[1]")
     # work around OmniFocus bug?
     sleep(100ms)
     key(home)
@@ -26,7 +26,7 @@ action next: key(cmd-alt-2 escape cmd-. down)
 
 action (last | lost | lust):
     key(end)
-    user.omnifocus_select_tree("last tree's last descendant tree")
+    user.omnifocus_select_tree("trees[-1].descendant_trees[-1]")
 
 open [<phrase>]:
     key(cmd-o)
