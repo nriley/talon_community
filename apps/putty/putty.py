@@ -6,7 +6,7 @@ ctx_configuration = Context()
 
 mod.apps.putty = """
 os: windows
-and app.exe: putty.exe
+and app.exe: /putty\.exe/i
 """
 
 mod.apps.putty_configuration = """
