@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, app, ui
+from talon import Context, Module, actions, app, ctrl, ui
 from talon.mac import applescript
 
 ctx = Context()
@@ -39,6 +39,45 @@ def outlook_focused_element():
 class AppActions:
     def window_open():
         actions.user.menu_select("File|New|Main Window")
+
+
+def zoom_if_editing(out: bool):
+    zoom_item = (
+        outlook_app()
+        .element.children.find_one(AXRole="AXMenuBar", max_depth=0)
+        .children.find_one(AXRole="AXMenuBarItem", AXTitle="Format", max_depth=0)
+        .children[0]
+        .children.find_one(AXRole="AXMenuItem", AXTitle="Zoom", max_depth=0)
+    )
+    if not zoom_item.AXEnabled:
+        return False
+
+    focused_element = outlook_focused_element()
+    mouse_pos = ctrl.mouse_pos()
+    element_center = focused_element.AXFrame.center
+    ctrl.mouse_move(*element_center)
+    actions.key("ctrl:down")
+    # y scroll amount maps directly to zoom percentage; keyboard zooming in a message
+    # zooms by 20% at a time, so do the same here. But, depending on the current
+    # zoom level, this may do nothing - an Outlook bug I'm not working around
+    ctrl.mouse_scroll(y=(-20 if out else 20))
+    ctrl.mouse_move(*mouse_pos)
+    actions.key("ctrl:up")
+
+    return True
+
+
+@ctx.action_class("edit")
+class EditActions:
+    def zoom_in():
+        if zoom_if_editing(False):
+            return
+        actions.key("cmd-=")
+
+    def zoom_out():
+        if zoom_if_editing(True):
+            return
+        actions.key("cmd--")
 
 
 @ctx.action_class("user")
