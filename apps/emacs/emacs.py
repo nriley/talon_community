@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 
-from talon import Context, Module, actions, settings
+from talon import Context, Module, actions, settings, ui
 
 mod = Module()
 mod.setting(
