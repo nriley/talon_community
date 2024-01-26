@@ -7,6 +7,16 @@ mod = Module()
 CALL_MICROPHONE = "SpeechMike III"
 pre_call_microphone = None
 
+EXCLUDE_MICROPHONES = {
+    "LG UltraFine Display Audio",
+    "Camo Microphone",
+    "Microsoft Teams Audio Device",
+    "RØDE Connect System",
+    "RØDE Connect Virtual",
+    "WebexMediaAudioDevice",
+    "ZoomAudioDevice",
+}
+
 microphone_device_list = []
 
 
@@ -19,7 +29,10 @@ def update_microphone_list():
     # On Windows, it's presently necessary to check the state, or
     # we will get any and every microphone that was ever connected.
     devices = [
-        dev.name for dev in ctx.inputs() if dev.state == cubeb.DeviceState.ENABLED
+        dev.name
+        for dev in ctx.inputs()
+        if dev.state == cubeb.DeviceState.ENABLED
+        and dev.name not in EXCLUDE_MICROPHONES
     ]
 
     devices.sort()
