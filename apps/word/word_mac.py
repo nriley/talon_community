@@ -1,7 +1,7 @@
 from talon import Context, Module, actions, app, ui
 
 if app.platform == "mac":
-    from appscript import k, its
+    from appscript import its, k
 
 ctx = Context()
 mod = Module()
@@ -60,6 +60,12 @@ class EditActions:
         word_document_zoom().percentage.set(100)
 
 
+@mod.action_class
+class Actions:
+    def toggle_comments():
+        """Toggle display of comments"""
+
+
 @ctx.action_class("user")
 class UserActions:
     def find(text: str):
@@ -115,3 +121,7 @@ class UserActions:
 
     def zoom_to_fit_width():
         word_document_zoom().page_fit.set(k.page_fit_best_fit)
+
+    def toggle_comments():
+        show_comments = word_document_window().view.show_comments
+        show_comments.set(not show_comments())
