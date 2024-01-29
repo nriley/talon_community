@@ -1,7 +1,7 @@
 from talon import Context, Module, actions, app, ui
 
 if app.platform == "mac":
-    from appscript import k
+    from appscript import k, its
 
 ctx = Context()
 mod = Module()
@@ -33,11 +33,11 @@ def word_document_window():
         ):
             raise Exception("Frontmost window is not a document window")
 
-    return word.appscript().windows[k.active == True]
+    return word.appscript().windows[its.active == True]()[0]
 
 
 def word_document_zoom():
-    return word_document_window().active_pane.view.zoom
+    return word_document_window().view.zoom
 
 
 @ctx.action_class("app")
