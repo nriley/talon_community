@@ -18,3 +18,4 @@ mail pdf: user.menu_select("File|Share|Send PDF")
 ribbon: key(cmd-alt-r)
 
 comments switch: user.toggle_comments()
+comment: user.menu_select("Insert|Comment")
