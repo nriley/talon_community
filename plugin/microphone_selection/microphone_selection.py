@@ -58,9 +58,8 @@ def gui(gui: imgui.GUI):
     gui.line()
     active_microphone = actions.sound.active_microphone()
     for index, item in enumerate(microphone_device_list, 1):
-        index = f"{index} " if index >= 10 else f"[{index}] "
         if gui.button(
-            f"{index}{item}{' — active' if item == active_microphone else ''}"
+            f"{f'[{index}] ' if index < 10 else ''}{item}{' — active' if item == active_microphone else ''}"
         ):
             actions.user.microphone_select(index)
 
