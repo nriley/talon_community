@@ -89,7 +89,6 @@ class Actions:
         """Selects a microphone"""
         if 1 <= index and index <= len(microphone_device_list):
             actions.sound.set_microphone(microphone_device_list[index - 1])
-            app.notify(f"Activating microphone: {microphone_device_list[index - 1]}")
             actions.user.microphone_selection_hide()
 
     def microphone_switch() -> bool:
