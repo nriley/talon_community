@@ -1,8 +1,10 @@
-from talon import Module, actions, app, imgui
+from talon import Context, Module, actions, app, imgui
 from talon.lib import cubeb
 
-ctx = cubeb.Context()
 mod = Module()
+ctx = Context()
+
+cubeb_ctx = cubeb.Context()
 
 CALL_MICROPHONE = "SpeechMike III"
 pre_call_microphone = None
@@ -30,7 +32,7 @@ def update_microphone_list():
     # we will get any and every microphone that was ever connected.
     devices = [
         dev.name
-        for dev in ctx.inputs()
+        for dev in cubeb_ctx.inputs()
         if dev.state == cubeb.DeviceState.ENABLED
         and dev.name not in EXCLUDE_MICROPHONES
     ]
@@ -43,16 +45,24 @@ def devices_changed(device_type):
     update_microphone_list()
 
 
+mod.tag(
+    "microphone_selection_open",
+    "tag for commands that are available only when the list of microphones is visible",
+)
+
+
 @imgui.open()
 def gui(gui: imgui.GUI):
-    gui.text("Select a Microphone")
+    gui.text("Click or type to select a microphone")
+    gui.text("(or say “microphone pick #”)")
     gui.line()
     for index, item in enumerate(microphone_device_list, 1):
-        if gui.button(f"{index}. {item}"):
+        index = f"{index} " if index >= 10 else f"[{index}] "
+        if gui.button(f"{index}{item}"):
             actions.user.microphone_select(index)
 
     gui.spacer()
-    if gui.button("Microphone close"):
+    if gui.button("[esc] Microphone close"):
         actions.user.microphone_selection_hide()
 
 
@@ -61,21 +71,23 @@ class Actions:
     def microphone_selection_toggle():
         """Show GUI for choosing the Talon microphone"""
         if gui.showing:
-            gui.hide()
-        else:
-            update_microphone_list()
-            gui.show()
+            actions.user.microphone_selection_hide()
+            return
+        update_microphone_list()
+        gui.show()
+        ctx.tags = ["user.microphone_selection_open"]
 
     def microphone_selection_hide():
         """Hide the microphone selection GUI"""
         gui.hide()
+        ctx.tags = []
 
     def microphone_select(index: int):
         """Selects a microphone"""
         if 1 <= index and index <= len(microphone_device_list):
             actions.sound.set_microphone(microphone_device_list[index - 1])
             app.notify(f"Activating microphone: {microphone_device_list[index - 1]}")
-            gui.hide()
+            actions.user.microphone_selection_hide()
 
     def microphone_switch() -> bool:
         """Switches to a secondary microphone for use during a call (returning success)"""
@@ -106,7 +118,7 @@ class Actions:
 
 
 def on_ready():
-    ctx.register("devices_changed", devices_changed)
+    cubeb_ctx.register("devices_changed", devices_changed)
     update_microphone_list()
 
 
