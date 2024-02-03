@@ -354,6 +354,9 @@ class Actions:
 
         actions.user.switcher_restore_mouse_pos(app)
 
+    def switcher_focus_last():
+        """Focus last window/application"""
+
     def switcher_focus_window(window: ui.Window):
         """Focus window and wait until switch is made"""
         window.focus()

@@ -34,8 +34,8 @@ words_to_exclude = [
 
 mod.setting(
     "file_manager_auto_show_pickers",
-    type=int,
-    default=0,
+    type=bool,
+    default=False,
     desc="Enable to show the file/directories pickers automatically",
 )
 mod.setting(
@@ -332,14 +332,18 @@ def clear_lists():
         or len(ctx.lists["self.file_manager_files"]) > 0
     ):
         current_folder_page = current_file_page = 1
-        ctx.lists["self.file_manager_directories"] = []
-        ctx.lists["self.file_manager_files"] = []
+        ctx.lists.update(
+            {
+                "self.file_manager_directories": [],
+                "self.file_manager_files": [],
+            }
+        )
         folder_selections = []
         file_selections = []
 
 
 def update_gui():
-    if gui_folders.showing or settings.get("user.file_manager_auto_show_pickers") >= 1:
+    if gui_folders.showing or settings.get("user.file_manager_auto_show_pickers"):
         gui_folders.show()
         gui_files.show()
 
@@ -373,8 +377,12 @@ def update_lists(path=None):
                 files = {}
 
     current_folder_page = current_file_page = 1
-    ctx.lists["self.file_manager_directories"] = directories
-    ctx.lists["self.file_manager_files"] = files
+    ctx.lists.update(
+        {
+            "self.file_manager_directories": directories,
+            "self.file_manager_files": files,
+        }
+    )
 
     folder_selections = list(set(directories.values()))
     folder_selections.sort(key=str.casefold)

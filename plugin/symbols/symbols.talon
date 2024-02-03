@@ -39,12 +39,12 @@ inside back ticks: user.insert_between("`", "`")
 angle that:
     text = edit.selected_text()
     user.paste("<{text}>")
-brace that:
-    text = edit.selected_text()
-    user.paste("{{{text}}}")
-bracket that:
+(bracket | square bracket) that:
     text = edit.selected_text()
     user.paste("[{text}]")
+(brace | curly bracket) that:
+    text = edit.selected_text()
+    user.paste("{{{text}}}")
 (parens | args) that:
     text = edit.selected_text()
     user.paste("({text})")
