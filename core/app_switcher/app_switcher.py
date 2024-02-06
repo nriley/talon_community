@@ -233,15 +233,16 @@ def update_running_list():
     running = {}
     foreground_apps = ui.apps(background=False)
     for cur_app in foreground_apps:
-        running_application_dict[cur_app.name] = True
+        running_application_dict[cur_app.name.lower()] = cur_app.name
 
         if app.platform == "windows":
             # print("hit....")
             # print(cur_app.exe)
-            running_application_dict[cur_app.exe.split(os.path.sep)[-1]] = True
+            exe = os.path.split(cur_app.exe)[1]
+            running_application_dict[exe.lower()] = exe
 
-    override_apps = frozenset([name.lower() for name in overrides.values()])
-    
+    override_apps = frozenset({name.lower() for name in overrides.values()})
+
     running = actions.user.create_spoken_forms_from_list(
         [curr_app.name for curr_app in ui.apps(background=False)
          if curr_app.name.lower() not in override_apps
@@ -252,8 +253,8 @@ def update_running_list():
     )
 
     for override in overrides:
-        if overrides[override] in running_application_dict:
-            running[override] = overrides[override]
+        if running_app_name := running_application_dict.get(overrides[override]):
+            running[override] = running_app_name
 
     lists = {
         "self.running": running,
@@ -290,7 +291,7 @@ class Actions:
         # We should use the capture result directly if it's already in the list
         # of running applications. Otherwise, name is from <user.text> and we
         # can be a bit fuzzier
-        if name not in running_application_dict:
+        if name.lower() not in running_application_dict:
             if len(name) < 3:
                 raise RuntimeError(
                     f'Skipped getting app: "{name}" has less than 3 chars.'
@@ -306,7 +307,8 @@ class Actions:
         for application in ui.apps(background=False):
             if application.name == name or (
                 app.platform == "windows"
-                and application.exe.split(os.path.sep)[-1] == name
+                # XXX not sure why this is lowercase when it's capitalized in the list
+                and os.path.split(application.exe)[1].lower() == name
             ):
                 return application
         raise RuntimeError(f'App not running: "{name}"')
