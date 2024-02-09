@@ -232,36 +232,33 @@ def update_running_list():
     running_application_dict = {}
     running = {}
     foreground_apps = ui.apps(background=False)
+
     for cur_app in foreground_apps:
         running_application_dict[cur_app.name.lower()] = cur_app.name
 
         if app.platform == "windows":
-            # print("hit....")
-            # print(cur_app.exe)
             exe = os.path.split(cur_app.exe)[1]
             running_application_dict[exe.lower()] = exe
 
-    override_apps = frozenset({name.lower() for name in overrides.values()})
+    override_apps = frozenset(overrides.values())
 
     running = actions.user.create_spoken_forms_from_list(
-        [curr_app.name for curr_app in ui.apps(background=False)
-         if curr_app.name.lower() not in override_apps
-         and curr_app.exe.lower() not in override_apps
-         and os.path.basename(curr_app.exe).lower() not in override_apps],
+        [
+            curr_app.name
+            for curr_app in ui.apps(background=False)
+            if curr_app.name.lower() not in override_apps
+            and curr_app.exe.lower() not in override_apps
+            and os.path.basename(curr_app.exe).lower() not in override_apps
+        ],
         words_to_exclude=words_to_exclude,
         generate_subsequences=True,
     )
 
-    for override in overrides:
-        if running_app_name := running_application_dict.get(overrides[override]):
-            running[override] = running_app_name
+    for running_name, full_application_name in overrides.items():
+        if running_app_name := running_application_dict.get(full_application_name):
+            running[running_name] = running_app_name
 
-    lists = {
-        "self.running": running,
-    }
-
-    # batch update lists
-    ctx.lists.update(lists)
+    ctx.lists["self.running"] = running
 
     for quit_app in set(app_mouse_pos) - set(foreground_apps):
         del app_mouse_pos[quit_app]
@@ -276,10 +273,10 @@ def update_overrides(name, flags):
         # print("update_overrides")
         with open(override_file_path) as f:
             for line in f:
-                line = line.rstrip()
+                line = line.rstrip().lower()
                 line = line.split(",")
                 if len(line) == 2:
-                    overrides[line[0].lower()] = line[1].strip()
+                    overrides[line[0]] = line[1].strip()
 
         update_running_list()
 
