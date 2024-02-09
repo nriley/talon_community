@@ -411,10 +411,11 @@ class Actions:
 
 @imgui.open()
 def gui_running(gui: imgui.GUI):
-    gui.text("Names of running applications")
+    gui.text("Running applications (with spoken forms)")
     gui.line()
-    for line in ctx.lists["self.running"]:
-        gui.text(line)
+    running_apps = sorted((v, k) for k, v in ctx.lists["self.running"].items())
+    for full_application_name, running_name in running_apps:
+        gui.text(f"{full_application_name}: {running_name}")
 
     gui.spacer()
     if gui.button("Running close"):
