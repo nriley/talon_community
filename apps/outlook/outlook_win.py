@@ -5,7 +5,7 @@ mod = Module()
 
 ctx.matches = r"""
 os: windows
-and app.exe: OUTLOOK.EXE
+and app.exe: outlook.exe
 """
 
 

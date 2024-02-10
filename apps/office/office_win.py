@@ -5,19 +5,19 @@ ctx = Context()
 
 mod.apps.excel_win = """
 os: windows
-and app.exe: EXCEL.EXE
+and app.exe: excel.exe
 """
 mod.apps.powerpoint_win = r"""
 os: windows
-and app.exe: POWERPNT.EXE
+and app.exe: powerpnt.exe
 """
 mod.apps.word_win = r"""
 os: windows
-and app.exe: WINWORD.EXE
+and app.exe: winword.exe
 """
 mod.apps.onenote_win = r"""
 os: windows
-and app.exe: ONENOTE.EXE
+and app.exe: onenote.exe
 """
 mod.apps.office_win = r"""
 app: excel_win
