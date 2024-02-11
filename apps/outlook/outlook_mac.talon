@@ -41,7 +41,7 @@ hunt all: key(cmd-shift-f)
 
 sync: key(cmd-ctrl-k)
 
-toggle sidebar: key(cmd-alt-s)
+bar switch: key(cmd-alt-s)
 
 # not tested in "old Outlook"
 # can use Control-[/] for previous/next though that does not focus the message list

@@ -11,7 +11,7 @@ today: key(cmd-t)
 
 calendar set [<user.text>]: user.fantastical_select_calendar_set(text or "")
 
-toggle sidebar: key(cmd-alt-s)
+bar switch: key(cmd-alt-s)
 pending: user.fantastical_show_notifications()
 
 dismiss: key(cmd-enter down)
