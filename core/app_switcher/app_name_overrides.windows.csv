@@ -1,5 +1,8 @@
+Application Frame Host
+Citrix HDX Engine
 code, Code.exe
 command, cmd.exe
+Console Window Host
 epic studio, epicstudio.exe
 explorer, explorer.exe
 fluency direct, fluencydirect.exe
@@ -9,5 +12,8 @@ outlook, outlook.exe
 piano bar, pianobar.exe
 power point, powerpnt.exe
 putty, putty.exe
+Store
 teams, ms-teams.exe
 text, sublime_text.exe
+TextInputHost.exe
+Video.UI.exe
