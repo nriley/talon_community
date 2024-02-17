@@ -75,7 +75,11 @@ class UserActions:
 
     def file_manager_select_directory(path: str):
         """selects the directory"""
-        actions.insert(path)
+        finder_app = finder()
+        front_window = finder_app.Finder_windows[1]
+        if not front_window.target.exists(timeout=0.1):
+            return
+        finder_app.selection.set(front_window.target.folders[path])
 
     def file_manager_new_folder(name: str):
         """Creates a new folder in a gui filemanager or inserts the command to do so for terminals"""
