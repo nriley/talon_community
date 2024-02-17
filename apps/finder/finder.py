@@ -5,6 +5,8 @@ try:
 except ImportError:
     pass
 
+import os.path
+
 from talon import Context, actions, app, ui
 
 ctx = Context()
@@ -64,13 +66,14 @@ class UserActions:
 
     def file_manager_open_directory(path: str):
         """opens the directory that's already visible in the view"""
-        path_ref = File(path)
 
         finder_app = finder()
         front_window = finder_app.Finder_windows[1]
         if front_window.target.exists(timeout=0.1) and front_window.sidebar_width() > 0:
-            front_window.target.set(path_ref)
+            front_window.target.set(front_window.target.folders[path])
             return
+
+        path_ref = File(os.path.join(actions.user.file_manager_current_path(), path))
         finder_app.open(path_ref)
 
     def file_manager_select_directory(path: str):
