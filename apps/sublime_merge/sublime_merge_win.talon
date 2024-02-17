@@ -45,7 +45,7 @@ pull: key(ctrl-alt-down)
 
 # stage command works in a file tab
 file (stage | unstage):
-    key(ctrl-pageup ctrl-pagedown)
+    key(tab ctrl-pageup ctrl-pagedown)
     sleep(100ms)
     key(tab shift-enter)
 
