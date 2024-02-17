@@ -313,7 +313,6 @@ class Actions:
         for application in ui.apps(background=False):
             if application.name == name or (
                 app.platform == "windows"
-                # XXX not sure why this is lowercase when it's capitalized in the list
                 and os.path.basename(application.exe).lower() == name
             ):
                 return application
