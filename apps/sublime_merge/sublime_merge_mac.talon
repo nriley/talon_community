@@ -27,6 +27,16 @@ hunk:
     sleep(150ms)
     key(tab)
 
+pull: key(cmd-alt-down)
+fetch:
+    key(shift-f7)
+    "fetch"
+    key(enter)
+fetch all:
+    key(shift-f7)
+    "fetch --all"
+    key(enter)
+
 commit:
     key(cmd-9)
     sleep(100ms)
@@ -36,7 +46,6 @@ push force:
     key(shift-f8)
     "--force-with-lease"
     key(enter)
-pull: key(cmd-alt-down)
 
 # stage commands work when insertion point is in a hunk
 
