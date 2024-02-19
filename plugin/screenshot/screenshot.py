@@ -1,4 +1,5 @@
 import os
+import subprocess
 from datetime import datetime
 from typing import Optional
 
@@ -114,10 +115,10 @@ os: mac
 @ctx_mac.action_class("user")
 class UserActionsMac:
     def screenshot_selection():
-        actions.key("cmd-shift-4")
+        subprocess.Popen(("/usr/sbin/screencapture", "-i", get_screenshot_path()))
 
     def screenshot_selection_clip():
-        actions.key("cmd-ctrl-shift-4")
+        subprocess.Popen(("/usr/sbin/screencapture", "-i", "-c"))
 
 
 ctx_win = Context()
