@@ -47,19 +47,24 @@ push force:
     "--force-with-lease"
     key(enter)
 
-# stage commands work when insertion point is in a hunk
+# stage/discard commands work when insertion point is in a hunk
 
 # this tends to get preferred to other stage commands (and can be destructive to your carefully curated
 # commit); feel free to uncomment if you don't see the conflict
 # ^stage | unstage$: key(shift-enter)
 
 (stage | unstage) (this | hunk | lines): key(enter)
+discard (this | hunk | lines): key(backspace)
 
-# stage command works in a file tab
+# stage/discard commands work in a file tab
 file (stage | unstage):
     key(tab cmd-shift-[ cmd-shift-])
     sleep(100ms)
     key(tab shift-enter)
+file discard:
+    key(tab cmd-shift-[ cmd-shift-])
+    sleep(100ms)
+    key(tab backspace)
 
 # stage commands work anywhere in a commit
 stage all:
