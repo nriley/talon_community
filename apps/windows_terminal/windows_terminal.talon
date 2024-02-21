@@ -30,3 +30,7 @@ find it <phrase>$:
     key(escape)
     # make it so
     edit.find("{phrase}\n")
+
+please [<user.text>]:
+    key(ctrl-shift-p)
+    insert(user.text or "")
