@@ -422,7 +422,7 @@ class Actions:
 
 @imgui.open()
 def gui_running(gui: imgui.GUI):
-    gui.text("Running applications (with spoken forms)")
+    gui.text("Running applications: spoken forms")
     gui.line()
     running_apps = sorted(
         (v.lower(), k, v) for k, v in ctx.lists["self.running"].items()
