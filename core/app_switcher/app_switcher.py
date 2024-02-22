@@ -285,7 +285,7 @@ def update_overrides(name, flags):
             for line in f:
                 line = line.rstrip().lower()
                 line = line.split(",")
-                if len(line) == 2 and line[0] != "Spoken form":
+                if len(line) == 2 and line[0] != "spoken form":
                     overrides[line[0]] = line[1].strip()
                 if len(line) == 1:
                     excludes.add(line[0].strip())
