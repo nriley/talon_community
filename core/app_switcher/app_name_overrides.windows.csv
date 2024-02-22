@@ -4,6 +4,7 @@ Citrix HDX Engine
 code, Code.exe
 command, cmd.exe
 Console Window Host
+edge, Microsoft Edge
 epic studio, epicstudio.exe
 explorer, explorer.exe
 fluency direct, fluencydirect.exe
@@ -13,9 +14,14 @@ one note, onenote.exe
 outlook, outlook.exe
 piano bar, pianobar.exe
 power point, powerpnt.exe
+power shell, Windows PowerShell
 putty, putty.exe
+Settings
 Store
+Talon
+task manager, Task Manager
 teams, ms-teams.exe
+terminal, WindowsTerminal.exe
 text, sublime_text.exe
 TextInputHost.exe
 Video.UI.exe
