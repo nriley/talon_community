@@ -157,7 +157,9 @@ Siff
 sig
 sigs
 SlicerDicer,slicer dicer
+SmartBlock,smart block
 SmartData,smart data
+SmartData Element,smart data element
 SmartForm,smart form
 SmartGroup,smart group
 SmartGroups,smart groups
