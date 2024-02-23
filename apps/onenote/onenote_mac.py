@@ -8,8 +8,13 @@ from talon.skia.image import Image
 mod = Module()
 ctx = Context()
 
+mod.apps.onenote_mac = r"""
+os: mac
+and app.bundle: com.microsoft.onenote.mac
+"""
+
 ctx.matches = r"""
-app.bundle: com.microsoft.onenote.mac
+app: onenote_mac
 """
 
 MATCHES = __import__("collections").defaultdict(int)

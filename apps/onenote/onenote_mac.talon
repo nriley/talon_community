@@ -1,4 +1,4 @@
-app.bundle: com.microsoft.onenote.mac
+app: onenote_mac
 -
 tag(): user.find_and_replace
 
