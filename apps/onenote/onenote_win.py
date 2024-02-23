@@ -38,5 +38,8 @@ class UserActions:
             actions.insert(f"{size}")
             actions.key("enter esc")
 
+    def onenote_go_progress():
+        actions.key("ctrl-g home enter tab:3 down enter esc")
+
     def zoom_to_fit_width():
         actions.user.office_win_ribbon_select("wi")

@@ -103,7 +103,7 @@ tomorrow:
     insert(digit_string)
 
 # back to progress (first notebook, first section)
-go progress: key(ctrl-g home enter tab:3 down enter esc)
+go progress: user.onenote_go_progress()
 
 # Windows+arrows do not work in full screen mode
 window minimize: key(alt-space n)
