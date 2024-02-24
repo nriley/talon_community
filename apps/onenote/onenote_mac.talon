@@ -67,6 +67,7 @@ go (section | sections): key(ctrl-shift-g)
 section new: key(cmd-t)
 section previous: key(cmd-{)
 section next: key(cmd-})
+go section <user.onenote_section>: user.onenote_go_section(onenote_section)
 
 go (page | pages): key(ctrl-cmd-g)
 page new:

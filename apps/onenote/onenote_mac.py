@@ -63,6 +63,19 @@ class EditActions:
             actions.sleep("100ms")
 
 
+mod.list("onenote_sections", desc="Sections in the open OneNote notebook")
+
+
+@mod.capture(rule="{user.onenote_sections}")
+def onenote_section(m) -> ui.Element:
+    if section := ONENOTE_SECTIONS.get(m.onenote_sections):
+        return section.AXParent
+
+    for name, section in ONENOTE_SECTIONS.items():
+        if m.onenote_sections in name:
+            return section.AXParent
+
+
 @mod.capture(
     rule="<number_small> | <number_small> plus <number_small> | [<number_small>] <user.text>"
 )
@@ -112,6 +125,9 @@ class Actions:
 
     def onenote_go_recent(offset: int):
         """Navigate to recent notes"""
+
+    def onenote_go_section(section: ui.Element):
+        """Navigate to a section of the current notebook"""
 
     def onenote_collapse_this():
         """Collapse the current outline in OneNote"""
@@ -263,6 +279,22 @@ def onenote_show_sidebar(tab):
     return splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
 
 
+ONENOTE_SECTIONS = {}
+
+
+@ctx.dynamic_list(f"user.onenote_sections")
+def onenote_sections(phrase):
+    global ONENOTE_SECTIONS
+    navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
+
+    sections_pages = navigation.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+    sections = sections_pages.children.find_one(AXRole="AXGroup")
+    sections_list = sections.children.find_one(AXRole="AXOutline")
+    sections = reversed(sections_list.children.find(AXRole="AXCell"))
+    ONENOTE_SECTIONS = {section.AXDescription.lower(): section for section in sections}
+    return "\n".join(ONENOTE_SECTIONS.keys())
+
+
 @ctx.action_class("user")
 class UserActions:
     # user.find_and_replace
@@ -341,6 +373,9 @@ class UserActions:
         desired_row = max(desired_row, 0)
         desired_row = min(desired_row, len(recent_rows) - 1)
         recent_rows[desired_row].AXSelected = True
+
+    def onenote_go_section(section):
+        section.AXSelected = True
 
     def onenote_copy_link():
         onenote = onenote_app()
