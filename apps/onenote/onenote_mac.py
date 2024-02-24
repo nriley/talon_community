@@ -1,3 +1,4 @@
+from enum import Enum
 from pathlib import Path
 
 from talon import Context, Module, actions, app, clip, cron, ctrl, ui
@@ -18,6 +19,12 @@ app: onenote_mac
 """
 
 MATCHES = __import__("collections").defaultdict(int)
+
+
+class SidebarTab(Enum):
+    NAVIGATION = 0
+    SEARCH = 1
+    RECENT_NOTES = 2
 
 
 @ctx.action_class("app")
@@ -246,6 +253,16 @@ def onenote_image_matches_in_notebook_window(
     return matches
 
 
+def onenote_show_sidebar(tab):
+    window = onenote_notebook_window()
+    splitgroup = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+    group = splitgroup.children.find_one(AXRole="AXGroup", max_depth=0)
+    checkbox = group.children.find(AXRole="AXCheckBox", max_depth=0)[tab.value]
+    if checkbox.AXValue == 0:
+        checkbox.perform("AXPress")
+    return splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+
+
 @ctx.action_class("user")
 class UserActions:
     # user.find_and_replace
@@ -313,15 +330,7 @@ class UserActions:
             open_tab.perform("AXPress")
 
     def onenote_go_recent(offset: int):
-        window = onenote_notebook_window()
-
-        splitgroup = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
-        group = splitgroup.children.find_one(AXRole="AXGroup", max_depth=0)
-        checkbox = group.children.find(AXRole="AXCheckBox", max_depth=0)[2]
-        if checkbox.AXValue == 0:
-            checkbox.perform("AXPress")
-
-        navigation = splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+        navigation = onenote_show_sidebar(SidebarTab.RECENT_NOTES)
         recent_notes = navigation.children.find_one(AXRole="AXGroup", max_depth=0)
         recent_list = recent_notes.children.find_one(AXRole="AXTable", max_depth=1)
         recent_rows = list(recent_list.children.find(AXRole="AXRow", max_depth=0))
@@ -349,17 +358,8 @@ class UserActions:
         app.notify(body="Copied link to paragraph", title="OneNote")
 
     def onenote_go_progress():
-        window = onenote_notebook_window()
-
-        # show navigation
-        splitgroup = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
-        group = splitgroup.children.find_one(AXRole="AXGroup", max_depth=0)
-        checkbox = group.children.find_one(AXRole="AXCheckBox", max_depth=0)
-        if checkbox.AXValue == 0:
-            checkbox.perform("AXPress")
-
         # go to the first notebook
-        navigation = splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+        navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
         try:
             sections_pages = navigation.children.find_one(
                 AXRole="AXSplitGroup", max_depth=0
