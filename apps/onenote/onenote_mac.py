@@ -1,3 +1,4 @@
+import re
 from enum import Enum
 from pathlib import Path
 
@@ -25,6 +26,11 @@ class SidebarTab(Enum):
     NAVIGATION = 0
     SEARCH = 1
     RECENT_NOTES = 2
+
+
+class NavigationLevel(Enum):
+    SECTIONS = 0
+    PAGES = 1
 
 
 @ctx.action_class("app")
@@ -64,6 +70,7 @@ class EditActions:
 
 
 mod.list("onenote_sections", desc="Sections in the open OneNote notebook")
+mod.list("onenote_pages", desc="Pages in the open OneNote section")
 
 
 @mod.capture(rule="{user.onenote_sections}")
@@ -74,6 +81,24 @@ def onenote_section(m) -> ui.Element:
     for name, section in ONENOTE_SECTIONS.items():
         if m.onenote_sections in name:
             return section.AXParent
+
+    message = f"No unique section title containing “{m.onenote_sections}”"
+    app.notify(body=message, title="OneNote")
+    raise Exception(message)
+
+
+@mod.capture(rule="{user.onenote_pages}")
+def onenote_page(m) -> ui.Element:
+    if page := ONENOTE_PAGES.get(m.onenote_pages):
+        return page.AXParent.AXParent.AXParent
+
+    for name, page in ONENOTE_PAGES.items():
+        if m.onenote_pages in name:
+            return page.AXParent.AXParent.AXParent
+
+    page = f"No unique page title containing “{m.onenote_pages}”"
+    app.notify(body=message, title="OneNote")
+    raise Exception(message)
 
 
 @mod.capture(
@@ -120,14 +145,14 @@ class Actions:
     def onenote_copy_link():
         """Copy a link to the current paragraph in OneNote"""
 
+    def onenote_navigate(row_element: ui.Element):
+        """Navigate to a OneNote section or page"""
+
     def onenote_go_progress():
         """Go to the first section of the first notebook"""
 
     def onenote_go_recent(offset: int):
         """Navigate to recent notes"""
-
-    def onenote_go_section(section: ui.Element):
-        """Navigate to a section of the current notebook"""
 
     def onenote_collapse_this():
         """Collapse the current outline in OneNote"""
@@ -279,20 +304,47 @@ def onenote_show_sidebar(tab):
     return splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
 
 
+RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
+
+
+def spoken_forms(s):
+    # XXX use user.vocabulary, or may never match
+    if RE_NON_ALPHA_OR_SPACE.search(s):
+        return f"""{actions.user.create_spoken_forms(s, generate_subsequences=False)[0]}
+{RE_NON_ALPHA_OR_SPACE.sub(" ", s.lower())}"""
+    return s.lower()
+
+
+def onenote_navigation_list(level):
+    navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
+
+    sections_pages = navigation.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+    navigation_levels = sections_pages.children.find(AXRole="AXGroup")
+    outline = navigation_levels[level.value].children.find_one(AXRole="AXOutline")
+    if level == NavigationLevel.SECTIONS:
+        cells = reversed(outline.children.find(AXRole="AXCell"))
+        return {spoken_forms(cell.AXDescription): cell for cell in cells}
+    elif level == NavigationLevel.PAGES:
+        labels = reversed(outline.children.find(AXRole="AXStaticText"))
+        return {spoken_forms(label.AXValue): label for label in labels}
+
+
 ONENOTE_SECTIONS = {}
+ONENOTE_PAGES = {}
 
 
 @ctx.dynamic_list(f"user.onenote_sections")
 def onenote_sections(phrase):
     global ONENOTE_SECTIONS
-    navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
-
-    sections_pages = navigation.children.find_one(AXRole="AXSplitGroup", max_depth=0)
-    sections = sections_pages.children.find_one(AXRole="AXGroup")
-    sections_list = sections.children.find_one(AXRole="AXOutline")
-    sections = reversed(sections_list.children.find(AXRole="AXCell"))
-    ONENOTE_SECTIONS = {section.AXDescription.lower(): section for section in sections}
+    ONENOTE_SECTIONS = onenote_navigation_list(NavigationLevel.SECTIONS)
     return "\n".join(ONENOTE_SECTIONS.keys())
+
+
+@ctx.dynamic_list(f"user.onenote_pages")
+def onenote_pages(phrase):
+    global ONENOTE_PAGES
+    ONENOTE_PAGES = onenote_navigation_list(NavigationLevel.PAGES)
+    return "\n".join(ONENOTE_PAGES.keys())
 
 
 @ctx.action_class("user")
@@ -374,8 +426,8 @@ class UserActions:
         desired_row = min(desired_row, len(recent_rows) - 1)
         recent_rows[desired_row].AXSelected = True
 
-    def onenote_go_section(section):
-        section.AXSelected = True
+    def onenote_navigate(row_element):
+        row_element.AXSelected = True
 
     def onenote_copy_link():
         onenote = onenote_app()

@@ -64,12 +64,13 @@ mail this: user.menu_select("File|Share|Send Page as Email Message")
 go (notebook | notebooks): key(ctrl-g)
 
 go (section | sections): key(ctrl-shift-g)
+go section <user.onenote_section>: user.onenote_navigate(onenote_section)
 section new: key(cmd-t)
 section previous: key(cmd-{)
 section next: key(cmd-})
-go section <user.onenote_section>: user.onenote_go_section(onenote_section)
 
 go (page | pages): key(ctrl-cmd-g)
+go page <user.onenote_page>: user.onenote_navigate(onenote_page)
 page new:
     key(cmd-n)
     sleep(100ms)
