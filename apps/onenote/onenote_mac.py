@@ -7,6 +7,12 @@ from talon.experimental.locate import locate_in_image
 from talon.screen import capture
 from talon.skia.image import Image
 
+try:
+    ui.Element
+except AttributeError: # XXX temporary workaround until this is exposed
+    from talon.windows.ax import Element
+    ui.Element = Element
+
 mod = Module()
 ctx = Context()
 
