@@ -5,7 +5,12 @@ refresh: key(ctrl-pagedown ctrl-pageup)
 bold: key(ctrl-b)
 italic: key(ctrl-i)
 strike through: key(ctrl--)
-highlight: key(ctrl-alt-h)
+# The below commented action implementation should work fine for most people.
+# I have bound Ctrl+Alt+H to a Talon action so I can't use it.
+# highlight: key(ctrl-alt-h)
+highlight:
+    user.office_win_ribbon_select("hi")
+    key(enter)
 
 font size [<number_small>]: user.onenote_font_size(number_small or 0)
 (bigger | larger): key(ctrl-shift->)
