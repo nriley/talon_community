@@ -65,7 +65,7 @@ class UserActions:
         actions.key("cmd-i")
 
     def file_manager_open_directory(path: str):
-        """opens the directory that's already visible in the view"""
+        """Opens the directory (that's already visible in the view, if needed)"""
 
         finder_app = finder()
         front_window = finder_app.Finder_windows[1]
@@ -73,7 +73,9 @@ class UserActions:
             front_window.target.set(front_window.target.folders[path])
             return
 
-        path_ref = File(os.path.join(actions.user.file_manager_current_path(), path))
+        if not os.path.isabs(path):
+            path = os.path.join(actions.user.file_manager_current_path(), path)
+        path_ref = File(path)
         finder_app.open(path_ref)
 
     def file_manager_select_directory(path: str):
