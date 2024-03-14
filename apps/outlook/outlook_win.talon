@@ -1,5 +1,4 @@
-os: windows
-and app.exe: outlook.exe
+app: outlook_win
 -
 tag(): user.find_and_replace
 
