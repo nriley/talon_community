@@ -117,6 +117,13 @@ class Actions:
             actions.sound.set_microphone(pre_call_microphone)
             app.notify(title="Restored prior microphone", body=pre_call_microphone)
 
+    def talon_drop_in_progress_audio():
+        """Uses a hack to tell Talon to drop all in progress audio"""
+        # https://github.com/talonvoice/talon/issues/538
+        active_microphone = actions.sound.active_microphone()
+        actions.sound.set_microphone("None")
+        actions.sound.set_microphone(active_microphone)
+
 
 def on_ready():
     cubeb_ctx.register("devices_changed", devices_changed)
