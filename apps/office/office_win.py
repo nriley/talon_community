@@ -34,7 +34,7 @@ app: office_win
 @mod.action_class
 class Actions:
     def office_win_ribbon_select(keys: str):
-        """Select from the ribbon on OneNote for Windows."""
+        """Select from the ribbon in a Windows Office app"""
 
 
 @ctx.action_class("user")
