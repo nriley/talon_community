@@ -2,7 +2,7 @@ app: excel_win
 -
 # tag(): user.find_and_replace
 
-# save as excel: user.excel_save_as_format("Excel Workbook (.xlsx)")
+save as excel: user.excel_save_as_format("Excel Workbook (*.xlsx)")
 password: key(alt-f i p e)
 
 fill down: key(ctrl-d)
