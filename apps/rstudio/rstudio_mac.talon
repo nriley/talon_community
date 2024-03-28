@@ -88,7 +88,7 @@ delete word right:
 clear word right: key(alt-delete)
 assign that: key(alt--)
 pipe that: key(cmd-shift-m)
-insert knitter chunk: key(cmd-alt-i)
+[insert knitter] chunk: key(cmd-alt-i)
 
 # Folding
 fold that: key(cmd-alt-l)
