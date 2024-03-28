@@ -120,9 +120,10 @@ class Actions:
     def talon_drop_in_progress_audio():
         """Uses a hack to tell Talon to drop all in progress audio"""
         # https://github.com/talonvoice/talon/issues/538
-        active_microphone = actions.sound.active_microphone()
-        actions.sound.set_microphone("None")
-        actions.sound.set_microphone(active_microphone)
+        if not actions.speech.enabled():
+            active_microphone = actions.sound.active_microphone()
+            actions.sound.set_microphone("None")
+            actions.sound.set_microphone(active_microphone)
 
 
 def on_ready():
