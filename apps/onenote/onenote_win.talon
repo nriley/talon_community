@@ -77,11 +77,11 @@ page next: key(ctrl-pagedown)
 page move right: key(ctrl-alt-g shift-f10 s)
 page move left: key(ctrl-alt-g shift-f10 o enter)
 
-[page] rename date [<user.prose>]$:
+(page | name) date [<user.prose>]$:
     key(ctrl-shift-t alt-shift-d)
     user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
 
-[page] rename [<user.prose>]$:
+[page] name [<user.prose>]$:
     key(ctrl-shift-t)
     user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
 

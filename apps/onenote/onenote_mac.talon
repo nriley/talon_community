@@ -82,7 +82,7 @@ page move down: key(ctrl-cmd-g cmd-alt-down)
 page move right: key(cmd-alt-])
 page move left: key(cmd-alt-[)
 
-[page] name date [<user.prose>]$:
+(page | name) date [<user.prose>]$:
     key(cmd-shift-t cmd-d)
     sleep(200ms)
     insert(prose or "")
