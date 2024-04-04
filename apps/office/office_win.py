@@ -41,7 +41,7 @@ class Actions:
 class UserActions:
     def office_tell_me():
         actions.key("alt-q")
-        actions.sleep("100ms")
+        actions.sleep("200ms")
 
     def office_win_ribbon_select(keys):
         actions.key("alt-" + keys[0])
