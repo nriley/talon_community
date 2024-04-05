@@ -34,7 +34,7 @@ with:
     key(delete up:2 right:3)
 
 column:
-    key(return)
+    edit.line_insert_down()
     ", "
 
 count: user.code_insert_function("Count", "")
