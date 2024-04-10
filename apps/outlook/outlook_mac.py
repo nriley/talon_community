@@ -205,7 +205,11 @@ class UserActions:
             focused_element = outlook_focused_element()
             role = focused_element.AXRole
             if focused_element != last_focused_element:
-                if role in ("AXGroup", "AXTextArea", "AXWebArea"):
+                if (
+                    role == "AXGroup"
+                    and focused_element.get("AXIdentifier", None)
+                    != "Email Renderer View"
+                ) or (role in ("AXTextArea", "AXWebArea")):
                     return
                 actions.key("ctrl-shift-[")
             last_focused_element = focused_element

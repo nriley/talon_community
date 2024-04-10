@@ -9,8 +9,9 @@ from talon.skia.image import Image
 
 try:
     ui.Element
-except AttributeError: # XXX temporary workaround until this is exposed
+except AttributeError:  # XXX temporary workaround until this is exposed
     from talon.windows.ax import Element
+
     ui.Element = Element
 
 mod = Module()
@@ -81,6 +82,7 @@ mod.list("onenote_pages", desc="Pages in the open OneNote section")
 
 @mod.capture(rule="{user.onenote_sections}")
 def onenote_section(m) -> ui.Element:
+    print(f"onenote_section {m=}")
     if section := ONENOTE_SECTIONS.get(m.onenote_sections):
         return section.AXParent
 
@@ -95,6 +97,7 @@ def onenote_section(m) -> ui.Element:
 
 @mod.capture(rule="{user.onenote_pages}")
 def onenote_page(m) -> ui.Element:
+    print(f"onenote_page {m=}")
     if page := ONENOTE_PAGES.get(m.onenote_pages):
         return page.AXParent.AXParent.AXParent
 
@@ -329,10 +332,12 @@ def onenote_navigation_list(level):
     outline = navigation_levels[level.value].children.find_one(AXRole="AXOutline")
     if level == NavigationLevel.SECTIONS:
         cells = reversed(outline.children.find(AXRole="AXCell"))
-        return {spoken_forms(cell.AXDescription): cell for cell in cells}
+        sections = {spoken_forms(cell.AXDescription): cell for cell in cells}
+        return sections
     elif level == NavigationLevel.PAGES:
         labels = reversed(outline.children.find(AXRole="AXStaticText"))
-        return {spoken_forms(label.AXValue): label for label in labels}
+        pages = {spoken_forms(label.AXValue): label for label in labels}
+        return pages
 
 
 ONENOTE_SECTIONS = {}
@@ -342,6 +347,7 @@ ONENOTE_PAGES = {}
 @ctx.dynamic_list(f"user.onenote_sections")
 def onenote_sections(phrase):
     global ONENOTE_SECTIONS
+    print(f"section {phrase=}")
     ONENOTE_SECTIONS = onenote_navigation_list(NavigationLevel.SECTIONS)
     return "\n".join(ONENOTE_SECTIONS.keys())
 
@@ -349,6 +355,7 @@ def onenote_sections(phrase):
 @ctx.dynamic_list(f"user.onenote_pages")
 def onenote_pages(phrase):
     global ONENOTE_PAGES
+    # print(f"page {phrase=}")
     ONENOTE_PAGES = onenote_navigation_list(NavigationLevel.PAGES)
     return "\n".join(ONENOTE_PAGES.keys())
 
