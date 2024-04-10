@@ -59,7 +59,7 @@ expand:
     key(right)
 message: user.outlook_focus_message_body()
 
-folder <user.text>:
+go folder <user.text>:
     user.outlook_focus_folder_list()
     insert('{user.formatted_text(text, "ALL_LOWERCASE,NO_SPACES")}')
     user.outlook_focus_message_list()

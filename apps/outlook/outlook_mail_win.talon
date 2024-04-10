@@ -36,7 +36,7 @@ expand:
     key(right)
 message: user.outlook_focus_message_body()
 
-folder <user.text>:
+go folder <user.text>:
     key(ctrl-y)
     insert('{user.formatted_text(text, "ALL_LOWERCASE")}')
 
