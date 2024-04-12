@@ -1,6 +1,6 @@
 # defines the default app actions for windows
 
-from talon import Context, actions
+from talon import Context, actions, ui
 
 ctx = Context()
 ctx.matches = r"""
@@ -44,3 +44,15 @@ class AppActions:
 class UserActions:
     def switcher_focus_last():
         actions.key("alt-tab")
+
+    def window_minimize():
+        if window := ui.active_window():
+            window.minimized = 1
+            return
+        actions.key("super-down:2")
+    
+    def window_maximize():
+        if window := ui.active_window():
+            window.maximized = 1
+            return
+        actions.key("super-up")

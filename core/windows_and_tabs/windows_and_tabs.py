@@ -1,7 +1,7 @@
-from talon import Context, actions, ui
+from talon import Context, actions, Module, ui
 
 ctx = Context()
-
+mod = Module()
 
 @ctx.action_class("app")
 class AppActions:
@@ -11,6 +11,13 @@ class AppActions:
     def window_next():
         cycle_windows(ui.active_app(), 1)
 
+@mod.action_class
+class UserActions:
+    def window_minimize():
+        """Minimize the frontmost window"""
+
+    def window_maximize():
+        """Maximize the frontmost window"""
 
 def cycle_windows(app: ui.App, diff: int):
     """Cycle windows backwards or forwards for the given application"""
