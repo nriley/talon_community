@@ -161,8 +161,8 @@ class UserActions:
         sidebar_split = toolbar_split.children.find_one(
             AXRole="AXSplitGroup", max_depth=0
         )
-        scroll_area_or_button = sidebar_split.children[0]
-        if scroll_area_or_button.AXRole == "AXButton":
+        scroll_area_or_split_group = sidebar_split.children[0]
+        if scroll_area_or_split_group.AXRole != "AXScrollArea":
             actions.key("cmd-alt-s")
 
         last_focused_element = None
