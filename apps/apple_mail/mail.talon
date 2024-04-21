@@ -34,9 +34,9 @@ normal: user.menu_select("Format|Style|Remove Style")
 move: user.focus_bundle("com.atow.msgfiler")
 
 (save to | move to | folder) [<user.text>]:
-    user.focus_bundle("com.atow.msgfiler")
+    user.focus_bundle("com.atow.MsgFiler4")
     key(cmd-a)
-    insert(user.text or "")
+    user.paste(user.text or "")
 
 # Add to OmniFocus
 to do: key(ctrl-o)
