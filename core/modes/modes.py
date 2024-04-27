@@ -1,4 +1,4 @@
-from talon import Module, actions, app, canvas, scope, speech_system, ui
+from talon import Context, Module, actions, app, canvas, scope, speech_system, ui
 from talon.types import Rect
 
 mod = Module()
