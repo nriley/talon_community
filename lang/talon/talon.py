@@ -37,13 +37,6 @@ ctx_talon_python.matches = r"""
 tag: user.talon_python
 """
 
-ctx.lists["user.code_common_function"] = {
-    "insert": "insert",
-    "key": "key",
-    "print": "print",
-    "repeat": "repeat",
-    "sleep": "sleep",
-}
 
 def on_update_decls(decls):
     # todo modes?
