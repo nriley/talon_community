@@ -36,6 +36,10 @@ class Actions:
     def office_win_ribbon_select(keys: str):
         """Select from the ribbon in a Windows Office app"""
 
+@ctx.action_class("edit")
+class EditActions:
+    def paste_match_style():
+        actions.user.office_win_ribbon_select("hvt")
 
 @ctx.action_class("user")
 class UserActions:
