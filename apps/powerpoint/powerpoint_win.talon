@@ -11,10 +11,14 @@ presenter view: key(alt-f5)
 slideshow: key(f5)
 slideshow from start: user.office_win_ribbon_select("sb")
 
+slide previous: key(f6 escape:2 pageup)
+slide next: key(f6 escape:2 pagedown)
+
 slide new: key(ctrl-m)
 
-# slide hide: user.menu_select("Slide Show|Hide Slide")
-# slide unhide: user.menu_select("Slide Show|Unhide Slide")
+# Can't get this to work reliably from keyboard commands
+# Would likely need to do via accessibility/COM
+# slide (hide|unhide): key(f6 escape:2 shift-f10 h:2)
 
 align left: key(ctrl-l)
 align center: key(ctrl-e)
@@ -42,8 +46,17 @@ un group that: key(ctrl-shift-g)
 copy style: key(ctrl-shift-c)
 (pace | pist | paste) style: key(ctrl-shift-v)
 
-# mail this: user.menu_select("File|Share|Send Presentation")
-# mail p d f: user.menu_select("File|Share|Send PDF")
+mail this:
+    user.office_tell_me()
+    "Mail Recipient (As Attachment)"
+    sleep(1s)
+    key(down enter)
+
+mail p d f:
+    user.office_tell_me()
+    "E-mail as PDF Attachment"
+    sleep(1s)
+    key(down enter)
 
 ribbon: key(ctrl-f1)
 ruler: user.office_win_ribbon_select("wr")

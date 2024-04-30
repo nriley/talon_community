@@ -16,6 +16,6 @@ mail this:
     user.office_tell_me()
     "Mail Recipient (As Attachment)"
     sleep(1s)
-    key(enter)
+    key(down enter)
 
 ribbon: key(ctrl-f1)
