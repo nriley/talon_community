@@ -18,9 +18,10 @@ app: outlook_win
 win.title: /^Calendar -/
 """
 
-ctx.matches ="""
+ctx.matches = """
 app: outlook_win
 """
+
 
 @ctx.action_class("user")
 class UserActions:

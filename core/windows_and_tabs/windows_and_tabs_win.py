@@ -50,7 +50,7 @@ class UserActions:
             window.minimized = 1
             return
         actions.key("super-down:2")
-    
+
     def window_maximize():
         if window := ui.active_window():
             window.maximized = 1

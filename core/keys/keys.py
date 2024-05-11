@@ -155,7 +155,7 @@ punctuation_words = {
     "colon": ":",
     "dash": "-",
     "m dash": "—",
-    "en dash": "–", 
+    "en dash": "–",
     "slash": "/",
     "question mark": "?",
     "exclamation mark": "!",

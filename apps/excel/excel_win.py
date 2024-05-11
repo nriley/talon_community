@@ -1,4 +1,4 @@
-from talon import app, Context, Module, actions, ui
+from talon import Context, Module, actions, app, ui
 
 ctx = Context()
 mod = Module()
@@ -7,10 +7,12 @@ ctx.matches = r"""
 app: excel_win
 """
 
+
 @ctx.action_class("app")
 class AppActions:
     def window_open():
         actions.key("alt-w n")
+
 
 @ctx.action_class("user")
 class UserActions:
@@ -32,11 +34,10 @@ class UserActions:
         else:
             app.notify(body="Did not find save as type menu as expected", title="Excel")
             return
-    
+
         # Menu is a separate window but does not contain the items;
         # go back to the document window for that
         file_format_item = document_window.find_one(
-            control_type="ListItem",
-            name=format
+            control_type="ListItem", name=format
         )
         file_format_item.invoke_pattern.invoke()
