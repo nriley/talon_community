@@ -1,5 +1,8 @@
 mode: dictation
 -
+settings():
+    speech.engine = "wav2letter-wisp"
+
 ^press <user.modifiers>$: key(modifiers)
 ^press <user.keys>$: key(keys)
 
