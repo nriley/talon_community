@@ -68,47 +68,16 @@ class AppActions:
 @ctx.action_class("edit")
 class EditActions:
     def selected_text() -> str:
-        pass
-
+        # clip.capture() always returns clip.NoChange
         clip.set_text("blah")
-        # clip.clear()
         actions.edit.copy()
-        # old_formats = []
         for i in range(15):
-            # print(i, clip.mime().formats, clip.text())
-            # if clip.mime().formats != old_formats: # clip.text() != 'blah':
-            # 	old_formats = clip.mime().formats
-            # 	print('formats', old_formats, 'in', i*10, 'ms')
-            # elif clip.text():
-            # 	print('text', clip.text(), 'in', i*10, 'ms')
-            if clip.text() != "blah":
-                break
+            text = clip.text()
+            if text is not None and text != "blah":
+                return text
             actions.sleep("10ms")
         else:
             return ""
-        return clip.text()
-
-        # from time import perf_counter
-        # from talon.api import ffi, lib, ffi_string
-        # # print('manual before', ffi_string(lib.tl_clipboard_get_text(lib.TL_CLIP_MAIN)))
-        # print('text', clip.text())
-        # if hasattr(clip, 'mime'):
-        # 	try: print('mime', clip.mime().text)
-        # 	except: print('no mime text', clip.mime().formats)
-        # 	print('before', clip.mime().formats)
-        # start = perf_counter()
-        # text = actions.next()
-        # end = perf_counter()
-        # print(f'selected_text |{text}| in {end - start}s')
-        # print('text', clip.text())
-        # # actions.sleep('2s')
-        # if hasattr(clip, 'mime'):
-        # 	try: print('mime', clip.mime().text)
-        # 	except: print('no mime text', clip.mime().formats)
-        # 	print('after', clip.mime().formats)
-        # print("manual", ffi_string(lib.tl_clipboard_get_text(lib.TL_CLIP_MAIN)))
-
-        return text
 
 
 @mod.action_class
