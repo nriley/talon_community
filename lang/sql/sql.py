@@ -48,10 +48,10 @@ class UserActions:
         actions.user.insert_between(" NOT IN (", ")")
 
     def code_operator_and():
-        actions.auto_insert("AND ")
+        actions.auto_insert(" AND ")
 
     def code_operator_or():
-        actions.auto_insert("OR ")
+        actions.auto_insert(" OR ")
 
     def code_insert_null():
         actions.auto_insert("NULL")
