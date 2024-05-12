@@ -121,10 +121,6 @@ class EditActions:
     def line_end():
         actions.key("cmd-right")
 
-    def line_insert_down():
-        actions.edit.line_end()
-        actions.key("enter")
-
     def line_insert_up():
         actions.edit.line_start()
         actions.key("enter up")
