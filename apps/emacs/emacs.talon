@@ -184,6 +184,8 @@ diff (buffer | [buffer] with file):
     user.emacs("diff-buffer-with-file")
     key(enter)
 
+diff buffers: user.emacs("ediff-buffers")
+
 # ----- MOTION AND EDITING ----- #
 mark: user.emacs("set-mark-command")
 go back: user.emacs("pop-to-mark-command")
