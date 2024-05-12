@@ -172,7 +172,7 @@ class Actions:
                 [
                     "/bin/sh",
                     "-c",
-                    f"/usr/bin/open -W {talon_app_path} ; /usr/bin/open {talon_app_path}",
+                    f"/usr/bin/open -W {talon_app_path}; sleep 1; /usr/bin/open {talon_app_path}",
                 ],
                 start_new_session=True,
             )
