@@ -67,3 +67,9 @@ class UserActions:
 
     def code_insert_function(text: str, selection: str):
         actions.user.insert_between(f"{text}({selection or ''}", ")")
+
+    def code_state_case():
+        actions.auto_insert("CASE ")
+
+    def code_state_else():
+        actions.user.insert_between("ELSE ", " END")
