@@ -1,10 +1,18 @@
 # defines the default edit actions for windows
 
-from talon import Context, actions
+from talon import Context, Module, actions
+
+mod = Module()
+mod.apps.edit_win = """
+os: windows
+"""
+mod.apps.edit_win = """
+app: citrix_viewer
+"""
 
 ctx = Context()
-ctx.matches = r"""
-os: windows
+ctx.matches = """
+app: edit_win
 """
 
 
