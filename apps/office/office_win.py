@@ -51,5 +51,5 @@ class UserActions:
 
     def office_win_ribbon_select(keys):
         actions.key("alt-" + keys[0])
-        actions.sleep("20ms")
+        actions.sleep("30ms")
         actions.key(" ".join(keys[1:]))
