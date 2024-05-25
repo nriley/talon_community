@@ -1,7 +1,6 @@
 app.bundle: com.sublimemerge
 -
 tag(): user.tabs
-tag(): user.file_manager
 
 please [<user.text>]:
     key(cmd-shift-p)
@@ -101,3 +100,5 @@ stash pop: key(cmd-shift-s)
 
 file history: user.menu_select("Navigate|File History…")
 file blame: user.menu_select("Navigate|Blame…")
+
+terminal here: user.file_manager_terminal_here()
