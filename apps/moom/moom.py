@@ -36,7 +36,7 @@ def moom_controls_if_opened():
         if win.app.bundle != "com.manytricks.Moom":
             return
 
-        if win.element.AXSubrole != "AXSystemDialog":
+        if win.element.get("AXSubrole") != "AXSystemDialog":
             return
 
         ui.unregister("win_open", opened_handler)
