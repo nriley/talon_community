@@ -62,6 +62,9 @@ ribbon: key(cmd-alt-r)
 mail this: user.menu_select("File|Share|Send Page as Email Message")
 
 go (notebook | notebooks): key(ctrl-g)
+go notebook <user.onenote_notebook>:
+    user.onenote_navigate(onenote_notebook)
+    key(enter)
 
 go (section | sections): key(ctrl-shift-g)
 go section <user.onenote_section>: user.onenote_navigate(onenote_section)

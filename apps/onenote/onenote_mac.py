@@ -36,6 +36,7 @@ class SidebarTab(Enum):
 
 
 class NavigationLevel(Enum):
+    NOTEBOOKS = -1
     SECTIONS = 0
     PAGES = 1
 
@@ -76,8 +77,24 @@ class EditActions:
             actions.sleep("100ms")
 
 
+mod.list("onenote_notebooks", desc="Open OneNote notebooks")
 mod.list("onenote_sections", desc="Sections in the open OneNote notebook")
 mod.list("onenote_pages", desc="Pages in the open OneNote section")
+
+
+@mod.capture(rule="{user.onenote_notebooks}")
+def onenote_notebook(m) -> ui.Element:
+    print(f"onenote_notebook {m=}")
+    if notebook := ONENOTE_NOTEBOOKS.get(m.onenote_notebooks):
+        return notebook.AXParent
+
+    for name, notebook in ONENOTE_NOTEBOOKS.items():
+        if m.onenote_notebooks in name:
+            return notebook.AXParent
+
+    message = f"No unique notebook title containing “{m.onenote_notebooks}”"
+    app.notify(body=message, title="OneNote")
+    raise Exception(message)
 
 
 @mod.capture(rule="{user.onenote_sections}")
@@ -313,6 +330,32 @@ def onenote_show_sidebar(tab):
     return splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
 
 
+def onenote_notebooks_outline():
+    navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
+    try:
+        sections_pages = navigation.children.find_one(
+            AXRole="AXSplitGroup", max_depth=0
+        )
+    except ui.UIErr:
+        pass
+    else:
+        # sections and pages are visible; show notebooks instead
+        notebooks_button = navigation.children.find_one(AXRole="AXButton", max_depth=0)
+        notebooks_button.perform("AXPress")
+
+    # wait for notebooks to appear
+    for attempt in range(5):
+        try:
+            notebooks = navigation.children.find_one(AXRole="AXGroup", max_depth=0)
+            return notebooks.children.find_one(AXRole="AXOutline")
+        except ui.UIErr:
+            actions.sleep("100ms")
+    else:
+        message = "Did not see notebooks as expected"
+        app.notify(body=message, title="OneNote")
+        raise Exception(message)
+
+
 RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
 
 
@@ -325,23 +368,38 @@ def spoken_forms(s):
 
 
 def onenote_navigation_list(level):
-    navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
+    if level == NavigationLevel.NOTEBOOKS:
+        outline = onenote_notebooks_outline()
+    else:
+        navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
 
-    sections_pages = navigation.children.find_one(AXRole="AXSplitGroup", max_depth=0)
-    navigation_levels = sections_pages.children.find(AXRole="AXGroup")
-    outline = navigation_levels[level.value].children.find_one(AXRole="AXOutline")
-    if level == NavigationLevel.SECTIONS:
-        cells = reversed(outline.children.find(AXRole="AXCell"))
-        sections = {spoken_forms(cell.AXDescription): cell for cell in cells}
-        return sections
-    elif level == NavigationLevel.PAGES:
+        sections_pages = navigation.children.find_one(
+            AXRole="AXSplitGroup", max_depth=0
+        )
+        navigation_levels = sections_pages.children.find(AXRole="AXGroup")
+        outline = navigation_levels[level.value].children.find_one(AXRole="AXOutline")
+
+    if level == NavigationLevel.PAGES:
         labels = reversed(outline.children.find(AXRole="AXStaticText"))
         pages = {spoken_forms(label.AXValue): label for label in labels}
         return pages
 
+    cells = reversed(outline.children.find(AXRole="AXCell"))
+    notebooks_or_sections = {spoken_forms(cell.AXDescription): cell for cell in cells}
+    return notebooks_or_sections
 
+
+ONENOTE_NOTEBOOKS = {}
 ONENOTE_SECTIONS = {}
 ONENOTE_PAGES = {}
+
+
+@ctx.dynamic_list(f"user.onenote_notebooks")
+def onenote_notebooks(phrase):
+    global ONENOTE_NOTEBOOKS
+    print(f"notebook {phrase=}")
+    ONENOTE_NOTEBOOKS = onenote_navigation_list(NavigationLevel.NOTEBOOKS)
+    return "\n".join(ONENOTE_NOTEBOOKS.keys())
 
 
 @ctx.dynamic_list(f"user.onenote_sections")
@@ -459,21 +517,7 @@ class UserActions:
 
     def onenote_go_progress():
         # go to the first notebook
-        navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
-        try:
-            sections_pages = navigation.children.find_one(
-                AXRole="AXSplitGroup", max_depth=0
-            )
-        except ui.UIErr:
-            pass
-        else:
-            # sections and pages are visible; show notebooks instead
-            notebooks_button = navigation.children.find_one(
-                AXRole="AXButton", max_depth=0
-            )
-            notebooks_button.perform("AXPress")
-        notebooks = navigation.children.find_one(AXRole="AXGroup", max_depth=0)
-        notebooks_list = notebooks.children.find_one(AXRole="AXOutline")
+        notebooks_outline = onenote_notebooks_outline()
         first_notebook = notebooks_list.children.find_one(AXRole="AXRow")
         if not first_notebook.AXSelected:
             first_notebook.AXSelected = True
