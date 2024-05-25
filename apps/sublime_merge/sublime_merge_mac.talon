@@ -98,3 +98,6 @@ stash pop: key(cmd-shift-s)
 
 # works only when a file/hunk is focused
 ^edit: key(cmd-enter)
+
+file history: user.menu_select("Navigate|File History…")
+file blame: user.menu_select("Navigate|Blame…")
