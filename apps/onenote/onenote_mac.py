@@ -330,8 +330,7 @@ def onenote_show_sidebar(tab):
     return splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
 
 
-def onenote_notebooks_outline():
-    navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
+def onenote_notebooks_outline(navigation):
     try:
         sections_pages = navigation.children.find_one(
             AXRole="AXSplitGroup", max_depth=0
@@ -368,11 +367,11 @@ def spoken_forms(s):
 
 
 def onenote_navigation_list(level):
-    if level == NavigationLevel.NOTEBOOKS:
-        outline = onenote_notebooks_outline()
-    else:
-        navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
+    navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
 
+    if level == NavigationLevel.NOTEBOOKS:
+        outline = onenote_notebooks_outline(navigation)
+    else:
         sections_pages = navigation.children.find_one(
             AXRole="AXSplitGroup", max_depth=0
         )
@@ -517,8 +516,9 @@ class UserActions:
 
     def onenote_go_progress():
         # go to the first notebook
-        notebooks_outline = onenote_notebooks_outline()
-        first_notebook = notebooks_list.children.find_one(AXRole="AXRow")
+        navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
+        notebooks_outline = onenote_notebooks_outline(navigation)
+        first_notebook = notebooks_outline.children.find_one(AXRole="AXRow")
         if not first_notebook.AXSelected:
             first_notebook.AXSelected = True
             actions.key(
