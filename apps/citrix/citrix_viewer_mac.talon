@@ -1,4 +1,4 @@
-app: citrix_viewer
+app: citrix_viewer_mac
 -
 
 # keys get dropped frequently, particularly during initial login

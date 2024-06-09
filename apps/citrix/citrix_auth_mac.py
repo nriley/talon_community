@@ -5,9 +5,13 @@ from talon import Context, Module, actions, app, keychain, ui
 mod = Module()
 ctx = Context()
 
-ctx.matches = """
+mod.apps.citrix_auth_mac = """
 os: mac
 and app.bundle: com.citrix.AuthManagerMac
+"""
+
+ctx.matches = """
+app: citrix_auth_mac
 """
 
 

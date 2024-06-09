@@ -1,5 +1,5 @@
 app: putty
-app: citrix_desktop
+app: citrix_desktop_mac
 -
 session menu: user.putty_open_menu()
 

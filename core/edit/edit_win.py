@@ -7,7 +7,7 @@ mod.apps.edit_win = """
 os: windows
 """
 mod.apps.edit_win = """
-app: citrix_viewer
+app: citrix_viewer_mac
 """
 
 ctx = Context()

@@ -3,13 +3,13 @@ from talon import Context, Module, actions, clip, ui
 ctx = Context()
 mod = Module()
 
-mod.apps.citrix_viewer = """
+mod.apps.citrix_viewer_mac = """
 os: mac
 and app.bundle: com.citrix.receiver.icaviewer.mac
 """
 
 ctx.matches = """
-app: citrix_viewer
+app: citrix_viewer_mac
 """
 
 

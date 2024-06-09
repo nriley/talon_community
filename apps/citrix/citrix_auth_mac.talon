@@ -1,5 +1,4 @@
-os: mac
-and app.bundle: com.citrix.AuthManagerMac
+app: citrix_auth_mac
 -
 # keys in password get dropped if typing too fast
 settings():

@@ -6,8 +6,10 @@ ctx = Context()
 mod.apps.sqltools = """
 os: windows
 and app.exe: sqltoolsu.exe
-os: mac
-and app: citrix_desktop
+"""
+
+mod.apps.sqltools = """
+app: citrix_desktop_mac
 and code.language: sql
 """
 
