@@ -13,3 +13,5 @@ full screen all: user.citrix_use_all_displays_in_full_screen()
 start [<user.text>]:
     key(ctrl-esc)
     insert(text or "")
+
+control (alt | alter) delete: key(ctrl-cmd-del)
