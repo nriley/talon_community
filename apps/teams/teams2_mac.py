@@ -18,7 +18,15 @@ def is_teams(app):
 
 def teams_app():
     if apps := ui.apps(bundle=TEAMS_BUNDLE_ID):
-        apps[0].element.AXEnhancedUserInterface = True
+        # There is no way as of Teams 24124.1412.2911.3341 to enable full
+        # accessibility support on macOS short of enabling VoiceOver, and
+        # Microsoft has publicly failed to appreciate the effects of this
+        # regression from the prior Electron-based Teams.  Unless we discover
+        # a way to "fake" VoiceOver being turned on, we can only use window
+        # titles (or OCR, I guess) until this is fixed.
+        #
+        # Please upvote this if you care:
+        # https://feedbackportal.microsoft.com/feedback/idea/94110324-4c7d-ee11-a81c-0022484e5453
         return apps[0]
     return None
 
