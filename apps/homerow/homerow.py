@@ -70,7 +70,7 @@ def complete_homerow_search():
 
 def win_is_homerow_search_bar(win):
     return (
-        win.app.bundle == "com.dexterleng.Homerow" and win.title == "Homerow Search Bar"
+        win.app.bundle == "com.superultra.Homerow" and win.title == "Homerow Search Bar"
     )
 
 
