@@ -38,6 +38,8 @@ class CodeActions:
     def language():
         # Default to R language.
         # Could use ui.register to detect focusing a document/console tab (on Mac at least)
+        if next_language := actions.next():
+            return next_language
         return "r"
 
 
