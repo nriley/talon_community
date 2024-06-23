@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, ui
+from talon import Context, Module, actions, clip, ui
 
 try:
     from appscript.reference import CommandError
@@ -72,10 +72,14 @@ class UserActions:
         actions.sleep("500ms")
         actions.insert(name)
 
-    def find_everywhere(text: str):
+    def find(text: str):
         if text:
             clip.set_text(text, mode="find")
+        actions.key("cmd-f enter")
+
+    def find_everywhere(text: str):
         actions.key("cmd-alt-f")
+        actions.user.paste(text)
 
     def zoom_to_fit():
         actions.key("cmd-shift-ctrl--")
