@@ -7,6 +7,13 @@ ctx.matches = r"""
 os: mac
 """
 
+mod.apps.fantastical = """
+os: mac
+and app.bundle: 85C27NK92C.com.flexibits.fantastical2.mac.helper
+os: mac
+and app.bundle: com.flexibits.fantastical2.mac
+"""
+
 
 def fantastical_calendar_window():
     window = ui.active_window()
