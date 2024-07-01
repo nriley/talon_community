@@ -1,4 +1,4 @@
-app.bundle: com.microsoft.Outlook
+app: outlook_mac
 -
 # dictation mode gets confused when typing too fast
 settings():

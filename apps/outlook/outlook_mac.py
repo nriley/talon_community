@@ -5,8 +5,7 @@ ctx = Context()
 mod = Module()
 
 ctx.matches = r"""
-os: mac
-app.bundle: com.microsoft.Outlook
+app: outlook_mac
 """
 
 
