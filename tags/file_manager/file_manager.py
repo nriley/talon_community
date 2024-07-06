@@ -326,7 +326,7 @@ def gui_files(gui: imgui.GUI):
 
 
 def clear_lists():
-    global folder_selections, file_selections
+    global folder_selections, file_selections, current_folder_page, current_file_page
     if (
         len(ctx.lists["self.file_manager_directories"]) > 0
         or len(ctx.lists["self.file_manager_files"]) > 0
