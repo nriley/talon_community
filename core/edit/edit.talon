@@ -167,7 +167,7 @@ cut (word right | east): user.cut_word_right()
 #     edit.cut()
 
 # Paste
-(pace | pist | paste) that: edit.paste()
+(pace | pist | paste) (that | it): edit.paste()
 (pace | pist | paste) enter:
     edit.paste()
     key(enter)
