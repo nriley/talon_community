@@ -1,8 +1,8 @@
-os: mac
-and app.bundle: com.apple.dt.Xcode
+app: xcode
 -
 tag(): user.find_and_replace
 tag(): user.line_commands
+tag(): user.splits
 tag(): user.tabs
 
 file: key(cmd-shift-o)
@@ -43,9 +43,9 @@ bug switch: key(cmd-shift-y)
 bug console: key(cmd-shift-c)
 
 # Navigate
-focus editor: key(ctrl-`)
 focus next: key(cmd-alt-`)
-focus: key(cmd-j)
+focus previous: key(cmd-alt-shift-`)
+focus pick: key(cmd-j)
 go forward: key(ctrl-cmd-right)
 go back: key(ctrl-cmd-left)
 (go definition | follow): key(cmd-ctrl-j)

@@ -1,9 +1,15 @@
-from talon import Context, actions
+from talon import Context, Module, actions, ctrl, ui
+
+mod = Module()
+
+mod.apps.xcode = r"""
+os: mac
+and app.bundle: com.apple.dt.Xcode
+"""
 
 ctx = Context()
 ctx.matches = r"""
-os: mac
-and app.bundle: com.apple.dt.Xcode
+app: xcode
 """
 
 
@@ -81,6 +87,37 @@ class UserActions:
 
     def camel_right():
         actions.key("ctrl-right")
+
+    # user.splits (partial)
+    def split_window_vertically():
+        actions.key("cmd-ctrl-t")
+
+    def split_window_horizontally():
+        actions.key("cmd-alt-ctrl-t")
+
+    def split_flip():
+        actions.user.menu_select("View|Change Editor Orientation")
+
+    def split_reset():
+        actions.user.menu_select("View|Reset Editor Sizes")
+
+    split_window = split_window_vertically
+
+    def split_clear():
+        actions.key("cmd-shift-ctrl-w")
+
+    def split_clear_all():
+        actions.key("cmd-shift-alt-ctrl-w")
+
+    def split_maximize():
+        actions.key("cmd-shift-ctrl-return")
+
+    def split_next():
+        # I use this shortcut for toggling Talon, so send directly to app
+        ctrl.key_press("`", ctrl=True, app=ui.active_app())
+
+    def split_last():
+        actions.key("shift-ctrl-`")
 
 
 @ctx.action_class("win")
