@@ -27,7 +27,6 @@ bar issues: key(cmd-5)
 bar test: key(cmd-6)
 bar debug: key(cmd-7)
 bar breakpoints: key(cmd-8)
-bar reports: key(cmd-9)
 bar switch: key(cmd-0)
 
 # Inspectors (right side)
