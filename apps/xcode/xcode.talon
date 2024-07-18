@@ -5,11 +5,9 @@ tag(): user.line_commands
 tag(): user.splits
 tag(): user.tabs
 
-file: key(cmd-shift-o)
-
-file name <user.text>:
+file hunt [<user.text>]:
     key(cmd-shift-o)
-    insert(user.text)
+    insert(text or "")
 
 product run: key(cmd-r)
 product stop: key(cmd-.)
