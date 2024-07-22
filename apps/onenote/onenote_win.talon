@@ -39,19 +39,19 @@ move down: key(alt-shift-down)
 move right: key(alt-shift-right)
 move left: key(alt-shift-left)
 
-cell select: user.office_win_ribbon_select("jlc")
+cell select: user.office_win_ribbon_select("jc")
 
-column select: user.office_win_ribbon_select("jlm")
-column insert left: user.office_win_ribbon_select("jll")
+column select: user.office_win_ribbon_select("jm")
+column insert left: user.office_win_ribbon_select("jl")
 column insert right: key(ctrl-alt-r)
-column delete: user.office_win_ribbon_select("jlu")
+column delete: user.office_win_ribbon_select("ju")
 
-row select: user.office_win_ribbon_select("jlo")
-row insert up: user.office_win_ribbon_select("jlv")
-row insert down: user.office_win_ribbon_select("jle")
-row delete: user.office_win_ribbon_select("jlw")
+row select: user.office_win_ribbon_select("jo")
+row insert up: user.office_win_ribbon_select("jv")
+row insert down: user.office_win_ribbon_select("je")
+row delete: user.office_win_ribbon_select("jw")
 
-table select: user.office_win_ribbon_select("jls")
+table select: user.office_win_ribbon_select("js")
 
 # for consistency with Mac version, where collapsing will collapse to level 1
 collapse: key(alt-shift-1)
