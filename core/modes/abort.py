@@ -25,6 +25,9 @@ def abort_update_phrase(phrase: Phrase) -> tuple[bool, str]:
     global ts_threshold
 
     words = phrase["phrase"]
+    if len(words) == 0:
+        return False, ""
+
     current_phrase = " ".join(words)
 
     if ts_threshold is not None:
