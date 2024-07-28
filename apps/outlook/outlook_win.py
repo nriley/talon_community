@@ -23,8 +23,8 @@ app: outlook_win
 """
 
 
-@ctx.action_class("user")
-class UserActions:
+@ctx.action_class("edit")
+class EditActions:
     def find(text: str):
         actions.key("f4")
         if text:
@@ -36,6 +36,9 @@ class UserActions:
     def find_previous():
         pass
 
+
+@ctx.action_class("user")
+class UserActions:
     def find_everywhere(text: str):
         actions.key("ctrl-e")
         if text:

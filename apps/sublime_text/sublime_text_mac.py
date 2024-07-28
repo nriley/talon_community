@@ -63,6 +63,11 @@ class EditActions:
     def select_line(n: int = None):
         actions.key("cmd-l")
 
+    # user.find_and_replace
+    def find(text: str):
+        actions.key("cmd-f")
+        actions.insert(text)
+
 
 @ctx.action_class("user")
 class UserActions:
@@ -73,10 +78,6 @@ class UserActions:
         actions.key("shift-tab")
 
     # user.find_and_replace
-    def find(text: str):
-        actions.key("cmd-f")
-        actions.insert(text)
-
     def find_everywhere(text: str):
         actions.key("cmd-shift-f")
         actions.insert(text)
@@ -89,12 +90,6 @@ class UserActions:
 
     def find_toggle_match_by_regex():
         actions.key("cmd-alt-r")
-
-    def find_next():
-        actions.key("cmd-g")
-
-    def find_previous():
-        actions.key("cmd-shift-g")
 
     def replace(text: str):
         actions.key("cmd-alt-f")

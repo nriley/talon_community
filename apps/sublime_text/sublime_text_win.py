@@ -80,12 +80,6 @@ class UserActions:
     def find_toggle_match_by_regex():
         actions.key("alt-r")
 
-    def find_next():
-        actions.key("f3")
-
-    def find_previous():
-        actions.key("shift-f3")
-
     def replace_confirm():
         actions.key("ctrl-shift-h")
 

@@ -99,13 +99,13 @@ unfold all: key(cmd-shift-alt-o)
 # Find and replace
 find and replace:
     app.notify('ERROR: Command deprecated; please use "hunt this"')
-    user.find("")
+    edit.find("")
 find next:
     app.notify('ERROR: Command deprecated; please use "hunt next"')
-    user.find_next()
+    edit.find_next()
 find previous:
     app.notify('ERROR: Command deprecated; please use "hunt previous"')
-    user.find_previous()
+    edit.find_previous()
 find with selection: key(cmd-e)
 find in files:
     app.notify('ERROR: Command deprecated; please use "hunt all"')

@@ -76,6 +76,12 @@ class EditActions:
             actions.next()
             actions.sleep("100ms")
 
+    # user.find_and_replace
+    def find(text: str):
+        actions.key("ctrl-g cmd-f")
+        actions.sleep("100ms")
+        actions.insert(text)
+
 
 mod.list("onenote_notebooks", desc="Open OneNote notebooks")
 mod.list("onenote_sections", desc="Sections in the open OneNote notebook")
@@ -420,21 +426,10 @@ def onenote_pages(phrase):
 @ctx.action_class("user")
 class UserActions:
     # user.find_and_replace
-    def find(text: str):
-        actions.key("ctrl-g cmd-f")
-        actions.sleep("100ms")
-        actions.insert(text)
-
     def find_everywhere(text: str):
         actions.key("ctrl-g cmd-alt-f")
         actions.sleep("200ms")
         actions.insert(text)
-
-    def find_next():
-        actions.key("cmd-g")
-
-    def find_previous():
-        actions.key("cmd-shift-g")
 
     # not standard OneNote; approximate equivalents of AutoHotKey
     def onenote_heading_1():

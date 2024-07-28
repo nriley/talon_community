@@ -17,6 +17,11 @@ class AppActions:
 
 @ctx.action_class("edit")
 class EditActions:
+    def find(text: str):
+        actions.key("cmd-f")
+        if text:
+            actions.insert(text)
+
     def zoom_in():
         applescript.run(
             r"""
@@ -89,17 +94,6 @@ class UserActions:
             AXRole="AXMenuItem", AXTitle=format, max_depth=0
         )
         file_format_item.perform("AXPress")
-
-    def find(text: str):
-        actions.key("cmd-f")
-        if text:
-            actions.insert(text)
-
-    def find_next():
-        actions.key("cmd-g")
-
-    def find_previous():
-        actions.key("cmd-shift-g")
 
     def find_everywhere(text: str):
         actions.key("ctrl-f")

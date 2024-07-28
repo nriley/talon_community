@@ -68,9 +68,6 @@ class EditActions:
     def line_swap_down():
         actions.key("alt-down")
 
-
-@ctx_mac.action_class("user")
-class UserActions:
     # user.find_and_replace
     def find(text: str):
         actions.key("cmd-f")
@@ -78,12 +75,10 @@ class UserActions:
             actions.key("cmd-a")
             actions.user.paste(text)
 
-    def find_next():
-        actions.key("cmd-g")
 
-    def find_previous():
-        actions.key("cmd-shift-g")
-
+@ctx_mac.action_class("user")
+class UserActions:
+    # user.find_and_replace
     def find_everywhere(text: str):
         actions.key("cmd-shift-f")
 
@@ -99,7 +94,9 @@ class UserActions:
         actions.edit.find("")
         actions.key("tab:10 space")
 
-    replace = find
+    def replace(text: str):
+        actions.user.find(text)
+
     replace_everywhere = find_everywhere
 
     def replace_confirm():
