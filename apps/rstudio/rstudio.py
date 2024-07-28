@@ -88,15 +88,15 @@ class UserActions:
         actions.key("cmd-shift-f")
 
     def find_toggle_match_by_case():
-        actions.user.find("")
+        actions.edit.find("")
         actions.key("tab:8 space")
 
     def find_toggle_match_by_word():
-        actions.user.find("")
+        actions.edit.find("")
         actions.key("tab:9 space")
 
     def find_toggle_match_by_regex():
-        actions.user.find("")
+        actions.edit.find("")
         actions.key("tab:10 space")
 
     replace = find
@@ -106,19 +106,19 @@ class UserActions:
         actions.key("cmd-shift-j")
 
     def replace_confirm_all():
-        actions.user.find("")
+        actions.edit.find("")
         actions.key("tab:6 space")
 
     def select_previous_occurrence(text: str):
         # Can't entirely suppress the find pane but at least hide it
-        actions.user.find(text)
-        actions.user.find_previous()
+        actions.edit.find(text)
+        actions.edit.find_previous()
         actions.key("esc")
 
     def select_next_occurrence(text: str):
         # Can't entirely suppress the find pane but at least hide it
-        actions.user.find(text)
-        actions.user.find_next()
+        actions.edit.find(text)
+        actions.edit.find_next()
         actions.key("esc")
 
     # user.multiple_cursors
