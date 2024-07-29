@@ -84,7 +84,7 @@ strike through: key(cmd-shift-x)
 normal: user.menu_select("Edit|Clear Formatting")
 
 copy style: user.menu_select("Edit|Copy Formatting")
-(pace | pist | paste) style: user.menu_select("Edit|Paste Formatting")
+((pace | pist | paste) style) | pistil: user.menu_select("Edit|Paste Formatting")
 
 bullet: user.menu_select("Format|Bulleted List")
 
