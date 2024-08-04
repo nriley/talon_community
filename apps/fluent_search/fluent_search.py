@@ -35,7 +35,8 @@ class UserActions:
         # If you have a different search keyboard shortcut configured,
         # replace ctrl-alt-space with it below.
         actions.key("ctrl-alt-space")
-        wait_for_fluent_search_window()
+        if not wait_for_fluent_search_window():
+            return
         actions.key("backspace")
         if "\t" in text:
             plugin, text = text.split("\t", 1)
@@ -44,7 +45,8 @@ class UserActions:
 
     def fluent_search_in_app(text: str, submit: bool):
         actions.key("alt-shift-/")
-        wait_for_fluent_search_window()
+        if not wait_for_fluent_search_window():
+            return
         actions.user.paste(text)
         if submit:
             actions.key("enter")
