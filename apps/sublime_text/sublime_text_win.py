@@ -124,10 +124,6 @@ class UserActions:
     def multi_cursor_select_more_occurrences():
         actions.key("ctrl-d")
 
-    def find(text: str):
-        actions.key("ctrl-f")
-        actions.insert(text)
-
     def find_everywhere(text: str):
         actions.key("ctrl-shift-f")
         actions.insert(text)
