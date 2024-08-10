@@ -58,9 +58,6 @@ select (word right | east): edit.extend_word_right()
 
 select way left: edit.extend_line_start()
 select way right: edit.extend_line_end()
-select paragraph:
-    edit.paragraph_start()
-    edit.extend_paragraph_end()
 select way up: edit.extend_file_start()
 select way down: edit.extend_file_end()
 
@@ -69,12 +66,6 @@ indent [more]: edit.indent_more()
 (indent less | out dent): edit.indent_less()
 
 # Delete
-clear that: key(backspace)
-clear all: user.delete_all()
-clear line: edit.delete_line()
-clear line start: user.delete_line_start()
-clear line end: user.delete_line_end()
-clear block: edit.delete_paragraph()
 clear left: edit.delete()
 clear right: user.delete_right()
 
@@ -85,8 +76,6 @@ clear up:
 clear down:
     edit.extend_line_down()
     edit.delete()
-
-clear word: edit.delete_word()
 
 clear (word (left | previous) | west):
     edit.extend_word_left()
@@ -102,11 +91,6 @@ clear way left:
 
 clear way right:
     edit.extend_line_end()
-    edit.delete()
-
-clear paragraph:
-    edit.paragraph_start()
-    edit.extend_paragraph_end()
     edit.delete()
 
 clear way up:
