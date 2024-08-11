@@ -25,6 +25,11 @@ def eaglefiler_front_browser_window():
 
 @ctx.action_class("edit")
 class EditActions:
+    def find(text: str):
+        if text:
+            clip.set_text(text, mode="find")
+        actions.key("cmd-f enter")
+
     def zoom_in():
         actions.key("cmd-ctrl-+")
 
@@ -71,11 +76,6 @@ class UserActions:
         actions.key("cmd-shift-n")
         actions.sleep("500ms")
         actions.insert(name)
-
-    def find(text: str):
-        if text:
-            clip.set_text(text, mode="find")
-        actions.key("cmd-f enter")
 
     def find_everywhere(text: str):
         actions.key("cmd-alt-f")
