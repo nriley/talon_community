@@ -2,6 +2,11 @@
 # eg: "select line", "clear all"
 <user.edit_action> <user.edit_modifier>: user.edit_command(edit_action, edit_modifier)
 
+# XXX Workaround for likely core Talon issue in which "clear line" doesn't work even
+# though it's defined in the captures/underlying lists above (and works with sim/mimic);
+# seems to be related to the clear [line] <number> command in line_commands.talon
+clear line: edit.delete_line()
+
 # Zoom
 zoom in: edit.zoom_in()
 zoom out: edit.zoom_out()
