@@ -48,6 +48,11 @@ class AppActions:
 
 @ctx.action_class("edit")
 class EditActions:
+    def find(text: str):
+        actions.key("cmd-f")
+        if text:
+            actions.insert(text)
+
     def zoom_in():
         zoom = word_document_zoom()
         zoom.percentage.set(zoom.percentage() * 1.25)
@@ -68,17 +73,6 @@ class Actions:
 
 @ctx.action_class("user")
 class UserActions:
-    def find(text: str):
-        actions.key("cmd-f")
-        if text:
-            actions.insert(text)
-
-    def find_next():
-        actions.key("cmd-g")
-
-    def find_previous():
-        actions.key("cmd-shift-g")
-
     def find_everywhere(text: str):
         actions.user.menu_select("Edit|Find|Advanced Find and Replace...")
         if text:
