@@ -14,10 +14,6 @@ class Actions:
         """Send a CoreDock notification to the macOS Dock using SPI"""
 
 
-cf = None
-appservices = None
-
-
 @ctx.action_class("user")
 class UserActions:
     def dock_send_notification(notification: str):
