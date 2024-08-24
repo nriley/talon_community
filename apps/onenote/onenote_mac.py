@@ -77,7 +77,7 @@ class EditActions:
             actions.sleep("100ms")
 
     # user.find_and_replace
-    def find(text: str):
+    def find(text: str = None):
         actions.key("ctrl-g cmd-f")
         actions.sleep("100ms")
         actions.insert(text)

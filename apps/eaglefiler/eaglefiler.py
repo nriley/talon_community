@@ -25,7 +25,7 @@ def eaglefiler_front_browser_window():
 
 @ctx.action_class("edit")
 class EditActions:
-    def find(text: str):
+    def find(text: str = None):
         if text:
             clip.set_text(text, mode="find")
         actions.key("cmd-f enter")

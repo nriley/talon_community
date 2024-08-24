@@ -69,7 +69,7 @@ class EditActions:
         actions.key("alt-down")
 
     # user.find_and_replace
-    def find(text: str):
+    def find(text: str = None):
         actions.key("cmd-f")
         if text:
             actions.key("cmd-a")

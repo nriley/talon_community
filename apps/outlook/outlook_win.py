@@ -25,7 +25,7 @@ app: outlook_win
 
 @ctx.action_class("edit")
 class EditActions:
-    def find(text: str):
+    def find(text: str = None):
         actions.key("f4")
         if text:
             actions.insert(text)

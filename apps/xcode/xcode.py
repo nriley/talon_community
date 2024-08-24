@@ -34,6 +34,11 @@ class CodeActions:
 
 @ctx.action_class("edit")
 class EditActions:
+    def find(text: str = None):
+        actions.key("cmd-f")
+        if text:
+            actions.insert(text)
+
     def jump_line(n: int):
         actions.key("cmd-l")
         actions.insert(str(n))
@@ -49,19 +54,9 @@ class EditActions:
 @ctx.action_class("user")
 class UserActions:
     # user.find_and_replace
-    def find(text: str):
-        actions.key("cmd-f")
-        actions.insert(text)
-
     def find_everywhere(text: str):
         actions.key("cmd-shift-f")
         actions.insert(text)
-
-    def find_next():
-        actions.key("cmd-g")
-
-    def find_previous():
-        actions.key("cmd-shift-g")
 
     def replace(text: str):
         actions.key("cmd-alt-f")
