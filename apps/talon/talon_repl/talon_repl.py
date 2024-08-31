@@ -1,8 +1,9 @@
 from talon import Context, Module
 
 mod = Module()
-mod.apps.talon_repl = """
+mod.apps.talon_repl = r"""
 win.title: /Talon (- )?REPL/
+win.title: /Talon - REPL/
 win.title: /.talon\/bin\/repl/
 """
 
