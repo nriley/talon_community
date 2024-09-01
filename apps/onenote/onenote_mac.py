@@ -90,7 +90,7 @@ mod.list("onenote_pages", desc="Pages in the open OneNote section")
 
 @mod.capture(rule="{user.onenote_notebooks}")
 def onenote_notebook(m) -> ui.Element:
-    print(f"onenote_notebook {m=}")
+    # print(f"onenote_notebook {m=}")
     if notebook := ONENOTE_NOTEBOOKS.get(m.onenote_notebooks):
         return notebook.AXParent
 
@@ -105,7 +105,7 @@ def onenote_notebook(m) -> ui.Element:
 
 @mod.capture(rule="{user.onenote_sections}")
 def onenote_section(m) -> ui.Element:
-    print(f"onenote_section {m=}")
+    # print(f"onenote_section {m=}")
     if section := ONENOTE_SECTIONS.get(m.onenote_sections):
         return section.AXParent
 
@@ -120,7 +120,7 @@ def onenote_section(m) -> ui.Element:
 
 @mod.capture(rule="{user.onenote_pages}")
 def onenote_page(m) -> ui.Element:
-    print(f"onenote_page {m=}")
+    # print(f"onenote_page {m=}")
     if page := ONENOTE_PAGES.get(m.onenote_pages):
         return page.AXParent.AXParent.AXParent
 
@@ -405,7 +405,7 @@ ONENOTE_PAGES = {}
 @ctx.dynamic_list(f"user.onenote_notebooks")
 def onenote_notebooks(phrase):
     global ONENOTE_NOTEBOOKS
-    print(f"notebook {phrase=}")
+    # print(f"notebook {phrase=}")
     ONENOTE_NOTEBOOKS = onenote_navigation_list(NavigationLevel.NOTEBOOKS)
     return "\n".join(ONENOTE_NOTEBOOKS.keys())
 
@@ -413,7 +413,7 @@ def onenote_notebooks(phrase):
 @ctx.dynamic_list(f"user.onenote_sections")
 def onenote_sections(phrase):
     global ONENOTE_SECTIONS
-    print(f"section {phrase=}")
+    # print(f"section {phrase=}")
     ONENOTE_SECTIONS = onenote_navigation_list(NavigationLevel.SECTIONS)
     return "\n".join(ONENOTE_SECTIONS.keys())
 
