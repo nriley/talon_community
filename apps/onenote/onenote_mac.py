@@ -370,7 +370,10 @@ RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
 def spoken_forms(s):
     # XXX use user.vocabulary, or may never match
     if RE_NON_ALPHA_OR_SPACE.search(s):
-        return f"""{actions.user.create_spoken_forms(s, generate_subsequences=False)[0]}
+        spoken_forms = "\n".join(
+            actions.user.create_spoken_forms(s, generate_subsequences=False)
+        )
+        return f"""{spoken_forms}
 {RE_NON_ALPHA_OR_SPACE.sub(" ", s.lower())}"""
     return s.lower()
 
