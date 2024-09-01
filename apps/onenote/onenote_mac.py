@@ -128,7 +128,7 @@ def onenote_page(m) -> ui.Element:
         if m.onenote_pages in name:
             return page.AXParent.AXParent.AXParent
 
-    page = f"No unique page title containing “{m.onenote_pages}”"
+    message = f"No unique page title containing “{m.onenote_pages}”"
     app.notify(body=message, title="OneNote")
     raise Exception(message)
 
