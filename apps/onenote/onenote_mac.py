@@ -174,6 +174,9 @@ class Actions:
     def onenote_hide_ribbon():
         """Hide the Ribbon in OneNote"""
 
+    def onenote_maximize_content_or_press_esc():
+        """Hide chrome and zoom content to fit width in OneNote if active, else press Esc"""
+
     def onenote_copy_link():
         """Copy a link to the current paragraph in OneNote"""
 
@@ -477,6 +480,17 @@ class UserActions:
         open_tab = ribbon.get("AXValue")
         if open_tab:
             open_tab.perform("AXPress")
+
+    def onenote_maximize_content_or_press_esc():
+        if (element := actions.user.focused_element_safe()) is not None:
+            app = element.window.app
+            if app.bundle != "com.microsoft.onenote.mac":
+                ctrl.key_press("esc", app=app)
+                return
+
+        actions.user.onenote_hide_ribbon()
+        actions.user.onenote_hide_navigation()
+        actions.user.zoom_to_fit_width()
 
     def onenote_go_recent(offset: int):
         navigation = onenote_show_sidebar(SidebarTab.RECENT_NOTES)

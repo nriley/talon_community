@@ -126,16 +126,8 @@ paste link:
     sleep(100ms)
     key(enter cmd-shift-n)
 
-# missing shortcut for hiding navigation
-(navigation hide | escape):
-    user.onenote_hide_ribbon()
-    user.onenote_hide_navigation()
-    user.zoom_to_fit_width()
-
-key(esc):
-    user.onenote_hide_ribbon()
-    user.onenote_hide_navigation()
-    user.zoom_to_fit_width()
+escape: user.onenote_maximize_content_or_press_esc()
+key(esc): user.onenote_maximize_content_or_press_esc()
 
 today:
     user.onenote_heading_1()
@@ -160,6 +152,4 @@ tomorrow:
 # back to progress (first notebook, first section)
 go progress:
     user.onenote_go_progress()
-    user.onenote_hide_ribbon()
-    user.onenote_hide_navigation()
-    user.zoom_to_fit_width()
+    user.onenote_maximize_content()
