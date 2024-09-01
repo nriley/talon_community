@@ -1,7 +1,7 @@
 list: user.letter
 -
 air: a
-bat: b
+batt: b
 cap: c
 drum: d
 each: e
@@ -25,4 +25,4 @@ vest: v
 whale: w
 plex: x
 yank: y
-zip: z
+zoo: z
