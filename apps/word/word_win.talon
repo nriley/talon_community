@@ -12,10 +12,6 @@ italic: key(ctrl-i)
 underline: key(ctrl-u)
 # strike through: key(ctrl-shift-x)
 
-mail this:
-    user.office_tell_me()
-    "Mail Recipient (As Attachment)"
-    sleep(1s)
-    key(down enter)
+mail this: user.office_mail_this()
 
 ribbon: key(ctrl-f1)

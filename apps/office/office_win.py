@@ -36,6 +36,9 @@ class Actions:
     def office_win_ribbon_select(keys: str):
         """Select from the ribbon in a Windows Office app"""
 
+    def office_mail_this():
+        """Attach the frontmost document to an email from an Office app"""
+
 
 @ctx.action_class("edit")
 class EditActions:
@@ -53,3 +56,9 @@ class UserActions:
         actions.key("alt-" + keys[0])
         actions.sleep("30ms")
         actions.key(" ".join(keys[1:]))
+
+    def office_mail_this():
+        actions.user.office_tell_me()
+        actions.user.paste("Mail Recipient (As Attachment)")
+        actions.sleep("1s")
+        actions.key("down enter")

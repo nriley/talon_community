@@ -46,15 +46,11 @@ un group that: key(ctrl-shift-g)
 copy style: key(ctrl-shift-c)
 (pace | pist | paste) style: key(ctrl-shift-v)
 
-mail this:
-    user.office_tell_me()
-    "Mail Recipient (As Attachment)"
-    sleep(1s)
-    key(down enter)
+mail this: user.office_mail_this()
 
 mail p d f:
     user.office_tell_me()
-    "E-mail as PDF Attachment"
+    user.paste("E-mail as PDF Attachment")
     sleep(1s)
     key(down enter)
 

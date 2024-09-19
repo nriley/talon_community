@@ -83,6 +83,6 @@ sheet next: key(ctrl-pagedown)
 sheet rename: key(alt-h o r)
 
 pivot that: key(alt-n v t)
-# mail this: user.menu_select("File|Share|Send Workbook")
+mail this: user.office_mail_this()
 
 ribbon: key(ctrl-f1)
