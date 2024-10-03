@@ -1,5 +1,6 @@
 app: powerpoint_win
 -
+tag(): user.pages
 
 (slide | normal) view: user.office_win_ribbon_select("wl")
 slide sorter: user.office_win_ribbon_select("wi")
@@ -11,8 +12,9 @@ presenter view: key(alt-f5)
 slideshow: key(f5)
 slideshow from start: user.office_win_ribbon_select("sb")
 
-slide previous: key(f6 escape:2 pageup)
-slide next: key(f6 escape:2 pagedown)
+[slide] previous: user.page_previous()
+[slide] next: user.page_next()
+[slide] final: user.page_final()
 
 slide new: key(ctrl-m)
 
