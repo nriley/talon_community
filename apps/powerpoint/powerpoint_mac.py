@@ -18,3 +18,13 @@ class AppActions:
 class UserActions:
     def zoom_to_fit():
         actions.key("cmd-alt-o")
+
+    # user.pages
+    def page_next():
+        actions.key("pagedown")
+
+    def page_previous():
+        actions.key("pageup")
+
+    def page_final():
+        actions.key("end")

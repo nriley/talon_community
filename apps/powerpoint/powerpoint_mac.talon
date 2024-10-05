@@ -1,5 +1,6 @@
 app: powerpoint_mac
 -
+tag(): user.pages
 
 # dictation mode gets confused when typing too fast
 settings():
@@ -14,6 +15,10 @@ presenter view: key(esc alt-enter)
 
 slideshow: key(cmd-enter)
 slideshow from start: key(cmd-shift-enter)
+
+[slide] previous: user.page_previous()
+[slide] next: user.page_next()
+[slide] final: user.page_final()
 
 slide new: key(cmd-shift-n)
 
