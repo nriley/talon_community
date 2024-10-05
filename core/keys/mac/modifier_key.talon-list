@@ -1,0 +1,12 @@
+list: user.modifier_key
+os: mac
+-
+function: fn
+troll: ctrl
+shift: shift
+super: cmd
+# I keep getting "comma" or "coma" when I say "command"
+man: cmd
+option: alt
+# for use when remote controlling Windows machines
+alter: cmd
