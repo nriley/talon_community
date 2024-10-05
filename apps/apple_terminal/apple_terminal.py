@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, cron, ui
+from talon import Context, Module, actions, app, cron, ctrl, ui
 
 # TODO: fit this to terminal.py
 
@@ -37,6 +37,35 @@ class Actions:
         cron.after(
             "200ms",
             lambda: actions.user.apple_terminal_window_focus_or_open(settings_set),
+        )
+
+    def apple_terminal_window_clear(settings_set: str):
+        """Clear a Terminal window with the specified settings set"""
+        try:
+            terminal = terminal_app()
+        except IndexError:
+            pass
+        else:
+            from appscript import its
+
+            terminal_window = terminal.appscript().windows[
+                its.current_settings.name == settings_set
+            ][1]
+
+            if terminal_window.exists():
+                # Can't clear window when it is not focused
+                active_window = ui.active_window()
+                terminal_window_id = terminal_window.id()
+                next(
+                    w for w in terminal.windows() if w.id == terminal_window_id
+                ).focus()
+                ctrl.key_press(key="k", super=True)
+                active_window.focus()
+                return
+
+        app.notify(
+            "Terminal",
+            f"Couldn’t find a window with profile “{settings_set}”",
         )
 
 
