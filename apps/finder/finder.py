@@ -31,7 +31,7 @@ class UserActions:
             target = finder().Finder_windows[1].target
             if not target.exists(timeout=0.1):
                 return None
-            if target.class_() not in {k.disk, k.folder}:
+            if target.class_(timeout=0.1) not in {k.disk, k.folder}:
                 return None
             return target.get(resulttype=k.alias, timeout=0.1).path
         except CommandError:  # fails with some windows, e.g. AirDrop window
