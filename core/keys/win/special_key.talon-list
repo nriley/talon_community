@@ -2,6 +2,7 @@ list: user.special_key
 os: windows
 os: linux
 -
+
 end: end
 home: home
 minus: minus
@@ -13,6 +14,7 @@ tab: tab
 wipe: backspace
 white: backspace
 eat: delete
+space: space
 void: space
 menu key: menu
 print screen: printscr
