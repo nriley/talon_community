@@ -11,6 +11,7 @@ page down: pagedown
 page up: pageup
 escape: escape
 tab: tab
+delete: backspace
 wipe: backspace
 white: backspace
 eat: delete
