@@ -17,3 +17,4 @@ white: backspace
 eat: delete
 space: space
 void: space
+insert: insert
