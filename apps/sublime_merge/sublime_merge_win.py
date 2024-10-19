@@ -2,8 +2,7 @@ from talon import Context, actions, app, ui
 
 ctx = Context()
 ctx.matches = r"""
-os: windows
-and app.exe: sublime_merge.exe
+app: sublime_merge_win
 """
 
 

@@ -1,7 +1,5 @@
-os: windows
-and app.exe: sublime_merge.exe
+app: sublime_merge_win
 -
-tag(): user.tabs
 
 please [<user.text>]:
     key(ctrl-shift-p)
@@ -28,12 +26,6 @@ hunk:
     key(tab)
 
 commit: key(ctrl-9 ctrl-enter)
-push: key(ctrl-alt-up)
-push force:
-    key(shift-f8)
-    "--force-with-lease"
-    key(enter)
-pull: key(ctrl-alt-down)
 
 # stage commands work when insertion point is in a hunk
 

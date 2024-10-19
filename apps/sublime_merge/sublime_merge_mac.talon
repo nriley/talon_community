@@ -1,6 +1,5 @@
-app.bundle: com.sublimemerge
+app: sublime_merge_mac
 -
-tag(): user.tabs
 
 please [<user.text>]:
     key(cmd-shift-p)
@@ -26,25 +25,10 @@ hunk:
     sleep(150ms)
     key(tab)
 
-pull: key(cmd-alt-down)
-fetch:
-    key(shift-f7)
-    "fetch"
-    key(enter)
-fetch all:
-    key(shift-f7)
-    "fetch --all"
-    key(enter)
-
 commit:
     key(cmd-9)
     sleep(100ms)
     key(cmd-enter)
-push: key(cmd-alt-up)
-push force:
-    key(shift-f8)
-    "--force-with-lease"
-    key(enter)
 
 # stage/discard commands work when insertion point is in a hunk
 
