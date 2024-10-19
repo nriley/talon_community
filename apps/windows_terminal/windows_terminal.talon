@@ -1,5 +1,7 @@
 app: windows_terminal
 -
+tag(): user.command_search
+
 # makes the commands in terminal.talon available
 tag(): terminal
 
@@ -30,7 +32,3 @@ find it <phrase>$:
     key(escape)
     # make it so
     edit.find("{phrase}\n")
-
-please [<user.text>]:
-    key(ctrl-shift-p)
-    insert(user.text or "")

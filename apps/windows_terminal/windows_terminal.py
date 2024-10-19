@@ -38,6 +38,12 @@ class EditActions:
 
 @ctx.action_class("user")
 class UserActions:
+    # user.command_search
+    def command_search(command=""):
+        actions.key("ctrl-shift-p")
+        if command != "":
+            actions.insert(command)
+
     def file_manager_current_path():
         path = ui.active_window().title
         path = (
