@@ -1,5 +1,6 @@
 app: sublime_merge
 -
+tag(): user.command_search
 tag(): user.tabs
 
 <user.sublime_merge_pull_with_args>:

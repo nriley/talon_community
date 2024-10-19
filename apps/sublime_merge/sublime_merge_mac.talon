@@ -1,10 +1,6 @@
 app: sublime_merge_mac
 -
 
-please [<user.text>]:
-    key(cmd-shift-p)
-    insert(user.text or "")
-
 ^message [<user.prose>]$:
     key(cmd-9)
     sleep(100ms)

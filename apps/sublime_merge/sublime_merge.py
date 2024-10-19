@@ -100,3 +100,9 @@ class UserActions:
         actions.key("shift-f8")
         actions.insert(f"{' '.join(args)}")
         actions.key("enter")
+
+    # user.command_search
+    def command_search(command=""):
+        actions.key("cmd-shift-p" if app.platform == "mac" else "ctrl-shift-p")
+        if command != "":
+            actions.insert(command)

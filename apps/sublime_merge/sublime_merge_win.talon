@@ -1,10 +1,6 @@
 app: sublime_merge_win
 -
 
-please [<user.text>]:
-    key(ctrl-shift-p)
-    insert(user.text or "")
-
 ^message [<user.prose>]$:
     key(ctrl-9)
     sleep(100ms)
