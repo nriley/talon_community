@@ -1,6 +1,7 @@
 os: mac
 app.bundle: com.sublimetext.4
 -
+tag(): user.command_search
 tag(): user.file_manager
 tag(): user.find_and_replace
 tag(): user.line_commands
@@ -19,10 +20,6 @@ file hunt [<user.text>]:
 
 symbol hunt [<user.text>]:
     key(cmd-shift-r)
-    insert(text or "")
-
-please [<user.text>]:
-    key(cmd-shift-p)
     insert(text or "")
 
 project switch [<user.text>]:

@@ -1,6 +1,7 @@
 os: windows
 and app.exe: sublime_text.exe
 -
+tag(): user.command_search
 tag(): user.find_and_replace
 tag(): user.line_commands
 tag(): user.multiple_cursors
@@ -16,10 +17,6 @@ file hunt [<user.text>]:
 
 symbol hunt [<user.text>]:
     key(ctrl-shift-r)
-    insert(text or "")
-
-please [<user.text>]:
-    key(ctrl-shift-p)
     insert(text or "")
 
 project switch [<user.text>]:

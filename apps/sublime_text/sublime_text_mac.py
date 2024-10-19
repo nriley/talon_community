@@ -77,6 +77,12 @@ class UserActions:
         actions.insert("<project filters>," + files)
         actions.key("shift-tab")
 
+    # user.command_search
+    def command_search(command=""):
+        actions.key("cmd-shift-p")
+        if command != "":
+            actions.insert(command)
+
     # user.find_and_replace
     def find_everywhere(text: str):
         actions.key("cmd-shift-f")

@@ -70,6 +70,12 @@ class UserActions:
         actions.insert("<project filters>," + files)
         actions.key("shift-tab")
 
+    # user.command_search
+    def command_search(command=""):
+        actions.key("ctrl-shift-p")
+        if command != "":
+            actions.insert(command)
+
     # user.find_and_replace
     def find_toggle_match_by_case():
         actions.key("alt-c")
