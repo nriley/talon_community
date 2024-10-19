@@ -134,3 +134,12 @@ class UserActions:
     # user.tabs
     def tab_final():
         actions.key("ctrl-shift-f12")
+
+
+@ctx.action_class("user")
+class UserActions:
+    # user.command_search
+    def command_search(command=""):
+        actions.key("cmd-shift-p" if app.platform == "mac" else "ctrl-shift-p")
+        if command != "":
+            actions.insert(command)

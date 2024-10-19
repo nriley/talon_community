@@ -1,6 +1,7 @@
 os: windows
 app: rstudio
 -
+tag(): user.command_search
 tag(): user.find_and_replace
 tag(): user.line_commands
 tag(): user.multiple_cursors
@@ -8,10 +9,6 @@ tag(): user.tabs
 
 # XXX The below keyboard shortcuts were created by copying the Mac versions and replacing Command by Control.
 # XXX Also, the actions invoked below need to be ported to Windows.
-
-please [<user.text>]:
-    key(ctrl-shift-p)
-    insert(text or "")
 
 (file | symbol) hunt [all] [<user.text>]:
     key(ctrl-.)

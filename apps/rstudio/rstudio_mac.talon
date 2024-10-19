@@ -1,14 +1,11 @@
 os: mac
 app: rstudio
 -
+tag(): user.command_search
 tag(): user.find_and_replace
 tag(): user.line_commands
 tag(): user.multiple_cursors
 tag(): user.tabs
-
-please [<user.text>]:
-    key(cmd-shift-p)
-    insert(text or "")
 
 (file | symbol) hunt [all] [<user.text>]:
     key(ctrl-.)
