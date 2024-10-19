@@ -10,11 +10,12 @@ enter: keypad_enter
 page down: pagedown
 page up: pageup
 escape: escape
+space: space
 tab: tab
-delete: backspace
+insert: insert
 wipe: backspace
 white: backspace
+delete: backspace
 eat: delete
 space: space
 void: space
-insert: insert

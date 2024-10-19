@@ -1,7 +1,7 @@
 list: user.modifier_key
 os: mac
 -
-function: fn
+alt: alt
 troll: ctrl
 shift: shift
 super: cmd
@@ -10,3 +10,5 @@ man: cmd
 option: alt
 # for use when remote controlling Windows machines
 alter: cmd
+function: fn
+globe: fn
