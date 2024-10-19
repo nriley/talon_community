@@ -31,10 +31,10 @@ message (last | lost | lust):
 normal: user.menu_select("Format|Style|Remove Style")
 
 # MsgFiler
-move: user.focus_bundle("com.atow.msgfiler")
+move: user.launch_or_focus_bundle("com.atow.MsgFiler4")
 
 (save to | move to | folder) [<user.text>]:
-    user.focus_bundle("com.atow.MsgFiler4")
+    user.launch_or_focus_bundle("com.atow.MsgFiler4")
     key(cmd-a)
     user.paste(user.text or "")
 
