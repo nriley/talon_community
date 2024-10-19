@@ -1,6 +1,8 @@
 os: mac
 and app.bundle: com.flyingmeat.Acorn7
 -
+tag(): user.command_search
+
 new (from | with) clipboard: key(cmd-alt-n)
 
 export: key(cmd-alt-s)
@@ -55,7 +57,3 @@ two hundred percent: key(cmd-2)
 four hundred percent: key(cmd-3)
 eight hundred percent: key(cmd-4)
 fifty percent: key(cmd-5)
-
-please [<user.text>]:
-    key(cmd-shift-o)
-    insert(user.text or "")

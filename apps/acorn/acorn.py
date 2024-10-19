@@ -22,3 +22,9 @@ class EditActions:
 class UserActions:
     def zoom_to_fit():
         actions.key("cmd-0")
+
+    # user.command_search
+    def command_search(command=""):
+        actions.key("cmd-shift-o")
+        if command != "":
+            actions.insert(command)
