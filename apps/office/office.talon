@@ -1,7 +1,3 @@
-app: office_mac
-app: office_win
+app: office
 -
-
-please [<user.text>]:
-    user.office_tell_me()
-    insert(text or "")
+tag(): user.command_search

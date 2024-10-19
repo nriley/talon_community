@@ -54,9 +54,3 @@ class UserActions:
                     button.perform("AXPress")
                     return
             raise Exception(f"Unable to locate Search button")
-
-
-@mod.action_class
-class Actions:
-    def office_tell_me():
-        """Focus 'Tell me' in Microsoft Office apps"""
