@@ -14,3 +14,6 @@ press <user.keys>: key(keys)
 # Work around a rare word being inserted instead of a key combination in mixed mode
 # "manto" instead of "man two"
 manto: key(cmd-2)
+
+# When I say "shift tab" it sometimes comes across as "shift up"
+back tab: key(shift-tab)
