@@ -23,13 +23,10 @@ mark [as] unread: key(cmd-shift-t)
 new message: key(cmd-n)
 send [this] message: key(cmd-enter)
 
-move:
-    # XXX Keyboard shortcut is nonfunctional as of Outlook 16.81.1 (240112117)
-    user.menu_select("Message|Move|Choose Folder...")
+move: key(cmd-shift-m)
 
 move to [<user.text>]:
-    # XXX Keyboard shortcut is nonfunctional as of Outlook 16.81.1 (240112117)
-    user.menu_select("Message|Move|Choose Folder...")
+    key(cmd-shift-m)
     insert(user.text or "")
 
 reply: key(cmd-r)
