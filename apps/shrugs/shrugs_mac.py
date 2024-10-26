@@ -27,8 +27,25 @@ def channel_outline():
     )
 
 
+@mod.action_class
+class Actions:
+    def shrugs_channel_reload():
+        """Go to the next and then previous channel in order to work around
+        a Shrugs bug in which the channel contents do not appear"""
+
+
 @ctx.action_class("user")
 class UserActions:
+    def shrugs_channel_reload():
+        outline = channel_outline()
+        selected_row_index = outline.AXSelectedRows[0].AXIndex
+        if selected_row_index == 1:
+            actions.user.messaging_channel_next()
+            actions.user.messaging_channel_previous()
+        else:
+            actions.user.messaging_channel_previous()
+            actions.user.messaging_channel_next()
+
     # Navigation: Servers
     def messaging_workspace_previous():
         actions.key("cmd-{")
