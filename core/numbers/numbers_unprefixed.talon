@@ -1,4 +1,4 @@
-not tag: user.prefixed_numbers
+tag: user.unprefixed_numbers
 -
 <user.number_string>: "{number_string}"
 
