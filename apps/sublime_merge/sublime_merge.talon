@@ -13,3 +13,7 @@ fetch {user.sublime_merge_fetch_arg}+:
 
 <user.sublime_merge_push_with_args>:
     user.sublime_merge_push(sublime_merge_push_with_args)
+
+go child: key(alt-up)
+go parent: key(alt-down)
+go second parent: key(alt-shift-down)

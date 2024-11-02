@@ -15,6 +15,8 @@ go locations: key(cmd-1)
 go commits: key(cmd-2)
 go files: key(cmd-3)
 
+go head: key(cmd-9)
+
 # navigate to first hunk in file (or section in Summary tab)
 hunk:
     key(cmd-shift-[ cmd-shift-])
