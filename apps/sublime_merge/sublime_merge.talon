@@ -2,6 +2,7 @@ app: sublime_merge
 -
 tag(): user.command_search
 tag(): user.tabs
+tag(): user.navigation
 
 <user.sublime_merge_pull_with_args>:
     user.sublime_merge_pull(sublime_merge_pull_with_args)

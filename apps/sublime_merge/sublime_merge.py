@@ -106,3 +106,10 @@ class UserActions:
         actions.key("cmd-shift-p" if app.platform == "mac" else "ctrl-shift-p")
         if command != "":
             actions.insert(command)
+
+    # user.navigation
+    def go_back():
+        actions.key("cmd-left" if app.platform == "mac" else "alt-left")
+
+    def go_forward():
+        actions.key("cmd-right" if app.platform == "mac" else "alt-right")
