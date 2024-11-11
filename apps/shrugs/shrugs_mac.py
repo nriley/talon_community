@@ -45,11 +45,17 @@ class Actions:
 
 def go_unread(go_next=True):
     workspaces = None
+    selected_row_index = None
 
     while True:
         channels = channel_outline()
-        selected_row_index = channels.AXSelectedRows[0].AXIndex
         channel_rows = channels.AXRows
+        if selected_row_index is None:
+            selected_row_index = channels.AXSelectedRows[0].AXIndex
+        elif go_next:
+            selected_row_index = 0
+        else:
+            selected_row_index = len(channel_rows) + 2
         if not go_next:
             channel_rows = reversed(channel_rows)
         for row in channel_rows:
