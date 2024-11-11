@@ -139,3 +139,6 @@ class UserActions:
     def messaging_unread_next():
         if not go_unread():
             app.notify(title="Shrugs: No next unread channel")
+
+    def messaging_mark_channel_read():
+        actions.user.menu_select("Conversation|Mark All as Unread")
