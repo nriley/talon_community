@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, app
+from talon import Context, Module, actions, app, ui
 
 # Maps language mode names to the extensions that activate them. Only put things
 # here which have a supported language mode; that's why there are so many
@@ -105,6 +105,7 @@ extension_lang_map = {
 language_ids = set(language_extensions.keys())
 
 forced_language = ""
+forced_language_by_wid = {}
 
 
 @ctx.action_class("code")
@@ -124,23 +125,31 @@ class ForcedCodeActions:
         return forced_language
 
 
+def force_language(language):
+    global forced_language
+    forced_language = language
+    # Update tags to force a context refresh. Otherwise `code.language` will not update.
+    # Necessary to first set an empty list otherwise you can't move from one forced language to another.
+    ctx.tags = []
+    if language:
+        ctx.tags = ["user.code_language_forced"]
+
+
 @mod.action_class
 class Actions:
     def code_set_language_mode(language: str):
         """Sets the active language mode, and disables extension matching"""
-        global forced_language
+        global forced_language_by_wid
         assert language in language_extensions
-        forced_language = language
-        # Update tags to force a context refresh. Otherwise `code.language` will not update.
-        # Necessary to first set an empty list otherwise you can't move from one forced language to another.
-        ctx.tags = []
-        ctx.tags = ["user.code_language_forced"]
+        forced_language_by_wid[ui.active_window().id] = language
+        force_language(language)
+        actions.user.command_mode()
 
     def code_clear_language_mode():
         """Clears the active language mode, and re-enables code.language: extension matching"""
-        global forced_language
-        forced_language = ""
-        ctx.tags = []
+        global forced_language_by_wid
+        forced_language_by_wid[ui.active_window().id] = ""
+        force_language("")
 
     def code_show_forced_language_mode():
         """Show the active language for this context"""
@@ -148,3 +157,31 @@ class Actions:
             app.notify(f"Forced language: {forced_language}")
         else:
             app.notify("No language forced")
+
+
+def on_focus(window):
+    language = forced_language_by_wid.get(window.id)
+    if language is not None:
+        force_language(language)
+    elif forced_language:
+        forced_language_by_wid[window.id] = language
+
+
+def on_close(win):
+    if forced_language:
+        forced_language_by_wid.pop(win.id, None)
+
+
+def on_app(_):
+    if forced_language:
+        force_language("")
+
+
+def on_ready():
+    ui.register("win_focus", on_focus)
+    ui.register("win_close", on_close)
+    ui.register("app_activate", on_app)
+    ui.register("app_deactivate", on_app)
+
+
+app.register("ready", on_ready)
