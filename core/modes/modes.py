@@ -77,7 +77,6 @@ class Actions:
         actions.mode.disable("sleep")
         actions.mode.enable("command")  # mixed mode
         actions.mode.enable("dictation")
-        actions.user.code_clear_language_mode()
         actions.user.gdb_disable()
 
     def command_mode():
