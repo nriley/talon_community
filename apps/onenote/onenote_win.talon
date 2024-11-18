@@ -65,7 +65,9 @@ mail this: user.office_win_ribbon_select("hm1")
 
 go (notebook | notebooks): key(ctrl-g)
 
-go (section | sections): key(ctrl-shift-g)
+# Focusing section documented as Ctrl+Shift+G, but it doesn't work.
+# This workaround only works in Full Page View (F11).
+go (section | sections): key(ctrl-g tab:3)
 section previous: key(ctrl-shift-tab)
 section next: key(ctrl-tab)
 
