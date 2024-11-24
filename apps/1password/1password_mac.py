@@ -49,6 +49,9 @@ class UserActions:
                     print("No Quick Access window — found only:", apps[0].windows())
                     actions.user.password_show()
                     continue
+            else:
+                actions.app.notify("1Password isn’t running")
+                raise Exception("1Password isn’t running")
             try:
                 focused_element = ui.focused_element()
             except RuntimeError:
