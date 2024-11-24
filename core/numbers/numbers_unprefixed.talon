@@ -1,6 +1,6 @@
 tag: user.unprefixed_numbers
 -
-<user.number_string>: "{number_string}"
-<user.number_string> over: "{number_string}"
-<user.number_decimal_string>: "{number_decimal_string}"
+
+<user.number_prose_unprefixed>: "{number_prose_unprefixed}"
+<user.number_prose_unprefixed> over: "{number_prose_unprefixed}"
 
