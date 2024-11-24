@@ -63,7 +63,7 @@ class Actions:
     def code_set_language_mode(language: str):
         """Sets the active language mode, and disables extension matching"""
         global forced_language_by_wid
-        assert language in language_extensions
+        assert language in language_ids
         forced_language_by_wid[ui.active_window().id] = language
         force_language(language)
         actions.user.command_mode()
