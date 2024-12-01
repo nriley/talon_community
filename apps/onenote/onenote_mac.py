@@ -486,8 +486,9 @@ class UserActions:
 
     def onenote_maximize_content_or_press_esc():
         if (element := actions.user.focused_element_safe()) is not None:
-            app = element.window.app
-            if app.bundle != "com.microsoft.onenote.mac":
+            window = element.window
+            app = window.app
+            if app.bundle != "com.microsoft.onenote.mac" or not window.doc:
                 ctrl.key_press("esc", app=app)
                 return
 
