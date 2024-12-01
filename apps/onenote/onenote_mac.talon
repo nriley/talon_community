@@ -152,4 +152,4 @@ tomorrow:
 # back to progress (first notebook, first section)
 go progress:
     user.onenote_go_progress()
-    user.onenote_maximize_content()
+    user.onenote_maximize_content_or_press_esc()
