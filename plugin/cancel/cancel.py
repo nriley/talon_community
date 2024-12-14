@@ -45,14 +45,15 @@ def pre_phrase(phrase: Phrase):
 
     # Check if the phrase is before the threshold
     if ts_threshold != 0:
-        if (start := getattr(words[0], "start", phrase.get("_ts"))) is not None:
-            phrase_starts_before_threshold = start < ts_threshold
-            ts_threshold = 0
-            # Start of phrase is before threshold timestamp
-            if phrase_starts_before_threshold:
-                print(f"Canceled phrase: {' '.join(words)}")
-                cancel_entire_phrase(phrase)
-                return
+        # NB: mimic() and Dragon don't have this key.
+        start = getattr(words[0], "start", None) or phrase.get("_ts", ts_threshold)
+        phrase_starts_before_threshold = start < ts_threshold
+        ts_threshold = 0
+        # Start of phrase is before threshold timestamp
+        if phrase_starts_before_threshold:
+            print(f"Canceled phrase: {' '.join(words)}")
+            cancel_entire_phrase(phrase)
+            return
 
     # Check if the phrase is a cancel command
     n = len(cancel_phrase)
