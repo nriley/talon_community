@@ -1,5 +1,6 @@
 tag: browser
 -
+tag(): user.address
 tag(): user.find
 tag(): user.navigation
 
@@ -13,8 +14,11 @@ copy link:
     address = browser.address()
     title = user.rango_get_bare_title()
     user.copy_link(address, title)
+>>>>>>> variant B
+go page | page focus: browser.focus_page()
+
+======= end
 go home: browser.go_home()
-go to {user.website}: browser.go(website)
 go private: browser.open_private_window()
 
 bookmark it: browser.bookmark()

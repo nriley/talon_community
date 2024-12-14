@@ -57,6 +57,17 @@ class UserActions:
             actions.user.paste(url_address)
             actions.key("enter")
 
+    def address_focus():
+        actions.browser.focus_address()
+
+    def address_copy_address():
+        actions.browser.focus_address()
+        actions.edit.copy()
+        actions.browser.focus_page()
+
+    def address_navigate(address: str):
+        actions.browser.go(address)
+
 
 @ctx.action_class("browser")
 class BrowserActions:
