@@ -14,10 +14,7 @@ copy link:
     address = browser.address()
     title = user.rango_get_bare_title()
     user.copy_link(address, title)
->>>>>>> variant B
-go page | page focus: browser.focus_page()
 
-======= end
 go home: browser.go_home()
 go private: browser.open_private_window()
 
