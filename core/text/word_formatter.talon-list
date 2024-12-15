@@ -1,7 +1,8 @@
 list: user.word_formatter
 -
+
 word: NOOP
 dunk: ALL_LOWERCASE
-trot: TRAILING_SPACE,NOOP
+trot: TRAILING_SPACE
 proud: CAPITALIZE_FIRST_WORD
 leap: TRAILING_SPACE,CAPITALIZE_FIRST_WORD
