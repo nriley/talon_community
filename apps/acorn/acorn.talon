@@ -1,5 +1,4 @@
-os: mac
-and app.bundle: com.flyingmeat.Acorn7
+app: acorn
 -
 tag(): user.command_search
 

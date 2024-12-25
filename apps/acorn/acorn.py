@@ -5,6 +5,10 @@ mod.apps.acorn = """
 os: mac
 and app.bundle: com.flyingmeat.Acorn7
 """
+mod.apps.acorn = """
+os: mac
+and app.bundle: com.flyingmeat.Acorn8
+"""
 
 ctx = Context()
 ctx.matches = r"""
