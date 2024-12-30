@@ -151,7 +151,7 @@ class Actions:
         # XXX work around inability to focus and insert in a single action
         # XXX potentially related to https://github.com/talonvoice/talon/issues/305?
         if actions.user.onenote_focus():
-            cron.after("200ms", lambda: actions.user.onenote_now(entry))
+            cron.after("400ms", lambda: actions.user.onenote_now(entry))
 
     def onenote_font(font: str = ""):
         """Change the font in OneNote"""
