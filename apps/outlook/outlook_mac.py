@@ -51,16 +51,12 @@ def zoom_if_editing(out: bool):
     if not zoom_item.AXEnabled:
         return False
 
-    focused_element = outlook_focused_element()
-    mouse_pos = ctrl.mouse_pos()
-    element_center = focused_element.AXFrame.center
-    ctrl.mouse_move(*element_center)
+    element_center = outlook_focused_element().AXFrame.center
     actions.key("ctrl:down")
     # y scroll amount maps directly to zoom percentage; keyboard zooming in a message
     # zooms by 20% at a time, so do the same here. But, depending on the current
     # zoom level, this may do nothing - an Outlook bug I'm not working around
-    ctrl.mouse_scroll(y=(-20 if out else 20))
-    ctrl.mouse_move(*mouse_pos)
+    ctrl.mouse_scroll(y=(-20 if out else 20), pos=tuple(element_center))
     actions.key("ctrl:up")
 
     return True
