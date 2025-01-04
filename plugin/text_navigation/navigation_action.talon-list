@@ -1,0 +1,9 @@
+list: user.navigation_action
+-
+
+move: GO
+extend: EXTEND
+take: SELECT
+chuck: DELETE
+cut: CUT
+# copy: COPY
