@@ -4,7 +4,7 @@ mod = Module()
 ctx = Context()
 ctx_configuration = Context()
 
-mod.apps.putty = """
+mod.apps.putty = r"""
 os: windows
 and app.exe: /putty\.exe/i
 """
@@ -26,10 +26,12 @@ app: putty_configuration
 
 mod.list("putty_session", "PuTTY saved sessions")
 
+
 @ctx.action_class("edit")
 class EditActions:
     def paste():
         actions.key("shift-insert")
+
 
 @mod.action_class
 class Actions:
