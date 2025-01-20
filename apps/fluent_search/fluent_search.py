@@ -9,7 +9,7 @@ os: windows
 
 
 def wait_for_fluent_search_window():
-    for attempt in range(10):
+    for attempt in range(20):
         if ui.active_app().name == "FluentSearch":
             return True
         actions.sleep("50ms")
