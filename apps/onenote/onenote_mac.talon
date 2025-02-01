@@ -7,6 +7,7 @@ tag(): user.find_and_replace
 settings():
     user.context_sensitive_dictation = 0
     insert_wait = 6
+    key_wait = 4
 
 bold: key(cmd-b)
 italic: key(cmd-i)
