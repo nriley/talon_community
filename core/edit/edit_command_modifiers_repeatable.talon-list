@@ -1,0 +1,9 @@
+list: user.edit_modifier_repeatable
+-
+word: word
+west: wordLeft
+east: wordRight
+up: lineUp
+down: lineDown
+left: left
+right: right
