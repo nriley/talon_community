@@ -2,10 +2,10 @@ app: omnifocus
 -
 tag(): user.find_and_replace
 
-action [<phrase>]:
+action [<user.text>]:
     # Quick Entry (keyboard shortcut is customizable)
     key(ctrl-alt-o)
-    insert(user.formatted_text(phrase or "", "CAPITALIZE_FIRST_WORD"))
+    insert(user.formatted_text(text or "", "CAPITALIZE_FIRST_WORD"))
 
 action first:
     key(home)
@@ -28,16 +28,16 @@ action (last | lost | lust):
     key(end)
     user.omnifocus_select_tree("trees[-1].descendant_trees[-1]")
 
-open [<phrase>]:
+open [<user.text>]:
     key(cmd-o)
-    insert(user.formatted_text(phrase or "", "ALL_LOWERCASE,NO_SPACES"))
+    insert(user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES"))
 
 edit: key(cmd-')
 close: key(cmd-alt-')
 
-project [<phrase>]:
+project [<user.text>]:
     key(cmd-alt-2 escape cmd-. tab:2)
-    insert(user.formatted_text(phrase or "", "ALL_LOWERCASE,NO_SPACES"))
+    insert(user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES"))
 defer: key(cmd-alt-2 escape cmd-. tab:3)
 due: key(cmd-alt-2 escape cmd-. tab:4)
 
