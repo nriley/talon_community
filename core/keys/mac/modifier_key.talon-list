@@ -1,7 +1,7 @@
 list: user.modifier_key
 os: mac
 -
-alt: alt
+
 troll: ctrl
 shift: shift
 super: cmd
