@@ -6,4 +6,4 @@ __pycache__
 .vscode/settings.json
 .DS_Store
 *~
-.bak
+*.bak

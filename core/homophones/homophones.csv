@@ -297,9 +297,9 @@ hostile,hostel
 Hugh,hue,hew
 humorous,humerus
 hurts,hertz
+I,eye,aye
 I'd,eyed
 I'll,aisle,isle
-I,eye,aye
 idle,idol,idyll
 illicit,elicit
 illusion,allusion
@@ -529,7 +529,6 @@ seller,cellar
 sense,cents,scents
 sensor,censor
 sent,cent,scent
-sent,scent
 serial,cereal
 series,Ceres
 session,cession
@@ -649,6 +648,7 @@ wax,whacks
 way,weigh,whey
 Wayne,wane,wain
 ways,weighs
+we,wee
 we'd,weed
 we'll,wheel
 we've,weave
@@ -661,7 +661,6 @@ wet,whet
 whale,wail,wale
 wheeled,wield
 where,wear,ware
-whether,weather
 whether,weather,wether
 which,witch
 while,wile
@@ -682,6 +681,6 @@ wreak,reek
 wretch,retch
 wrote,rote
 yoke,yolk
-you'll,Yule
 you,yew,ewe
+you'll,Yule
 your,you're,yore
