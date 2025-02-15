@@ -62,7 +62,7 @@ stash pop: key(cmd-shift-s)
     sleep(100ms)
     insert('{user.formatted_text(text or "", "DASH_SEPARATED")}')
 
-^branch new [<user.text>]:
+^branch new [<user.text>]$:
     key(escape cmd-shift-b)
     sleep(100ms)
     insert('{user.formatted_text(text or "", "DASH_SEPARATED")}')

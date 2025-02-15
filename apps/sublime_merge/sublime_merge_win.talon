@@ -52,7 +52,7 @@ stash pop: key(ctrl-shift-s)
     key(escape ctrl-b)
     insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
 
-^branch new [<user.text>]:
+^branch new [<user.text>]$:
     key(escape ctrl-shift-b)
     sleep(100ms)
     insert('{user.formatted_text(text or "", "DASH_SEPARATED")}')
