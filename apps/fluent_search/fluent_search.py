@@ -30,6 +30,9 @@ class Actions:
 @ctx.action_class("user")
 class UserActions:
     def fluent_search(text: str):
+        if len(ui.apps(name="FluentSearch")) == 0:
+            app.notify("Fluent Search not running")
+            return
         # XXX can't use app.focus() and unaware of any other way to
         # automate the way we do with LaunchBar
         # If you have a different search keyboard shortcut configured,
