@@ -1,5 +1,5 @@
 import re
-from enum import Enum
+from enum import Enum, StrEnum, auto
 from pathlib import Path
 
 from talon import Context, Module, actions, app, clip, cron, ctrl, ui
@@ -39,6 +39,12 @@ class NavigationLevel(Enum):
     NOTEBOOKS = -1
     SECTIONS = 0
     PAGES = 1
+
+
+class Disclosure(StrEnum):
+    EXPAND = auto()
+    COLLAPSE = auto()
+    TOGGLE = auto()
 
 
 @ctx.action_class("app")
@@ -86,6 +92,11 @@ class EditActions:
 mod.list("onenote_notebooks", desc="Open OneNote notebooks")
 mod.list("onenote_sections", desc="Sections in the open OneNote notebook")
 mod.list("onenote_pages", desc="Pages in the open OneNote section")
+mod.list("onenote_disclose", desc="OneNote disclosure actions")
+
+ctx.lists["user.onenote_disclose"] = {
+    str(v): v for v in Disclosure.__members__.values()
+}
 
 
 @mod.capture(rule="{user.onenote_notebooks}")
@@ -182,6 +193,10 @@ class Actions:
 
     def onenote_navigate(row_element: ui.Element):
         """Navigate to a OneNote section or page"""
+
+    # XXX Talon's type checker seems confused by StrEnums
+    def onenote_disclose(row_element: ui.Element, disclosure: Disclosure | str):
+        """Change the disclosure state of a OneNote section or page"""
 
     def onenote_go_progress():
         """Go to the first section of the first notebook"""
@@ -511,6 +526,15 @@ class UserActions:
 
     def onenote_navigate(row_element):
         row_element.AXSelected = True
+
+    def onenote_disclose(row_element, disclosure):
+        match disclosure:
+            case Disclosure.EXPAND:
+                row_element.AXDisclosing = True
+            case Disclosure.COLLAPSE:
+                row_element.AXDisclosing = False
+            case Disclosure.TOGGLE:
+                row_element.AXDisclosing = not row_element.AXDisclosing
 
     def onenote_copy_link():
         onenote = onenote_app()

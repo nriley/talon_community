@@ -69,12 +69,16 @@ go notebook <user.onenote_notebook>:
 
 go (section | sections): key(ctrl-shift-g)
 go section <user.onenote_section>: user.onenote_navigate(onenote_section)
+section {user.onenote_disclose} <user.onenote_section>:
+    user.onenote_disclose(onenote_section, onenote_disclose)
 section new: key(cmd-t)
 section previous: key(cmd-{)
 section next: key(cmd-})
 
 go (page | pages): key(ctrl-cmd-g)
 go page <user.onenote_page>: user.onenote_navigate(onenote_page)
+page {user.onenote_disclose} <user.onenote_page>:
+    user.onenote_disclose(onenote_page, onenote_disclose)
 page new:
     key(cmd-n)
     sleep(100ms)
