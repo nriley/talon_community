@@ -162,7 +162,7 @@ class Actions:
         # XXX work around inability to focus and insert in a single action
         # XXX potentially related to https://github.com/talonvoice/talon/issues/305?
         if actions.user.onenote_focus():
-            cron.after("400ms", lambda: actions.user.onenote_now(entry))
+            cron.after("10ms", lambda: actions.user.onenote_now(entry))
 
     def onenote_font(font: str = ""):
         """Change the font in OneNote"""
@@ -593,12 +593,21 @@ class UserActions:
             first_section.AXSelected = True
 
     def onenote_now(entry: str = ""):
-        actions.key("ctrl-e enter")
-        actions.key("cmd-alt-0")  # custom shortcut for "Remove Tag"
+        app = onenote_app()
+        ctrl.key_press("e", ctrl=True, app=app)
+        ctrl.key_press("enter", app=app)
+        for _ in range(5):
+            ctrl.key_press("tab", shift=True, app=app)
+        for _ in range(2):
+            ctrl.key_press("tab", app=app)
+        ctrl.key_press(
+            "0", alt=True, super=True, app=app
+        )  # custom shortcut for "Remove Tag"
+
         actions.key("cmd-/ cmd-.")
-        actions.key("shift-tab:5 tab:2")
         actions.user.insert_time_ampm()
         actions.insert(" - ")
+
         if entry:
             actions.mimic(entry)
 
