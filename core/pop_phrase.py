@@ -19,6 +19,7 @@ auto_pop_that_phrases = [
     "downer",
     "next",
     "previous",
+    "step over",
 ]
 
 
