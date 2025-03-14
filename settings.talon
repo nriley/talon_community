@@ -104,6 +104,9 @@ settings():
     # Display the talon-gaze-ocr debugging overlay for longer
     user.ocr_debug_display_seconds = 5
 
+    # If no eye tracker is connected, match the active window rather than the main screen
+    user.ocr_behavior_when_no_eye_tracker = "ACTIVE_WINDOW"
+
     # Choose how to resize windows moved across physical screens (eg. via `snap next`).
     # Default is 'proportional', which preserves window size : screen size ratio.
     # 'size aware' keeps absolute window size the same, except full-height or
