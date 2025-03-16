@@ -12,6 +12,7 @@ list: user.delimiter_pair
 round: ( )
 args: ( )
 box: [ ]
+brackets: [ ]
 diamond: < >
 curly: { }
 quotes: "' '"
@@ -21,6 +22,6 @@ percents: % %
 pad: space space
 
 escaped dubquotes: '\\" \\"'
-escaped quotes:  "\\' \\'"
+escaped quotes: "\\' \\'"
 escaped args: \( \)
 escaped box: \[ \]
