@@ -4,7 +4,7 @@ settings():
 
     # Uncomment to set the speech timeout. This is the amount of time after you stop
     # speaking until Talon starts processing the spoken audio. Default is 0.3s.
-    # speech.timeout = 0.3
+    speech.timeout = 0.15
 
     # Uncomment to enable dark mode for talon help menus
     # imgui.dark_mode = true
@@ -71,8 +71,6 @@ settings():
     user.command_history_size = 50
     # record everything to ~/.talon/recordings
     speech.record_all = 1
-    # default wav2letter timeout changed in 0.1.5 from 150 to 300 ms
-    speech.timeout = 0.15
 
     # Set the time window size for to for pop_twice_to_sleep and pop_twice_to_repeat. By default, the pops must be more than 0.1 seconds apart and less then 0.3 seconds, to reduce false positives
     user.double_pop_speed_minimum = 0.1
