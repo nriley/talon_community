@@ -1,4 +1,3 @@
-from appscript import k
 from talon import Context, Module, actions, ui
 
 mod = Module()
@@ -28,6 +27,8 @@ class Actions:
 @ctx.action_class("user")
 class UserActions:
     def media_shuffle():
+        from appscript import k
+
         music = apple_music_app().appscript()
         music.stop()
         music.shuffle_mode.set(k.songs)
