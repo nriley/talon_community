@@ -3,11 +3,6 @@ from talon import Context, Module, actions
 ctx = Context()
 mod = Module()
 
-mod.apps.outlook_win = r"""
-os: windows
-and app.exe: /^outlook\.exe$/i
-"""
-
 mod.apps.outlook_mail_win = r"""
 app: outlook_win
 and not win.title: /^(Calendar|Contacts|To Do) -/

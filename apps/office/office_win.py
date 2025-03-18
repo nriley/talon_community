@@ -2,6 +2,7 @@ from talon import Context, Module, actions
 
 mod = Module()
 ctx = Context()
+ctx_mail_this = Context()
 
 mod.apps.excel_win = """
 os: windows
@@ -19,17 +20,26 @@ mod.apps.onenote_win = r"""
 os: windows
 and app.exe: onenote.exe
 """
+mod.apps.outlook_win = r"""
+os: windows
+and app.exe: outlook.exe
+"""
 mod.apps.office_win = r"""
 app: excel_win
 app: powerpoint_win
 app: word_win
 app: onenote_win
+app: outlook_win
 """
 
 ctx.matches = """
 app: office_win
 """
 
+ctx_mail_this.matches = """
+app: office_win
+not app: outlook_win
+"""
 
 @mod.action_class
 class Actions:
@@ -57,6 +67,8 @@ class UserActions:
         actions.sleep("30ms")
         actions.key(" ".join(keys[1:]))
 
+@ctx_mail_this.action_class("user")
+class UserActions:
     def office_mail_this():
         actions.user.office_tell_me()
         actions.user.paste("Mail Recipient (As Attachment)")
