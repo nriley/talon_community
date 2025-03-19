@@ -32,14 +32,24 @@ def document_window():
     )
 
 
+def document_window_toolbar_group():
+    return (
+        document_window()
+        .children.find_one(AXRole="AXToolbar", max_depth=0)
+        .children.find_one(AXRole="AXGroup", max_depth=0)
+    )
+
+
+@mod.action_class
+class Actions:
+    def office_document_actions():
+        """Opens the document actions popover"""
+
+
 @ctx.action_class("user")
 class UserActions:
     def office_tell_me():
-        toolbar_group = (
-            document_window()
-            .children.find_one(AXRole="AXToolbar", max_depth=0)
-            .children.find_one(AXRole="AXGroup", max_depth=0)
-        )
+        toolbar_group = document_window_toolbar_group()
         try:
             toolbar_group.children.find_one(
                 AXRole="AXTextField", AXSubrole="AXSearchField", max_depth=0
@@ -54,3 +64,14 @@ class UserActions:
                     button.perform("AXPress")
                     return
             raise Exception(f"Unable to locate Search button")
+
+    def office_document_actions():
+        toolbar_group = document_window_toolbar_group()
+        try:
+            toolbar_group.children.find_one(
+                AXRole="AXButton",
+                AXIdentifier="CUIDocumentShellWindowAutosaveWidgetAutoID",
+                max_depth=0,
+            ).perform("AXPress")
+        except ui.UIErr:
+            raise Exception(f"Unable to locate document actions button")
