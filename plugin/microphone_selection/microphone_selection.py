@@ -13,6 +13,7 @@ EXCLUDE_MICROPHONES = {
     "LG UltraFine Display Audio",
     "Camo Microphone",
     "Microsoft Teams Audio Device",
+    "MOTIV Mix Virtual Output",
     "RØDE Connect System",
     "RØDE Connect Virtual",
     "WebexMediaAudioDevice",
