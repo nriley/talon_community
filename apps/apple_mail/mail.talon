@@ -10,6 +10,7 @@ junk: key(cmd-shift-j)
 download: user.mail_download_images()
 reply: key(cmd-r)
 reply all: key(cmd-shift-r)
+forward: key(cmd-shift-f)
 
 mark [as] read: user.mail_mark_as_read()
 mark [as] unread: user.mail_mark_as_unread()
