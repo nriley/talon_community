@@ -13,6 +13,10 @@ outline view: key(cmd-4)
 reading view: key(cmd-5)
 presenter view: key(esc alt-enter)
 
+master slide: key(cmd-alt-1)
+master handout: key(cmd-alt-2)
+master notes: key(cmd-alt-3)
+
 slideshow: key(cmd-enter)
 slideshow from start: key(cmd-shift-enter)
 
