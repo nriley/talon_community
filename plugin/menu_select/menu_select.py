@@ -134,6 +134,7 @@ def gui_extras(gui: imgui.GUI):
     global STATUS_MENU_TITLES
 
     gui.text("Status menus (left to right)")
+    gui.text("Say “status [hover | touch] <name>”")
     gui.line()
     for title in STATUS_MENU_TITLES:
         gui.text(title)
