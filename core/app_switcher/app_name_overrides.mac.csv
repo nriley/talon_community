@@ -1,4 +1,5 @@
 Spoken form, App name (or list an app name by itself on a line to exclude it)
+arq, Arq
 camo, Camo Studio
 Control Center
 coreautha
@@ -9,16 +10,19 @@ com.microsoft.teams2.notificationcenter
 CoreServicesUIAgent
 excel, Microsoft Excel
 mirroring, iPhone Mirroring
+HomeControl
+Homerow
 iStat Menus Menubar
 LaunchBar
 loginwindow
 Lunar
+message filer, MsgFiler
 Notification Center
 one note, Microsoft OneNote
 one password, 1Password
 outlook, Microsoft Outlook
 powerpoint, Microsoft PowerPoint
-teams, Microsoft Teams (work or school)
+teams, Microsoft Teams
 UserNotificationCenter
 word, Microsoft Word
 zoom, zoom.us
