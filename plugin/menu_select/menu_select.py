@@ -1,7 +1,7 @@
 import os
 import re
 
-from talon import Context, Module, actions, app, ctrl, ui
+from talon import Context, Module, actions, app, ctrl, imgui, ui
 
 mod = Module()
 ctx = Context()
@@ -75,6 +75,16 @@ def enabled_items_with_role(element, role):
     ]
 
 
+def item_titles(items, fallback=None):
+    for item in items:
+        if title := element_title(item):
+            yield title
+        if fallback is not None:
+            if element := fallback(item):
+                if title := element_title(element):
+                    yield title
+
+
 def saved_item_selection_list(items, fallback=None):
     global MENU_ITEMS
 
@@ -107,6 +117,25 @@ class Actions:
     def menu_item_hover(menu_item: ui.Element):
         """Move the mouse pointer to the specified menu item"""
 
+    def menu_extras_toggle():
+        """Display or hide titles of menu extras"""
+
+
+MENU_EXTRA_TITLES = []
+
+
+@imgui.open()
+def gui_extras(gui: imgui.GUI):
+    global MENU_EXTRA_TITLES
+
+    gui.text("Menu extras")
+    gui.line()
+    for title in MENU_EXTRA_TITLES:
+        gui.text(title)
+    gui.spacer()
+    if gui.button("Close (say “extras”)"):
+        actions.user.menu_extras_toggle()
+
 
 @ctx.action_class("user")
 class UserActions:
@@ -137,6 +166,27 @@ class UserActions:
 
     def menu_item_hover(menu_item: ui.Element):
         ctrl.mouse_move(*menu_item.AXFrame.center)
+
+    def menu_extras_toggle():
+        global MENU_EXTRA_TITLES
+
+        if gui_extras.showing:
+            gui_extras.hide()
+
+            MENU_EXTRA_TITLES = []
+
+            return
+
+        MENU_EXTRA_TITLES = list(item_titles(*menu_extra_items_fallback()))
+        MENU_EXTRA_TITLES.reverse()
+
+        cc = ui.apps(bundle="com.apple.controlcenter")[0]
+        menubar = cc.element.children.find_one(AXRole="AXMenuBar", max_depth=0)
+        frame = menubar.AXFrame
+
+        gui_extras.x = frame.left - 100
+        gui_extras.y = frame.top
+        gui_extras.show()
 
 
 @ctx.dynamic_list("user.menu_items")
@@ -175,8 +225,7 @@ def display_area():
     return screen_rect
 
 
-@ctx.dynamic_list("user.menu_extras")
-def menu_extras(phrase: list[str]):
+def menu_extra_items_fallback():
     items = []
     singletons = []  # can't use set as Element is unhashable
     # XXX some menus start slightly off the top of the screen; if still over-filters, consider matching x only
@@ -206,4 +255,9 @@ def menu_extras(phrase: list[str]):
         if item in singletons:
             return item.AXTopLevelUIElement.AXParent
 
-    return saved_item_selection_list(items, fallback)
+    return items, fallback
+
+
+@ctx.dynamic_list("user.menu_extras")
+def menu_extras(phrase: list[str]):
+    return saved_item_selection_list(*menu_extra_items_fallback())
