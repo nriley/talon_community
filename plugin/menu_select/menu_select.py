@@ -40,16 +40,21 @@ def status_menu(m) -> ui.Element:
 
 
 RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
+RE_INTERCAPS = re.compile(r"[a-z][A-Z]")
 
 
 def spoken_forms(s):
     # XXX use user.vocabulary, or may never match
-    if RE_NON_ALPHA_OR_SPACE.search(s):
+    has_non_alpha_or_space = RE_NON_ALPHA_OR_SPACE.search(s)
+    if has_non_alpha_or_space or RE_INTERCAPS.search(s):
         spoken_forms = "\n".join(
             actions.user.create_spoken_forms(s, generate_subsequences=False)
         )
-        return f"""{spoken_forms}
+        if has_non_alpha_or_space:
+            return f"""{spoken_forms}
 {RE_NON_ALPHA_OR_SPACE.sub(" ", s.lower())}"""
+        else:
+            return spoken_forms
     return s.lower()
 
 
