@@ -11,7 +11,7 @@ os: mac
 """
 
 mod.list("menu_items", desc="Active menu items and/or menu bar items")
-mod.list("menu_extras", desc="Menu extras' menu bar items")
+mod.list("status_menus", desc="Status menus' menu bar items")
 
 MENU_ITEMS = {}
 
@@ -34,9 +34,9 @@ def menu_item(m) -> ui.Element:
     return matching_item(m.menu_items)
 
 
-@mod.capture(rule="{user.menu_extras}")
-def menu_extra(m) -> ui.Element:
-    return matching_item(m.menu_extras)
+@mod.capture(rule="{user.status_menus}")
+def status_menu(m) -> ui.Element:
+    return matching_item(m.status_menus)
 
 
 RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
@@ -117,27 +117,27 @@ class Actions:
     def menu_item_hover(menu_item: ui.Element):
         """Move the mouse pointer to the specified menu item"""
 
-    def menu_extras_hide() -> bool:
-        """Hide display of titles of menu extras (returns whether they were displayed)"""
+    def status_menus_hide() -> bool:
+        """Hide display of titles of status menus (returns whether they were displayed)"""
 
-    def menu_extras_toggle():
-        """Display or hide titles of menu extras"""
+    def status_menus_toggle():
+        """Display or hide titles of status menus"""
 
 
-MENU_EXTRA_TITLES = []
+STATUS_MENU_TITLES = []
 
 
 @imgui.open()
 def gui_extras(gui: imgui.GUI):
-    global MENU_EXTRA_TITLES
+    global STATUS_MENU_TITLES
 
-    gui.text("Menu extras (left to right)")
+    gui.text("Status menus (left to right)")
     gui.line()
-    for title in MENU_EXTRA_TITLES:
+    for title in STATUS_MENU_TITLES:
         gui.text(title)
     gui.spacer()
-    if gui.button("Close (say “extras”)"):
-        actions.user.menu_extras_toggle()
+    if gui.button("Close (say “status menus”)"):
+        actions.user.status_menus_toggle()
 
 
 @ctx.action_class("user")
@@ -170,25 +170,25 @@ class UserActions:
     def menu_item_hover(menu_item: ui.Element):
         ctrl.mouse_move(*menu_item.AXFrame.center)
 
-    def menu_extras_hide() -> bool:
-        global MENU_EXTRA_TITLES
+    def status_menus_hide() -> bool:
+        global STATUS_MENU_TITLES
 
         if not gui_extras.showing:
             return False
 
         gui_extras.hide()
-        MENU_EXTRA_TITLES = []
+        STATUS_MENU_TITLES = []
         return True
 
-    def menu_extras_toggle():
-        global MENU_EXTRA_TITLES
+    def status_menus_toggle():
+        global STATUS_MENU_TITLES
 
-        if actions.user.menu_extras_hide():
+        if actions.user.status_menus_hide():
             return
 
-        items, fallback = menu_extra_items_fallback()
+        items, fallback = status_menu_items_fallback()
         items.sort(key=lambda i: i.AXPosition.x)
-        MENU_EXTRA_TITLES = list(item_titles(items, fallback))
+        STATUS_MENU_TITLES = list(item_titles(items, fallback))
 
         cc = ui.apps(bundle="com.apple.controlcenter")[0]
         menubar = cc.element.children.find_one(AXRole="AXMenuBar", max_depth=0)
@@ -235,7 +235,7 @@ def display_area():
     return screen_rect
 
 
-def menu_extra_items_fallback():
+def status_menu_items_fallback():
     items = []
     singletons = []  # can't use set as Element is unhashable
     # XXX some menus start slightly off the top of the screen; if still over-filters, consider matching x only
@@ -268,6 +268,6 @@ def menu_extra_items_fallback():
     return items, fallback
 
 
-@ctx.dynamic_list("user.menu_extras")
-def menu_extras(phrase: list[str]):
-    return saved_item_selection_list(*menu_extra_items_fallback())
+@ctx.dynamic_list("user.status_menus")
+def status_menus(phrase: list[str]):
+    return saved_item_selection_list(*status_menu_items_fallback())
