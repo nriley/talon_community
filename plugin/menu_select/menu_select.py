@@ -131,7 +131,7 @@ MENU_EXTRA_TITLES = []
 def gui_extras(gui: imgui.GUI):
     global MENU_EXTRA_TITLES
 
-    gui.text("Menu extras")
+    gui.text("Menu extras (left to right)")
     gui.line()
     for title in MENU_EXTRA_TITLES:
         gui.text(title)
@@ -186,8 +186,9 @@ class UserActions:
         if actions.user.menu_extras_hide():
             return
 
-        MENU_EXTRA_TITLES = list(item_titles(*menu_extra_items_fallback()))
-        MENU_EXTRA_TITLES.reverse()
+        items, fallback = menu_extra_items_fallback()
+        items.sort(key=lambda i: i.AXPosition.x)
+        MENU_EXTRA_TITLES = list(item_titles(items, fallback))
 
         cc = ui.apps(bundle="com.apple.controlcenter")[0]
         menubar = cc.element.children.find_one(AXRole="AXMenuBar", max_depth=0)
