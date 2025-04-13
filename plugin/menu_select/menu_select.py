@@ -117,6 +117,9 @@ class Actions:
     def menu_item_hover(menu_item: ui.Element):
         """Move the mouse pointer to the specified menu item"""
 
+    def menu_extras_hide() -> bool:
+        """Hide display of titles of menu extras (returns whether they were displayed)"""
+
     def menu_extras_toggle():
         """Display or hide titles of menu extras"""
 
@@ -167,14 +170,20 @@ class UserActions:
     def menu_item_hover(menu_item: ui.Element):
         ctrl.mouse_move(*menu_item.AXFrame.center)
 
+    def menu_extras_hide() -> bool:
+        global MENU_EXTRA_TITLES
+
+        if not gui_extras.showing:
+            return False
+
+        gui_extras.hide()
+        MENU_EXTRA_TITLES = []
+        return True
+
     def menu_extras_toggle():
         global MENU_EXTRA_TITLES
 
-        if gui_extras.showing:
-            gui_extras.hide()
-
-            MENU_EXTRA_TITLES = []
-
+        if actions.user.menu_extras_hide():
             return
 
         MENU_EXTRA_TITLES = list(item_titles(*menu_extra_items_fallback()))
