@@ -1,3 +1,5 @@
+import os
+
 from talon import Context, Module, actions, app, ui
 
 mod = Module()
@@ -7,6 +9,7 @@ ctx.matches = """
 os: windows
 """
 
+FLUENT_SEARCH_EXE = None
 
 def wait_for_fluent_search_window():
     for attempt in range(20):
@@ -30,9 +33,16 @@ class Actions:
 @ctx.action_class("user")
 class UserActions:
     def fluent_search(text: str):
-        if len(ui.apps(name="FluentSearch")) == 0:
-            app.notify("Fluent Search not running")
-            return
+        apps = ui.apps(name="FluentSearch")
+        if len(apps) == 0:
+            if FLUENT_SEARCH_EXE is not None:
+                app.notify("Fluent Search not running; relaunching...")
+                os.startfile(FLUENT_SEARCH_EXE)
+            else:
+                app.notify("Fluent Search not running")
+                return
+        else:
+            FLUENT_SEARCH_EXE = apps[0].exe
         # XXX can't use app.focus() and unaware of any other way to
         # automate the way we do with LaunchBar
         # If you have a different search keyboard shortcut configured,
