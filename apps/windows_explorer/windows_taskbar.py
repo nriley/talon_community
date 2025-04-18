@@ -27,9 +27,15 @@ def first_matching_child(element, **kw):
 class UserActions:
     def click_taskbar_button(button_names: str):
         explorer = ui.apps(name="Windows Explorer")[0]
-        taskbar = next(
-            window for window in explorer.windows() if window.cls == "Shell_TrayWnd"
-        )
+        try:
+            taskbar = next(
+                window for window in explorer.windows() if window.cls == "Shell_TrayWnd"
+            )
+        except StopIteration:
+            print("Unable to find system tray window - instead found:")
+            for w in explorer.windows():
+                print(f"\t- {w.cls=}; {w.title=}")
+            return
         tray = first_matching_child(taskbar.element, class_name=["TrayNotifyWnd"])
         pager = first_matching_child(tray, class_name=["SysPager"])
         toolbar = first_matching_child(pager, class_name=["ToolbarWindow32"])
