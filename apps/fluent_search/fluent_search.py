@@ -33,6 +33,8 @@ class Actions:
 @ctx.action_class("user")
 class UserActions:
     def fluent_search(text: str):
+        global FLUENT_SEARCH_EXE
+        
         apps = ui.apps(name="FluentSearch")
         if len(apps) == 0:
             if FLUENT_SEARCH_EXE is not None:
