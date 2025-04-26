@@ -22,6 +22,27 @@ def fantastical_calendar_window():
     return window
 
 
+def fantastical_notifications():
+    if not (window := fantastical_calendar_window()):
+        return None
+
+    if window.element.get("AXIdentifier") == "mini window":
+        buttons = window.children.find(
+            AXRole="AXButton", AXIdentifier="notifications", max_depth=0
+        )
+    else:
+        buttons = (
+            window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+            .children.find_one(AXRole="AXToolbar", max_depth=0)
+            .children.find(AXRole="AXButton", AXIdentifier="notifications", max_depth=0)
+        )
+
+    if not buttons:
+        return None
+
+    return buttons[0]
+
+
 @ctx.action_class("user")
 class UserActions:
     def fantastical_parse(text: str):
@@ -40,38 +61,22 @@ class UserActions:
         webbrowser.open(f"x-fantastical3://show/calendar")
 
     def fantastical_show_notifications():
-        if not (window := fantastical_calendar_window()):
+        if not (notifications := fantastical_notifications()):
             return
 
-        if window.element.get("AXIdentifier") == "mini window":
-            buttons = window.children.find(
-                AXRole="AXButton", AXIdentifier="notifications", max_depth=0
-            )
-        else:
-            buttons = (
-                window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
-                .children.find_one(AXRole="AXToolbar", max_depth=0)
-                .children.find(
-                    AXRole="AXButton", AXIdentifier="notifications", max_depth=0
-                )
-            )
-
-        if not buttons:
-            return
-
-        buttons[0].perform("AXPress")
+        notifications.perform("AXPress")
 
         for attempt in range(10):
             actions.sleep("50ms")
             try:
-                if buttons[0].children:
+                if notifications.children:
                     break
             except AttributeError:  # XXX Talon bug?
                 pass
         else:
             return
 
-        buttons[0].children[0].children.find_one(AXRole="AXRow").AXSelected = True
+        notifications.children[0].children.find_one(AXRole="AXRow").AXSelected = True
 
     def fantastical_select_calendar_set(text):
         if not (window := fantastical_calendar_window()):
