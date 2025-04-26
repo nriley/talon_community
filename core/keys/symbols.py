@@ -64,7 +64,7 @@ symbols = [
     Symbol("*", ["asterisk"], ["star"]),
     Symbol("#", ["number sign"], ["number"]),
     Symbol("%", ["percent sign"], ["percent"]),
-    Symbol("@", ["atsign"], ["at sign"]),
+    Symbol("@", ["at symbol"], ["at sign"]),
     Symbol("&", ["ampersand"]),
     Symbol("-", ["hyphen"], ["minus", "dash"]),
     Symbol("–", ["en dash"]),
