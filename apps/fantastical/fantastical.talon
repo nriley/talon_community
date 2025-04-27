@@ -10,6 +10,7 @@ calendar set [<user.text>]: user.fantastical_select_calendar_set(text or "")
 
 bar switch: key(cmd-alt-s)
 pending: user.fantastical_show_notifications()
+pending dismiss: user.fantastical_clear_all_notifications()
 
 dismiss: key(cmd-enter down)
 dismiss all: key(cmd-alt-enter)

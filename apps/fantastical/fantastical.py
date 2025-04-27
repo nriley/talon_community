@@ -78,6 +78,40 @@ class UserActions:
 
         notifications.children[0].children.find_one(AXRole="AXRow").AXSelected = True
 
+    def fantastical_clear_all_notifications():
+        if not (notifications := fantastical_notifications()):
+            return
+
+        try:
+            if notifications.children:
+                pass
+        except AttributeError:
+            actions.user.fantastical_show_notifications()
+            try:
+                if notifications.children:
+                    pass
+            except AttributeError:
+                return
+
+        button = notifications.children[0].children.find_one(AXRole="AXMenuButton")
+        button.perform("AXPress")
+
+        for attempt in range(10):
+            actions.sleep("50ms")
+            try:
+                menu = ui.active_menu()
+                if menu.parent == button:
+                    break
+            except AttributeError:  # XXX Talon bug?
+                pass
+        else:
+            return
+
+        clear_all = menu.children.find_one(
+            AXRole="AXMenuItem", AXIdentifier="confirmAllNotifications"
+        )
+        clear_all.perform("AXPress")
+
     def fantastical_select_calendar_set(text):
         if not (window := fantastical_calendar_window()):
             return
@@ -145,6 +179,9 @@ class Actions:
 
     def fantastical_show_notifications():
         """Shows the notifications/invitations popover"""
+
+    def fantastical_clear_all_notifications():
+        """Clears all contents from the notifications/invitations popover"""
 
     def fantastical_show_menu():
         """Show the Fantastical menu"""
