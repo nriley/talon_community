@@ -200,6 +200,7 @@ def ribbon_items(phrase: list[str]):
             "AXCheckBox",
             "AXComboBox",
             "AXMenuButton",
+            "AXRadioButton",
         ):
             items.append(item)
 
