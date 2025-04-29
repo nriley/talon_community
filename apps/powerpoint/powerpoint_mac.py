@@ -1,4 +1,6 @@
-from talon import Context, Module, actions
+import re
+
+from talon import Context, Module, actions, ui
 
 ctx = Context()
 mod = Module()
@@ -6,6 +8,15 @@ mod = Module()
 ctx.matches = r"""
 app: powerpoint_mac
 """
+
+ctx_presentation = Context()
+ctx_presentation.matches = r"""
+app: powerpoint_mac
+mode: user.presentation
+"""
+
+RE_SLIDE_SHOW = re.compile(r"PowerPoint Slide Show - \[.*\]")
+RE_PRESENTING = re.compile(r"PowerPoint (Slide Show|Presenter View) - \[.*\]")
 
 
 @ctx.action_class("app")
@@ -28,3 +39,27 @@ class UserActions:
 
     def page_final():
         actions.key("end")
+
+
+POWERPOINT_BUNDLE_ID = "com.microsoft.Powerpoint"
+
+
+def is_powerpoint(app):
+    return app.bundle == POWERPOINT_BUNDLE_ID
+
+
+def win_opened(window):
+    if is_powerpoint(window.app) and RE_SLIDE_SHOW.match(window.title):
+        actions.mode.save()
+        actions.mode.disable("dictation")
+        actions.mode.disable("command")
+        actions.mode.enable("user.presentation")
+
+
+def win_focused(window):
+    if is_powerpoint(window.app) and not RE_PRESENTING.match(window.title):
+        actions.mode.restore()
+
+
+ui.register("win_open", win_opened)
+ui.register("win_focus", win_focused)
