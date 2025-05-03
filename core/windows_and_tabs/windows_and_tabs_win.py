@@ -56,3 +56,9 @@ class UserActions:
             window.maximized = 1
             return
         actions.key("super-up")
+
+    def window_restore():
+        if window := ui.active_window():
+            window.maximized = 0
+            return
+        actions.key("super-down")
