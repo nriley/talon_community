@@ -68,5 +68,9 @@ def win_focused(window):
         actions.user.exit_user_mode("presentation")
 
 
-ui.register("win_open", win_opened)
-ui.register("win_focus", win_focused)
+def ready():
+    ui.register("win_open", win_opened)
+    ui.register("win_focus", win_focused)
+
+
+app.register("ready", ready)
