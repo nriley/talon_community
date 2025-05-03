@@ -95,6 +95,21 @@ class Actions:
         modes = scope.get("mode", ())
         return "sleep" not in modes and ("dictation" in modes or "command" in modes)
 
+    def enter_user_mode(mode: str):
+        """Save current modes, disable dictation/command and enable user.<mode> mode if inactive"""
+        if ("user." + mode) in scope.get("mode", ()):
+            return
+        actions.mode.save()
+        actions.mode.disable("dictation")
+        actions.mode.disable("command")
+        actions.mode.enable("user." + mode)
+
+    def exit_user_mode(mode: str):
+        """Disable user.<mode> mode if active, restoring prior modes"""
+        if ("user." + mode) not in scope.get("mode", ()):
+            return
+        actions.mode.restore()
+
 
 dictation_apps = set()
 

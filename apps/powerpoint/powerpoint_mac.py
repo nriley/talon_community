@@ -1,6 +1,6 @@
 import re
 
-from talon import Context, Module, actions, ui
+from talon import Context, Module, actions, app, ui
 
 ctx = Context()
 mod = Module()
@@ -41,6 +41,16 @@ class UserActions:
         actions.key("end")
 
 
+@ctx_presentation.action_class("user")
+class UserActions:
+    # user.pages
+    def page_next():
+        actions.key("pagedown")
+
+    def page_previous():
+        actions.key("pageup")
+
+
 POWERPOINT_BUNDLE_ID = "com.microsoft.Powerpoint"
 
 
@@ -50,15 +60,12 @@ def is_powerpoint(app):
 
 def win_opened(window):
     if is_powerpoint(window.app) and RE_SLIDE_SHOW.match(window.title):
-        actions.mode.save()
-        actions.mode.disable("dictation")
-        actions.mode.disable("command")
-        actions.mode.enable("user.presentation")
+        actions.user.enter_user_mode("presentation")
 
 
 def win_focused(window):
     if is_powerpoint(window.app) and not RE_PRESENTING.match(window.title):
-        actions.mode.restore()
+        actions.user.exit_user_mode("presentation")
 
 
 ui.register("win_open", win_opened)
