@@ -31,7 +31,7 @@ go parent: user.file_manager_open_parent()
 
 #new folder
 folder new <user.format_text>: user.file_manager_new_folder(format_text)
-folder new <user.text>: user.file_manager_new_folder(text)
+folder new [<user.text>]: user.file_manager_new_folder(text or "")
 
 #show properties
 properties show: user.file_manager_show_properties()
