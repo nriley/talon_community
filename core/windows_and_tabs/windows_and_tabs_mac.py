@@ -56,3 +56,9 @@ NSWorkspace's sharedWorkspace's hideOtherApplications()
 class UserActions:
     def switcher_focus_last():
         actions.key("cmd-tab")
+
+    def window_minimize():
+        if window := ui.active_window():
+            window.minimized = 1
+            return
+        actions.key("cmd-m")
