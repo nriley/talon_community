@@ -93,8 +93,11 @@ class UserActions:
             except AttributeError:
                 return
 
-        button = notifications.children[0].children.find_one(AXRole="AXMenuButton")
-        button.perform("AXPress")
+        try:
+            button = notifications.children[0].children.find_one(AXRole="AXMenuButton")
+            button.perform("AXPress")
+        except ui.UIErr:
+            actions.key("cmd-enter")
 
         for attempt in range(10):
             actions.sleep("50ms")
