@@ -144,9 +144,7 @@ def onenote_page(m) -> ui.Element:
     raise Exception(message)
 
 
-@mod.capture(
-    rule="<number_small> | <number_small> plus <number_small> | [<number_small>] <user.text>"
-)
+@mod.capture(rule="<number_small>")
 def now_entry(m) -> str:
     return " ".join(m._unmapped)
 
