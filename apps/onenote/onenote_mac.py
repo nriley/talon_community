@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 from enum import Enum, StrEnum, auto
 from pathlib import Path
 
@@ -26,7 +27,7 @@ ctx.matches = r"""
 app: onenote_mac
 """
 
-MATCHES = __import__("collections").defaultdict(int)
+MATCHES = defaultdict(int)
 
 
 class SidebarTab(Enum):
