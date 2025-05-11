@@ -1,7 +1,9 @@
 import re
 from collections import defaultdict
+from datetime import timedelta
 from enum import Enum, StrEnum, auto
 from pathlib import Path
+from typing import Optional
 
 from talon import Context, Module, actions, app, clip, cron, ctrl, ui
 from talon.experimental.locate import locate_in_image
@@ -162,6 +164,9 @@ class Actions:
         # XXX potentially related to https://github.com/talonvoice/talon/issues/305?
         if actions.user.onenote_focus():
             cron.after("10ms", lambda: actions.user.onenote_now(entry))
+
+    def onenote_day_heading(days_in_future: Optional[int] = 0):
+        """Insert progress day heading into OneNote"""
 
     def onenote_font(font: str = ""):
         """Change the font in OneNote"""
@@ -464,7 +469,7 @@ class UserActions:
         actions.key("cmd-alt-1")
 
     def onenote_checkbox():
-        actions.key("ctrl-e enter tab cmd-1 up ctrl-e")
+        actions.key("ctrl-e enter tab cmd-1")
 
     def onenote_hide_navigation():
         window = onenote_notebook_window()
@@ -608,6 +613,26 @@ class UserActions:
 
         if entry:
             actions.mimic(entry)
+
+    def onenote_day_heading(days_in_future: Optional[int] = 0):
+        actions.user.onenote_heading_1()
+        day = actions.time.now()
+        if days_in_future:
+            day += timedelta(days=days_in_future)
+            actions.user.insert_date(days_in_future, "%-m/%-d/%Y ")
+        else:
+            actions.key("cmd-d")
+        day_of_week = day.isoweekday()
+        if day_of_week < 6:
+            actions.insert("- ")
+        else:
+            actions.key("backspace")
+        actions.key("up ctrl-shift--")
+        actions.sleep("500ms")
+        actions.key("down")
+        actions.user.onenote_checkbox()
+        if day_of_week < 6:
+            actions.key("up ctrl-e")
 
     def onenote_font(font):
         if (combo_box := onenote_font_combo_box()) is None:

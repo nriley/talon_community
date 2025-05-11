@@ -134,25 +134,11 @@ paste link:
 escape: user.onenote_maximize_content_or_press_esc()
 key(esc): user.onenote_maximize_content_or_press_esc()
 
-today:
-    user.onenote_heading_1()
-    key(cmd-d)
-    insert("- ")
-    key(up ctrl-shift--)
-    sleep(500ms)
-    key(down)
-    user.onenote_checkbox()
+today: user.onenote_day_heading()
 
 key(ctrl-cmd-t): mimic("today")
 
-tomorrow:
-    user.onenote_heading_1()
-    user.insert_date(1, "%-m/%-d/%Y")
-    insert(" - ")
-    key(up ctrl-shift--)
-    sleep(500ms)
-    key(down)
-    user.onenote_checkbox()
+tomorrow: user.onenote_day_heading(1)
 
 # back to progress (first notebook, first section)
 go progress:
