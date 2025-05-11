@@ -603,8 +603,7 @@ class UserActions:
         )  # custom shortcut for "Remove Tag"
 
         actions.key("cmd-/ cmd-.")
-        actions.user.insert_time_ampm()
-        actions.insert(" - ")
+        actions.insert(f"{actions.user.time_ampm()} - ")
 
         if entry:
             actions.mimic(entry)

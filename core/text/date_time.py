@@ -61,9 +61,13 @@ def year(m) -> int:
 
 @mod.action_class
 class Actions:
+    def time_ampm():
+        """Returns the current time in 12-hour format"""
+        return time.strftime("%-I:%M %p")
+
     def insert_time_ampm():
         """Inserts the current time in 12-hour format"""
-        actions.insert(time.strftime("%-I:%M %p"))
+        actions.insert(actions.user.time_ampm())
 
     def insert_date(days: Optional[int] = 0, format: Optional[str] = "%x"):
         """Inserts the date offset by the specified number of days"""
