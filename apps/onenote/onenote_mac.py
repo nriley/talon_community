@@ -598,18 +598,20 @@ class UserActions:
 
     def onenote_now(entry: str = ""):
         app = onenote_app()
-        ctrl.key_press("e", ctrl=True, app=app)
-        ctrl.key_press("enter", app=app)
-        for _ in range(5):
-            ctrl.key_press("tab", shift=True, app=app)
-        for _ in range(2):
-            ctrl.key_press("tab", app=app)
-        ctrl.key_press(
-            "0", alt=True, super=True, app=app
-        )  # custom shortcut for "Remove Tag"
-
-        actions.key("cmd-/ cmd-.")
-        actions.insert(f"{actions.user.time_ampm()} - ")
+        with clip.revert():
+            clip.set_text(f"{actions.user.time_ampm()} - ")
+            ctrl.key_press("e", ctrl=True, app=app)
+            ctrl.key_press("enter", app=app)
+            for _ in range(5):
+                ctrl.key_press("tab", shift=True, app=app)
+            for _ in range(2):
+                ctrl.key_press("tab", app=app)
+            ctrl.key_press(
+                "0", alt=True, super=True, app=app
+            )  # custom shortcut for "Remove Tag"
+            actions.key("cmd-/ cmd-.")
+            actions.edit.paste()
+            actions.sleep("200ms")
 
         if entry:
             actions.mimic(entry)
