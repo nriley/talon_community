@@ -190,7 +190,8 @@ class UserActions:
             return
 
         items, fallback = status_menu_items_fallback()
-        items.sort(key=lambda i: i.AXPosition.x)
+        # XXX temporary workaround for lack of AXPosition as of Talon 0.4.0-868
+        items.sort(key=lambda i: i.AXFrame.x)
         STATUS_MENU_TITLES = list(item_titles(items, fallback))
 
         cc = ui.apps(bundle="com.apple.controlcenter")[0]
@@ -246,23 +247,24 @@ def status_menu_items_fallback():
 
     talon_pid = os.getpid()
     for app in ui.apps():
-        try:
-            if app.pid == talon_pid:
-                continue  # XXX can pop up menu extra but can't select from it
+        if app.pid == talon_pid:
+            continue  # XXX can pop up menu extra but can't select from it
 
-            if "/XPCServices/" in app.exe:
-                continue  # XXX hangs; can we filter these out more cleanly?
+        if "/XPCServices/" in app.exe:
+            continue  # XXX hangs; can we filter these out more cleanly?
 
-            if menu_bar := app.element.AXExtrasMenuBar:
-                if not screen_rect.contains(menu_bar.AXPosition):
-                    continue
+        if menu_bar := getattr(app.element, "AXExtrasMenuBar", None):
+            # XXX temporary workaround for lack of AXPosition as of Talon 0.4.0-868
+            if (rect := getattr(menu_bar, "AXFrame", None)) is None:
+                continue
 
-                app_items = enabled_items_with_role(menu_bar, "AXMenuBarItem")
-                if len(app_items) == 1:
-                    singletons.append(app_items[0])
-                items += app_items
-        except:
-            pass
+            if not screen_rect.contains(rect.pos):
+                continue
+
+            app_items = enabled_items_with_role(menu_bar, "AXMenuBarItem")
+            if len(app_items) == 1:
+                singletons.append(app_items[0])
+            items += app_items
 
     def fallback(item):
         if item in singletons:
