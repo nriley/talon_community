@@ -610,7 +610,7 @@ class UserActions:
                 "0", alt=True, super=True, app=app
             )  # custom shortcut for "Remove Tag"
             actions.key("cmd-/ cmd-.")
-            actions.edit.paste()
+            actions.user.menu_select("Edit|Paste")
             actions.sleep("200ms")
 
         if entry:
