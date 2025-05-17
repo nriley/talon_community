@@ -32,6 +32,24 @@ class Actions:
     def enable_fd():
         """Enable Fluency Direct via a keyboard shortcut"""
 
+    def fd_sync_talon_listening():
+        """Synchronize Talon's listening state with Fluency Direct's state"""
+        if not actions.speech.enabled():
+            # SpeechMike does not listen unless I hold it up - can switch back and forth
+            # Other microphones currently require I manually reenable Talon with a voice or
+            # keyboard command
+            if (
+                "SpeechMike III" in actions.sound.active_microphone()
+                and not actions.user.fd_is_listening()
+                and not actions.user.speech_suspended()
+            ):
+                actions.speech.enable()
+            return
+
+        if actions.user.fd_is_listening():
+            print("FD listening - disabling Talon")
+            actions.speech.disable()
+
 
 @Context().action_class("user")
 class FallbackUserActions:
@@ -50,7 +68,15 @@ class UserActions:
         return FDLINK_APPLICATION.IsRunning()
 
     def fd_is_listening():
-        return fd_listening()
+        global FD_RECORDING_CONTROL
+
+        if fdrc := fd_recording_control():
+            try:
+                return fdrc.GetRecognizerStatus() == 1
+            except com_error:
+                FD_RECORDING_CONTROL = None
+
+        return False
 
     def disable_fd():
         global FD_RECORDING_CONTROL
@@ -91,35 +117,7 @@ def fd_recording_control():
     return FD_RECORDING_CONTROL
 
 
-def fd_listening():
-    global FD_RECORDING_CONTROL
-
-    if fdrc := fd_recording_control():
-        try:
-            return fdrc.GetRecognizerStatus() == 1
-        except com_error:
-            FD_RECORDING_CONTROL = None
-
-    return False
-
-
-def toggle_talon_by_fd_listening():
-    if not actions.speech.enabled():
-        # SpeechMike does not listen unless I hold it up - can switch back and forth
-        # Other microphones currently require I manually reenable Talon with a voice or
-        # keyboard command
-        if (
-            "SpeechMike III" in actions.sound.active_microphone()
-            and not fd_listening()
-            and not actions.user.speech_suspended()
-        ):
-            actions.speech.enable()
-        return
-
-    if fd_listening():
-        print("FD listening - disabling Talon")
-        actions.speech.disable()
-
-
 if FDLINK_APPLICATION:
-    app.register("ready", lambda: cron.interval("500ms", toggle_talon_by_fd_listening))
+    app.register(
+        "ready", lambda: cron.interval("500ms", actions.user.fd_sync_talon_listening)
+    )
