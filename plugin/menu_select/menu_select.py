@@ -11,6 +11,7 @@ os: mac
 """
 
 mod.list("menu_items", desc="Active menu items and/or menu bar items")
+mod.list("contextual_menu_items", "Active contextual menu items")
 mod.list("status_menus", desc="Status menus' menu bar items")
 
 MENU_ITEMS = {}
@@ -32,6 +33,11 @@ def matching_item(match):
 @mod.capture(rule="{user.menu_items}")
 def menu_item(m) -> ui.Element:
     return matching_item(m.menu_items)
+
+
+@mod.capture(rule="{user.contextual_menu_items}")
+def contextual_menu_item(m) -> ui.Element:
+    return matching_item(m.contextual_menu_items)
 
 
 @mod.capture(rule="{user.status_menus}")
@@ -228,6 +234,12 @@ def menu_items(phrase: list[str]):
         )
 
     return saved_item_selection_list(items)
+
+
+@ctx.dynamic_list("user.contextual_menu_items")
+def contextual_menu_items(phrase: list[str]):
+    actions.user.contextual_menu_open()
+    return menu_items(phrase)
 
 
 def display_area():
