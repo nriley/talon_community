@@ -161,8 +161,7 @@ class UserActions:
             except:
                 pass
 
-        new_var = 1
-        ctrl.mouse_click(new_var)
+        ctrl.mouse_click(1)
 
     def menu_item_select(menu_item: ui.Element):
         try:
