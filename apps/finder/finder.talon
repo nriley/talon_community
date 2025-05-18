@@ -7,6 +7,7 @@ tag(): user.navigation
 tag(): user.tabs
 options: key(cmd-j)
 inspector: key(cmd-alt-i)
+preview: key(cmd-shift-p)
 search: key(cmd-alt-f)
 toolbar: key(cmd-alt-t)
 
