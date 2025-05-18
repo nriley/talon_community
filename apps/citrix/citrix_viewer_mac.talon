@@ -16,4 +16,4 @@ start [<user.text>]:
     key(ctrl-esc)
     insert(text or "")
 
-control (alt | alter) delete: key(ctrl-cmd-del)
+control (alt | alter) delete: user.menu_select("Devices|Keyboard|Send Ctrl-Alt-Del")
