@@ -157,11 +157,20 @@ class UserActions:
         if (element := ui.focused_element()) is not None:
             try:
                 element.perform("AXShowMenu")
-                return
+                actions.sleep("50ms")
+                if ui.active_menu():
+                    return
             except:
                 pass
 
         ctrl.mouse_click(1)
+
+        for attempt in range(10):
+            actions.sleep("50ms")
+            if ui.active_menu() is not None:
+                return
+
+        raise Exception("Unable to pop up contextual menu")
 
     def menu_item_select(menu_item: ui.Element):
         try:
