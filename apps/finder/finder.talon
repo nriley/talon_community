@@ -5,7 +5,6 @@ tag(): user.address
 tag(): user.file_manager
 tag(): user.navigation
 tag(): user.tabs
-preferences: key(cmd-,)
 options: key(cmd-j)
 inspector: key(cmd-alt-i)
 search: key(cmd-alt-f)
