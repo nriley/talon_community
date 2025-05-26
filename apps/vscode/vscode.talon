@@ -297,6 +297,8 @@ cell next: user.vscode("notebook.focusNextEditor")
 cell last: user.vscode("notebook.focusPreviousEditor")
 cell run above: user.vscode("notebook.cell.executeCellsAbove")
 cell run: user.vscode("notebook.cell.execute")
+cell delete: user.vscode("notebook.cell.delete")
+cell tag: user.vscode("jupyter-cell-tags.addTag")
 
 install local: user.vscode("workbench.extensions.action.installVSIX")
 preview markdown: user.vscode("markdown.showPreview")
