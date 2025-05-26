@@ -26,6 +26,10 @@ bar source: user.vscode("workbench.view.scm")
 bar test: user.vscode("workbench.view.testing.focus")
 bar switch: user.vscode("workbench.action.toggleSidebarVisibility")
 
+# Secondary Side Bar
+sec: user.vscode("workbench.action.focusAuxiliaryBar")
+sec switch: user.vscode("workbench.action.toggleAuxiliaryBar")
+
 # Symbol search
 symbol hunt [<user.text>]:
     user.vscode("workbench.action.gotoSymbol")
