@@ -179,6 +179,9 @@ def saved_item_selection_list(items, fallback=None):
 class UserActions:
 
     def ribbon_item_select(ribbon_item: ui.Element):
+        if ribbon_item.AXRole == "AXComboBox":
+            ribbon_item.AXFocused = True
+            return
         try:
             ribbon_item.perform("AXPress")
         except:  # XXX sometimes "fails" when it actually succeeds
