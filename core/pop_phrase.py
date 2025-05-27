@@ -21,6 +21,7 @@ auto_pop_that_phrases = [
     "previous",
     "step over",
     "hunt",
+    "follow",
 ]
 
 
