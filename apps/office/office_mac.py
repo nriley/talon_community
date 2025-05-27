@@ -196,15 +196,18 @@ def ribbon_items(phrase: list[str]):
     tab_group = document_window_tab_group()
     items = enabled_items_with_role(tab_group, "AXRadioButton")
 
-    tab = tab_group.children.find_one(AXRole="AXScrollArea", max_depth=0)
-    for item in tab.children.find():
-        if item.AXRole in (
-            "AXButton",
-            "AXCheckBox",
-            "AXComboBox",
-            "AXMenuButton",
-            "AXRadioButton",
-        ):
-            items.append(item)
+    try:
+        tab = tab_group.children.find_one(AXRole="AXScrollArea", max_depth=0)
+        for item in tab.children.find():
+            if item.AXRole in (
+                "AXButton",
+                "AXCheckBox",
+                "AXComboBox",
+                "AXMenuButton",
+                "AXRadioButton",
+            ):
+                items.append(item)
+    except ui.UIErr as e:
+        pass
 
     return saved_item_selection_list(items)
