@@ -10,5 +10,6 @@ cell run: user.vscode("quarto.runCurrentCell")
 [cell run] advance: user.vscode("quarto.runCurrentAdvance")
 cell run all: user.vscode("quarto.runAllCells")
 run: user.vscode("quarto.runCurrent")
+preview: user.vscode("quarto.preview")
 
 bar assist: user.vscode("quarto-assist.focus")
