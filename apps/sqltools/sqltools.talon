@@ -13,3 +13,9 @@ quick query: key(f11)
 object: key(f12)
 object script: key(ctrl-f12)
 sequel plus: key(ctrl-shift-f5)
+
+# Intentional overlap with formatting commands
+all cap that: key(ctrl-shift-up)
+all down that: key(ctrl-shift-down)
+title that: key(ctrl-k a)
+norm that: key(ctrl-k n)
