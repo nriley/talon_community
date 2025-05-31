@@ -4,11 +4,19 @@ import re
 from talon import Context, Module, actions, app, ctrl, imgui, ui
 
 mod = Module()
-ctx = Context()
+ctx_mac = Context()
+ctx_win_citrix = Context()
 
-ctx.matches = r"""
+ctx_mac.matches = r"""
 os: mac
 """
+
+ctx_win_citrix.matches = r"""
+os: windows
+os: mac
+and app: citrix_viewer_mac
+"""
+
 
 mod.list("menu_items", desc="Active menu items and/or menu bar items")
 mod.list("contextual_menu_items", "Active contextual menu items")
@@ -149,7 +157,7 @@ def gui_extras(gui: imgui.GUI):
         actions.user.status_menus_toggle()
 
 
-@ctx.action_class("user")
+@ctx_mac.action_class("user")
 class UserActions:
     def contextual_menu_open():
         if ui.active_menu():
@@ -216,7 +224,13 @@ class UserActions:
         gui_extras.show()
 
 
-@ctx.dynamic_list("user.menu_items")
+@ctx_win_citrix.action_class("user")
+class UserActions:
+    def contextual_menu_open():
+        actions.key("shift-f10")
+
+
+@ctx_mac.dynamic_list("user.menu_items")
 def menu_items(phrase: list[str]):
     items = []
 
@@ -236,7 +250,7 @@ def menu_items(phrase: list[str]):
     return saved_item_selection_list(items)
 
 
-@ctx.dynamic_list("user.contextual_menu_items")
+@ctx_mac.dynamic_list("user.contextual_menu_items")
 def contextual_menu_items(phrase: list[str]):
     actions.user.contextual_menu_open()
     return menu_items(phrase)
@@ -291,6 +305,6 @@ def status_menu_items_fallback():
     return items, fallback
 
 
-@ctx.dynamic_list("user.status_menus")
+@ctx_mac.dynamic_list("user.status_menus")
 def status_menus(phrase: list[str]):
     return saved_item_selection_list(*status_menu_items_fallback())
