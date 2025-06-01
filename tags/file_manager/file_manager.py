@@ -3,7 +3,7 @@ from itertools import islice
 from pathlib import Path
 from typing import Union
 
-from talon import Context, Module, actions, app, imgui, registry, settings, ui
+from talon import Context, Module, actions, app, imgui, scope, settings, ui
 
 mod = Module()
 ctx = Context()
@@ -403,7 +403,7 @@ def win_event_handler(window):
     if not window.app.exe or window != ui.active_window():
         return
 
-    if "user.file_manager" not in registry.tags:
+    if "user.file_manager" not in scope.get("tag"):
         actions.user.file_manager_hide_pickers()
         clear_lists()
         cached_path = None
