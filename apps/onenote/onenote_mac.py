@@ -298,7 +298,7 @@ def onenote_image_matches_in_notebook_window(
     if window.screen.scale == 1:
         image_name += "@1x"
     images = {
-        image_path.stem: Image.from_file(str(image_path))
+        image_path.stem: Image.load(str(image_path))
         for image_path in sorted(image_dir.glob(f"{image_name}_*.png"))
     }
 
