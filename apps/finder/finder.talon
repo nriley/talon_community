@@ -29,7 +29,7 @@ trash that: key(cmd-backspace)
 empty trash: key(cmd-shift-backspace)
 
 open that: key(cmd-down)
-move that here: key(cmd-alt-v)
+move it here: key(cmd-alt-v)
 eject that: key(cmd-e)
 
 open close: key(cmd-alt-down)
