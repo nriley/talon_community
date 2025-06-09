@@ -236,8 +236,7 @@ def menu_items(phrase: list[str]):
 
     if menu := ui.active_menu():
         items = enabled_items_with_role(menu, "AXMenuItem")
-        while True:
-            parent = menu.AXParent
+        while parent := getattr(menu, "AXParent", None):
             if (parent_role := parent.AXRole) not in ("AXMenuBarItem", "AXMenuItem"):
                 break
             menu = parent.AXParent
