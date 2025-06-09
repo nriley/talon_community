@@ -13,6 +13,8 @@ paste special: key(cmd-ctrl-v)
 
 align left: key(cmd-l)
 align center: key(cmd-e)
+align right:
+    user.office_mac_ribbon_control_press(0, "Home", "AXCheckBox", "Align Right")
 
 filter: key(cmd-shift-f)
 sort: key(cmd-shift-r)
