@@ -342,8 +342,8 @@ def onenote_image_matches_in_notebook_window(
         no_matches.mkdir(exist_ok=True)
 
         now = actions.user.time_format()
-        needle.write_file(no_matches / f"{now} {image_name}.png")
-        haystack.write_file(no_matches / f"{now} haystack.png")
+        needle.save(no_matches / f"{now} {image_name}.png")
+        haystack.save(no_matches / f"{now} haystack.png")
 
     return matches
 
