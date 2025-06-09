@@ -1,5 +1,5 @@
 app: safari
 -
-auto fill:
+autofill | auto fill:
     user.browser_focus_password_autofill()
     key(down)
