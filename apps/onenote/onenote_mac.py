@@ -20,11 +20,6 @@ except AttributeError:  # XXX temporary workaround until this is exposed
 mod = Module()
 ctx = Context()
 
-mod.apps.onenote_mac = r"""
-os: mac
-and app.bundle: com.microsoft.onenote.mac
-"""
-
 ctx.matches = r"""
 app: onenote_mac
 """
@@ -216,67 +211,14 @@ def onenote_app():
     return ui.apps(bundle="com.microsoft.onenote.mac")[0]
 
 
-def onenote_notebook_window():
-    if not (active_window := ui.active_window()):
-        raise Exception("Can't determine active window")
-
-    if active_window.app != onenote_app():
-        raise Exception("OneNote is not frontmost")
-
-    if not active_window.doc:
-        raise Exception("Frontmost window is not a document window")
-
-    return active_window
-
-
-def onenote_activate_ribbon_tab(tab_index, tab_name):
-    window = onenote_notebook_window()
-
-    ribbon = window.children.find_one(AXRole="AXTabGroup", max_depth=0)
-    tab = ribbon.AXTabs[tab_index]
-    if tab.get("AXValue") != 1:
-        tab.perform("AXPress")
-
-    for attempt in range(10):
-        actions.sleep("50ms")
-        if tab.get("AXValue") == 1:
-            break
-    else:
-        app.notify(body=f"Could not activate {tab_name} tab", title="OneNote")
-        return None
-
-    return ribbon
-
-
-def onenote_ribbon_combo_box(tab_index, tab_name, box_name, box_filter=None):
-    if (ribbon := onenote_activate_ribbon_tab(tab_index, tab_name)) is None:
-        return None
-
-    combo_boxes = []
-    for attempt in range(10):
-        actions.sleep("50ms")
-        if combo_boxes := ribbon.children.find(AXRole="AXComboBox"):
-            break
-    else:
-        app.notify(body="Could not find combo boxes", title="OneNote")
-        return None
-
-    for combo_box in combo_boxes:
-        if combo_box.AXDescription == f"{box_name}:" or box_filter(combo_box):
-            return combo_box
-    else:
-        app.notify(body=f"Could not find {box_name} combo box", title="OneNote")
-        return None
-
-
 def onenote_font_combo_box():
-    return onenote_ribbon_combo_box(
+    return actions.user.office_mac_ribbon_combo_box(
         0, "Home", "Font", lambda combo_box: not str.isnumeric(combo_box.AXValue)
     )
 
 
 def onenote_font_size_combo_box():
-    return onenote_ribbon_combo_box(
+    return actions.user.office_mac_ribbon_combo_box(
         0, "Home", "Font Size", lambda combo_box: str.isnumeric(combo_box.AXValue)
     )
 
@@ -286,7 +228,9 @@ def onenote_zoom_combo_box():
         value = combo_box.AXValue
         return len(value) > 0 and str.isnumeric(value[:-1])
 
-    return onenote_ribbon_combo_box(3, "View", "Zoom", is_zoom_combo_box)
+    return actions.user.office_mac_ribbon_combo_box(
+        3, "View", "Zoom", is_zoom_combo_box
+    )
 
 
 def onenote_image_matches_in_notebook_window(
@@ -349,7 +293,7 @@ def onenote_image_matches_in_notebook_window(
 
 
 def onenote_show_sidebar(tab):
-    window = onenote_notebook_window()
+    window = actions.user.office_mac_document_window()
     splitgroup = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
     group = splitgroup.children.find_one(AXRole="AXGroup", max_depth=0)
     checkbox = group.children.find(AXRole="AXCheckBox", max_depth=0)[tab.value]
@@ -456,6 +400,18 @@ class UserActions:
         actions.sleep("200ms")
         actions.insert(text)
 
+    def office_mac_document_window():
+        if not (active_window := ui.active_window()):
+            raise Exception("Can't determine active window")
+
+        if active_window.app != onenote_app():
+            raise Exception("OneNote is not frontmost")
+
+        if not active_window.doc:
+            raise Exception("Frontmost window is not a document window")
+
+        return active_window
+
     # not standard OneNote; approximate equivalents of AutoHotKey
     def onenote_heading_1():
         actions.key("ctrl-e enter")
@@ -472,7 +428,7 @@ class UserActions:
         actions.key("ctrl-e enter tab cmd-1")
 
     def onenote_hide_navigation():
-        window = onenote_notebook_window()
+        window = actions.user.office_mac_document_window()
         # hide the navigation pane(s) if necessary
         splitgroup = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
         group = splitgroup.children.find_one(AXRole="AXGroup", max_depth=0)
@@ -496,7 +452,7 @@ class UserActions:
         app.notify(body="Unable to focus note body", title="OneNote")
 
     def onenote_hide_ribbon():
-        window = onenote_notebook_window()
+        window = actions.user.office_mac_document_window()
 
         ribbon = window.children.find_one(AXRole="AXTabGroup", max_depth=0)
         open_tab = ribbon.get("AXValue")
@@ -646,8 +602,7 @@ class UserActions:
             actions.key("tab")
 
     def onenote_font_size(size):
-        combo_box = onenote_font_size_combo_box()
-        if combo_box is None:
+        if (combo_box := onenote_font_size_combo_box()) is None:
             return
 
         combo_box.AXFocused = True
@@ -656,8 +611,7 @@ class UserActions:
             actions.key("return")
 
     def onenote_font_size_adjust(offset):
-        combo_box = onenote_font_size_combo_box()
-        if combo_box is None:
+        if (combo_box := onenote_font_size_combo_box()) is None:
             return
 
         font_size = combo_box.AXValue
@@ -688,7 +642,7 @@ class UserActions:
         # - White background for note
         # - 100% zoom level (ensured below)
         # - (Potentially) font size
-        window = onenote_notebook_window()
+        window = actions.user.office_mac_document_window()
         rect = window.rect
         scale = window.screen.scale
 

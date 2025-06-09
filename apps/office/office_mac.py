@@ -1,6 +1,8 @@
 import re
+from collections.abc import Callable
+from typing import Optional
 
-from talon import Context, Module, actions, ctrl, ui
+from talon import Context, Module, actions, app, ctrl, ui
 
 mod = Module()
 ctx = Context()
@@ -8,6 +10,10 @@ ctx = Context()
 mod.apps.excel_mac = """
 os: mac
 and app.bundle: com.microsoft.Excel
+"""
+mod.apps.onenote_mac = r"""
+os: mac
+and app.bundle: com.microsoft.onenote.mac
 """
 mod.apps.powerpoint_mac = r"""
 os: mac
@@ -19,6 +25,7 @@ and app.bundle: com.microsoft.Word
 """
 mod.apps.office_mac = r"""
 app: excel_mac
+app: onenote_mac
 app: powerpoint_mac
 app: word_mac
 """
@@ -28,22 +35,18 @@ app: office_mac
 """
 
 
-def document_window():
-    return ui.active_app().children.find_one(
-        AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
-    )
-
-
 def document_window_toolbar_group():
     return (
-        document_window()
+        actions.user.office_mac_document_window()
         .children.find_one(AXRole="AXToolbar", max_depth=0)
         .children.find_one(AXRole="AXGroup", max_depth=0)
     )
 
 
 def document_window_tab_group():
-    return document_window().children.find_one(AXRole="AXTabGroup", max_depth=0)
+    return actions.user.office_mac_document_window().children.find_one(
+        AXRole="AXTabGroup", max_depth=0
+    )
 
 
 @mod.action_class
@@ -51,17 +54,128 @@ class Actions:
     def office_document_actions():
         """Opens the document actions popover"""
 
-    def ribbon_item_select(ribbon_item: ui.Element):
+    def office_mac_document_window():
+        """Returns the current document window"""
+
+    def office_mac_ribbon_activate_tab(
+        tab_index: int, tab_name: str
+    ) -> Optional[ui.Element]:
+        """Activates a ribbon tab by index, returning ribbon or None on failure"""
+
+    def office_mac_ribbon_combo_box(
+        tab_index: int,
+        tab_name: str,
+        box_name: str,
+        box_filter: Optional[Callable[[ui.Element], bool]] = None,
+    ) -> Optional[ui.Element]:
+        """Returns a ribbon combo box by tab index and name or filter"""
+
+    def office_mac_ribbon_control(
+        tab_index: int,
+        tab_name: str,
+        role: str,
+        name: str,
+        filter: Optional[Callable[[ui.Element], bool]] = None,
+    ) -> Optional[ui.Element]:
+        """Returns a ribbon control by tab index and name or filter"""
+
+    def office_mac_ribbon_control_press(
+        tab_index: int,
+        tab_name: str,
+        role: str,
+        name: str,
+        filter: Optional[Callable[[ui.Element], bool]] = None,
+    ) -> Optional[ui.Element]:
+        """Presses a ribbon control by tab index and name or filter"""
+
+    def office_mac_ribbon_item_select(ribbon_item: ui.Element):
         """Select the specified ribbon control"""
 
-    def ribbon_item_hover(ribbon_item: ui.Element):
+    def office_mac_ribbon_item_hover(ribbon_item: ui.Element):
         """Move the mouse pointer to the specified ribbon control"""
 
 
 @ctx.action_class("user")
 class UserActions:
+    def office_mac_document_window():
+        return ui.active_app().children.find_one(
+            AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
+        )
+
+    def office_mac_ribbon_activate_tab(tab_index, tab_name):
+        ribbon = document_window_tab_group()
+        tab = ribbon.AXTabs[tab_index]
+        if tab.get("AXValue") != 1:
+            tab.perform("AXPress")
+
+        for attempt in range(10):
+            actions.sleep("50ms")
+            if tab.get("AXValue") == 1:
+                break
+        else:
+            app.notify(body=f"Could not activate {tab_name} tab", title="OneNote")
+            return None
+
+        return ribbon
+
+    def office_mac_ribbon_control(tab_index, tab_name, role, name, filter=None):
+        if (
+            ribbon := actions.user.office_mac_ribbon_activate_tab(tab_index, tab_name)
+        ) is None:
+            return None
+
+        controls = []
+        for attempt in range(10):
+            actions.sleep("50ms")
+            if controls := ribbon.children.find(AXRole=role):
+                break
+        else:
+            app.notify(
+                body="Could not find ribbon controls", title=ui.active_app().name
+            )
+            return None
+
+        for control in controls:
+            if (
+                getattr(control, "AXTitle", None) == name
+                or getattr(control, "AXDescription", None) == f"{name}:"
+                or (filter and filter(control))
+            ):
+                return control
+        else:
+            app.notify(
+                body=f"Could not find {name} in ribbon", title=ui.active_app().name
+            )
+            return None
+
+    def office_mac_ribbon_control_press(tab_index, tab_name, role, name, filter=None):
+        if (
+            control := actions.user.office_mac_ribbon_control(
+                tab_index, tab_name, role, name, filter
+            )
+        ) is None:
+            return None
+
+        control.perform("AXPress")
+
+    def office_mac_ribbon_combo_box(tab_index, tab_name, box_name, box_filter=None):
+        return actions.user.office_mac_ribbon_control(
+            tab_index, tab_name, "AXComboBox", box_name, box_filter
+        )
+
     def office_tell_me():
-        toolbar_group = document_window_toolbar_group()
+        try:  # OneNote only as of 6/9/2025
+            document_window_tab_group().children.find_one(
+                AXRole="AXButton", AXTitle="Tell me", max_depth=0
+            ).perform("AXPress")
+            return
+        except ui.UIErr:
+            pass
+
+        try:
+            toolbar_group = document_window_toolbar_group()
+        except ui.UIErr:
+            raise Exception(f"Unable to locate window toolbar")
         try:
             toolbar_group.children.find_one(
                 AXRole="AXTextField", AXSubrole="AXSearchField", max_depth=0
@@ -178,7 +292,7 @@ def saved_item_selection_list(items, fallback=None):
 @ctx.action_class("user")
 class UserActions:
 
-    def ribbon_item_select(ribbon_item: ui.Element):
+    def office_mac_ribbon_item_select(ribbon_item: ui.Element):
         if ribbon_item.AXRole == "AXComboBox":
             ribbon_item.AXFocused = True
             return
@@ -187,7 +301,7 @@ class UserActions:
         except:  # XXX sometimes "fails" when it actually succeeds
             pass
 
-    def ribbon_item_hover(ribbon_item: ui.Element):
+    def office_mac_ribbon_item_hover(ribbon_item: ui.Element):
         ctrl.mouse_move(*ribbon_item.AXFrame.center)
 
 
