@@ -29,7 +29,7 @@ class UserActions:
             o
             for o in content.children.find(AXRole="AXWebArea")
             if o.AXURL.startswith(
-                "safari-web-extension://48C35BEB-B0CA-4377-AE58-1159F591B98D"
+                "safari-web-extension://506D2125-AA38-4102-9097-3F6F2FDDC127"
             )
         )
         autofill.AXFocused = True
