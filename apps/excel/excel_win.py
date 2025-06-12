@@ -19,7 +19,7 @@ class UserActions:
     def excel_save_as_format(format: str):
         actions.user.office_win_ribbon_select("fa")
         actions.sleep("500ms")
-        actions.insert("y4")
+        actions.insert("yc")
 
         document_window = ui.active_window().element
 
