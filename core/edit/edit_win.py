@@ -110,14 +110,6 @@ class EditActions:
     def find_next():
         actions.key("f3")
 
-    def indent_less():
-        actions.key("home delete")
-
-    def indent_more():
-        actions.key("home tab")
-        # action(edit.jump_column(n: int)
-        # action(edit.jump_line(n: int)
-
     def left():
         actions.key("left")
 

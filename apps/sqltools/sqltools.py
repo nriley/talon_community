@@ -26,6 +26,12 @@ class CodeActions:
 
 @ctx.action_class("edit")
 class EditActions:
+    def indent_more():
+        actions.key("ctrl-i")
+
+    def indent_less():
+        actions.key("ctrl-u")
+    
     # more direct word/line processing - actions are in core,
     # but voice commands are enabled with tag(user.line_commands)
     def delete_line():
