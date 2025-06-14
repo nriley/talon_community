@@ -75,7 +75,7 @@ symbols = [
     Symbol("_", None, ["score", "underscore"]),
     Symbol("(", ["open paren"], ["paren"]),
     Symbol(")", ["close paren"], None),
-    Symbol("[", ["open bracket"], ["square"]),
+    Symbol("[", ["open bracket"], ["square", "bracket"]),
     Symbol("]", ["close bracket"], ["close square"]),
     Symbol("/", ["slash"]),
     Symbol("\\", None, ["backslash", "whack"]),
