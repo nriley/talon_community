@@ -7,7 +7,7 @@ menu hover <user.menu_item>: user.menu_item_hover(menu_item)
 <user.modifiers> menu <user.menu_item>:
     key("{modifiers}:down")
     user.menu_item_select(menu_item)
-    sleep(50ms)
+    sleep(500ms)
     key("{modifiers}:up")
 
 status menus$: user.status_menus_toggle()
