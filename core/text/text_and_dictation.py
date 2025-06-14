@@ -126,7 +126,9 @@ def spelled_word(m) -> str:
     return "".join(m.letter_list)
 
 
-@mod.capture(rule="({user.vocabulary} | <user.spelled_word> | <user.prose_contact> | <phrase>)+")
+@mod.capture(
+    rule="({user.vocabulary} | <user.spelled_word> | <user.prose_contact> | <phrase>)+"
+)
 def text(m) -> str:
     """A sequence of words, including user-defined vocabulary."""
     return format_phrase(m)
@@ -361,6 +363,13 @@ def auto_capitalize(text, state=None):
 
 # ---------- DICTATION AUTO FORMATTING ---------- #
 class DictationFormat:
+    __slots__ = (
+        "before",
+        "force_no_space",
+        "force_capitalization",
+        "state",
+    )
+
     def __init__(self):
         self.reset()
 
@@ -389,12 +398,13 @@ class DictationFormat:
         self.force_no_space = False
         if auto_cap:
             text, self.state = auto_capitalize(text, self.state)
-        if self.force_capitalization == "cap":
-            text = format_first_letter(text, lambda s: s.capitalize())
-            self.force_capitalization = None
-        if self.force_capitalization == "no cap":
-            text = format_first_letter(text, lambda s: s.lower())
-            self.force_capitalization = None
+        match self.force_capitalization:
+            case "cap":
+                text = format_first_letter(text, lambda s: s.capitalize())
+                self.force_capitalization = None
+            case "no cap":
+                text = format_first_letter(text, lambda s: s.lower())
+                self.force_capitalization = None
         self.before = text or self.before
         return text
 
