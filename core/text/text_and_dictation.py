@@ -245,21 +245,13 @@ def apply_formatting(m):
         if isinstance(item, grammar.vm.Phrase):
             parsed = actions.dictate.parse_words(item)
             words = actions.dictate.replace_words(parsed)
-            match item[-1][-1]:  # reformat Whisper output
-                case ".":
-                    # remove capitalization and trailing period/ellipsis if present
-                    formatter.force_capitalization = "no cap"
-                    words[-1] = words[-1].rstrip(".")
-                case "?":
-                    # just fix capitalization; don't strip trailing punctuation
-                    formatter.force_capitalization = "no cap"
-                case _:
-                    # no trailing punctuation; fix first word if capitalized when Talon wouldn't
-                    if (
-                        actions.dictate.replace_words([parsed[0].lower()])[0]
-                        != words[0]
-                    ):
-                        formatter.force_capitalization = "no cap"
+            # reformat Whisper output:
+            # 1) remove trailing period/ellipsis if present
+            if parsed[-1][-1] == ".":
+                words[-1] = words[-1].rstrip(".")
+            # 2) lowercase first word if capitalized when Talon wouldn't
+            if actions.dictate.replace_words([parsed[0].lower()])[0] != words[0]:
+                formatter.force_capitalization = "no cap"
         else:
             words = [item]
         for word in words:
