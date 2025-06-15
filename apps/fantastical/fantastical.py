@@ -17,7 +17,7 @@ and app.bundle: com.flexibits.fantastical2.mac
 
 def fantastical_calendar_window():
     window = ui.active_window()
-    if not window or window.element.AXSubrole != "AXStandardWindow":
+    if not window or window.element.get("AXSubrole", None) != "AXStandardWindow":
         return None
     return window
 
