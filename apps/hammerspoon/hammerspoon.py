@@ -36,8 +36,14 @@ class UserActions:
             "AXPress"
         )
 
+    def hammerspoon_execute(lua_code):
+        hammerspoon_app().appscript().execute_lua_code(lua_code)
+
 
 @mod.action_class
 class Actions:
     def hammerspoon_menu_select(title: str):
         """Select the specified item from the Hammerspoon menu"""
+
+    def hammerspoon_execute(lua_code: str):
+        """Execute the specified Lua code in Hammerspoon — requires hs.allowAppleScript(true)"""
