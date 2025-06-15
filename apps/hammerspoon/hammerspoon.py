@@ -1,4 +1,4 @@
-from talon import Context, Module, ui
+from talon import Context, Module, app, ui
 
 ctx = Context()
 mod = Module()
@@ -16,6 +16,15 @@ def hammerspoon_app():
 class UserActions:
     def hammerspoon_menu_select(title):
         hs = hammerspoon_app().element
+        if not hs.attrs:
+            message = """Unable to interact with Hammerspoon. Has it hung?
+
+            Note that you may need to restart Talon if you restart Hammerspoon."""
+            app.notify(
+                title="Hammerspoon",
+                body=message,
+            )
+            raise Exception(message)
         hs_menu_extra = hs.AXExtrasMenuBar.children.find_one(
             AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=0
         )
