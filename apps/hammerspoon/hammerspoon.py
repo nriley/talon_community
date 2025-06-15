@@ -8,11 +8,15 @@ os: mac
 """
 
 
+def hammerspoon_app():
+    return ui.apps(bundle="org.hammerspoon.Hammerspoon")[0]
+
+
 @ctx.action_class("user")
 class UserActions:
     def hammerspoon_menu_select(title):
-        hs = ui.apps(bundle="org.hammerspoon.Hammerspoon")[0]
-        hs_menu_extra = hs.element.AXExtrasMenuBar.children.find_one(
+        hs = hammerspoon_app().element
+        hs_menu_extra = hs.AXExtrasMenuBar.children.find_one(
             AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=0
         )
         try:
