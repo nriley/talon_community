@@ -1,9 +1,8 @@
 os: windows
 -
-# update to Win+N in Windows 11
 ^calendar mini:
-    key("super-b")
+    key("super-n")
     sleep(50ms)
     key("left:2 enter")
 
-proxy toggle: user.click_taskbar_button("IE proxy disabled|IE proxy enabled")
+proxy toggle: user.click_system_tray_button("IEProxyToggle.exe IE proxy disabled|IEProxyToggle.exe IE proxy enabled")
