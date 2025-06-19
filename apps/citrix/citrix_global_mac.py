@@ -15,6 +15,9 @@ class Actions:
     def citrix_focus_workspace():
         """Focus Citrix Workspace"""
 
+    def citrix_launch_favorite(citrix_favorite: str):
+        """Launch the specified Citrix app or desktop"""
+
 
 @ctx.action_class("user")
 class UserActions:
