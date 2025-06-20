@@ -2,7 +2,7 @@ talon check updates: menu.check_for_updates()
 # the debug window is only available in the talon beta
 talon open debug: menu.open_debug_window()
 talon open log: menu.open_log()
-talon open rebel: menu.open_repl()
+talon open (rebel | repple): menu.open_repl()
 talon home: menu.open_talon_home()
 talon copy context pie: user.talon_add_context_clipboard_python()
 talon copy context: user.talon_add_context_clipboard()
