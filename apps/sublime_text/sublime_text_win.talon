@@ -8,6 +8,9 @@ tag(): user.multiple_cursors
 # tag(): user.snippets
 tag(): user.tabs
 
+settings():
+    user.snippet_raw_text_spaces_per_tab = -1
+
 # NOTE: for Talon's context-sensitive dictation to work properly in Sublime Text,
 # you need to set "copy_with_empty_selection": false in your settings.
 

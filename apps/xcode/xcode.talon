@@ -5,6 +5,9 @@ tag(): user.line_commands
 tag(): user.splits
 tag(): user.tabs
 
+settings():
+    user.snippet_raw_text_spaces_per_tab = -1
+
 file hunt [<user.text>]:
     key(cmd-shift-o)
     insert(text or "")
