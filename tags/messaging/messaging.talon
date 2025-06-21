@@ -9,7 +9,7 @@ channel <user.text>:
     insert(user.formatted_text(user.text, "ALL_LOWERCASE"))
 channel up: user.messaging_channel_previous()
 channel down: user.messaging_channel_next()
-([channel] unread last | gopreev): user.messaging_unread_previous()
+([channel] unread last | gopreev | go preve): user.messaging_unread_previous()
 ([channel] unread next | goneck): user.messaging_unread_next()
 go (find | search): user.messaging_open_search()
 mark (all | workspace | server) read: user.messaging_mark_workspace_read()
