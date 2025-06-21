@@ -118,4 +118,4 @@ class UserActions:
 @ctx.action_class("win")
 class WinActions:
     def filename():
-        return actions.win.title()
+        return getattr(ui.active_window(), "doc", None)
