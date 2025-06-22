@@ -1,6 +1,7 @@
 app: onenote_mac
 -
 tag(): user.find_and_replace
+tag(): user.font_size
 
 # due to a combination of clipboard slowness/flakiness, issues with inserting text in tables
 # and lack of exposure though accessibility
@@ -15,9 +16,6 @@ strike through: key(ctrl-cmd--)
 highlight: key(ctrl-cmd-h)
 
 font [<user.text>]: user.onenote_font('{text or ""}')
-font size [<number_small>]: user.onenote_font_size(number_small or 0)
-(bigger | larger): user.onenote_font_size_adjust(1)
-smaller: user.onenote_font_size_adjust(-1)
 
 align left: key(cmd-l)
 align right: key(cmd-r)

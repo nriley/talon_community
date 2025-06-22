@@ -166,12 +166,6 @@ class Actions:
     def onenote_font(font: str = ""):
         """Change the font in OneNote"""
 
-    def onenote_font_size(size: int):
-        """Change the font size in OneNote (or edit it, if size is 0)"""
-
-    def onenote_font_size_adjust(offset: int):
-        """Adjust the font size in OneNote"""
-
     def onenote_checkbox():
         """Insert indented checkbox into OneNote"""
 
@@ -601,7 +595,18 @@ class UserActions:
             actions.insert(f"{font}\n")
             actions.key("tab")
 
-    def onenote_font_size(size):
+    def get_font_size():
+        if (combo_box := onenote_font_size_combo_box()) is None:
+            return
+
+        font_size = combo_box.AXValue
+        if not str.isnumeric(font_size):
+            app.notify(body="Unable to determine current font size", title="OneNote")
+            raise RuntimeError("Can't get font size")
+
+        return float(font_size)
+
+    def set_font_size(size=0):
         if (combo_box := onenote_font_size_combo_box()) is None:
             return
 
@@ -610,17 +615,12 @@ class UserActions:
             combo_box.AXValue = str(size)
             actions.key("return")
 
-    def onenote_font_size_adjust(offset):
+    def adjust_font_size(offset):
         if (combo_box := onenote_font_size_combo_box()) is None:
             return
 
-        font_size = combo_box.AXValue
-        if not str.isnumeric(font_size):
-            app.notify(body="Unable to determine current font size", title="OneNote")
-            return
-        font_size = str(int(font_size) + offset)
-
-        combo_box.AXValue = font_size
+        font_size = actions.user.get_font_size()
+        combo_box.AXValue = str(int(font_size) + offset)
         combo_box.AXFocused = True
         actions.key("return")
 
