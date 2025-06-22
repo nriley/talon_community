@@ -53,22 +53,22 @@ class UserActions:
     def citrix_focus_app(app_name):
         for husk in ui.apps(bundle="com.citrix.ctxapphusk"):
             husk_name = Path(husk.exe).parents[2].stem
-            if app_name.startswith(husk_name):
-                actions.user.switcher_save_mouse_pos()
-                husk.focus()
-                for attempt in range(10):
-                    actions.sleep("10ms")
-                    active_app = ui.active_app()
-                    if active_app.bundle == "com.citrix.receiver.icaviewer.mac":
-                        break
-                else:
-                    raise ("Timed out waiting to focus Citrix Viewer")
-                    return False
-                actions.user.switcher_restore_mouse_pos(ui.active_app())
-        else:
-            return False
+            if not app_name.startswith(husk_name):
+                continue
+            actions.user.switcher_save_mouse_pos()
+            husk.focus()
+            for attempt in range(10):
+                actions.sleep("10ms")
+                active_app = ui.active_app()
+                if active_app.bundle == "com.citrix.receiver.icaviewer.mac":
+                    break
+            else:
+                raise ("Timed out waiting to focus Citrix Viewer")
+                return False
+            actions.user.switcher_restore_mouse_pos(ui.active_app())
+            return True
 
-        return True
+        return False
 
     def citrix_launch_or_focus(favorite):
         if actions.user.citrix_focus_app(favorite):
