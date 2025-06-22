@@ -2,6 +2,7 @@
 app: vscode
 -
 tag(): user.find_and_replace
+tag(): user.font_size
 tag(): user.line_commands
 tag(): user.multiple_cursors
 tag(): user.splits

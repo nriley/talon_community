@@ -465,3 +465,20 @@ class UserActions:
 
     def insert_snippet(body: str):
         actions.user.run_rpc_command("editor.action.insertSnippet", {"snippet": body})
+
+    # font_size.py support begin
+    def get_font_size():
+        return actions.user.run_rpc_command_get("andreas.getSetting", "editor.fontSize")
+
+    def set_font_size(size=0):
+        if not size:
+            actions.user.vscode_and_wait("workbench.action.openSettings2")
+            actions.user.vscode_and_wait("settings.action.search")
+            actions.insert("editor.fontSize")
+            return
+
+        actions.user.run_rpc_command_and_wait(
+            "andreas.setSetting", "editor.fontSize", size
+        )
+
+    # font_size.py support end
