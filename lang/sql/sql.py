@@ -48,8 +48,5 @@ class UserActions:
             substitutions["0"] = selection
         actions.user.insert_snippet_by_name("functionCall", substitutions)
 
-    def code_state_case():
-        actions.auto_insert("CASE ")
-
     def code_state_else():
         actions.user.insert_between("ELSE ", " END")

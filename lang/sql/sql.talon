@@ -23,7 +23,7 @@ inner join using: user.insert_between("INNER JOIN ", " USING ")
 left outer join: user.insert_between("LEFT OUTER JOIN ", " ON ")
 right outer join: user.insert_between("RIGHT OUTER JOIN ", " ON ")
 
-when: user.insert_between("WHEN ", " THEN ")
+then: "THEN "
 exists: user.insert_between("EXISTS (", ")")
 end: "END"
 
