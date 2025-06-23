@@ -597,7 +597,8 @@ class UserActions:
 
     def get_font_size():
         if (combo_box := onenote_font_size_combo_box()) is None:
-            return
+            app.notify(body="Unable to find font size combo box", title="OneNote")
+            raise RuntimeError("Can't find font size combo box")
 
         font_size = combo_box.AXValue
         if not str.isnumeric(font_size):
