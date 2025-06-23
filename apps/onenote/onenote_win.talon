@@ -1,5 +1,7 @@
 app: onenote_win
 -
+tag(): user.font_size
+
 refresh: key(ctrl-pagedown ctrl-pageup)
 
 bold: key(ctrl-b)
@@ -11,10 +13,6 @@ strike through: key(ctrl--)
 highlight:
     user.office_win_ribbon_select("hi")
     key(enter)
-
-font size [<number_small>]: user.onenote_font_size(number_small or 0)
-(bigger | larger): key(ctrl-shift->)
-smaller: key(ctrl-shift-<)
 
 align left: key(ctrl-l)
 align right: key(ctrl-r)

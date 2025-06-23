@@ -1,4 +1,4 @@
-from talon import Context, Module, actions
+from talon import Context, Module, actions, app
 
 mod = Module()
 ctx = Context()
@@ -31,12 +31,28 @@ class EditActions:
 
 @ctx.action_class("user")
 class UserActions:
-    def onenote_font_size(size):
+    def get_font_size():
+        actions.user.office_win_ribbon_select("hfs")
+        font_size = actions.edit.selected_text()
+        
+        if not str.isnumeric(font_size):
+            app.notify(body="Unable to determine current font size", title="OneNote")
+            raise RuntimeError("Can't get font size")
+        
+        return float(font_size)
+
+    def set_font_size(size=0):
         actions.user.office_win_ribbon_select("hfs")
         if size:
             actions.sleep("20ms")
             actions.insert(f"{size}")
             actions.key("enter esc")
+
+    def adjust_font_size(offset):
+        if offset > 0:
+            actions.key(f"ctrl-shift->:{offset}")
+        else:
+            actions.key(f"ctrl-shift-<:{-offset}")
 
     def onenote_go_progress():
         actions.key("ctrl-g home enter tab:3 home enter esc")
