@@ -284,7 +284,8 @@ replace here:
     user.replace("")
     key(cmd-alt-l)
 
-hover show: user.vscode("editor.action.showHover")
+hover: user.vscode("editor.action.showHover")
+hover focus: user.vscode("editor.action.showDefinitionPreviewHover")
 
 join lines: user.vscode("editor.action.joinLines")
 
