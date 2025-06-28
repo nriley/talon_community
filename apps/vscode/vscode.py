@@ -482,3 +482,7 @@ class UserActions:
         )
 
     # font_size.py support end
+
+    def move_cursor_to_next_snippet_stop():
+        actions.user.vscode("jumpToNextSnippetPlaceholder")
+
