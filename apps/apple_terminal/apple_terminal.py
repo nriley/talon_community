@@ -60,6 +60,16 @@ class Actions:
                     w for w in terminal.windows() if w.id == terminal_window_id
                 ).focus()
                 ctrl.key_press(key="k", super=True)
+                for attempt in range(10):
+                    window_contents = terminal_window.contents().rstrip("\n")
+                    if window_contents == "":
+                        break
+                    actions.sleep(0.05)
+                else:
+                    app.notify(
+                        "Terminal",
+                        f"Couldn’t clear contents of window with profile “{settings_set}”",
+                    )
                 active_window.focus()
                 return
 
