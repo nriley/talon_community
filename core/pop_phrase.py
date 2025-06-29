@@ -22,6 +22,7 @@ auto_pop_that_phrases = [
     "step over",
     "hunt",
     "follow",
+    "tab close",
 ]
 
 
