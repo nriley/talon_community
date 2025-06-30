@@ -1,0 +1,8 @@
+list: user.temperature
+-
+
+celsius: "°C"
+centigrade: "°C"
+fahrenheit: "°F"
+kelvin: " K"
+degrees: "°"

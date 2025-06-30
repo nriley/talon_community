@@ -32,6 +32,7 @@ mod.list(
     "currency",
     desc="Currency types (e.g., dollars, euros) that can be used within prose",
 )
+mod.list("temperature", "Temperature units that can be used within prose")
 
 ctx = Context()
 ctx_dragon = Context()
@@ -82,6 +83,11 @@ def prose_currency(m) -> str:
     if hasattr(m, "number_string_2"):
         s += "." + m.number_string_2
     return s
+
+
+@mod.capture(rule="<user.number_string> [degrees] {user.temperature}")
+def prose_temperature(m) -> str:
+    return m.number_string + m.temperature
 
 
 @mod.capture(rule="am|pm")
@@ -148,6 +154,7 @@ def text(m) -> str:
         "| {user.punctuation}"
         "| {user.prose_snippets}"
         "| <user.prose_currency>"
+        "| <user.prose_temperature>"
         "| <user.prose_time>"
         "| <user.number_prose_prefixed>"
         "| <user.prose_percent>"
@@ -171,6 +178,7 @@ def prose(m) -> str:
         "| {user.punctuation}"
         "| {user.prose_snippets}"
         "| <user.prose_currency>"
+        "| <user.prose_temperature>"
         "| <user.prose_time>"
         "| <user.number_prose_prefixed>"
         "| <user.prose_percent>"
