@@ -1,6 +1,7 @@
 Spoken form, App name/.exe (or list an app name/.exe by itself on a line to exclude it)
 Application Frame Host
 Citrix HDX Engine
+Citrix Workspace
 code, Code.exe
 command, cmd.exe
 Console Window Host
@@ -9,7 +10,9 @@ epic studio, epicstudio.exe
 explorer, explorer.exe
 fluency direct, fluencydirect.exe
 Host Process for Windows Services
+Hyperspace, hyperdrive.exe
 merge, sublime_merge.exe
+Microsoft.CmdPal.UI
 Microsoft Edge WebView2
 help, Microsoft Help and Support
 one note, onenote.exe
