@@ -3,6 +3,7 @@ from talon import Context, Module, actions, settings, ui
 ctx = Context()
 mod = Module()
 ctx.matches = r"""
+os: windows
 app: windows_power_shell
 app: windows_terminal
 and win.title: /PowerShell/

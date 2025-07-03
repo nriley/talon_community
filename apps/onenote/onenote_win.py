@@ -4,6 +4,7 @@ mod = Module()
 ctx = Context()
 
 ctx.matches = r"""
+os: windows
 app: onenote_win
 """
 
