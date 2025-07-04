@@ -98,9 +98,26 @@ class Actions:
 @ctx.action_class("user")
 class UserActions:
     def office_mac_document_window():
-        return ui.active_app().children.find_one(
-            AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
-        )
+        active_app = ui.active_app()
+        try:
+            for attempt in range(10):
+                try:
+                    window = active_app.children.find_one(
+                        AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
+                    )
+                except AttributeError:
+                    # XXX Microsoft Word sometimes returns an invalid/empty element
+                    actions.sleep("10ms")
+                else:
+                    return window
+            else:
+                raise Exception(
+                    f"Can't get children of {active_app.name} after {attempt} tries"
+                )
+        except Exception as e:
+            app.notify(body="Can't find document window", title=ui.active_app().name)
+            e.add_note("Unable to find a document window")
+            raise
 
     def office_mac_ribbon_activate_tab(tab_index, tab_name):
         ribbon = document_window_tab_group()
