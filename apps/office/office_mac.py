@@ -113,7 +113,9 @@ class UserActions:
             if tab.get("AXValue") == 1:
                 break
         else:
-            app.notify(body=f"Could not activate {tab_name} tab", title="OneNote")
+            app.notify(
+                body=f"Could not activate {tab_name} tab", title=ui.active_app().name
+            )
             return None
 
         return ribbon
