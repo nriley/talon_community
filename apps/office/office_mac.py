@@ -105,7 +105,7 @@ class UserActions:
                     window = active_app.children.find_one(
                         AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
                     )
-                except AttributeError:
+                except (AttributeError, ui.UIErr):
                     # XXX Microsoft Word sometimes returns an invalid/empty element
                     actions.sleep("10ms")
                 else:
