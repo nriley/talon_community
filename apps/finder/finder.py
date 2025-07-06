@@ -7,8 +7,9 @@ except ImportError:
 
 import os.path
 
-from talon import Context, actions, app, ui
+from talon import Context, Module, actions, app, ui
 
+mod = Module()
 ctx = Context()
 ctx.matches = r"""
 app: finder
@@ -19,8 +20,17 @@ def finder():
     return ui.apps(bundle="com.apple.finder")[0].appscript()
 
 
+@mod.action_class
+class Actions:
+    def finder_open_trash():
+        """Open the Trash in the Mac Finder"""
+
+
 @ctx.action_class("user")
 class UserActions:
+    def finder_open_trash():
+        finder().trash.open()
+
     def file_manager_open_parent():
         actions.key("cmd-up")
 

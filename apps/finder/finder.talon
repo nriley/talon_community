@@ -27,6 +27,7 @@ gallery view: key(cmd-4)
 
 trash that: key(cmd-backspace)
 empty trash: key(cmd-shift-backspace)
+go trash: user.finder_open_trash()
 
 open that: key(cmd-down)
 move it here: key(cmd-alt-v)
