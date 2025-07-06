@@ -1,0 +1,86 @@
+list: user.python_special_name
+-
+
+# in order of listing in https://docs.python.org/3/reference/datamodel.html
+# last updated for Python 3.13
+# use a space to replace interior _'s
+doc
+qual name: qualname
+dict
+keyword defaults: kwdefaults
+funk: func
+spec
+first line number: firstlineno
+m r o: mro
+in it: init
+dell: del
+string: str
+repper: repr
+less than: lt
+less than or equal to: le
+equal to: eq
+not equal to: ne
+greater than: gt
+greater than or equal to: ge
+bool: bool
+get attr: getattr
+get attribute: getattribute
+set attr: setattr
+dell attr: delattr
+dir
+obj class: objclass
+m r o entries: mro entries
+class cell: classcell
+instance check: instancecheck
+subclass check: subclasscheck
+get item: getitem
+class get item: class getitem
+set item: setitem
+dell item: delitem
+itter: iter
+mull: mul
+mat mull: matmul
+true div: truediv
+floor div: floordiv
+div mod: divmod
+l shift: lshift
+r shift: rshift
+exor: xor
+r add: radd
+r sub: rsub
+r mull: rmul
+r mat mull: rmatmul
+r true div: rtruediv
+r floor div: rfloordiv
+r mod: rmod
+r div mod: rdivmod
+r pow: rpow
+r l shift: rlshift
+r r shift: rrshift
+r and: rand
+r exor: rxor
+r or: ror
+i add: iadd
+i sub: isub
+i mull: imul
+i mat mull: imatmul
+i true div: itruediv
+i floor div: ifloordiv
+i mod: imod
+i div mod: idivmod
+i pow: ipow
+i l shift: ilshift
+i r shift: irshift
+i and: iand
+i exor: ixor
+i or: ior
+neg
+pos
+abs
+trunk: trunc
+seal: ceil
+match args: match args
+a itter: aiter
+a next: anext
+a enter: aenter
+a exit: aexit

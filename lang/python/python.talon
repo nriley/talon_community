@@ -26,7 +26,11 @@ settings():
     user.code_public_variable_formatter = "SNAKE_CASE"
 
 #python-specific grammars
-dunder in it: "__init__"
+dunder <user.python_special_name>:
+    text = user.formatted_text("{python_special_name or ''}", "SNAKE_CASE")
+    "__{text}__"
+dunder: user.insert_between("__", "__")
+
 state (def | deaf | deft): "def "
 state try: "try:\n"
 state except: "except "
