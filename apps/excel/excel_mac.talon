@@ -1,6 +1,7 @@
 app: excel_mac
 -
 tag(): user.find_and_replace
+tag(): user.tabs
 
 save as excel: user.excel_save_as_format("Excel Workbook (.xlsx)")
 

@@ -71,6 +71,15 @@ class AppActions:
     def window_open():
         actions.user.menu_select("Window|New Window")
 
+    def tab_open():
+        actions.key("shift-f11")
+
+    def tab_next():
+        actions.key("ctrl-pagedown")
+
+    def tab_previous():
+        actions.key("ctrl-pageup")
+
 
 @ctx.action_class("edit")
 class EditActions:
