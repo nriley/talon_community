@@ -168,8 +168,8 @@ sig
 sigs
 SlicerDicer
 SmartBlock
-SmartData
-SmartData Element
+smart data: SmartData
+smart data element: SmartData Element
 SmartForm
 SmartGroup
 SmartGroups
