@@ -22,7 +22,12 @@ def excel_column(m) -> str | int:
 
 
 @mod.capture(
-    rule=f"<user.excel_row> | <user.excel_column> | (<user.excel_row> <user.excel_column>) | (<user.excel_column> <user.excel_row>)"
+    rule="""
+        (<user.excel_row> [through <user.excel_row>]) |
+        (<user.excel_column> [through (<user.excel_column> | <user.number_string>)]) |
+        (<user.excel_row> <user.excel_column> [through <user.excel_row> <user.excel_column>]) |
+        (<user.excel_column> <user.excel_row> [through <user.excel_column> <user.excel_row>])
+    """
 )
 def excel_reference(m) -> str:
     R1C1 = applescript.run(
@@ -31,21 +36,33 @@ def excel_reference(m) -> str:
     R1C1 = R1C1 == "true"
 
     row = getattr(m, "excel_row", "")
+    through_row = getattr(m, "excel_row_2", None)
+
     if column := getattr(m, "excel_column", None):
+        through_column = getattr(
+            m, "excel_column_2", getattr(m, "number_string", column)
+        )
         if isinstance(column, str):
             if R1C1:
                 error = "Excel is configured for R1C1, not A1 reference style"
                 app.notify(body=error, title="Excel")
                 raise ValueError(error)
+
             if row:
+                if through_row:
+                    return f"{column}{row}:{through_column}{through_row}"
                 return f"{column}{row}"
             else:
-                return f"{column}:{column}"
+                return f"{column}:{through_column}"
         if not R1C1:
             error = "Excel is configured for A1, not R1C1 reference style"
             app.notify(body=error, title="Excel")
             raise ValueError(error)
+        if through_column:
+            return f"C{column}:C{through_column}"
         return f"{f'R{row}' if row else ''}C{column}"
+    if through_row:
+        return f"R{row}:R{through_row}" if R1C1 else f"{row}:{through_row}"
     return f"R{row}" if R1C1 else f"{row}:{row}"
 
 
