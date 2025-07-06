@@ -58,9 +58,11 @@ def excel_reference(m) -> str:
             error = "Excel is configured for A1, not R1C1 reference style"
             app.notify(body=error, title="Excel")
             raise ValueError(error)
-        if through_column:
-            return f"C{column}:C{through_column}"
-        return f"{f'R{row}' if row else ''}C{column}"
+        if row:
+            if through_row:
+                return f"R{row}C{column}:R{through_row}C{through_column}"
+            return f"R{row}C{column}"
+        return f"C{column}:C{through_column}"
     if through_row:
         return f"R{row}:R{through_row}" if R1C1 else f"{row}:{through_row}"
     return f"R{row}" if R1C1 else f"{row}:{row}"
