@@ -25,8 +25,6 @@ def excel_column(m) -> str | int:
     rule=f"<user.excel_row> | <user.excel_column> | (<user.excel_row> <user.excel_column>) | (<user.excel_column> <user.excel_row>)"
 )
 def excel_reference(m) -> str:
-    from talon.mac import applescript
-
     R1C1 = applescript.run(
         """tell application id "com.microsoft.Excel" to get (reference style is R1C1)"""
     )
