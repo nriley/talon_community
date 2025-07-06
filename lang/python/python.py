@@ -179,6 +179,17 @@ def python_generic_type(m) -> str:
 
 # End of unstable section
 
+mod.list(
+    "python_special_name",
+    desc="python special attribute/method names (minus the __s) with non-word spellings",
+)
+
+
+@mod.capture(rule=r"<user.text>|{user.python_special_name}")
+def python_special_name(m) -> str:
+    return getattr(m, "text", getattr(m, "python_special_name", None))
+
+
 operators = Operators(
     # code_operators_array
     SUBSCRIPT=create_described_insert_between("[", "]"),
