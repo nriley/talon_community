@@ -9,6 +9,48 @@ app: excel_mac
 """
 
 
+@mod.capture(rule="[row] <user.number_string>")
+def excel_row(m) -> int:
+    return int(m.number_string)
+
+
+@mod.capture(rule="(column <user.number_string>)|([column] <user.letter>+)")
+def excel_column(m) -> str | int:
+    if letter := getattr(m, "letter", None):
+        return letter.upper()
+    return int(m.number_string)
+
+
+@mod.capture(
+    rule=f"<user.excel_row> | <user.excel_column> | (<user.excel_row> <user.excel_column>) | (<user.excel_column> <user.excel_row>)"
+)
+def excel_reference(m) -> str:
+    from talon.mac import applescript
+
+    R1C1 = applescript.run(
+        """tell application id "com.microsoft.Excel" to get (reference style is R1C1)"""
+    )
+    R1C1 = R1C1 == "true"
+
+    row = getattr(m, "excel_row", "")
+    if column := getattr(m, "excel_column", None):
+        if isinstance(column, str):
+            if R1C1:
+                error = "Excel is configured for R1C1, not A1 reference style"
+                app.notify(body=error, title="Excel")
+                raise ValueError(error)
+            if row:
+                return f"{column}{row}"
+            else:
+                return f"{column}:{column}"
+        if not R1C1:
+            error = "Excel is configured for A1, not R1C1 reference style"
+            app.notify(body=error, title="Excel")
+            raise ValueError(error)
+        return f"{f'R{row}' if row else ''}C{column}"
+    return f"R{row}" if R1C1 else f"{row}:{row}"
+
+
 @ctx.action_class("app")
 class AppActions:
     def window_open():
