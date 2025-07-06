@@ -3,6 +3,11 @@ app: excel_mac
 tag(): user.find_and_replace
 tag(): user.tabs
 
+settings():
+    # Pasting into a column heading in a PivotTable doesn't work,
+    # but typing does
+    user.paste_to_insert_threshold = -1
+
 save as excel: user.excel_save_as_format("Excel Workbook (.xlsx)")
 
 fill down: key(cmd-d)
