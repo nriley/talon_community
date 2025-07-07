@@ -98,7 +98,7 @@ mail this: user.menu_select("File|Share|Send Workbook")
 
 ribbon: key(cmd-alt-r)
 
-(take | go [to]) <user.excel_reference>:
+(select | take | go [to]) <user.excel_reference>:
     key(ctrl-g tab)
     insert(excel_reference)
     key(return)
