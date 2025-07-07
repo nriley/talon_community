@@ -19,3 +19,12 @@ all cap that: key(ctrl-shift-up)
 all down that: key(ctrl-shift-down)
 title that: key(ctrl-k a)
 norm that: key(ctrl-k n)
+
+bar switch: key(alt-0)
+
+result: user.sqltools_select_pane("Result")
+statistics: user.sqltools_select_pane("Statistics")
+plan: user.sqltools_select_pane("Plan")
+output: user.sqltools_select_pane("Output")
+history: user.sqltools_select_pane("History")
+binds: user.sqltools_select_pane("Binds")
