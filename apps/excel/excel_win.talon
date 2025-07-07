@@ -86,3 +86,8 @@ pivot that: key(alt-n v t)
 mail this: user.office_mail_this()
 
 ribbon: key(ctrl-f1)
+
+(select | take | go [to]) <user.excel_reference>:
+    key(ctrl-g)
+    insert(excel_reference)
+    key(return)
