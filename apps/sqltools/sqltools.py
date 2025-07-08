@@ -61,11 +61,16 @@ class Actions:
     def sqltools_select_pane(name: str):
         """Selects/focuses the specified pane in SQLTools for Oracle"""
 
+    def sqltools_click_button(name: str):
+        """Clicks the specified button in SQLTools for Oracle"""
+
+def sqltools_window():
+    return next(w for w in ui.apps(name="SQLTools")[0].windows() if w.title == "SQLTools")
 
 @ctx_win.action_class("user")
 class UserActions:
     def sqltools_select_pane(name):
-        window = next(w for w in ui.active_app().windows() if w.title == "SQLTools")
+        window = sqltools_window()
         buttons = window.element.find(control_type="RadioButton")
         button_index, button = next((i, b) for i, b in enumerate(buttons) if b.name.startswith(name))
         if button.selectionitem_pattern.is_selected:
@@ -73,3 +78,6 @@ class UserActions:
             buttons[other_index].invoke_pattern.invoke()
         buttons[button_index].invoke_pattern.invoke()
 
+    def sqltools_click_button(name):
+        window = sqltools_window()
+        window.element.find_one(control_type="Button", name=name).invoke_pattern.invoke()

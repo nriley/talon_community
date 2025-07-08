@@ -28,3 +28,5 @@ plan: user.sqltools_select_pane("Plan")
 output: user.sqltools_select_pane("Output")
 history: user.sqltools_select_pane("History")
 binds: user.sqltools_select_pane("Binds")
+
+open: user.sqltools_click_button("Open with default CSV viewer...")
