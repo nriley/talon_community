@@ -1,5 +1,8 @@
 from talon import Context, Module, actions, app, ui
-from talon.mac import applescript
+
+if app.platform == "mac":
+    from appscript import app as appscript_app
+    from appscript import its, k
 
 ctx = Context()
 
@@ -31,25 +34,15 @@ class EditActions:
             actions.insert(text)
 
     def zoom_in():
-        applescript.run(
-            r"""
-			tell application id "com.microsoft.Excel" to set front window's zoom to (front window's zoom) * 1.25
-		"""
-        )
+        window = excel_workbook_window()
+        window.zoom.set(window.zoom() * 1.25)
 
     def zoom_out():
-        applescript.run(
-            r"""
-			tell application id "com.microsoft.Excel" to set front window's zoom to (front window's zoom) / 1.25
-		"""
-        )
+        window = excel_workbook_window()
+        window.zoom.set(window.zoom() / 1.25)
 
     def zoom_reset():
-        applescript.run(
-            r"""
-			tell application id "com.microsoft.Excel" to set front window's zoom to 100
-		"""
-        )
+        excel_workbook_window().zoom.set(100)
 
     def line_insert_down():
         actions.key("enter")
@@ -63,6 +56,18 @@ def excel_window():
     return next(
         window for window in excel_app().windows() if window.doc or window.title
     )
+
+
+def excel_appscript():
+    from . import excel_sdef
+
+    return appscript_app(id="com.microsoft.Excel", terms=excel_sdef)
+
+
+def excel_workbook_window():
+    return excel_appscript().windows[
+        (its.window_type == k.window_type_workbook).AND(its.entry_index == 1)
+    ]()[0]
 
 
 @ctx.action_class("user")
