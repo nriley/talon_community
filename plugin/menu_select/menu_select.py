@@ -160,8 +160,12 @@ def gui_extras(gui: imgui.GUI):
 @ctx_mac.action_class("user")
 class UserActions:
     def contextual_menu_open():
-        if ui.active_menu():
-            return
+        if menu := ui.active_menu():
+            if menu.AXTopLevelUIElement.AXRole != "AXMenuBar":
+                # XXX assuming that you don't try to open a contextual menu
+                # XXX when a menubar menu is open; Talon sometimes gets confused
+                # XXX and the active menu gets "stuck"
+                return
 
         actions.key("menu")
         actions.sleep("50ms")
