@@ -21,6 +21,8 @@ and app.bundle: com.visualstudio.code.oss
 os: mac
 and app.bundle: com.todesktop.230313mzl4w4u92
 os: mac
+and app.bundle: com.exafunction.windsurf
+os: mac
 and app.bundle: co.posit.positron
 """
 mod.apps.vscode = """
