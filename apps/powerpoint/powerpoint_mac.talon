@@ -52,8 +52,8 @@ send backward: key(cmd-alt-shift-b)
 group that: key(cmd-alt-g)
 un group that: key(cmd-alt-shift-g)
 
-copy style: key(cmd-shift-c)
-(pace | pist | paste) style: key(cmd-shift-v)
+(copy | pick up object) style: key(cmd-shift-c)
+(pace | pist | paste | apply object) style: key(cmd-shift-v)
 
 mail this: user.menu_select("File|Share|Send Presentation")
 mail p d f: user.menu_select("File|Share|Send PDF")
