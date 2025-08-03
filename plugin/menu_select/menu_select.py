@@ -172,7 +172,7 @@ class UserActions:
         if ui.active_menu():
             return
 
-        if (element := ui.focused_element()) is not None:
+        if (element := actions.user.focused_element_safe()) is not None:
             try:
                 element.perform("AXShowMenu")
                 actions.sleep("50ms")
