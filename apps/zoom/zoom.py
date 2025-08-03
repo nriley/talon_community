@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from talon import Context, Module, actions, app, ctrl, ui
 from talon.types.size import Size2d
 
@@ -74,12 +76,24 @@ def on_win_close(window):
         actions.user.meeting_ended("zoom", window)
 
 
+# workaround for win_close notifications not being delivered
+@dataclass
+class NoWindow:
+    app: ui.App
+
+
+def on_app_close(app):
+    if is_zoom(app):
+        actions.user.meeting_ended("zoom", NoWindow(app))
+
+
 def on_ready():
     if meeting_window := zoom_meeting_window():
-        actions.user.meeting_started("zoom", meeting_window)
+        actions.user.meeting_ended("zoom", meeting_window)
 
     ui.register("win_open", on_win_open)
     ui.register("win_close", on_win_close)
+    ui.register("app_close", on_app_close)
 
 
 @ctx.action_class("user")
