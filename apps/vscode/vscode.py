@@ -455,12 +455,6 @@ class UserActions:
 
     # line_commands.py support end
 
-    def insert_between(before: str, after: str):
-        # Use paste to avoid issue with docstrings inserting too many "s
-        actions.user.paste(before + after)
-        for _ in after:
-            actions.edit.left()
-
     # comment_block.py
     def code_comment_block():
         actions.user.vscode("editor.action.blockComment")
@@ -487,4 +481,3 @@ class UserActions:
 
     def move_cursor_to_next_snippet_stop():
         actions.user.vscode("jumpToNextSnippetPlaceholder")
-
