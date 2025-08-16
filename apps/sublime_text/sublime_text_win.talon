@@ -35,10 +35,10 @@ slap: key(ctrl-enter)
 definition show: key(f12)
 
 # navigate through multifile search (match) results
-(match|result) next: key(f4 f3)
-(match|result) previous: key(shift-f4 f3)
+(match | result) next: key(f4 f3)
+(match | result) previous: key(shift-f4 f3)
 
-^repository | repo$:
+^ repository | repo $:
     key(ctrl-shift-p)
     insert("Sublime Merge: Open Repository")
     key(enter)
