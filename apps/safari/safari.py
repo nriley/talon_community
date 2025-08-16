@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, ui
+from talon import Context, Module, actions, clip, ui
 
 ctx = Context()
 mod = Module()
@@ -128,3 +128,13 @@ class BrowserActions:
 class AppActions:
     def window_close():
         actions.key("cmd-shift-w")
+
+
+@ctx.action_class("edit")
+class EditActions:
+    def find(text):
+        if text is not None:
+            clip.set_text(text, mode="find")
+            actions.key("cmd-g")
+            return
+        actions.key("cmd-f")
