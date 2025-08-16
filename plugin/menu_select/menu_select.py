@@ -1,5 +1,6 @@
 import os
 import re
+from typing import Optional
 
 from talon import Context, Module, actions, app, ctrl, imgui, ui
 
@@ -139,6 +140,10 @@ class Actions:
     def status_menus_toggle():
         """Display or hide titles of status menus"""
 
+    def active_menu_safe() -> Optional[ui.Element]:
+        """Returns the active menu if there is actually one (working around app/Talon issues)"""
+        return ui.active_menu()
+
 
 STATUS_MENU_TITLES = []
 
@@ -159,24 +164,31 @@ def gui_extras(gui: imgui.GUI):
 
 @ctx_mac.action_class("user")
 class UserActions:
-    def contextual_menu_open():
+    def active_menu_safe():
         if menu := ui.active_menu():
-            if menu.AXTopLevelUIElement.AXRole != "AXMenuBar":
-                # XXX assuming that you don't try to open a contextual menu
-                # XXX when a menubar menu is open; Talon sometimes gets confused
-                # XXX and the active menu gets "stuck"
-                return
+            role = menu.get("AXRole")
+            if role != "AXMenu":
+                # XXX Talon sometimes gets a notification on a non-menu
+                # XXX that gets "stuck" open and may then become invalid
+                # XXX (Safari is commonly responsible)
+                return None
+
+        return menu
+
+    def contextual_menu_open():
+        if actions.user.active_menu_safe() is not None:
+            return
 
         actions.key("menu")
         actions.sleep("50ms")
-        if ui.active_menu():
+        if actions.user.active_menu_safe() is not None:
             return
 
         if (element := actions.user.focused_element_safe()) is not None:
             try:
                 element.perform("AXShowMenu")
                 actions.sleep("50ms")
-                if ui.active_menu():
+                if actions.user.active_menu_safe() is not None:
                     return
             except:
                 pass
@@ -185,7 +197,7 @@ class UserActions:
 
         for attempt in range(10):
             actions.sleep("50ms")
-            if ui.active_menu() is not None:
+            if actions.user.active_menu_safe() is not None:
                 return
 
         raise Exception("Unable to pop up contextual menu")
