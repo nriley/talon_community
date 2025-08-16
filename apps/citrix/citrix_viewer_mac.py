@@ -45,13 +45,6 @@ class UserActions:
                 "Unable to find Citrix Viewer full screen menu item (non-English localization?)"
             )
 
-    def citrix_use_all_displays_in_full_screen():
-        view_menu = citrix_view_menu()
-        use_all_displays_in_full_screen_item = view_menu.children.find_one(
-            AXRole="AXMenuItem", AXTitle="Use All Displays In Full Screen", max_depth=0
-        )
-        use_all_displays_in_full_screen_item.perform("AXPress")
-
 
 @ctx.action_class("app")
 class AppActions:
