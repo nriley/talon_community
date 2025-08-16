@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, clip, ui
+from talon import Context, Module, actions, app, clip, ui
 
 ctx = Context()
 mod = Module()
@@ -41,8 +41,9 @@ class UserActions:
         ):
             full_screen_item.perform("AXPress")
         else:
-            print(
-                "Unable to find Citrix Viewer full screen menu item (non-English localization?)"
+            app.notify(
+                "Unable to find full screen menu item (non-English localization?)",
+                title="Citrix Viewer",
             )
 
 
