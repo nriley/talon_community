@@ -62,3 +62,11 @@ hunt pie [<user.text>]$:
 hunt talon [<user.text>]$:
     text = text or ""
     user.sublime_text_find_in_project_files(text, "*.talon")
+
+hunt talon list [<user.text>]$:
+    text = text or ""
+    user.sublime_text_find_in_project_files(text, "*.talon-list")
+
+hunt snippet [<user.text>]$:
+    text = text or ""
+    user.sublime_text_find_in_project_files(text, "*.snippet")
