@@ -136,5 +136,4 @@ class EditActions:
         if text is not None:
             clip.set_text(text, mode="find")
             actions.key("cmd-g")
-            return
         actions.key("cmd-f")
