@@ -81,3 +81,18 @@ class Actions:
 
     def citrix_use_all_displays_in_full_screen():
         """Toggle using all displays in full screen"""
+
+
+def on_win_focus(window):
+    if window.app.bundle == "com.citrix.receiver.icaviewer.mac" and window.title == "":
+        actions.user.status_add("Citrix Viewer window has no title")
+    else:
+        actions.user.status_remove("Citrix Viewer window has no title")
+
+
+def on_ready():
+    if app.platform == "mac":
+        ui.register("win_focus", on_win_focus)
+
+
+app.register("ready", on_ready)
