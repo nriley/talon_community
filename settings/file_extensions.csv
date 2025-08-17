@@ -1,25 +1,26 @@
 File extension,Name
-.py,dot pie
-.talon,dot talon
-.md,dot mark down
-.sh,dot shell
-.c,dot see
-.cs,dot see sharp
-.com,dot com
-.net,dot net
-.org,dot org
-.us,dot us
-.us,dot U S
-.exe,dot exe
 .bin,dot bin
-.json,dot jason
-.json,dot jay son
+.c,dot see
+.com,dot com
+.cs,dot see sharp
+.csv,dot csv
+.csv,tot csv
+.csv,totssv
+.exe,dot exe
+.html,dot H T M L
 .js,dot J S
 .js,dot java script
-.ts,dot TS
-.csv,dot csv
-.csv,totssv
-.csv,tot csv
-.txt,dot text
+.json,dot jason
+.json,dot jay son
+.md,dot mark down
+.net,dot net
+.org,dot org
 .png,dot ping
-.html,dot H T M L
+.py,dot pie
+.sh,dot shell
+.talon,dot talon
+.talon-list,dot talon list
+.ts,dot TS
+.txt,dot text
+.us,dot U S
+.us,dot us
