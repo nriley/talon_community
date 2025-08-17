@@ -62,9 +62,9 @@ show in projects: key(cmd-alt-r)
 
 # Using plugins from https://github.com/nriley/OmniFocus-Plug-Ins
 
-due today: key(ctrl-cmd-t)
-due tomorrow: key(ctrl-cmd-m)
-due this weekend: key(ctrl-cmd-w)
+(due | do) today: key(ctrl-cmd-t)
+(due | do) tomorrow: key(ctrl-cmd-m)
+(due | do) this weekend: key(ctrl-cmd-w)
 
 postpone [by] <number_small> days: user.omnifocus_postpone(number_small)
 
