@@ -26,12 +26,11 @@ def excel_column(m) -> str | int:
 def excel_reference(m) -> str:
     match app.platform:
         case "mac":
-            from talon.mac import applescript  # XXX convert to appscript
+            from appscript import k
 
-            R1C1 = applescript.run(
-                """tell application id "com.microsoft.Excel" to get (reference style is R1C1)"""
-            )
-            R1C1 = R1C1 == "true"
+            from .excel_mac import excel_appscript
+
+            R1C1 = excel_appscript().reference_style() == k.R1C1
         case "windows":
             import win32com
 
