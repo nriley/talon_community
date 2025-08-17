@@ -15,6 +15,7 @@ class Actions:
     def click_system_tray_button(button_names: str):
         """Click the system tray button with one of the |-separated names"""
 
+
 @ctx.action_class("user")
 class UserActions:
     def click_system_tray_button(button_names: str):
@@ -28,7 +29,9 @@ class UserActions:
             for w in explorer.windows():
                 print(f"\t- {w.cls=}; {w.title=}")
             return
-        pane = taskbar.element.find_one(class_name="Windows.UI.Input.InputSite.WindowClass", max_depth=0)
+        pane = taskbar.element.find_one(
+            class_name="Windows.UI.Input.InputSite.WindowClass", max_depth=0
+        )
         try:
             actions.user.mouse_helper_position_save()
             buttons = pane.find(class_name="SystemTray.NormalButton", max_depth=0)

@@ -24,6 +24,7 @@ class UserActions:
     def window_restore():
         """Restore the frontmost window to its prior size and position"""
 
+
 def cycle_windows(app: ui.App, diff: int):
     """Cycle windows backwards or forwards for the given application"""
     active = app.active_window

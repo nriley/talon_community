@@ -35,11 +35,11 @@ class UserActions:
     def get_font_size():
         actions.user.office_win_ribbon_select("hfs")
         font_size = actions.edit.selected_text()
-        
+
         if not str.isnumeric(font_size):
             app.notify(body="Unable to determine current font size", title="OneNote")
             raise RuntimeError("Can't get font size")
-        
+
         return float(font_size)
 
     def set_font_size(size=0):

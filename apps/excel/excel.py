@@ -2,6 +2,7 @@ from talon import Module, app
 
 mod = Module()
 
+
 @mod.capture(rule="[row] <user.number_string>")
 def excel_row(m) -> int:
     return int(m.number_string)
@@ -25,7 +26,7 @@ def excel_column(m) -> str | int:
 def excel_reference(m) -> str:
     match app.platform:
         case "mac":
-            from talon.mac import applescript # XXX convert to appscript
+            from talon.mac import applescript  # XXX convert to appscript
 
             R1C1 = applescript.run(
                 """tell application id "com.microsoft.Excel" to get (reference style is R1C1)"""
@@ -33,7 +34,8 @@ def excel_reference(m) -> str:
             R1C1 = R1C1 == "true"
         case "windows":
             import win32com
-            R1C1 = win32com.client.Dispatch('Excel.Application').ReferenceStyle
+
+            R1C1 = win32com.client.Dispatch("Excel.Application").ReferenceStyle
             R1C1 = R1C1 == -4150
 
     row = getattr(m, "excel_row", "")
@@ -67,6 +69,7 @@ def excel_reference(m) -> str:
     if through_row:
         return f"R{row}:R{through_row}" if R1C1 else f"{row}:{through_row}"
     return f"R{row}" if R1C1 else f"{row}:{row}"
+
 
 @mod.action_class
 class Actions:

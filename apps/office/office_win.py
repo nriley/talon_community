@@ -41,6 +41,7 @@ app: office_win
 not app: outlook_win
 """
 
+
 @mod.action_class
 class Actions:
     def office_win_ribbon_select(keys: str):
@@ -66,6 +67,7 @@ class UserActions:
         actions.key("alt-" + keys[0])
         actions.sleep("30ms")
         actions.key(" ".join(keys[1:]))
+
 
 @ctx_mail_this.action_class("user")
 class UserActions:

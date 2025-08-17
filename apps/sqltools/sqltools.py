@@ -23,6 +23,7 @@ os: windows
 app: sqltools
 """
 
+
 @ctx.action_class("code")
 class CodeActions:
     def language():
@@ -36,7 +37,7 @@ class EditActions:
 
     def indent_less():
         actions.key("ctrl-u")
-    
+
     # more direct word/line processing - actions are in core,
     # but voice commands are enabled with tag(user.line_commands)
     def delete_line():
@@ -56,6 +57,7 @@ class EditActions:
         actions.insert(str(n))
         actions.key("enter")
 
+
 @mod.action_class
 class Actions:
     def sqltools_select_pane(name: str):
@@ -64,15 +66,21 @@ class Actions:
     def sqltools_click_button(name: str):
         """Clicks the specified button in SQLTools for Oracle"""
 
+
 def sqltools_window():
-    return next(w for w in ui.apps(name="SQLTools")[0].windows() if w.title == "SQLTools")
+    return next(
+        w for w in ui.apps(name="SQLTools")[0].windows() if w.title == "SQLTools"
+    )
+
 
 @ctx_win.action_class("user")
 class UserActions:
     def sqltools_select_pane(name):
         window = sqltools_window()
         buttons = window.element.find(control_type="RadioButton")
-        button_index, button = next((i, b) for i, b in enumerate(buttons) if b.name.startswith(name))
+        button_index, button = next(
+            (i, b) for i, b in enumerate(buttons) if b.name.startswith(name)
+        )
         if button.selectionitem_pattern.is_selected:
             other_index = button_index - 1 if button_index > 0 else 1
             buttons[other_index].invoke_pattern.invoke()
@@ -80,4 +88,6 @@ class UserActions:
 
     def sqltools_click_button(name):
         window = sqltools_window()
-        window.element.find_one(control_type="Button", name=name).invoke_pattern.invoke()
+        window.element.find_one(
+            control_type="Button", name=name
+        ).invoke_pattern.invoke()

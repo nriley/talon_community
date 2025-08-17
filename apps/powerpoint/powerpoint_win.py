@@ -1,9 +1,10 @@
-from talon import actions, Context
+from talon import Context, actions
 
 ctx = Context()
-ctx.matches  = r"""
+ctx.matches = r"""
 app: powerpoint_win
 """
+
 
 def focus_slides():
     actions.key("f6:2 esc")

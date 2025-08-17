@@ -11,6 +11,7 @@ os: windows
 
 FLUENT_SEARCH_EXE = None
 
+
 def wait_for_fluent_search_window():
     for attempt in range(20):
         if ui.active_app().name == "FluentSearch":
@@ -34,7 +35,7 @@ class Actions:
 class UserActions:
     def fluent_search(text: str):
         global FLUENT_SEARCH_EXE
-        
+
         apps = ui.apps(name="FluentSearch")
         if len(apps) == 0:
             if FLUENT_SEARCH_EXE is not None:

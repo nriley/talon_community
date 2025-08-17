@@ -9,14 +9,10 @@ junk: key(alt-h j b)
 not junk: key(ctrl-alt-j)
 download: key(ctrl-shift-w p)
 
-accept: 
-    key(shift-f10 c c enter)
-tentative:
-    key(shift-f10 n enter)
-decline: 
-    key(shift-f10 e enter)
-calendar: 
-    key(shift-f10 l enter)
+accept: key(shift-f10 c c enter)
+tentative: key(shift-f10 n enter)
+decline: key(shift-f10 e enter)
+calendar: key(shift-f10 l enter)
 
 mark [as] read: key(ctrl-q)
 mark [as] unread: key(ctrl-u)
