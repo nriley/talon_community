@@ -1,0 +1,17 @@
+list: user.code_keyword_unprefixed
+code.language: sql
+-
+
+select: "SELECT "
+distinct: "DISTINCT "
+from: "FROM "
+select star from: "SELECT *\nFROM "
+where: "WHERE "
+order by: "ORDER BY "
+group by: "GROUP BY "
+having: "HAVING "
+descending: " DESC"
+ascending: " ASC"
+dot i d: ".id"
+then: "THEN "
+end: "END"

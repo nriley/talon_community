@@ -1,31 +1,19 @@
 code.language: sql
 -
-tag(): user.code_operators_math
-tag(): user.code_comment_line
 tag(): user.code_comment_block_c_like
+tag(): user.code_comment_line
 tag(): user.code_data_null
 tag(): user.code_functions_common
 tag(): user.code_imperative
+tag(): user.code_keywords
+tag(): user.code_operators_math
 
-select: "SELECT "
-distinct: "DISTINCT "
-from: "FROM "
-select star from: "SELECT *\nFROM "
-where: "WHERE "
-order by: "ORDER BY "
-group by: "GROUP BY "
-having: "HAVING "
-descending: " DESC"
-ascending: " ASC"
-dot i d: ".id"
 inner join: user.insert_between("INNER JOIN ", " ON ")
 inner join using: user.insert_between("INNER JOIN ", " USING ")
 left outer join: user.insert_between("LEFT OUTER JOIN ", " ON ")
 right outer join: user.insert_between("RIGHT OUTER JOIN ", " ON ")
 
-then: "THEN "
 exists: user.insert_between("EXISTS (", ")")
-end: "END"
 
 with: user.insert_snippet_by_name("withStatement")
 
