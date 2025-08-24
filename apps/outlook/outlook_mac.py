@@ -212,6 +212,22 @@ class UserActions:
 
         raise Exception("Unable to focus Outlook message body")
 
+    def outlook_react():
+        actions.key("cmd-ctrl-r")
+        outlook = outlook_app()
+        for attempt in range(10):
+            windows = outlook.element.children.find(
+                AXRole="AXWindow", AXTitle="", AXSubrole="AXUnknown", max_depth=0
+            )
+            if len(windows) == 1:
+                window = windows[0]
+                break
+
+            actions.sleep("10ms")
+
+        button = window.AXSections[0]["SectionObject"]
+        ctrl.mouse_move(*button.AXFrame.center)
+
 
 @mod.action_class
 class Actions:
@@ -235,3 +251,6 @@ class Actions:
 
     def outlook_download_images():
         """Download images in Outlook"""
+
+    def outlook_react():
+        """React to the current message in Outlook"""

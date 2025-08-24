@@ -29,6 +29,7 @@ move to [<user.text>]:
     key(cmd-shift-m)
     insert(user.text or "")
 
+react: user.outlook_react()
 reply: key(cmd-r)
 reply all: key(cmd-shift-r)
 forward: key(cmd-j)
