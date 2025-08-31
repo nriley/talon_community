@@ -87,9 +87,6 @@ class EditActions:
         actions.insert(text)
 
 
-mod.list("onenote_notebooks", desc="Open OneNote notebooks")
-mod.list("onenote_sections", desc="Sections in the open OneNote notebook")
-mod.list("onenote_pages", desc="Pages in the open OneNote section")
 mod.list("onenote_disclose", desc="OneNote disclosure actions")
 
 ctx.lists["user.onenote_disclose"] = {
@@ -97,49 +94,31 @@ ctx.lists["user.onenote_disclose"] = {
 }
 
 
-@mod.capture(rule="{user.onenote_notebooks}")
-def onenote_notebook(m) -> ui.Element:
-    # print(f"onenote_notebook {m=}")
-    if notebook := ONENOTE_NOTEBOOKS.get(m.onenote_notebooks):
-        return notebook.AXParent
-
-    for name, notebook in ONENOTE_NOTEBOOKS.items():
-        if m.onenote_notebooks in name:
-            return notebook.AXParent
-
-    message = f"No unique notebook title containing “{m.onenote_notebooks}”"
-    app.notify(body=message, title="OneNote")
-    raise Exception(message)
-
-
-@mod.capture(rule="{user.onenote_sections}")
-def onenote_section(m) -> ui.Element:
-    # print(f"onenote_section {m=}")
-    if section := ONENOTE_SECTIONS.get(m.onenote_sections):
-        return section.AXParent
-
-    for name, section in ONENOTE_SECTIONS.items():
-        if m.onenote_sections in name:
-            return section.AXParent
-
-    message = f"No unique section title containing “{m.onenote_sections}”"
-    app.notify(body=message, title="OneNote")
-    raise Exception(message)
+def on_ready():
+    actions.user.ui_dynamic_list_and_capture(
+        "notebook title",
+        ctx,
+        mod.list("onenote_notebook", desc="Open OneNote notebooks"),
+        lambda: onenote_navigation_list(NavigationLevel.NOTEBOOKS),
+        lambda e: e.AXParent,
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "section title",
+        ctx,
+        mod.list("onenote_section", desc="Sections in the open OneNote notebook"),
+        lambda: onenote_navigation_list(NavigationLevel.SECTIONS),
+        lambda e: e.AXParent,
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "notebook title",
+        ctx,
+        mod.list("onenote_page", desc="Pages in the open OneNote section"),
+        lambda: onenote_navigation_list(NavigationLevel.PAGES),
+        lambda e: e.AXParent.AXParent.AXParent,
+    )
 
 
-@mod.capture(rule="{user.onenote_pages}")
-def onenote_page(m) -> ui.Element:
-    # print(f"onenote_page {m=}")
-    if page := ONENOTE_PAGES.get(m.onenote_pages):
-        return page.AXParent.AXParent.AXParent
-
-    for name, page in ONENOTE_PAGES.items():
-        if m.onenote_pages in name:
-            return page.AXParent.AXParent.AXParent
-
-    message = f"No unique page title containing “{m.onenote_pages}”"
-    app.notify(body=message, title="OneNote")
-    raise Exception(message)
+app.register("ready", on_ready)
 
 
 @mod.capture(rule="<number_small>")
@@ -321,20 +300,6 @@ def onenote_notebooks_outline(navigation):
         raise Exception(message)
 
 
-RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
-
-
-def spoken_forms(s):
-    # XXX use user.vocabulary, or may never match
-    if RE_NON_ALPHA_OR_SPACE.search(s):
-        spoken_forms = "\n".join(
-            actions.user.create_spoken_forms(s, generate_subsequences=False)
-        )
-        return f"""{spoken_forms}
-{RE_NON_ALPHA_OR_SPACE.sub(" ", s.lower())}"""
-    return s.lower()
-
-
 def onenote_navigation_list(level):
     navigation = onenote_show_sidebar(SidebarTab.NAVIGATION)
 
@@ -349,41 +314,12 @@ def onenote_navigation_list(level):
 
     if level == NavigationLevel.PAGES:
         labels = reversed(outline.children.find(AXRole="AXStaticText"))
-        pages = {spoken_forms(label.AXValue): label for label in labels}
+        pages = {label.AXValue: label for label in labels}
         return pages
 
     cells = reversed(outline.children.find(AXRole="AXCell"))
-    notebooks_or_sections = {spoken_forms(cell.AXDescription): cell for cell in cells}
+    notebooks_or_sections = {cell.AXDescription: cell for cell in cells}
     return notebooks_or_sections
-
-
-ONENOTE_NOTEBOOKS = {}
-ONENOTE_SECTIONS = {}
-ONENOTE_PAGES = {}
-
-
-@ctx.dynamic_list(f"user.onenote_notebooks")
-def onenote_notebooks(phrase):
-    global ONENOTE_NOTEBOOKS
-    # print(f"notebook {phrase=}")
-    ONENOTE_NOTEBOOKS = onenote_navigation_list(NavigationLevel.NOTEBOOKS)
-    return "\n".join(ONENOTE_NOTEBOOKS.keys())
-
-
-@ctx.dynamic_list(f"user.onenote_sections")
-def onenote_sections(phrase):
-    global ONENOTE_SECTIONS
-    # print(f"section {phrase=}")
-    ONENOTE_SECTIONS = onenote_navigation_list(NavigationLevel.SECTIONS)
-    return "\n".join(ONENOTE_SECTIONS.keys())
-
-
-@ctx.dynamic_list(f"user.onenote_pages")
-def onenote_pages(phrase):
-    global ONENOTE_PAGES
-    # print(f"page {phrase=}")
-    ONENOTE_PAGES = onenote_navigation_list(NavigationLevel.PAGES)
-    return "\n".join(ONENOTE_PAGES.keys())
 
 
 @ctx.action_class("user")
