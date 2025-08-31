@@ -254,3 +254,33 @@ class Actions:
 
     def outlook_react():
         """React to the current message in Outlook"""
+
+
+def outlook_recent_folder_list():
+    outlook = outlook_app()
+    menu_bar = outlook.element.children.find_one(AXRole="AXMenuBar", max_depth=0)
+    message_menu = menu_bar.children.find_one(
+        AXRole="AXMenuBarItem", AXTitle="Message", max_depth=0
+    ).children[0]
+    move_submenu = message_menu.children.find_one(
+        AXRole="AXMenuItem",
+        AXIdentifier="moveRecordsToFolderValidation:",
+        max_depth=0,
+    ).children[0]
+    folder_items = move_submenu.children.find(
+        AXRole="AXMenuItem", AXIdentifier="moveRecordsToFolder:", max_depth=0
+    )
+    return {item.AXTitle: item for item in folder_items}
+
+
+def on_ready():
+    actions.user.ui_dynamic_list_and_capture(
+        "recently used folder",
+        ctx,
+        mod.list("outlook_recent_folder", desc="Recent Outlook folders"),
+        outlook_recent_folder_list,
+        lambda e: e.AXTitle,
+    )
+
+
+app.register("ready", on_ready)

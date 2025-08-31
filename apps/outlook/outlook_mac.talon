@@ -25,9 +25,14 @@ send [this] message: key(cmd-enter)
 
 move: key(cmd-shift-m)
 
-move to [<user.text>]:
+move to <user.outlook_recent_folder>:
     key(cmd-shift-m)
-    insert(user.text or "")
+    sleep(0.1)
+    user.paste(outlook_recent_folder)
+
+move to <user.text>:
+    key(cmd-shift-m)
+    insert(user.text)
 
 react: user.outlook_react()
 reply: key(cmd-r)
@@ -56,6 +61,11 @@ expand:
     user.outlook_focus_message_list()
     key(right)
 message: user.outlook_focus_message_body()
+
+go folder <user.outlook_recent_folder>:
+    user.outlook_focus_folder_list()
+    insert('{user.formatted_text(outlook_recent_folder, "ALL_LOWERCASE,NO_SPACES")}')
+    user.outlook_focus_message_list()
 
 go folder <user.text>:
     user.outlook_focus_folder_list()
