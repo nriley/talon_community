@@ -46,6 +46,14 @@ class UserActions:
                 title="Citrix Viewer",
             )
 
+    def windows_key(key):
+        if "win-" in key or "super-" in key:
+            raise Exception(
+                "Unable to synthesize Windows key combinations on macOS Citrix Viewer"
+            )
+        key = key.replace("alt", "cmd")
+        actions.key(key)
+
 
 @ctx.action_class("app")
 class AppActions:
@@ -81,6 +89,13 @@ class Actions:
 
     def citrix_use_all_displays_in_full_screen():
         """Toggle using all displays in full screen"""
+
+    def windows_key(key: str):
+        """Press one or more keys by name, space-separated, replacing Windows by Mac equivalents if needed"""
+        if app.platform == "windows":
+            actions.key(key)
+
+        raise Exception("Unexpected use of user.windows_key outside Citrix Viewer")
 
 
 def on_win_focus(window):
