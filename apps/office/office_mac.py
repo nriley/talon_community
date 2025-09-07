@@ -36,11 +36,18 @@ app: office_mac
 
 
 def document_window_toolbar_group():
-    return (
-        actions.user.office_mac_document_window()
-        .children.find_one(AXRole="AXToolbar", max_depth=0)
-        .children.find_one(AXRole="AXGroup", max_depth=0)
-    )
+    window = actions.user.office_mac_document_window()
+    try:
+        toolbar = window.children.find_one(AXRole="AXToolbar", max_depth=0)
+    except ui.UIErr:
+        # full screen includes an additional layer
+        group = next(
+            e
+            for e in window.children.find(AXRole="AXGroup", max_depth=0)
+            if not hasattr(e, "AXDescription")
+        )
+        toolbar = group.children.find_one(AXRole="AXToolbar", max_depth=0)
+    return toolbar.children.find_one(AXRole="AXGroup", max_depth=0)
 
 
 def document_window_tab_group():
