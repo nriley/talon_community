@@ -154,7 +154,7 @@ def gui_operators(gui: imgui.GUI):
     if operators_text is None:
         gui.text("Help: Operators (1/1)")
         gui.line()
-        gui.text("There is no active programming language when you opened this menu")
+        gui.text("There is no active programming language (code.language)")
         gui.text("or the language does not have operator support.")
     else:
         page_size = settings.get("user.help_max_command_lines_per_page")
