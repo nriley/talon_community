@@ -1,0 +1,12 @@
+list: user.code_keyword_unprefixed
+code.language: m
+-
+
+do: "d "
+kill: "k "
+merge: "m "
+new: "n "
+quit: "QUIT"
+# useful when "quit" is already defined
+quit when: "QUIT:"
+write: "w "

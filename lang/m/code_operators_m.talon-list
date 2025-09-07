@@ -1,0 +1,9 @@
+list: user.code_operators_m
+code.language: m
+-
+
+follows: STRING_FOLLOWS
+not follows: STRING_NOT_FOLLOWS
+match: STRING_PATTERN_MATCH
+not match: STRING_PATTERN_NOT_MATCH
+cat: STRING_CONCATENATE

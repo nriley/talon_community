@@ -1,0 +1,27 @@
+list: user.code_common_function
+code.language: m
+-
+
+ascii: "$a"
+char: "$c"
+data: "$d"
+extract: "$d"
+find: "$f"
+format number: "$fn"
+get: "$g"
+increment: "$i"
+justify: "$j"
+length: "$l"
+name: "$na"
+next: "$n"
+order: "$o"
+piece: "$p"
+query: "$q"
+query length: "$ql"
+query subscript: "$qs"
+random: "$r"
+reverse: "$re"
+select: "$s"
+stack: "$st"
+text: "$t"
+translate: "$tr"

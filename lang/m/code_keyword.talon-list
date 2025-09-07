@@ -1,0 +1,15 @@
+list: user.code_keyword
+code.language: m
+-
+
+break: b
+close: "c "
+else: "e "
+halt: h
+hang: "h "
+if: "i "
+lock: "l "
+open: "o "
+read: "r "
+use: "u "
+execute: "x "
