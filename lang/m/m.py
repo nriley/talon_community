@@ -16,6 +16,8 @@ mod.list("code_operators_m", desc="List of code operators for M")
 class MOperators(Operators):
     STRING_FOLLOWS: Operator
     STRING_NOT_FOLLOWS: Operator
+    STRING_SORTS_AFTER: Operator
+    STRING_NOT_SORTS_AFTER: Operator
     STRING_PATTERN_MATCH: Operator
     STRING_PATTERN_NOT_MATCH: Operator
     STRING_CONCATENATE: Operator
@@ -53,6 +55,8 @@ operators = MOperators(
     # M operators
     STRING_FOLLOWS="]",
     STRING_NOT_FOLLOWS="']",
+    STRING_SORTS_AFTER="]]",
+    STRING_NOT_SORTS_AFTER="']]",
     STRING_PATTERN_MATCH="?",
     STRING_PATTERN_NOT_MATCH="'?",
     STRING_CONCATENATE="_",

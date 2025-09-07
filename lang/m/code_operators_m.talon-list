@@ -4,6 +4,8 @@ code.language: m
 
 follows: STRING_FOLLOWS
 not follows: STRING_NOT_FOLLOWS
+sorts after: STRING_SORTS_AFTER
+not sorts after: STRING_NOT_SORTS_AFTER
 match: STRING_PATTERN_MATCH
 not match: STRING_PATTERN_NOT_MATCH
 cat: STRING_CONCATENATE
