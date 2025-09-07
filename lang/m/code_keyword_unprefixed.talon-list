@@ -6,7 +6,7 @@ do: "d "
 kill: "k "
 merge: "m "
 new: "n "
-quit: "QUIT"
-# useful when "quit" is already defined
+quit: "q "
+# convention so early exits are more visible
 quit when: "QUIT:"
 write: "w "
