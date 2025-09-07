@@ -70,9 +70,16 @@ def insert_snippet_raw_text(body: str):
     else:
         actions.insert(updated_snippet)
 
-    if stop:
+    if not stop:
+        return
+
+    if stop.rows_up:
         up(stop.rows_up)
         move_to_correct_column(stop)
+    else:
+        # Handle a snippet being inserted in the middle of a line.
+        # This may only help with the first stop, but better than nothing.
+        move_cursor_left(stop.columns_left)
 
 
 def update_stop_information(stops: list[Stop]):
@@ -130,6 +137,7 @@ def is_any_line_from_right_to_left(lines) -> bool:
 
 
 def move_to_correct_column(stop: Stop):
+    """Assumes the snippet is the last text on the line."""
     actions.edit.line_end()
     move_cursor_left(stop.columns_left)
 
@@ -161,7 +169,6 @@ def parse_snippet(body: str):
     stops: list[Stop] = []
 
     for i, line in enumerate(lines):
-
         start = 0
         while match := RE_STOP.search(line, start):
             stop_text = match.group(0)
