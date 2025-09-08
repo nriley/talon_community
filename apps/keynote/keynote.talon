@@ -41,8 +41,5 @@ send backward: key(cmd-alt-shift-b)
 group that: key(cmd-alt-g)
 un group that: key(cmd-alt-shift-g)
 
-copy style: key(cmd-alt-c)
-(pace | pist | paste) style: key(cmd-alt-v)
-
 toolbar: key(cmd-alt-t)
 ruler: key(cmd-r)
