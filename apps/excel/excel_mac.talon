@@ -17,6 +17,13 @@ delete that: key(cmd--)
 
 paste special: key(cmd-ctrl-v)
 
+clear all: user.menu_select("Edit|Clear|All")
+clear (style | formats): user.menu_select("Edit|Clear|Formats")
+clear that: user.menu_select("Edit|Clear|Contents")
+clear comments: user.menu_select("Edit|Clear|Clear Comments and Notes")
+clear hyperlinks: user.menu_select("Edit|Clear|Hyperlinks")
+clear series: user.menu_select("Edit|Clear|Series")
+
 align left: key(cmd-l)
 align center: key(cmd-e)
 align right:
