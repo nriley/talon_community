@@ -35,7 +35,7 @@ trim [to edges]: key(cmd-ctrl-t)
 
 colors: key(cmd-shift-c)
 color reset: key(d)
-color swap: key(x)
+[color] swap: key(x)
 toggle fill: key(F)
 toggle stroke: key(B)
 
