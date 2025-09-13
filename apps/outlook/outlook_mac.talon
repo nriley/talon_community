@@ -8,7 +8,8 @@ archive: user.outlook_archive()
 delete: key(cmd-backspace)
 delete all | empty folder: user.menu_select("Edit|Empty Folder")
 flag: key(ctrl-5)
-unflag: key(cmd-ctrl-')
+unflag: user.menu_select("Message|Flag|Clear Flag")
+# unflag: key(cmd-ctrl-') # does not work reliably
 junk: key(cmd-shift-j)
 not junk: key(cmd-shift-alt-j)
 download:
