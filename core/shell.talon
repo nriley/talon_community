@@ -11,3 +11,4 @@ teammox attach: "tmux attach "
 teammox detach:
     key("ctrl-a")
     key("d")
+assent: "y\n"
