@@ -6,7 +6,7 @@ settings():
 
 archive: user.outlook_archive()
 delete: key(cmd-backspace)
-^delete all | empty folder$: user.menu_select("Edit|Empty Folder")
+delete all | empty folder: user.menu_select("Edit|Empty Folder")
 flag: key(ctrl-5)
 unflag: key(cmd-ctrl-')
 junk: key(cmd-shift-j)
