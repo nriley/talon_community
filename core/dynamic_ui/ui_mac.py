@@ -61,6 +61,12 @@ def active_window_elements(*roles):
                     if title := getattr(element, attr, None):
                         titles.append(title)
                         break
+                else:
+                    if identifier := getattr(element, "AXIdentifier", None):
+                        if not identifier.startswith("_") and not identifier.endswith(
+                            ":"
+                        ):
+                            titles.append(identifier)
 
             if role in ("AXPopUpButton", "AXTextField", "AXComboBox"):
                 for attr in (
@@ -95,7 +101,7 @@ def on_ready():
         "text field in active window",
         ctx,
         mod.list("ui_active_window_field", desc="Text fields in active window"),
-        lambda: active_window_elements("AXTextField", "AXComboBox"),
+        lambda: active_window_elements("AXTextArea", "AXTextField", "AXComboBox"),
         lambda e: e,
     )
 
