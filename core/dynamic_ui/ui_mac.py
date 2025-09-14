@@ -44,6 +44,9 @@ class UserActions:
 
     def ui_element_menu(element):
         element.AXFocused = True
+        if element.AXRole == "AXComboBox":
+            element.children.find_one(AXRole="AXButton", max_depth=0).perform("AXPress")
+            return
         element.perform("AXShowMenu")
 
 
