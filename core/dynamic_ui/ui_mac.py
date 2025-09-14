@@ -33,6 +33,11 @@ class UserActions:
 
     def ui_element_focus(element):
         element.AXFocused = True
+        if not element.AXFocused:
+            previous_position = ctrl.mouse_pos()
+            actions.user.ui_element_hover(element)
+            ctrl.mouse_click()
+            ctrl.mouse_move(*previous_position)
 
     def ui_element_hover(element):
         ctrl.mouse_move(*element.AXFrame.center)
