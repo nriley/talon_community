@@ -1,0 +1,96 @@
+from talon import Context, Module, actions, app, ctrl, ui
+
+mod = Module()
+ctx = Context()
+
+ctx.matches = r"""
+os: mac
+"""
+
+
+@mod.action_class
+class Actions:
+    def ui_element_click(element: ui.Element):
+        """Click on a UI element"""
+
+    def ui_element_focus(element: ui.Element):
+        """Move keyboard focus to a UI element"""
+
+    def ui_element_hover(element: ui.Element):
+        """Move the mouse pointer to a UI element"""
+
+    def ui_element_menu(element: ui.Element):
+        """Show a menu on a UI element"""
+
+
+@ctx.action_class("user")
+class UserActions:
+    def ui_element_click(element):
+        element.perform("AXPress")
+
+    def ui_element_focus(element):
+        element.AXFocused = True
+
+    def ui_element_hover(element):
+        ctrl.mouse_move(*element.AXFrame.center)
+
+    def ui_element_menu(element):
+        element.AXFocused = True
+        element.perform("AXShowMenu")
+
+
+def active_window_elements(*roles):
+    active_window = ui.active_window()
+    element_dict = {}
+    for role in roles:
+        for element in active_window.element.children.find(AXRole=role):
+            titles = []
+            for attr in (
+                "AXTitle",
+                "AXDescription",
+                "AXHelp",
+                "AXRoleDescription",
+            ):
+                if title := getattr(element, attr, None):
+                    titles.append(title)
+                    break
+
+            if role in ("AXTextField", "AXComboBox"):
+                for attr in (
+                    "AXValue",
+                    "AXPlaceholderValue",
+                ):
+                    if title := getattr(element, attr, None):
+                        titles.append(str(title))
+                        break
+
+            for title in titles:
+                element_dict[title] = element
+
+    return element_dict
+
+
+def on_ready():
+    actions.user.ui_dynamic_list_and_capture(
+        "button in active window",
+        ctx,
+        mod.list("ui_active_window_button", desc="Buttons in active window"),
+        lambda: active_window_elements(
+            "AXButton",
+            "AXCheckBox",
+            "AXRadioButton",
+            "AXPopUpButton",
+            "AXDisclosureTriangle",
+        ),
+        lambda e: e,
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "text field in active window",
+        ctx,
+        mod.list("ui_active_window_field", desc="Text fields in active window"),
+        lambda: active_window_elements("AXTextField", "AXComboBox"),
+        lambda e: e,
+    )
+
+
+app.register("ready", on_ready)
