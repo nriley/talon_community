@@ -97,9 +97,11 @@ def on_ready():
         lambda: active_window_elements(
             "AXButton",
             "AXCheckBox",
-            "AXRadioButton",
-            "AXPopUpButton",
+            "AXColorWell",
             "AXDisclosureTriangle",
+            "AXMenuButton",
+            "AXPopUpButton",
+            "AXRadioButton",
         ),
         lambda e: e,
     )
