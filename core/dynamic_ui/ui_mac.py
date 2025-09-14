@@ -1,3 +1,5 @@
+from contextlib import suppress
+
 from talon import Context, Module, actions, app, ctrl, ui
 
 mod = Module()
@@ -40,10 +42,14 @@ class UserActions:
 
 
 def active_window_elements(*roles):
-    active_window = ui.active_window()
+    parent = ui.active_window().element
+    # don't expose the contents of the window to which a sheet is attached
+    with suppress(ui.UIErr):
+        parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
+
     element_dict = {}
     for role in roles:
-        for element in active_window.element.children.find(AXRole=role):
+        for element in parent.children.find(AXRole=role):
             titles = []
             if (
                 role in ("AXPopUpButton", "AXCheckBox", "AXDisclosureTriangle")
