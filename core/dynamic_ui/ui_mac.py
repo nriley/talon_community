@@ -52,7 +52,7 @@ def active_window_elements(*roles):
         for element in parent.children.find(AXRole=role):
             titles = []
             if (
-                role in ("AXPopUpButton", "AXCheckBox", "AXDisclosureTriangle")
+                role != "AXRadioButton"
                 and (title_element := getattr(element, "AXTitleUIElement", None))
                 and (title := getattr(title_element, "AXValue", None))
             ):
