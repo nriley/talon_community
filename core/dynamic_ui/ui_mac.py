@@ -80,7 +80,7 @@ def active_window_elements(*roles):
                     "AXPlaceholderValue",
                 ):
                     if value := getattr(element, attr, None):
-                        titles.append(str(value))
+                        titles.append(str(value) + "\n")
                         break
 
             for title in titles:
