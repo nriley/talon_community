@@ -28,7 +28,8 @@ class Actions:
 @ctx.action_class("user")
 class UserActions:
     def ui_element_click(element):
-        element.perform("AXPress")
+        with suppress(ui.ActionFailed):
+            element.perform("AXPress")
 
     def ui_element_focus(element):
         element.AXFocused = True
