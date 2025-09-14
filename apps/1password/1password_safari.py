@@ -28,8 +28,7 @@ class UserActions:
         autofill = next(
             o
             for o in content.children.find(AXRole="AXWebArea")
-            if o.AXURL.startswith(
-                "safari-web-extension://506D2125-AA38-4102-9097-3F6F2FDDC127"
-            )
+            if o.AXURL.startswith("safari-web-extension://")
+            and "/inline/menu/menu.html" in o.AXURL
         )
         autofill.AXFocused = True
