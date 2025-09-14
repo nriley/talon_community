@@ -43,10 +43,17 @@ class UserActions:
 
 
 def active_window_elements(*roles):
-    parent = ui.active_window().element
-    # don't expose the contents of the window to which a sheet is attached
-    with suppress(ui.UIErr):
-        parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
+    window = ui.active_window()
+    if window.id == -1:
+        # XXX core Talon bug? You get Window(None) instead of None
+        # even though there is a focused window (e.g. sheet in Installer)
+        parent = ui.active_app().element.AXFocusedWindow
+    else:
+        parent = ui.active_window().element
+    if parent.AXRole != "AXSheet":
+        # don't expose the contents of the window to which a sheet is attached
+        with suppress(ui.UIErr):
+            parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
 
     element_dict = {}
     for role in roles:
