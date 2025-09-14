@@ -45,23 +45,29 @@ def active_window_elements(*roles):
     for role in roles:
         for element in active_window.element.children.find(AXRole=role):
             titles = []
-            for attr in (
-                "AXTitle",
-                "AXDescription",
-                "AXHelp",
-                "AXRoleDescription",
+            if (title_element := getattr(element, "AXTitleUIElement", None)) and (
+                title := getattr(title_element, "AXValue", None)
             ):
-                if title := getattr(element, attr, None):
-                    titles.append(title)
-                    break
+                titles.append(title)
+            else:
+                for attr in (
+                    "AXTitle",
+                    "AXDescription",
+                    "AXAttributedDescription",
+                    "AXHelp",
+                    "AXRoleDescription",
+                ):
+                    if title := getattr(element, attr, None):
+                        titles.append(title)
+                        break
 
             if role in ("AXTextField", "AXComboBox"):
                 for attr in (
                     "AXValue",
                     "AXPlaceholderValue",
                 ):
-                    if title := getattr(element, attr, None):
-                        titles.append(str(title))
+                    if value := getattr(element, attr, None):
+                        titles.append(str(value))
                         break
 
             for title in titles:
