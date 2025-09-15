@@ -106,6 +106,7 @@ def fd_recording_control():
         return None
 
     if FD_RECORDING_CONTROL is None:
+        # XXX COM has no timeouts and sometimes this hangs - run in thread?
         fdas = FDLINK_APPLICATION.Connect()
         if fdas is None:
             return None
