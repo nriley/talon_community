@@ -4,6 +4,7 @@ app: citrix_viewer_mac
 settings():
     # keys get dropped frequently, particularly during initial login
     insert_wait = 4
+    key_wait = 6
     # bridged clipboard isn't that fast or reliable
     user.paste_to_insert_threshold = -1
 
