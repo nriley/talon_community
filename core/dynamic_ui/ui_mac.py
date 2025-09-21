@@ -65,7 +65,10 @@ def active_window_elements(*roles):
 
     element_dict = {}
     for role in roles:
-        for element in parent.children.find(AXRole=role):
+        # Some apps (e.g., Excel's Create Table dialog) have loops in their
+        # accessibility hierarchy; pick a large maximum depth to avoid
+        # searching forever and hopefully not miss anything important
+        for element in parent.children.find(AXRole=role, max_depth=50):
             titles = []
             if (
                 role != "AXRadioButton"
