@@ -21,6 +21,13 @@ def spoken_forms(s):
     return s.lower()
 
 
+def top_left(element):
+    if frame := getattr(element, "AXFrame", None):
+        return (frame.top, frame.left)
+    else:
+        return (0, 0)
+
+
 @mod.action_class
 class Actions:
     def ui_dynamic_list_and_capture(
@@ -45,6 +52,14 @@ class Actions:
         @ctx.dynamic_list(list_path)
         def ui_list(phrase):
             nonlocal LIST
+
+            if not phrase:
+                elements = [
+                    (*top_left(element), name)
+                    for (name, element) in list_generator().items()
+                ]
+                elements.sort()
+                return [name for top, left, name in elements]
 
             LIST = {
                 spoken_forms(name): element

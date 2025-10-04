@@ -10,9 +10,13 @@ button hover <user.ui_active_window_button>:
 button menu <user.ui_active_window_button>:
     user.ui_element_menu(ui_active_window_button)
 
+button list: user.help_list("user.ui_active_window_button")
+
 field <user.ui_active_window_field>: user.ui_element_focus(ui_active_window_field)
 
 field hover <user.ui_active_window_field>:
     user.ui_element_hover(ui_active_window_field)
 
 field menu <user.ui_active_window_field>: user.ui_element_menu(ui_active_window_field)
+
+field list: user.help_list("user.ui_active_window_field")
