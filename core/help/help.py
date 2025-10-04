@@ -7,6 +7,7 @@ from textwrap import wrap
 from typing import Any, Iterable, Optional, Tuple
 
 from talon import Context, Module, actions, imgui, registry, settings
+from talon.scripting import types
 
 mod = Module()
 mod.list("help_contexts", desc="list of available contexts")
@@ -57,6 +58,8 @@ live_update = True
 show_enabled_contexts_only = False
 
 selected_list = None
+cached_list = None
+cached_list_contents = None
 current_list_page = 1
 
 
@@ -461,6 +464,8 @@ def reset():
     global show_enabled_contexts_only
     global display_name_to_context_name_map
     global selected_list
+    global cached_list
+    global cached_list_contents
     global current_list_page
 
     current_context_page = 1
@@ -471,6 +476,8 @@ def reset():
     show_enabled_contexts_only = False
     display_name_to_context_name_map = {}
     selected_list = None
+    cached_list = None
+    cached_list_contents = {}
     current_list_page = 1
 
 
@@ -635,9 +642,22 @@ def paginate_list(data, SIZE=None):
 def draw_list_commands(gui: imgui.GUI):
     global selected_list
     global total_page_count
-    global selected_context_page
+    global cached_list
+    global cached_list_contents
 
     talon_list = actions.user.talon_get_active_registry_list(selected_list)
+    if isinstance(talon_list, types.DynamicList):
+        if selected_list == cached_list and cached_list_contents is not None:
+            talon_list = cached_list_contents
+        else:
+            talon_list = talon_list([])
+            if isinstance(talon_list, str):
+                talon_list = {c: "" for c in talon_list.splitlines()}
+            elif isinstance(talon_list, list):
+                talon_list = {c: "" for c in talon_list}
+            cached_list = selected_list
+            cached_list_contents = talon_list
+
     # numpages = math.ceil(len(talon_list) / SIZE)
 
     pages_list = []
@@ -676,7 +696,10 @@ def gui_list_help(gui: imgui.GUI):
 
     if len(pages_list) > 0:
         for key, value in pages_list[current_list_page - 1].items():
-            gui.text(f"{value}: {key}")
+            if value:
+                gui.text(f"{value}: {key}")
+            else:
+                gui.text(key)
 
     gui.spacer()
 
@@ -867,12 +890,18 @@ class Actions:
         """Refreshes the help"""
         global show_enabled_contexts_only
         global selected_context
+        global cached_list
+        global cached_list_contents
 
         if gui_context_help.showing:
             if selected_context is None:
                 refresh_context_command_map(show_enabled_contexts_only)
             else:
                 update_active_contexts_cache(registry.last_active_contexts)
+        elif gui_list_help.showing:
+            if cached_list is not None:
+                cached_list = None
+                cached_list_contents = {}
 
     def help_hide():
         """Hides the help"""
