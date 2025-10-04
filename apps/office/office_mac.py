@@ -326,15 +326,26 @@ class UserActions:
             ribbon_item.perform("AXPress")
         except:  # XXX sometimes "fails" when it actually succeeds
             pass
+        actions.user.help_refresh()
 
     def office_mac_ribbon_item_hover(ribbon_item: ui.Element):
         ctrl.mouse_move(*ribbon_item.AXFrame.center)
+
+
+def left_top(element):
+    if frame := getattr(element, "AXFrame", None):
+        return (frame.left, frame.top)
+    else:
+        return (0, 0)
 
 
 @ctx.dynamic_list("user.ribbon_items")
 def ribbon_items(phrase: list[str]):
     tab_group = document_window_tab_group()
     items = enabled_items_with_role(tab_group, "AXRadioButton")
+    if not phrase:
+        names = [f"• {element_title(tab)}" for tab in items]
+        items = []
 
     try:
         tab = tab_group.children.find_one(AXRole="AXScrollArea", max_depth=0)
@@ -349,5 +360,12 @@ def ribbon_items(phrase: list[str]):
                 items.append(item)
     except ui.UIErr as e:
         pass
+
+    if not phrase:
+        elements = [(*left_top(element), element_title(element)) for element in items]
+        elements.sort()
+        if elements:
+            names.append("")
+        return names + [name for top, left, name in elements]
 
     return saved_item_selection_list(items)
