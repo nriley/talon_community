@@ -17,7 +17,7 @@ class AppActions:
 @ctx.action_class("user")
 class UserActions:
     def excel_save_as_format(format: str):
-        actions.user.office_win_ribbon_select("fa")
+        actions.user.office_ribbon_select("fa")
         actions.sleep("500ms")
         actions.insert("yc")
 

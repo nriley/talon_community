@@ -42,19 +42,10 @@ not app: outlook_win
 """
 
 
-@mod.action_class
-class Actions:
-    def office_win_ribbon_select(keys: str):
-        """Select from the ribbon in a Windows Office app"""
-
-    def office_mail_this():
-        """Attach the frontmost document to an email from an Office app"""
-
-
 @ctx.action_class("edit")
 class EditActions:
     def paste_match_style():
-        actions.user.office_win_ribbon_select("hvt")
+        actions.user.office_ribbon_select("hvt")
 
 
 @ctx.action_class("user")
@@ -63,7 +54,7 @@ class UserActions:
         actions.key("alt-q")
         actions.sleep("200ms")
 
-    def office_win_ribbon_select(keys):
+    def office_ribbon_select(keys):
         actions.key("alt-" + keys[0])
         actions.sleep("30ms")
         actions.key(" ".join(keys[1:]))

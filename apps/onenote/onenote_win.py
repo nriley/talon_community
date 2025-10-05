@@ -12,7 +12,7 @@ app: onenote_win
 @ctx.action_class("app")
 class AppActions:
     def window_open():
-        actions.user.office_win_ribbon_select("wn")
+        actions.user.office_ribbon_select("wn")
 
 
 @ctx.action_class("edit")
@@ -27,13 +27,13 @@ class EditActions:
         actions.key("ctrl-alt-shift--")
 
     def zoom_reset():
-        actions.user.office_win_ribbon_select("w1")
+        actions.user.office_ribbon_select("w1")
 
 
 @ctx.action_class("user")
 class UserActions:
     def get_font_size():
-        actions.user.office_win_ribbon_select("hfs")
+        actions.user.office_ribbon_select("hfs")
         font_size = actions.edit.selected_text()
 
         if not str.isnumeric(font_size):
@@ -43,7 +43,7 @@ class UserActions:
         return float(font_size)
 
     def set_font_size(size=0):
-        actions.user.office_win_ribbon_select("hfs")
+        actions.user.office_ribbon_select("hfs")
         if size:
             actions.sleep("20ms")
             actions.insert(f"{size}")
@@ -59,4 +59,4 @@ class UserActions:
         actions.key("ctrl-g home enter tab:3 home enter esc")
 
     def zoom_to_fit_width():
-        actions.user.office_win_ribbon_select("wi")
+        actions.user.office_ribbon_select("wi")

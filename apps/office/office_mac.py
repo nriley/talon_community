@@ -189,6 +189,42 @@ class UserActions:
             tab_index, tab_name, "AXComboBox", box_name, box_filter
         )
 
+    def office_ribbon_select(keys):
+        # assumes KeyTips activation keystroke is set to Option-Shift
+        # in Settings > Accessibility
+        active_app = ui.active_app()
+
+        def keytips_active():
+            return (
+                len(
+                    active_app.element.children.find(AXRole="AXStaticText", max_depth=0)
+                )
+                > 0
+            )
+
+        if keytips_active():
+            ctrl.key_press("shift", alt=True, app=active_app)
+            for attempt in range(10):
+                if not keytips_active():
+                    break
+                actions.sleep("10ms")
+            else:
+                error = "Unable to deactivate KeyTips. Is the activation keystroke set to something other than ⇧⌥?"
+                actions.app.notify(error, active_app.AXTitle)
+                raise RuntimeError(error)
+
+        ctrl.key_press("shift", alt=True, app=active_app)
+        for attempt in range(10):
+            if keytips_active():
+                break
+            actions.sleep("10ms")
+        else:
+            error = "Unable to activate KeyTips. Is the activation keystroke set to something other than ⇧⌥?"
+            actions.app.notify(error, active_app.AXTitle)
+            raise RuntimeError(error)
+
+        actions.key(" ".join(keys))
+
     def office_tell_me():
         try:  # OneNote only as of 6/9/2025
             document_window_tab_group().children.find_one(
