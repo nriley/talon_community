@@ -257,7 +257,10 @@ def menu_items(phrase: list[str]):
                 break
             menu = parent.AXParent
             items += enabled_items_with_role(menu, parent_role)
-    else:
+    elif not (
+        (parent := actions.user.ui_element_active_window_or_sheet())
+        and (items := parent.children.find(AXRole="AXMenuItem", visible_only=True))
+    ):
         items = enabled_items_with_role(
             ui.active_app().element.AXMenuBar, "AXMenuBarItem"
         )
