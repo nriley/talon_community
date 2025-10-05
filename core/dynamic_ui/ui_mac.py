@@ -1,4 +1,5 @@
 from contextlib import suppress
+from operator import itemgetter
 
 from talon import Context, Module, actions, app, ctrl, ui
 from talon.types import Span
@@ -212,7 +213,7 @@ def sidebar_rows():
         for child in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
             if scroll_areas := child.children.find(AXRole="AXScrollArea", max_depth=2):
                 frame_scroll = [(sa.AXFrame.left, sa) for sa in scroll_areas]
-                frame_scroll.sort()
+                frame_scroll.sort(key=itemgetter(0))
                 for _, sa in frame_scroll:
                     scroll_child = sa.children[0]
                     if scroll_child.AXRole in ("AXOutline", "AXTable"):
