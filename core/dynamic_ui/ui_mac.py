@@ -92,6 +92,8 @@ class UserActions:
         with suppress(ui.UIErr):
             element.AXSelected = True
         if parent.AXRole == "AXList":
+            # Can't figure out how to scroll to the selection if it's offscreen,
+            # so hide the list after selecting
             ggparent = parent.parent.parent
             if ggparent.AXRole == "AXComboBox":
                 ggparent.perform("AXConfirm")
