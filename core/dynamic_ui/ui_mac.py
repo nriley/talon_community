@@ -53,7 +53,7 @@ class UserActions:
                 # but lets you use "row" commands
                 actions.user.ui_element_focus(element)
                 # selecting is not necessary to pop up the menu,
-                # but helps if you "type" to insert a replacement
+                # but helps if you insert a replacement
                 selected_range = Span(0, element.AXNumberOfCharacters)
                 for attempt in range(10):
                     element.AXSelectedTextRange = selected_range
@@ -210,10 +210,13 @@ def sidebar_rows():
     parent = active_window_parent()
     for depth in range(3):
         for child in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
-            for scroll_area in child.children.find(AXRole="AXScrollArea", max_depth=2):
-                scroll_child = scroll_area.children[0]
-                if scroll_child.AXRole in ("AXOutline", "AXTable"):
-                    return list_rows(scroll_child, True)
+            if scroll_areas := child.children.find(AXRole="AXScrollArea", max_depth=2):
+                frame_scroll = [(sa.AXFrame.left, sa) for sa in scroll_areas]
+                frame_scroll.sort()
+                for _, sa in frame_scroll:
+                    scroll_child = sa.children[0]
+                    if scroll_child.AXRole in ("AXOutline", "AXTable"):
+                        return list_rows(scroll_child, True)
     else:
         return {}
 
