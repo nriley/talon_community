@@ -14,6 +14,9 @@ os: mac
 
 @mod.action_class
 class Actions:
+    def ui_element_active_window_or_sheet() -> ui.Element:
+        """Return a UI element for the active window or sheet"""
+
     def ui_element_click(element: ui.Element):
         """Click on a UI element"""
 
@@ -32,6 +35,21 @@ class Actions:
 
 @ctx.action_class("user")
 class UserActions:
+    def ui_element_active_window_or_sheet():
+        window = ui.active_window()
+        if window.id == -1:
+            # XXX core Talon bug? You get Window(None) instead of None
+            # even though there is a focused window (e.g. sheet in Installer)
+            parent = ui.active_app().element.AXFocusedWindow
+        else:
+            parent = window.element
+        if parent.AXRole != "AXSheet":
+            # don't expose the contents of the window to which a sheet is attached
+            with suppress(ui.UIErr):
+                parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
+
+        return parent
+
     def ui_element_click(element):
         with suppress(ui.ActionFailed):
             element.perform("AXPress")
@@ -98,24 +116,8 @@ class UserActions:
             element.AXSelected = True
 
 
-def active_window_parent():
-    window = ui.active_window()
-    if window.id == -1:
-        # XXX core Talon bug? You get Window(None) instead of None
-        # even though there is a focused window (e.g. sheet in Installer)
-        parent = ui.active_app().element.AXFocusedWindow
-    else:
-        parent = ui.active_window().element
-    if parent.AXRole != "AXSheet":
-        # don't expose the contents of the window to which a sheet is attached
-        with suppress(ui.UIErr):
-            parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
-
-    return parent
-
-
 def active_window_elements(*roles):
-    parent = active_window_parent()
+    parent = actions.user.ui_element_active_window_or_sheet()
 
     element_dict = {}
     for role in roles:
@@ -207,7 +209,7 @@ def focused_list_rows(all=False):
 
 def sidebar_rows():
     # Doesn't identify sidebars in Catalyst apps
-    parent = active_window_parent()
+    parent = actions.user.ui_element_active_window_or_sheet()
     for depth in range(3):
         for split in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
             if scroll_areas := split.children.find(AXRole="AXScrollArea", max_depth=2):
