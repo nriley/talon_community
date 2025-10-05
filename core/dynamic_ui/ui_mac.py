@@ -1,6 +1,7 @@
 from contextlib import suppress
 
 from talon import Context, Module, actions, app, ctrl, ui
+from talon.types import Span
 
 mod = Module()
 ctx = Context()
@@ -24,6 +25,9 @@ class Actions:
     def ui_element_menu(element: ui.Element):
         """Show a menu on a UI element"""
 
+    def ui_element_select(element: ui.Element):
+        """Select a UI element"""
+
 
 @ctx.action_class("user")
 class UserActions:
@@ -43,14 +47,55 @@ class UserActions:
         ctrl.mouse_move(*element.AXFrame.center)
 
     def ui_element_menu(element):
-        if element.AXRole == "AXComboBox":
-            element.children.find_one(AXRole="AXButton", max_depth=0).perform("AXPress")
-            return
-        element.AXFocused = True
-        element.perform("AXShowMenu")
+        match element.AXRole:
+            case "AXComboBox":
+                # focusing is not necessary to pop up the menu,
+                # but lets you use "row" commands
+                actions.user.ui_element_focus(element)
+                # selecting is not necessary to pop up the menu,
+                # but helps if you "type" to insert a replacement
+                selected_range = Span(0, element.AXNumberOfCharacters)
+                for attempt in range(10):
+                    element.AXSelectedTextRange = selected_range
+                    if element.AXSelectedTextRange == selected_range:
+                        break
+                    actions.sleep("10ms")
+                element.children.find_one(AXRole="AXButton", max_depth=0).perform(
+                    "AXPress"
+                )
+                return
+            case "AXRow":
+                for child in element.children.find(max_depth=1):
+                    if "AXShowMenu" in child.actions:
+                        with suppress(ui.ActionFailed):
+                            child.perform("AXShowMenu")
+                        return
+                previous_position = ctrl.mouse_pos()
+                actions.user.ui_element_hover(element)
+                ctrl.mouse_click(1)
+                ctrl.mouse_move(*previous_position)
+                return
+
+        with suppress(ui.UIErr):
+            element.AXFocused = True
+        with suppress(ui.ActionFailed):
+            element.perform("AXShowMenu")
+
+    def ui_element_select(element):
+        parent = element.parent
+        for attr in ("AXSelectedRows", "AXSelectedChildren"):
+            if selected := getattr(parent, attr, None):
+                setattr(parent, attr, [element])
+                break
+        with suppress(ui.UIErr):
+            element.AXSelected = True
+        if parent.AXRole == "AXList":
+            ggparent = parent.parent.parent
+            if ggparent.AXRole == "AXComboBox":
+                ggparent.perform("AXConfirm")
 
 
-def active_window_elements(*roles):
+def active_window_parent():
     window = ui.active_window()
     if window.id == -1:
         # XXX core Talon bug? You get Window(None) instead of None
@@ -62,6 +107,12 @@ def active_window_elements(*roles):
         # don't expose the contents of the window to which a sheet is attached
         with suppress(ui.UIErr):
             parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
+
+    return parent
+
+
+def active_window_elements(*roles):
+    parent = active_window_parent()
 
     element_dict = {}
     for role in roles:
@@ -108,6 +159,65 @@ def active_window_elements(*roles):
     return element_dict
 
 
+def list_rows(element, all=False):
+    element_dict = {}
+    rows = getattr(element, "AXRows" if all else "AXVisibleRows", [])
+    i = 1
+    for row in rows:
+        titles = []
+        for role in ("AXStaticText", "AXTextField"):
+            for text in row.children.find(AXRole=role):
+                if title := getattr(text, "AXValue", None):
+                    titles.append([text.AXPosition.y, text.AXPosition.x, title])
+        if not titles:
+            continue
+
+        titles.sort()
+        element_dict[f"{i}. " + " - ".join(title for top, left, title in titles)] = row
+        i += 1
+
+    return element_dict
+
+
+def combo_box_rows(element):
+    element_dict = {}
+    list = element.children.find_one(AXRole="AXList", max_depth=1)
+    i = 1
+    for text in list.children:
+        if title := getattr(text, "AXValue", None):
+            if str.isnumeric(title):
+                element_dict[title] = text
+            else:
+                element_dict[f"{i}. {title}"] = text
+                i += 1
+
+    return element_dict
+
+
+def focused_list_rows(all=False):
+    element = actions.user.focused_element_safe()
+    if not element:
+        return {}
+
+    if element.AXRole == "AXComboBox":
+        return combo_box_rows(element)
+
+    return list_rows(element, all)
+
+
+def sidebar_rows():
+    # Doesn't identify sidebars in Catalyst apps
+    parent = active_window_parent()
+    for depth in range(3):
+        for child in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
+            for scroll_area in child.children.find(AXRole="AXScrollArea", max_depth=2):
+                scroll_child = scroll_area.children[0]
+                if scroll_child.AXRole in ("AXOutline", "AXTable"):
+                    return list_rows(scroll_child, True)
+    else:
+        return {}
+
+
 def on_ready():
     actions.user.ui_dynamic_list_and_capture(
         "button in active window",
@@ -129,6 +239,39 @@ def on_ready():
         ctx,
         mod.list("ui_active_window_field", desc="Text fields in active window"),
         lambda: active_window_elements("AXTextArea", "AXTextField", "AXComboBox"),
+        lambda e: e,
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "list, table or outline in active window",
+        ctx,
+        mod.list(
+            "ui_active_window_list", desc="Lists, tables and outlines in active window"
+        ),
+        lambda: active_window_elements("AXTable", "AXOutline"),
+        lambda e: e,
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "visible rows of focused list, table or outline",
+        ctx,
+        mod.list(
+            "ui_focused_list_visible_row",
+            desc="Visible rows of focused list, table or outline",
+        ),
+        focused_list_rows,
+        lambda e: e,
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "rows of focused list, table or outline",
+        ctx,
+        mod.list("ui_focused_list_row", desc="Rows of focused list, table or outline"),
+        lambda: focused_list_rows(True),
+        lambda e: e,
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "rows of sidebar",
+        ctx,
+        mod.list("ui_sidebar_row", desc="Rows of sidebar"),
+        sidebar_rows,
         lambda e: e,
     )
 
