@@ -213,14 +213,15 @@ def sidebar_rows():
     # Doesn't identify sidebars in Catalyst apps
     parent = active_window_parent()
     for depth in range(3):
-        for child in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
-            if scroll_areas := child.children.find(AXRole="AXScrollArea", max_depth=2):
+        for split in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
+            if scroll_areas := split.children.find(AXRole="AXScrollArea", max_depth=2):
                 frame_scroll = [(sa.AXFrame.left, sa) for sa in scroll_areas]
                 frame_scroll.sort(key=itemgetter(0))
                 for _, sa in frame_scroll:
                     scroll_child = sa.children[0]
                     if scroll_child.AXRole in ("AXOutline", "AXTable"):
-                        return list_rows(scroll_child, True)
+                        if rows := list_rows(scroll_child, True):
+                            return rows
     else:
         return {}
 
