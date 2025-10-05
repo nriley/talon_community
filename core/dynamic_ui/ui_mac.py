@@ -86,17 +86,16 @@ class UserActions:
         parent = element.parent
         for attr in ("AXSelectedRows", "AXSelectedChildren"):
             if selected := getattr(parent, attr, None):
+                if vs := getattr(parent.parent, "AXVerticalScrollBar", None):
+                    children = list(parent.children)
+                    index = children.index(element)
+                    # Assumes equal row height
+                    vs.AXValue = index / len(children)
                 with suppress(ui.UIErr):
                     setattr(parent, attr, [element])
                 break
         with suppress(ui.UIErr):
             element.AXSelected = True
-        if parent.AXRole == "AXList":
-            # Can't figure out how to scroll to the selection if it's offscreen,
-            # so hide the list after selecting
-            ggparent = parent.parent.parent
-            if ggparent.AXRole == "AXComboBox":
-                ggparent.perform("AXConfirm")
 
 
 def active_window_parent():
