@@ -86,7 +86,8 @@ class UserActions:
         parent = element.parent
         for attr in ("AXSelectedRows", "AXSelectedChildren"):
             if selected := getattr(parent, attr, None):
-                setattr(parent, attr, [element])
+                with suppress(ui.UIErr):
+                    setattr(parent, attr, [element])
                 break
         with suppress(ui.UIErr):
             element.AXSelected = True
