@@ -119,7 +119,7 @@ def active_window_elements(*roles):
 
     element_dict = {}
     for role in roles:
-        for element in parent.children.find(AXRole=role):
+        for element in parent.children.find(AXRole=role, visible_only=True):
             titles = []
             if (
                 role != "AXRadioButton"
