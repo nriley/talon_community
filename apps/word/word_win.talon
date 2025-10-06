@@ -16,4 +16,4 @@ mail this: user.office_mail_this()
 
 ribbon: key(ctrl-f1)
 
-markup: user.office_win_ribbon_select("rtd")
+markup: user.office_ribbon_select("rtd")

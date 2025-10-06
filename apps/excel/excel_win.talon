@@ -3,7 +3,7 @@ app: excel_win
 # tag(): user.find_and_replace
 
 save as excel: user.excel_save_as_format("Excel Workbook (*.xlsx)")
-password: user.office_win_ribbon_select("fipe")
+password: user.office_ribbon_select("fipe")
 
 fill down: key(ctrl-d)
 fill right: key(ctrl-r)
@@ -12,9 +12,9 @@ delete that: key(ctrl--)
 
 paste special: key(ctrl-alt-v)
 
-align left: user.office_win_ribbon_select("hal")
-align center: user.office_win_ribbon_select("hac")
-align right: user.office_win_ribbon_select("har")
+align left: user.office_ribbon_select("hal")
+align center: user.office_ribbon_select("hac")
+align right: user.office_ribbon_select("har")
 
 # filter: key(cmd-shift-f)
 # sort: key(cmd-shift-r)
@@ -61,9 +61,9 @@ column insert: key(ctrl-space ctrl-shift-=)
 column delete: key(ctrl-space ctrl--)
 column top: key(ctrl-up)
 column bottom: key(ctrl-down)
-column fit: user.office_win_ribbon_select("hoi")
+column fit: user.office_ribbon_select("hoi")
 column filter: key(ctrl-down ctrl-up alt-down)
-column width: user.office_win_ribbon_select("how")
+column width: user.office_ribbon_select("how")
 
 row hide: key(ctrl-9)
 # row unhide: key(ctrl-shift-9)
@@ -72,8 +72,8 @@ row insert: key(shift-space ctrl-shift-=)
 row delete: key(shift-space ctrl--)
 row start: key(ctrl-left)
 row end: key(ctrl-right)
-row fit: user.office_win_ribbon_select("hoa")
-row height: user.office_win_ribbon_select("hoh")
+row fit: user.office_ribbon_select("hoa")
+row height: user.office_ribbon_select("hoh")
 
 table select: key(ctrl-a)
 select all: key(ctrl-a:3)
@@ -81,9 +81,9 @@ select all: key(ctrl-a:3)
 sheet new: key(shift-f11)
 sheet previous: key(ctrl-pageup)
 sheet next: key(ctrl-pagedown)
-sheet rename: user.office_win_ribbon_select("hor")
+sheet rename: user.office_ribbon_select("hor")
 
-pivot that: user.office_win_ribbon_select("nvt")
+pivot that: user.office_ribbon_select("nvt")
 mail this: user.office_mail_this()
 
 ribbon: key(ctrl-f1)

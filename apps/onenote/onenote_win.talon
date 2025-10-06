@@ -11,7 +11,7 @@ strike through: key(ctrl--)
 # I have bound Ctrl+Alt+H to a Talon action so I can't use it.
 # highlight: key(ctrl-alt-h)
 highlight:
-    user.office_win_ribbon_select("hi")
+    user.office_ribbon_select("hi")
     key(enter)
 
 align left: key(ctrl-l)
@@ -29,7 +29,7 @@ normal: key(ctrl-shift-n)
 
 code:
     key(ctrl-shift-n)
-    user.office_win_ribbon_select("hl")
+    user.office_ribbon_select("hl")
     key(up:3 enter)
 
 move up: key(alt-shift-up)
@@ -37,19 +37,19 @@ move down: key(alt-shift-down)
 move right: key(alt-shift-right)
 move left: key(alt-shift-left)
 
-cell select: user.office_win_ribbon_select("jc")
+cell select: user.office_ribbon_select("jc")
 
-column select: user.office_win_ribbon_select("jm")
-column insert left: user.office_win_ribbon_select("jl")
+column select: user.office_ribbon_select("jm")
+column insert left: user.office_ribbon_select("jl")
 column insert right: key(ctrl-alt-r)
-column delete: user.office_win_ribbon_select("ju")
+column delete: user.office_ribbon_select("ju")
 
-row select: user.office_win_ribbon_select("jo")
-row insert up: user.office_win_ribbon_select("jv")
-row insert down: user.office_win_ribbon_select("je")
-row delete: user.office_win_ribbon_select("jw")
+row select: user.office_ribbon_select("jo")
+row insert up: user.office_ribbon_select("jv")
+row insert down: user.office_ribbon_select("je")
+row delete: user.office_ribbon_select("jw")
 
-table select: user.office_win_ribbon_select("js")
+table select: user.office_ribbon_select("js")
 
 # for consistency with Mac version, where collapsing will collapse to level 1
 collapse: key(alt-shift-1)
@@ -59,7 +59,7 @@ expand all: key(alt-shift-0)
 # but add option to just collapse a single level
 collapse (this | that): key(alt-shift--)
 
-mail this: user.office_win_ribbon_select("hm1")
+mail this: user.office_ribbon_select("hm1")
 
 go (notebook | notebooks): key(ctrl-g)
 

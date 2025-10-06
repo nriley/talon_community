@@ -2,15 +2,15 @@ app: powerpoint_win
 -
 tag(): user.pages
 
-(slide | normal) view: user.office_win_ribbon_select("wl")
-slide sorter: user.office_win_ribbon_select("wi")
-notes page: user.office_win_ribbon_select("wt")
-outline view: user.office_win_ribbon_select("wpo")
-reading view: user.office_win_ribbon_select("wd")
+(slide | normal) view: user.office_ribbon_select("wl")
+slide sorter: user.office_ribbon_select("wi")
+notes page: user.office_ribbon_select("wt")
+outline view: user.office_ribbon_select("wpo")
+reading view: user.office_ribbon_select("wd")
 presenter view: key(alt-f5)
 
 slideshow: key(f5)
-slideshow from start: user.office_win_ribbon_select("sb")
+slideshow from start: user.office_ribbon_select("sb")
 
 [slide] previous: user.page_previous()
 [slide] next: user.page_next()
@@ -57,4 +57,4 @@ mail p d f:
     key(down enter)
 
 ribbon: key(ctrl-f1)
-ruler: user.office_win_ribbon_select("wr")
+ruler: user.office_ribbon_select("wr")
