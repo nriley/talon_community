@@ -135,6 +135,7 @@ def active_window_elements(*roles):
                     "AXDescription",
                     "AXAttributedDescription",
                     "AXHelp",
+                    "AXRoleDescription",
                 ):
                     if title := getattr(element, attr, None):
                         titles.append(title)
