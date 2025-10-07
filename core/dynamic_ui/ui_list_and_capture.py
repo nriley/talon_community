@@ -12,6 +12,7 @@ RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
 
 def spoken_forms(s):
     # XXX use user.vocabulary, or may never match
+    s = str(s)
     if RE_NON_ALPHA_OR_SPACE.search(s):
         spoken_forms = "\n".join(
             actions.user.create_spoken_forms(s, generate_subsequences=False)
@@ -55,7 +56,7 @@ class Actions:
 
             if not phrase:
                 elements = [
-                    (*top_left(element), name)
+                    (*top_left(element), str(name))
                     for (name, element) in list_generator().items()
                 ]
                 elements.sort()
