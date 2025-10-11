@@ -1,5 +1,6 @@
 from contextlib import suppress
 from operator import itemgetter
+from typing import Optional
 
 from talon import Context, Module, actions, app, ctrl, ui
 from talon.types import Span
@@ -31,6 +32,9 @@ class Actions:
 
     def ui_element_select(element: ui.Element):
         """Select a UI element"""
+
+    def ui_element_end(tail: Optional[bool] = False, select: Optional[bool] = False):
+        """Go to one end of the focused UI element (head, beginning or first item)"""
 
 
 @ctx.action_class("user")
@@ -114,6 +118,39 @@ class UserActions:
                 break
         with suppress(ui.UIErr):
             element.AXSelected = True
+
+    def ui_element_end(tail=False, select=False):
+        element = actions.user.focused_element_safe()
+        if element is None:
+            return
+        if (range := getattr(element, "AXSelectedTextRange", None)) is not None:
+            # For text, move the insertion point by default
+            if tail:
+                if length := getattr(element, "AXNumberOfCharacters", None):
+                    element.AXSelectedTextRange = Span(
+                        range.left if select else length, length
+                    )
+                else:
+                    raise RuntimeError("Unable to get character count")
+            else:
+                element.AXSelectedTextRange = Span(0, range.right if select else 0)
+            return
+        if vs := getattr(element.parent, "AXVerticalScrollBar", None):
+            # For a list/table/outline or anything else scrollable, scroll by default
+            vs.AXValue = 1 if tail else 0
+            if select:
+                if hasattr(element, "AXSelectedRows") and (
+                    rows := getattr(element, "AXVisibleRows")
+                ):
+                    with suppress(ui.UIErr):
+                        rows[-1 if tail else 0].AXSelected = True
+                elif hasattr(element, "AXSelectedChildren"):
+                    if tail:
+                        child = element.children.find(max_depth=0)[-1]
+                    else:
+                        child = element.children.find_one()
+                    element.AXSelectedChildren = [child]
+            return
 
 
 def active_window_elements(*roles):

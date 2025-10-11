@@ -38,3 +38,8 @@ help rows all: user.help_list("user.ui_focused_list_row")
 sidebar menu <user.ui_sidebar_row>: user.ui_element_menu(ui_sidebar_row)
 sidebar hover <user.ui_sidebar_row>: user.ui_element_hover(ui_sidebar_row)
 help sidebar: user.help_list("user.ui_sidebar_row")
+
+head end: user.ui_element_end()
+tail end: user.ui_element_end(true)
+select head end: user.ui_element_end(false, true)
+select tail end: user.ui_element_end(true, true)
