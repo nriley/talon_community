@@ -83,9 +83,10 @@ class UserActions:
                     if element.AXSelectedTextRange == selected_range:
                         break
                     actions.sleep("10ms")
-                element.children.find_one(AXRole="AXButton", max_depth=0).perform(
-                    "AXPress"
-                )
+                with suppress(ui.ActionFailed):
+                    element.children.find_one(AXRole="AXButton", max_depth=0).perform(
+                        "AXPress"
+                    )
                 return
             case "AXRow":
                 for child in element.children.find(max_depth=1):
