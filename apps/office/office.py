@@ -20,15 +20,3 @@ class Actions:
 
     def office_ribbon_select(keys: str):
         """Select from the ribbon in an Office app"""
-
-    def office_tell_me():
-        """Focus 'Tell me' in Microsoft Office apps"""
-
-
-@ctx.action_class("user")
-class UserActions:
-    # user.command_search
-    def command_search(command=""):
-        actions.user.office_tell_me()
-        if command != "":
-            actions.insert(command)

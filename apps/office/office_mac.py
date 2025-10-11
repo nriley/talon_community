@@ -1,5 +1,6 @@
 import re
 from collections.abc import Callable
+from contextlib import suppress
 from typing import Optional
 
 from talon import Context, Module, actions, app, ctrl, ui
@@ -225,33 +226,62 @@ class UserActions:
 
         actions.key(" ".join(keys))
 
-    def office_tell_me():
-        try:  # OneNote only as of 6/9/2025
+    def command_search(command=""):
+        with suppress(ui.UIErr):
+            # OneNote only as of 6/9/2025
             document_window_tab_group().children.find_one(
                 AXRole="AXButton", AXTitle="Tell me", max_depth=0
             ).perform("AXPress")
+
+            actions.key("cmd-a")
+            if command != "":
+                actions.insert(command)
+                actions.key("down")
+            else:
+                actions.key("delete")
             return
-        except ui.UIErr:
-            pass
 
         try:
             toolbar_group = document_window_toolbar_group()
         except ui.UIErr:
             raise Exception(f"Unable to locate window toolbar")
         try:
-            toolbar_group.children.find_one(
+            search_field = toolbar_group.children.find_one(
                 AXRole="AXTextField", AXSubrole="AXSearchField", max_depth=0
-            ).AXFocused = True
-        except ui.UIErr:
-            toolbar_buttons = toolbar_group.children.find(
-                AXRole="AXButton", AXRoleDescription="button"
             )
-            for button in toolbar_buttons:
-                # XXX could use frame, otherwise no way to distinguish, so English-only for now
-                if button.AXTitle.startswith("Search ("):
-                    button.perform("AXPress")
-                    return
-            raise Exception(f"Unable to locate Search button")
+            search_field.AXFocused = True
+        except ui.UIErr:
+            raise Exception("Unable to locate Search button")
+
+        search_field.AXValue = command
+        if command == "":
+            # focusing doesn't move keyboard focus if the menu is shown
+            ctrl.mouse_move(*search_field.AXFrame.center)
+            ctrl.mouse_click()
+            return
+
+        active_app = ui.active_app()
+        for attempt in range(10):
+            with suppress(ui.UIErr):
+                window = active_app.children.find_one(
+                    AXRole="AXWindow",
+                    AXSubrole="AXUnknown",
+                    # AXTitle="Search, Suggestions available",
+                    max_depth=0,
+                )
+                break
+            actions.sleep("10ms")
+        else:
+            raise Exception("Unable to locate command search window")
+        group = window.children.find_one(AXRole="AXGroup", max_depth=0)
+        # jump over find and replace options
+        menu_buttons = group.children.find(AXRole="AXMenuButton")[3:]
+        for index, button in enumerate(menu_buttons):
+            if button.AXEnabled == False:
+                button = menu_buttons[index + 1]
+                ctrl.mouse_move(*button.AXFrame.center)
+                return
+        raise Exception("No matching action")
 
     def office_document_actions():
         toolbar_group = document_window_toolbar_group()

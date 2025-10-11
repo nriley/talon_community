@@ -50,9 +50,11 @@ class EditActions:
 
 @ctx.action_class("user")
 class UserActions:
-    def office_tell_me():
+    def command_search(command=""):
         actions.key("alt-q")
         actions.sleep("200ms")
+        if command != "":
+            actions.insert(command)
 
     def office_ribbon_select(keys):
         actions.key("alt-" + keys[0])
