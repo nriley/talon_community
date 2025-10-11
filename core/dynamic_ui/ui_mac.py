@@ -43,7 +43,7 @@ class UserActions:
             parent = ui.active_app().element.AXFocusedWindow
         else:
             parent = window.element
-        if parent.AXRole != "AXSheet":
+        if getattr(parent, "AXRole", None) != "AXSheet":
             # don't expose the contents of the window to which a sheet is attached
             with suppress(ui.UIErr):
                 parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
