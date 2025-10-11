@@ -1,0 +1,7 @@
+list: user.scroll_direction
+-
+
+upper: UP
+downer: DOWN
+lefty: LEFT
+righty: RIGHT

@@ -43,3 +43,5 @@ head end: user.ui_element_end()
 tail end: user.ui_element_end(true)
 select head end: user.ui_element_end(false, true)
 select tail end: user.ui_element_end(true, true)
+
+scroll {user.scroll_direction}: user.ui_element_scroll(scroll_direction)

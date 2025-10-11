@@ -1,6 +1,7 @@
 from contextlib import suppress
+from enum import StrEnum
 from operator import itemgetter
-from typing import Optional
+from typing import Optional, Union
 
 from talon import Context, Module, actions, app, ctrl, ui
 from talon.types import Span
@@ -11,6 +12,16 @@ ctx = Context()
 ctx.matches = r"""
 os: mac
 """
+
+mod.list("scroll_direction", "Scroll direction")
+
+
+class AXScrollByPageAction(StrEnum):
+    # most (but not all) apps reverse this
+    AXScrollDownByPage = "UP"
+    AXScrollUpByPage = "DOWN"
+    AXScrollRightByPage = "LEFT"
+    AXScrollLeftByPage = "RIGHT"
 
 
 @mod.action_class
@@ -35,6 +46,9 @@ class Actions:
 
     def ui_element_end(tail: Optional[bool] = False, select: Optional[bool] = False):
         """Go to one end of the focused UI element (head, beginning or first item)"""
+
+    def ui_element_scroll(direction: Union[str, AXScrollByPageAction]):
+        """Scroll the focused UI element"""
 
 
 @ctx.action_class("user")
@@ -152,6 +166,24 @@ class UserActions:
                         child = element.children.find_one()
                     element.AXSelectedChildren = [child]
             return
+
+    def ui_element_scroll(direction):
+        element = ui.focused_element()
+
+        action = AXScrollByPageAction(direction).name
+        while True:
+            element = element.parent
+            match element.AXRole:
+                case "AXScrollArea":
+                    break
+                case ("AXWindow", "AXApplication"):
+                    raise Exception("Unable to find a scroll area")
+
+        if action not in element.actions:
+            raise Exception(f"Scroll area does not implement {action}")
+
+        with suppress(ui.ActionFailed):
+            element.perform(action)
 
 
 def active_window_elements(*roles):
