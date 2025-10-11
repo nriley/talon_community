@@ -135,9 +135,7 @@ class UserActions:
             element.AXSelected = True
 
     def ui_element_end(tail=False, select=False):
-        element = actions.user.focused_element_safe()
-        if element is None:
-            return
+        element = ui.focused_element()
         if (range := getattr(element, "AXSelectedTextRange", None)) is not None:
             # For text, move the insertion point by default
             if tail:
