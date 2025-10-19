@@ -276,9 +276,10 @@ def focused_list_rows(all=False):
     return list_rows(element, all)
 
 
-def sidebar_rows():
+def potential_sidebars():
     # Doesn't identify sidebars in Catalyst apps
     parent = actions.user.ui_element_active_window_or_sheet()
+    seen_children = []
     for depth in range(3):
         for split in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
             if scroll_areas := split.children.find(AXRole="AXScrollArea", max_depth=2):
@@ -286,9 +287,23 @@ def sidebar_rows():
                 frame_scroll.sort(key=itemgetter(0))
                 for _, sa in frame_scroll:
                     scroll_child = sa.children[0]
+                    if scroll_child in seen_children:
+                        continue
                     if scroll_child.AXRole in ("AXOutline", "AXTable"):
-                        if rows := list_rows(scroll_child, True):
-                            return rows
+                        yield scroll_child
+                    seen_children.add(scroll_child)
+
+
+def sidebar():
+    for scroll_child in potential_sidebars():
+        if rows := list_rows(scroll_child, True):
+            return scroll_child
+
+
+def sidebar_rows():
+    for scroll_child in potential_sidebars():
+        if rows := list_rows(scroll_child, True):
+            return rows
     else:
         return {}
 
