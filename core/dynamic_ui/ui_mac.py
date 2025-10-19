@@ -29,6 +29,9 @@ class Actions:
     def ui_element_active_window_or_sheet() -> ui.Element:
         """Return a UI element for the active window or sheet"""
 
+    def ui_element_sidebar() -> Optional[ui.Element]:
+        """Return a UI element for the active window’s sidebar"""
+
     def ui_element_click(element: ui.Element):
         """Click on a UI element"""
 
@@ -67,6 +70,9 @@ class UserActions:
                 parent = parent.children.find_one(AXRole="AXSheet", max_depth=0)
 
         return parent
+
+    def ui_element_sidebar():
+        return sidebar()
 
     def ui_element_click(element):
         with suppress(ui.ActionFailed):
