@@ -26,7 +26,7 @@ class AXScrollByPageAction(StrEnum):
 
 @mod.action_class
 class Actions:
-    def ui_element_active_window_or_sheet() -> ui.Element:
+    def ui_element_active_window_or_sheet() -> Optional[ui.Element]:
         """Return a UI element for the active window or sheet"""
 
     def ui_element_sidebar() -> Optional[ui.Element]:
