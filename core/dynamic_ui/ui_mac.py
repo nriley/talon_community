@@ -50,8 +50,11 @@ class Actions:
     def ui_element_end(tail: Optional[bool] = False, select: Optional[bool] = False):
         """Go to one end of the focused UI element (head, beginning or first item)"""
 
-    def ui_element_scroll(direction: Union[str, AXScrollByPageAction]):
-        """Scroll the focused UI element"""
+    def ui_element_scroll(
+        direction: Union[str, AXScrollByPageAction],
+        element: Optional[ui.Element] = None,
+    ):
+        """Scroll the focused (or specified) UI element"""
 
 
 @ctx.action_class("user")
@@ -171,8 +174,9 @@ class UserActions:
                     element.AXSelectedChildren = [child]
             return
 
-    def ui_element_scroll(direction):
-        element = ui.focused_element()
+    def ui_element_scroll(direction, element=None):
+        if element is None:
+            element = ui.focused_element()
 
         action = AXScrollByPageAction(direction).name
         while True:
