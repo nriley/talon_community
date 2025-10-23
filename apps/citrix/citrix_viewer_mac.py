@@ -94,6 +94,7 @@ class Actions:
         """Press one or more keys by name, space-separated, replacing Windows by Mac equivalents if needed"""
         if app.platform == "windows":
             actions.key(key)
+            return
 
         raise Exception("Unexpected use of user.windows_key outside Citrix Viewer")
 
