@@ -65,7 +65,6 @@ class UserActions:
 @ctx_mail_this.action_class("user")
 class UserActions:
     def office_mail_this():
-        actions.user.office_tell_me()
-        actions.user.paste("Mail Recipient (As Attachment)")
+        actions.user.command_search("Mail Recipient (As Attachment)")
         actions.sleep("1s")
         actions.key("down enter")

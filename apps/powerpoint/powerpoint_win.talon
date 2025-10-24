@@ -51,8 +51,7 @@ copy style: key(ctrl-shift-c)
 mail this: user.office_mail_this()
 
 mail p d f:
-    user.office_tell_me()
-    user.paste("E-mail as PDF Attachment")
+    user.command_search("E-mail as PDF Attachment")
     sleep(1s)
     key(down enter)
 
