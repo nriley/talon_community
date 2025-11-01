@@ -1,5 +1,6 @@
 import re
 from collections import defaultdict
+from contextlib import suppress
 from datetime import timedelta
 from enum import Enum, StrEnum, auto
 from pathlib import Path
@@ -265,14 +266,22 @@ def onenote_image_matches_in_notebook_window(
     return matches
 
 
-def onenote_show_sidebar(tab):
+def onenote_sidebar_button_group():
     window = actions.user.office_mac_document_window()
     splitgroup = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
-    group = splitgroup.children.find_one(AXRole="AXGroup", max_depth=0)
+    hosting = splitgroup.children.find_one(
+        AXRole="AXGroup", AXSubrole="AXHostingView", max_depth=0
+    )
+    return hosting.children.find_one(AXRole="AXGroup", max_depth=0)
+
+
+def onenote_show_sidebar(tab):
+    group = onenote_sidebar_button_group()
     checkbox = group.children.find(AXRole="AXCheckBox", max_depth=0)[tab.value]
     if checkbox.AXValue == 0:
         checkbox.perform("AXPress")
-    return splitgroup.children.find_one(AXRole="AXSplitGroup", max_depth=0)
+    hosting = group.parent
+    return hosting.children.find_one(AXRole="AXSplitGroup", max_depth=0)
 
 
 def onenote_notebooks_outline(navigation):
@@ -358,17 +367,12 @@ class UserActions:
         actions.key("ctrl-e enter tab cmd-1")
 
     def onenote_hide_navigation():
-        window = actions.user.office_mac_document_window()
-        # hide the navigation pane(s) if necessary
-        splitgroup = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
-        group = splitgroup.children.find_one(AXRole="AXGroup", max_depth=0)
-        try:
+        group = onenote_sidebar_button_group()
+        with suppress(ui.UIErr):
+            # hide the navigation pane(s) if necessary
             checkbox = group.children.find_one(
                 AXRole="AXCheckBox", AXValue=1, max_depth=0
             )
-        except ui.UIErr:
-            pass
-        else:
             checkbox.perform("AXPress")
         # focus the note body if necessary
         for attempt in range(10):
