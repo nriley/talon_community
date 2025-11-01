@@ -242,7 +242,10 @@ def active_window_elements(*roles):
 
 def list_rows(element, all=False):
     element_dict = {}
-    rows = getattr(element, "AXRows" if all else "AXVisibleRows", [])
+    if element.AXRole == "AXList":
+        rows = element.children
+    else:
+        rows = getattr(element, "AXRows" if all else "AXVisibleRows", [])
     i = 1
     for row in rows:
         titles = []
@@ -345,9 +348,10 @@ def on_ready():
         "list, table or outline in active window",
         ctx,
         mod.list(
-            "ui_active_window_list", desc="Lists, tables and outlines in active window"
+            "ui_active_window_list",
+            desc="Lists, tables, outlines and column views in active window",
         ),
-        lambda: active_window_elements("AXTable", "AXOutline"),
+        lambda: active_window_elements("AXTable", "AXOutline", "AXBrowser"),
         lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
@@ -355,7 +359,7 @@ def on_ready():
         ctx,
         mod.list(
             "ui_focused_list_visible_row",
-            desc="Visible rows of focused list, table or outline",
+            desc="Visible rows of focused list, table, outline or column",
         ),
         focused_list_rows,
         lambda e: e,
@@ -363,7 +367,9 @@ def on_ready():
     actions.user.ui_dynamic_list_and_capture(
         "rows of focused list, table or outline",
         ctx,
-        mod.list("ui_focused_list_row", desc="Rows of focused list, table or outline"),
+        mod.list(
+            "ui_focused_list_row", desc="Rows of focused list, table, outline or column"
+        ),
         lambda: focused_list_rows(True),
         lambda e: e,
     )
