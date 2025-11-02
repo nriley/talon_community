@@ -1,0 +1,6 @@
+list: user.disclosure_action
+-
+
+expand: EXPAND
+collapse: COLLAPSE
+toggle: TOGGLE

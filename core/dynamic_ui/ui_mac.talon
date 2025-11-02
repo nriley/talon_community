@@ -27,6 +27,8 @@ help lists: user.help_list("user.ui_active_window_list")
     user.ui_element_menu(ui_focused_list_visible_row)
 (row | item) hover <user.ui_focused_list_visible_row>:
     user.ui_element_hover(ui_focused_list_visible_row)
+row {user.disclosure_action} <user.ui_focused_list_visible_row>:
+    user.ui_element_disclose(ui_focused_list_visible_row, disclosure_action)
 help (rows | items): user.help_list("user.ui_focused_list_visible_row")
 
 [gooey] (row | item) all <user.ui_focused_list_row>: user.ui_element_select(ui_focused_list_row)

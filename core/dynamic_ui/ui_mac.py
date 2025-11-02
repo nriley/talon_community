@@ -1,5 +1,5 @@
 from contextlib import suppress
-from enum import StrEnum
+from enum import StrEnum, auto
 from operator import itemgetter
 from typing import Optional
 
@@ -22,6 +22,19 @@ class AXScrollByPageAction(StrEnum):
     AXScrollUpByPage = "DOWN"
     AXScrollRightByPage = "LEFT"
     AXScrollLeftByPage = "RIGHT"
+
+
+mod.list("disclosure_action", desc="Disclosure actions")
+
+
+class DisclosureAction(StrEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return name
+
+    EXPAND = auto()
+    COLLAPSE = auto()
+    TOGGLE = auto()
 
 
 @mod.action_class
@@ -55,6 +68,9 @@ class Actions:
         element: Optional[ui.Element] = None,
     ):
         """Scroll the focused (or specified) UI element"""
+
+    def ui_element_disclose(element: ui.Element, action: DisclosureAction | str):
+        """Change the disclosure state of a UI element"""
 
 
 @ctx.action_class("user")
@@ -206,6 +222,15 @@ class UserActions:
 
         with suppress(ui.ActionFailed):
             element.perform(action)
+
+    def ui_element_disclose(element, action):
+        match DisclosureAction(action):
+            case DisclosureAction.EXPAND:
+                element.AXDisclosing = True
+            case DisclosureAction.COLLAPSE:
+                element.AXDisclosing = False
+            case DisclosureAction.TOGGLE:
+                element.AXDisclosing = not element.AXDisclosing
 
 
 def active_window_elements(*roles):
