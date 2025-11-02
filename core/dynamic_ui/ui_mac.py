@@ -147,6 +147,10 @@ class UserActions:
 
     def ui_element_select(element):
         parent = element.parent
+        with suppress(ui.UIErr):
+            element.AXSelected = True
+        if element.AXSelected:
+            return
         if (
             parent.AXRole == "AXList"
             and getattr(parent, "AXSubrole", None) == "AXSectionList"
@@ -159,6 +163,8 @@ class UserActions:
         for attr in ("AXSelectedRows", "AXSelectedChildren"):
             if (selected := getattr(list_top or parent, attr, None)) is not None:
                 list_top = list_top or parent
+                with suppress(ui.UIErr):
+                    setattr(list_top, attr, [element])
                 if (
                     getattr(list_top, "AXOrientation", None)
                     != "AXHorizontalOrientation"
@@ -168,11 +174,7 @@ class UserActions:
                         index = children.index(element)
                         # Assumes equal row height
                         vs.AXValue = index / len(children)
-                with suppress(ui.UIErr):
-                    setattr(list_top, attr, [element])
                 break
-        with suppress(ui.UIErr):
-            element.AXSelected = True
 
     def ui_element_end(tail=False, select=False):
         element = ui.focused_element()
