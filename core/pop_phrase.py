@@ -25,6 +25,7 @@ auto_pop_that_phrases = [
     "hunt",
     "follow",
     "tab close",
+    "zoom",
 ]
 
 
