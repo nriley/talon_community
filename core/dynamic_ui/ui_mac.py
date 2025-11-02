@@ -111,7 +111,7 @@ class UserActions:
                         "AXPress"
                     )
                 return
-            case "AXRow":
+            case "AXRow" | "AXGroup":
                 for child in element.children.find(max_depth=1):
                     if "AXShowMenu" in child.actions:
                         with suppress(ui.ActionFailed):
@@ -130,15 +130,29 @@ class UserActions:
 
     def ui_element_select(element):
         parent = element.parent
+        if (
+            parent.AXRole == "AXList"
+            and getattr(parent, "AXSubrole", None) == "AXSectionList"
+            and parent.parent.AXRole == "AXList"
+            and getattr(parent.parent, "AXSubrole", None) == "AXCollectionList"
+        ):
+            list_top = parent.parent
+        else:
+            list_top = None
         for attr in ("AXSelectedRows", "AXSelectedChildren"):
-            if selected := getattr(parent, attr, None):
-                if vs := getattr(parent.parent, "AXVerticalScrollBar", None):
-                    children = list(parent.children)
-                    index = children.index(element)
-                    # Assumes equal row height
-                    vs.AXValue = index / len(children)
+            if (selected := getattr(list_top or parent, attr, None)) is not None:
+                list_top = list_top or parent
+                if (
+                    getattr(list_top, "AXOrientation", None)
+                    != "AXHorizontalOrientation"
+                ):
+                    if vs := getattr(list_top.parent, "AXVerticalScrollBar", None):
+                        children = list(parent.children)
+                        index = children.index(element)
+                        # Assumes equal row height
+                        vs.AXValue = index / len(children)
                 with suppress(ui.UIErr):
-                    setattr(parent, attr, [element])
+                    setattr(list_top, attr, [element])
                 break
         with suppress(ui.UIErr):
             element.AXSelected = True
@@ -199,7 +213,14 @@ def active_window_elements(*roles):
 
     element_dict = {}
     for role in roles:
-        for element in parent.children.find(AXRole=role, visible_only=True):
+        if "." in role:
+            role, subrole = role.split(".", 1)
+            elements = parent.children.find(
+                AXRole=role, AXSubrole=subrole, visible_only=True
+            )
+        else:
+            elements = parent.children.find(AXRole=role, visible_only=True)
+        for element in elements:
             titles = []
             if (
                 role != "AXRadioButton"
@@ -242,17 +263,27 @@ def active_window_elements(*roles):
 
 def list_rows(element, all=False):
     element_dict = {}
-    if element.AXRole == "AXList":
-        rows = element.children
-    else:
-        rows = getattr(element, "AXRows" if all else "AXVisibleRows", [])
+    match element.AXRole:
+        case "AXList":
+            if section_lists := element.children.find(
+                AXRole="AXList", AXSubrole="AXSectionList"
+            ):
+                rows = [c for cl in [l.children for l in section_lists] for c in cl]
+            else:
+                rows = element.children
+        case "AXGrid":
+            rows = element.children
+        case _:
+            rows = getattr(element, "AXRows" if all else "AXVisibleRows", [])
     i = 1
     for row in rows:
         titles = []
-        for role in ("AXStaticText", "AXTextField"):
+        for role in ("AXStaticText", "AXTextField", "AXImage"):
             for text in row.children.find(AXRole=role):
-                if title := getattr(text, "AXValue", None):
-                    titles.append([text.AXPosition.y, text.AXPosition.x, title])
+                for attr in ("AXValue", "AXTitle"):
+                    if title := getattr(text, attr, None):
+                        titles.append([text.AXPosition.y, text.AXPosition.x, title])
+                        break
         if not titles:
             continue
 
@@ -345,30 +376,33 @@ def on_ready():
         lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
-        "list, table or outline in active window",
+        "list, table, outline, icon or column view in active window",
         ctx,
         mod.list(
             "ui_active_window_list",
-            desc="Lists, tables, outlines and column views in active window",
+            desc="Lists, tables, outlines, icon and column views in active window",
         ),
-        lambda: active_window_elements("AXTable", "AXOutline", "AXBrowser"),
+        lambda: active_window_elements(
+            "AXTable", "AXOutline", "AXBrowser", "AXGrid", "AXList.AXCollectionList"
+        ),
         lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
-        "visible rows of focused list, table or outline",
+        "visible rows or items of focused list, table, outline, column or icon view",
         ctx,
         mod.list(
             "ui_focused_list_visible_row",
-            desc="Visible rows of focused list, table, outline or column",
+            desc="Visible rows of focused list, table, outline, column or icon view",
         ),
         focused_list_rows,
         lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
-        "rows of focused list, table or outline",
+        "rows of focused list, table, outline, column or icon view",
         ctx,
         mod.list(
-            "ui_focused_list_row", desc="Rows of focused list, table, outline or column"
+            "ui_focused_list_row",
+            desc="Rows of focused list, table, outline, column or icon view",
         ),
         lambda: focused_list_rows(True),
         lambda e: e,

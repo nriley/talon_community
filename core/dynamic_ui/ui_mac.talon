@@ -21,18 +21,18 @@ list menu <user.ui_active_window_list>: user.ui_element_menu(ui_active_window_li
 list hover <user.ui_active_window_list>: user.ui_element_hover(ui_active_window_list)
 help lists: user.help_list("user.ui_active_window_list")
 
-[gooey] row <user.ui_focused_list_visible_row>:
+[gooey] (row | item) <user.ui_focused_list_visible_row>:
     user.ui_element_select(ui_focused_list_visible_row)
-row menu <user.ui_focused_list_visible_row>:
+(row | item) menu <user.ui_focused_list_visible_row>:
     user.ui_element_menu(ui_focused_list_visible_row)
-row hover <user.ui_focused_list_visible_row>:
+(row | item) hover <user.ui_focused_list_visible_row>:
     user.ui_element_hover(ui_focused_list_visible_row)
-help rows: user.help_list("user.ui_focused_list_visible_row")
+help (rows | items): user.help_list("user.ui_focused_list_visible_row")
 
-[gooey] row all <user.ui_focused_list_row>: user.ui_element_select(ui_focused_list_row)
-row all menu <user.ui_focused_list_row>: user.ui_element_menu(ui_focused_list_row)
-row all hover <user.ui_focused_list_row>: user.ui_element_hover(ui_focused_list_row)
-help rows all: user.help_list("user.ui_focused_list_row")
+[gooey] (row | item) all <user.ui_focused_list_row>: user.ui_element_select(ui_focused_list_row)
+(row | item) all menu <user.ui_focused_list_row>: user.ui_element_menu(ui_focused_list_row)
+(row | item) all hover <user.ui_focused_list_row>: user.ui_element_hover(ui_focused_list_row)
+help (rows | items) all: user.help_list("user.ui_focused_list_row")
 
 [gooey] sidebar <user.ui_sidebar_row>: user.ui_element_select(ui_sidebar_row)
 sidebar menu <user.ui_sidebar_row>: user.ui_element_menu(ui_sidebar_row)
