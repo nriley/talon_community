@@ -392,14 +392,12 @@ def on_ready():
             "AXPopUpButton",
             "AXRadioButton",
         ),
-        lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
         "text field in active window",
         ctx,
         mod.list("ui_active_window_field", desc="Text fields in active window"),
         lambda: active_window_elements("AXTextArea", "AXTextField", "AXComboBox"),
-        lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
         "list, table, outline, icon or column view in active window",
@@ -411,7 +409,6 @@ def on_ready():
         lambda: active_window_elements(
             "AXTable", "AXOutline", "AXBrowser", "AXGrid", "AXList.AXCollectionList"
         ),
-        lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
         "visible rows or items of focused list, table, outline, column or icon view",
@@ -421,7 +418,6 @@ def on_ready():
             desc="Visible rows of focused list, table, outline, column or icon view",
         ),
         focused_list_rows,
-        lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
         "rows of focused list, table, outline, column or icon view",
@@ -431,14 +427,12 @@ def on_ready():
             desc="Rows of focused list, table, outline, column or icon view",
         ),
         lambda: focused_list_rows(True),
-        lambda e: e,
     )
     actions.user.ui_dynamic_list_and_capture(
         "rows of sidebar",
         ctx,
         mod.list("ui_sidebar_row", desc="Rows of sidebar"),
         sidebar_rows,
-        lambda e: e,
     )
 
 
