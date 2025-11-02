@@ -363,7 +363,7 @@ def potential_sidebars():
                         continue
                     if scroll_child.AXRole in ("AXOutline", "AXTable"):
                         yield scroll_child
-                    seen_children.add(scroll_child)
+                    seen_children.append(scroll_child)
 
 
 def sidebar():
