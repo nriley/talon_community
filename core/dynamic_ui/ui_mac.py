@@ -13,7 +13,8 @@ ctx.matches = r"""
 os: mac
 """
 
-mod.list("scroll_direction", "Scroll direction")
+
+mod.list("scroll_direction", "Scroll directions")
 
 
 class AXScrollByPageAction(StrEnum):
