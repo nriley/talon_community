@@ -306,9 +306,9 @@ def list_rows(element, all=False):
     i = 1
     for row in rows:
         titles = []
-        for role in ("AXStaticText", "AXTextField", "AXImage"):
+        for role in ("AXStaticText", "AXTextField", "AXImage", "AXCell"):
             for text in row.children.find(AXRole=role):
-                for attr in ("AXValue", "AXTitle"):
+                for attr in ("AXValue", "AXTitle", "AXDescription"):
                     if title := getattr(text, attr, None):
                         titles.append([text.AXPosition.y, text.AXPosition.x, title])
                         break

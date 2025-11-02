@@ -3,6 +3,8 @@ app: outlook_mac
 # dictation mode gets confused when typing too fast
 settings():
     insert_wait = 2
+    # processing the entire contents of email previews is slow
+    user.ui_spoken_form_max_characters = 150
 
 archive: user.outlook_archive()
 delete: key(cmd-backspace)
