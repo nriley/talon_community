@@ -1,18 +1,38 @@
 import re
+import time
 from collections.abc import Callable
 from typing import Optional
 
-from talon import Context, Module, actions, app, ui
+from talon import Context, Module, actions, app, settings, ui
 from talon.scripting.types import NameDecl
 
 mod = Module()
 
+# Dynamic selection list processing can get slow when processing lots of text.
+# On my M4 Max, it's about 170K chars/sec.  Some apps will put a LOT into
+# accessibility descriptions which may not even be visible to the user.
+mod.setting(
+    "ui_spoken_form_max_characters",
+    type=str,
+    default=0,
+    desc="The maximum number of characters to process in a UI element label (0 for no limit)",
+)
+
 RE_NON_ALPHA_OR_SPACE = re.compile(r"\s*[^A-Za-z\s]+\s*")
+RE_SPACE = re.compile(r"\s+")
 
 
-def spoken_forms(s):
+def spoken_forms(s, max_length=0):
     # XXX use user.vocabulary, or may never match
     s = str(s)
+    if max_length and len(s) > max_length:
+        if str.isspace(s[max_length - 1]):
+            s = s[: max_length - 1]
+        elif str.isspace(s[max_length]):
+            s = s[:max_length]
+        else:
+            rest_of_word = RE_SPACE.split(s[max_length:], maxsplit=1)[0]
+            s = s[: (max_length + len(rest_of_word))]
     if RE_NON_ALPHA_OR_SPACE.search(s):
         spoken_forms = "\n".join(
             actions.user.create_spoken_forms(s, generate_subsequences=False)
@@ -47,12 +67,14 @@ class Actions:
         element_transformer: Callable mapping a ui.Element in the map above to the capture return value
         """
         LIST = {}
+        LIST_GENERATION_TIME = None
+        LIST_GENERATION_END_TIME = None
         list_path = list_decl.path
         list_name = list_path.rsplit(".", 1)[1]
 
         @ctx.dynamic_list(list_path)
         def ui_list(phrase):
-            nonlocal LIST
+            nonlocal LIST, LIST_GENERATION_TIME, LIST_GENERATION_END_TIME
 
             if not phrase:
                 elements = [
@@ -62,16 +84,27 @@ class Actions:
                 elements.sort()
                 return [name for top, left, name in elements]
 
+            max_length = settings.get("user.ui_spoken_form_max_characters")
+            start_time = time.time()
             LIST = {
-                spoken_forms(name): element
+                spoken_forms(name, max_length): element
                 for name, element in list_generator().items()
             }
+            LIST_GENERATION_END_TIME = time.time()
+            LIST_GENERATION_TIME = LIST_GENERATION_END_TIME - start_time
             return "\n".join(LIST.keys())
 
         if element_transformer is None:
             element_transformer = lambda e: e
 
         def ui_capture(m, element_transformer=element_transformer) -> ui.Element:
+            processing_time = time.time() - LIST_GENERATION_END_TIME
+            if LIST_GENERATION_TIME > 0.1 or processing_time > 0.1:
+                list_length = len("\n".join(LIST.keys()))
+                print(
+                    f"dynamic list generation time {LIST_GENERATION_TIME:.2f}s; length {list_length} characters; recognition time {processing_time:.2f}s"
+                )
+
             matched_text = getattr(m, list_name)
             if element := LIST.get(matched_text):
                 return element_transformer(element)
