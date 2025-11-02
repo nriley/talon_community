@@ -1,7 +1,7 @@
 from contextlib import suppress
 from enum import StrEnum
 from operator import itemgetter
-from typing import Optional, Union
+from typing import Optional
 
 from talon import Context, Module, actions, app, ctrl, ui
 from talon.types import Span
@@ -51,7 +51,7 @@ class Actions:
         """Go to one end of the focused UI element (head, beginning or first item)"""
 
     def ui_element_scroll(
-        direction: Union[str, AXScrollByPageAction],
+        direction: str | AXScrollByPageAction,
         element: Optional[ui.Element] = None,
     ):
         """Scroll the focused (or specified) UI element"""
