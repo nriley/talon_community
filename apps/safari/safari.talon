@@ -15,3 +15,7 @@ window reopen: key(cmd-shift-t)
 window reopen all: user.menu_select("History|Reopen All Windows from Last Session")
 
 reader: key(cmd-shift-r)
+
+bar switch: key(cmd-shift-l)
+bar bookmarks: key(cmd-ctrl-1)
+bar reading list: key(cmd-ctrl-2)
