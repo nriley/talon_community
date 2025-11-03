@@ -39,6 +39,8 @@ help (rows | items) all: user.help_list("user.ui_focused_list_row")
 [gooey] sidebar <user.ui_sidebar_row>: user.ui_element_select(ui_sidebar_row)
 sidebar menu <user.ui_sidebar_row>: user.ui_element_menu(ui_sidebar_row)
 sidebar hover <user.ui_sidebar_row>: user.ui_element_hover(ui_sidebar_row)
+sidebar {user.disclosure_action} <user.ui_sidebar_row>:
+    user.ui_element_disclose(user.ui_sidebar_row, disclosure_action)
 sidebar [scroll] {user.scroll_direction}:
     sidebar = user.ui_element_sidebar()
     if sidebar: user.ui_element_scroll(scroll_direction, sidebar)
