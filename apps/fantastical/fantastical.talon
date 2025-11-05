@@ -6,6 +6,12 @@ tomorrow: key(shift-right)
 yesterday: key(shift-left)
 today: key(cmd-t)
 
+day view: key(cmd-1)
+week view: key(cmd-2)
+month view: key(cmd-3)
+quarter view: key(cmd-4)
+year view: key(cmd-5)
+
 calendar set [<user.text>]: user.fantastical_select_calendar_set(text or "")
 
 bar switch: key(cmd-alt-s)
