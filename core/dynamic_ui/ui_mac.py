@@ -436,6 +436,15 @@ def on_ready():
         mod.list("ui_sidebar_row", desc="Rows of sidebar"),
         sidebar_rows,
     )
+    actions.user.ui_dynamic_list_and_capture(
+        "link in active window",
+        ctx,
+        mod.list(
+            "ui_active_window_link",
+            desc="Links in active window",
+        ),
+        lambda: active_window_elements("AXLink"),
+    )
 
 
 app.register("ready", on_ready)
