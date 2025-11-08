@@ -75,11 +75,7 @@ class EditActions:
         actions.sleep("100ms")
 
     def paste_match_style():
-        text = clip.text()
-        with clip.revert():
-            clip.set_text(text)
-            actions.next()
-            actions.sleep("100ms")
+        actions.key("cmd-shift-v")
 
     # user.find_and_replace
     def find(text: str = None):
@@ -338,6 +334,13 @@ class UserActions:
         actions.key("ctrl-g cmd-alt-f")
         actions.sleep("200ms")
         actions.insert(text)
+
+    def paste(text: str):
+        with clip.revert():
+            clip.set_text(text)
+            actions.edit.paste_match_style()
+            # sleep here so that clip.revert doesn't revert the clipboard too soon
+            actions.sleep("300ms")
 
     def office_mac_document_window():
         if not (active_window := ui.active_window()):
