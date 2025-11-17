@@ -17,6 +17,7 @@ field menu <user.ui_active_window_field>: user.ui_element_menu(ui_active_window_
 help fields: user.help_list("user.ui_active_window_field")
 
 [gooey] link <user.ui_active_window_link>: user.ui_element_click(ui_active_window_link)
+help links: user.help_list("user.ui_active_window_link")
 
 [gooey] list <user.ui_active_window_list>: user.ui_element_focus(ui_active_window_list)
 list menu <user.ui_active_window_list>: user.ui_element_menu(ui_active_window_list)
