@@ -12,6 +12,8 @@ Zero means always paste; -1 means never paste.
 """,
 )
 
+mod.tag("no_paste_to_insert", "Tag for temporarily disabling paste to insert")
+
 
 @ctx.action_class("main")
 class MainActions:
