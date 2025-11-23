@@ -67,7 +67,7 @@ class UserActions:
                 continue
             if not (window_element := focused_element.get("AXWindow")):
                 continue
-            if window_element.get("AXModal") or window_element.get("AXCloseButton"):
+            if window_element.get("AXModal"):
                 continue  # not the Quick Access window
             if (  # empty search field focused
                 focused_element.get("AXRole") == "AXTextField"
