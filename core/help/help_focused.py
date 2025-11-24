@@ -44,7 +44,7 @@ class ImguiRecording:
 
         return f
 
-    def playback(self, gui):
+    def play_back(self, gui):
         recording = self.recording
         if len(recording) == 0:
             return False
@@ -72,7 +72,7 @@ FOCUSED_HELP = None
 @imgui.open(x=ui.main_screen().x)
 def focused_help(gui: imgui.GUI):
     global FOCUSED_HELP
-    if FOCUSED_HELP.playback(gui):
+    if FOCUSED_HELP.play_back(gui):
         hide_button(gui)
         return
     else:
