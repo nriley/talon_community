@@ -111,6 +111,15 @@ def focused_help(gui: imgui.GUI):
         title(gui, "Window")
         text_attrs(gui, active_window, ("title", "rect", "id", "app"))
 
+    try:
+        active_app = focused_element.window.app
+        title(gui, "Element’s App")
+    except ui.UIErr:  # typically "Window not found"
+        if active_app := ui.active_app():
+            title(gui, "Active App")
+    if active_app:
+        text_attrs(gui, active_app, ("name", "pid", "bundle", "path", "exe", "cmdline"))
+
     if active_menu := ui.active_menu():
         title(gui, "Menu")
         if not active_menu.attrs:
