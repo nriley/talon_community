@@ -86,7 +86,8 @@ def focused_help(gui: imgui.GUI):
             pass
         case _:
             gui.text("Not currently supported on Windows or Linux")
-            hide_button(gui)
+            hide_button(gui.gui)
+            gui.stop()
             return
 
     try:
