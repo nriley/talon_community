@@ -124,6 +124,10 @@ def focused_help(gui: imgui.GUI):
                     "window",
                 ),
             )
+            if top_level := active_menu.get("AXTopLevelUIElement"):
+                if parent := top_level.get("AXParent"):
+                    gui.text(f"app: {parent}")
+
     hide_button(gui.gui)
     gui.stop()
 
