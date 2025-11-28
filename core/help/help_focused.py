@@ -114,7 +114,7 @@ def focused_help(gui: imgui.GUI):
     try:
         active_app = focused_element.window.app
         title(gui, "Element’s App")
-    except ui.UIErr:  # typically "Window not found"
+    except (ui.UIErr, AttributeError):  # typically "Window not found"
         if active_app := ui.active_app():
             title(gui, "Active App")
     if active_app:
