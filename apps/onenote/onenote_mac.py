@@ -335,6 +335,16 @@ class UserActions:
         actions.sleep("200ms")
         actions.insert(text)
 
+    # user.navigation
+    # XXX Key equivalents are unresponsive as of OneNote 16.103.2 (25112216)
+    def go_back():
+        # actions.key("cmd-ctrl-left")
+        actions.user.menu_select("Notebooks|History|Back")
+
+    def go_forward():
+        # actions.key("cmd-ctrl-right")
+        actions.user.menu_select("Notebooks|History|Forward")
+
     def paste(text: str):
         with clip.revert():
             clip.set_text(text)

@@ -2,6 +2,7 @@ app: onenote_mac
 -
 tag(): user.find_and_replace
 tag(): user.font_size
+tag(): user.navigation
 
 # due to a combination of clipboard slowness/flakiness, issues with inserting text in tables
 # and lack of exposure though accessibility
@@ -112,10 +113,6 @@ page back [<user.ordinals>]$: user.onenote_go_recent(ordinals or 1)
 
 key(cmd-ctrl-down): user.onenote_go_recent(1)
 key(cmd-ctrl-up): user.onenote_go_recent(-1)
-
-# navigating by cursor position
-go forward: key(cmd-ctrl-right)
-go back: key(cmd-ctrl-left)
 
 [open] link: key(left right:2 enter)
 edit link: key(cmd-k)
