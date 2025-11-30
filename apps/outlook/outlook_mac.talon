@@ -49,6 +49,8 @@ sync: key(cmd-ctrl-k)
 
 bar switch: key(cmd-alt-s)
 
+task switch: key(cmd-shift-])
+
 # not tested in "old Outlook"
 # can use Control-[/] for previous/next though that does not focus the message list
 next:
