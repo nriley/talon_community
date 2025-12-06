@@ -250,7 +250,7 @@ class UserActions:
 def menu_items(phrase: list[str]):
     items = []
 
-    if menu := ui.active_menu():
+    if menu := actions.user.active_menu_safe():
         items = enabled_items_with_role(menu, "AXMenuItem")
         while parent := getattr(menu, "AXParent", None):
             if (parent_role := parent.AXRole) not in ("AXMenuBarItem", "AXMenuItem"):
