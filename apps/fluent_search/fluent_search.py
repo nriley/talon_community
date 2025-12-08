@@ -39,10 +39,10 @@ class UserActions:
         apps = ui.apps(name="FluentSearch")
         if len(apps) == 0:
             if FLUENT_SEARCH_EXE is not None:
-                app.notify("Fluent Search not running; relaunching...")
+                app.notify("Fluent Search is not running; relaunching...")
                 os.startfile(FLUENT_SEARCH_EXE)
             else:
-                app.notify("Fluent Search not running")
+                app.notify("Fluent Search is not running; please (re)launch it")
                 return
         else:
             FLUENT_SEARCH_EXE = apps[0].exe
