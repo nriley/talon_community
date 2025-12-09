@@ -399,7 +399,9 @@ def on_ready():
         "text field in active window",
         ctx,
         mod.list("ui_active_window_field", desc="Text fields in active window"),
-        lambda: active_window_elements("AXTextArea", "AXTextField", "AXComboBox"),
+        lambda: active_window_elements(
+            "AXTextArea", "AXTextField", "AXComboBox", "AXDateTimeArea"
+        ),
     )
     actions.user.ui_dynamic_list_and_capture(
         "list, table, outline, icon or column view in active window",
