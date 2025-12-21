@@ -1,6 +1,9 @@
 list: user.phrase_ender
 -
 
+dot: "."
 over: ""
-space: " "
 pick: "\n"
+score: "_"
+slash: "/"
+space: " "
