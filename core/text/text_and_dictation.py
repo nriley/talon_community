@@ -145,12 +145,6 @@ def word(m) -> str:
         )
 
 
-@mod.capture(rule="(letter | {self.letter}) {self.letter}+")
-def spelled_word(m) -> str:
-    """A single word composed of letters from the Talon alphabet."""
-    return "".join(m.letter_list)
-
-
 @mod.capture(
     rule="({user.vocabulary} | <user.prose_contact> | <user.prose_spell> | <user.prose_clipboard> | <phrase>)+"
 )
