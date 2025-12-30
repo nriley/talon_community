@@ -47,10 +47,8 @@ class UserActions:
         if not (messages_table := mail_messages_table()):
             return
 
-        last_row = [
-            child for child in messages_table.children if child.AXRole == "AXRow"
-        ][-1]
-        last_row.AXSelected = True
+        messages_table.AXFocused = True
+        messages_table.AXRows[-1].AXSelected = True
 
     def mail_select_message(offset: int):
         if not (messages_table := mail_messages_table()):
