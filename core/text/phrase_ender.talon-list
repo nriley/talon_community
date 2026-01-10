@@ -1,6 +1,7 @@
 list: user.phrase_ender
 -
 
+colon: ":"
 dot: "."
 over: ""
 pick: "\n"
