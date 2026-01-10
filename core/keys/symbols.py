@@ -51,6 +51,7 @@ class Symbol:
 currency_symbols = [
     Symbol("$", ["dollar sign"], ["dollar"]),
     Symbol("£", ["pound sign"], ["pound"]),
+    Symbol("€", ["euro sign"], ["euro"]),
 ]
 
 symbols = [
@@ -65,10 +66,11 @@ symbols = [
     Symbol("#", ["number sign"], ["number"]),
     Symbol("%", ["percent sign"], ["percent"]),
     Symbol("@", ["at symbol"], ["at sign", "atsign"]),
+    Symbol("°", ["degree sign"], ["degree", "degrees"]),
     Symbol("&", ["ampersand"]),
     Symbol("-", ["hyphen"], ["minus", "dash"]),
-    Symbol("–", ["en dash"]),
-    Symbol("—", ["em dash"]),
+    Symbol("–", ["en dash", "nut dash"]),
+    Symbol("—", ["em dash", "mutton dash"]),
     Symbol("=", None, ["equals"]),
     Symbol("+", None, ["plus"]),
     Symbol("~", None, ["tilde"]),
