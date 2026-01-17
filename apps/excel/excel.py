@@ -1,6 +1,14 @@
-from talon import Module, app
+from talon import Context, Module, actions, app, settings
+
+from ...core.edit import edit_command, edit_command_actions
 
 mod = Module()
+ctx = Context()
+
+ctx.matches = r"""
+app: excel_mac
+app: excel_win
+"""
 
 
 @mod.capture(rule="[row] <user.number_string>")
@@ -74,3 +82,49 @@ def excel_reference(m) -> str:
 class Actions:
     def excel_save_as_format(format: str):
         """Save Excel document with format"""
+
+
+def select_lines(action, direction, count):
+    if direction == "lineUp":
+        selection_callback = actions.edit.extend_line_up
+    else:
+        selection_callback = actions.edit.extend_line_down
+
+    selection_delay = f"{settings.get('user.edit_command_line_selection_delay')}ms"
+
+    for i in range(1, count + 1):
+        selection_callback()
+        actions.sleep(selection_delay)
+
+    edit_command_actions.run_action_callback(action)
+
+
+custom_callbacks = {
+    ("delete", "lineUp"): select_lines,
+    ("delete", "lineDown"): select_lines,
+    ("cutToClipboard", "lineUp"): select_lines,
+    ("cutToClipboard", "lineDown"): select_lines,
+    ("copyToClipboard", "lineUp"): select_lines,
+    ("copyToClipboard", "lineDown"): select_lines,
+    ("select", "lineUp"): select_lines,
+    ("select", "lineDown"): select_lines,
+}
+
+
+@ctx.action_class("user")
+class UserActions:
+    def edit_command(action, modifier):
+        # XXX Extract functions to actions to make overriding this behavior easier
+        # XXX Or consider a "don't extend line when selecting up/down" setting
+
+        if isinstance(modifier, str):
+            modifier = edit_command.EditModifier(modifier)
+        if isinstance(action, str):
+            action = edit_command.EditSimpleAction(action)
+        key = (action.type, modifier.type)
+
+        if key in custom_callbacks:
+            custom_callbacks[key](action, modifier.type, modifier.count)
+            return
+
+        actions.next(action, modifier)
