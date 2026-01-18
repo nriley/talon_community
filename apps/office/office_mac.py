@@ -384,7 +384,7 @@ def saved_item_selection_list(items, fallback=None):
 @ctx.action_class("user")
 class UserActions:
 
-    def office_mac_ribbon_item_select(ribbon_item: ui.Element):
+    def office_mac_ribbon_item_select(ribbon_item):
         if ribbon_item.AXRole == "AXComboBox":
             ribbon_item.AXFocused = True
             return
@@ -394,7 +394,7 @@ class UserActions:
             pass
         actions.user.help_refresh()
 
-    def office_mac_ribbon_item_hover(ribbon_item: ui.Element):
+    def office_mac_ribbon_item_hover(ribbon_item):
         ctrl.mouse_move(*ribbon_item.AXFrame.center)
 
 
