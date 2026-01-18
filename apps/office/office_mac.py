@@ -102,7 +102,7 @@ class Actions:
     def office_mac_ribbon_item_hover(ribbon_item: ui.Element):
         """Move the mouse pointer to the specified ribbon control"""
 
-    def office_mac_ribbon_item_menu(ribbon_item: ui.Element):
+    def office_mac_ribbon_menu(ribbon_menu: ui.Element):
         """Open a menu on the specified ribbon control or select a menu item"""
 
 
@@ -406,12 +406,12 @@ class UserActions:
     def office_mac_ribbon_item_hover(ribbon_item):
         ctrl.mouse_move(*ribbon_item.AXFrame.center)
 
-    def office_mac_ribbon_item_menu(ribbon_item):
-        if "AXShowMenu" in ribbon_item.actions:
-            ribbon_item.perform("AXShowMenu")
+    def office_mac_ribbon_menu(ribbon_menu):
+        if "AXShowMenu" in ribbon_menu.actions:
+            ribbon_menu.perform("AXShowMenu")
             actions.user.help_refresh()
         else:
-            actions.user.office_mac_ribbon_item_select(ribbon_item)
+            actions.user.office_mac_ribbon_item_select(ribbon_menu)
 
 
 def left_top(element):
@@ -424,7 +424,7 @@ def left_top(element):
 def item_names(items, names=[]):
     elements = [(*left_top(element), element_title(element)) for element in items]
     elements.sort()
-    if elements:
+    if elements and names:
         names.append("")
     return names + [name for top, left, name in elements]
 
@@ -466,8 +466,11 @@ def ribbon_menus(phrase: list[str]):
             AXRole="AXWindow", AXSubrole="AXUnknown", max_depth=0
         )
         items = list(menu_window.children.find(AXRole="AXMenuButton"))
-        print(items)
+        if not phrase:
+            names = [f"• {element_title(item)}" for item in items]
+            items = []
     except ui.UIErr:
+        names = []
         items = []
 
     try:
@@ -477,6 +480,6 @@ def ribbon_menus(phrase: list[str]):
         return []
 
     if not phrase:
-        return item_names(items)
+        return item_names(items, names)
 
     return saved_item_selection_list(items)
