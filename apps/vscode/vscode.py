@@ -369,7 +369,6 @@ class UserActions:
     # find_and_replace.py support begin
 
     def find_everywhere(text: str):
-        """Triggers find across project"""
         if is_mac:
             actions.key("cmd-shift-f")
         else:
@@ -379,28 +378,24 @@ class UserActions:
             actions.insert(text)
 
     def find_toggle_match_by_case():
-        """Toggles find match by case sensitivity"""
         if is_mac:
             actions.key("alt-cmd-c")
         else:
             actions.key("alt-c")
 
     def find_toggle_match_by_word():
-        """Toggles find match by whole words"""
         if is_mac:
             actions.key("cmd-alt-w")
         else:
             actions.key("alt-w")
 
     def find_toggle_match_by_regex():
-        """Toggles find match by regex"""
         if is_mac:
             actions.key("cmd-alt-r")
         else:
             actions.key("alt-r")
 
     def replace(text: str):
-        """Search and replaces in the active editor"""
         if is_mac:
             actions.key("alt-cmd-f")
         else:
@@ -410,7 +405,6 @@ class UserActions:
             actions.insert(text)
 
     def replace_everywhere(text: str):
-        """Search and replaces in the entire project"""
         if is_mac:
             actions.key("cmd-shift-h")
         else:
@@ -420,14 +414,12 @@ class UserActions:
             actions.insert(text)
 
     def replace_confirm():
-        """Confirm replace at current position"""
         if is_mac:
             actions.key("shift-cmd-1")
         else:
             actions.key("ctrl-shift-1")
 
     def replace_confirm_all():
-        """Confirm replace all"""
         if is_mac:
             actions.key("cmd-enter")
         else:
