@@ -407,7 +407,7 @@ class UserActions:
         ctrl.mouse_move(*ribbon_item.AXFrame.center)
 
     def office_mac_ribbon_menu_select(ribbon_menu):
-        if "AXShowMenu" in ribbon_menu.actions:
+        if ribbon_menu.AXRole == "AXMenuButton" and "AXShowMenu" in ribbon_menu.actions:
             ribbon_menu.perform("AXShowMenu")
             actions.user.help_refresh()
         else:
