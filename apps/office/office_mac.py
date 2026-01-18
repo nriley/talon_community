@@ -102,8 +102,8 @@ class Actions:
     def office_mac_ribbon_item_hover(ribbon_item: ui.Element):
         """Move the mouse pointer to the specified ribbon control"""
 
-    def office_mac_ribbon_menu(ribbon_menu: ui.Element):
-        """Open a menu on the specified ribbon control or select a menu item"""
+    def office_mac_ribbon_menu_select(ribbon_menu: ui.Element):
+        """Open the specified ribbon menu or select a ribbon menu item"""
 
 
 @ctx.action_class("user")
@@ -406,7 +406,7 @@ class UserActions:
     def office_mac_ribbon_item_hover(ribbon_item):
         ctrl.mouse_move(*ribbon_item.AXFrame.center)
 
-    def office_mac_ribbon_menu(ribbon_menu):
+    def office_mac_ribbon_menu_select(ribbon_menu):
         if "AXShowMenu" in ribbon_menu.actions:
             ribbon_menu.perform("AXShowMenu")
             actions.user.help_refresh()
