@@ -349,7 +349,7 @@ def spoken_forms(s):
 
 def element_title(e):
     title = None
-    for attribute in ("AXTitle", "AXDescription"):
+    for attribute in ("AXTitle", "AXDescription", "AXValue"):
         try:
             if title := e.get(attribute):
                 break
@@ -468,9 +468,11 @@ def ribbon_menus(phrase: list[str]):
         menu_window = ui.active_app().children.find_one(
             AXRole="AXWindow", AXSubrole="AXUnknown", max_depth=0
         )
-        items = list(menu_window.children.find(AXRole="AXMenuButton"))
+        items = list(menu_window.children.find(AXRole="AXRadioButton"))
+        items += list(menu_window.children.find(AXRole="AXMenuButton"))
         if not phrase:
-            names = [f"• {element_title(item)}" for item in items]
+            items += list(menu_window.children.find(AXRole="AXStaticText"))
+            names = item_names(items, prefix="• ", across_then_down=True)
             items = []
     except ui.UIErr:
         names = []
