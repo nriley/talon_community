@@ -102,6 +102,9 @@ class Actions:
     def office_mac_ribbon_item_hover(ribbon_item: ui.Element):
         """Move the mouse pointer to the specified ribbon control"""
 
+    def office_mac_ribbon_item_menu(ribbon_item: ui.Element):
+        """Open a menu on the specified ribbon control or select a menu item"""
+
 
 @ctx.action_class("user")
 class UserActions:
@@ -296,6 +299,7 @@ class UserActions:
 
 
 mod.list("ribbon_items", desc="Ribbon tabs and controls (if visible)")
+mod.list("ribbon_menus", desc="Ribbon menu buttons and menu items (if visible)")
 
 RIBBON_ITEMS = {}
 
@@ -316,6 +320,11 @@ def matching_item(match):
 @mod.capture(rule="{user.ribbon_items}")
 def ribbon_item(m) -> ui.Element:
     return matching_item(m.ribbon_items)
+
+
+@mod.capture(rule="{user.ribbon_menus}")
+def ribbon_menu(m) -> ui.Element:
+    return matching_item(m.ribbon_menus)
 
 
 # XXX Share with menu_select
@@ -397,12 +406,27 @@ class UserActions:
     def office_mac_ribbon_item_hover(ribbon_item):
         ctrl.mouse_move(*ribbon_item.AXFrame.center)
 
+    def office_mac_ribbon_item_menu(ribbon_item):
+        if "AXShowMenu" in ribbon_item.actions:
+            ribbon_item.perform("AXShowMenu")
+            actions.user.help_refresh()
+        else:
+            actions.user.office_mac_ribbon_item_select(ribbon_item)
+
 
 def left_top(element):
     if frame := getattr(element, "AXFrame", None):
         return (frame.left, frame.top)
     else:
         return (0, 0)
+
+
+def item_names(items, names=[]):
+    elements = [(*left_top(element), element_title(element)) for element in items]
+    elements.sort()
+    if elements:
+        names.append("")
+    return names + [name for top, left, name in elements]
 
 
 @ctx.dynamic_list("user.ribbon_items")
@@ -428,10 +452,31 @@ def ribbon_items(phrase: list[str]):
         pass
 
     if not phrase:
-        elements = [(*left_top(element), element_title(element)) for element in items]
-        elements.sort()
-        if elements:
-            names.append("")
-        return names + [name for top, left, name in elements]
+        return item_names(items, names)
+
+    return saved_item_selection_list(items)
+
+
+@ctx.dynamic_list("user.ribbon_menus")
+def ribbon_menus(phrase: list[str]):
+    tab_group = document_window_tab_group()
+
+    try:
+        menu_window = ui.active_app().children.find_one(
+            AXRole="AXWindow", AXSubrole="AXUnknown", max_depth=0
+        )
+        items = list(menu_window.children.find(AXRole="AXMenuButton"))
+        print(items)
+    except ui.UIErr:
+        items = []
+
+    try:
+        tab = tab_group.children.find_one(AXRole="AXScrollArea", max_depth=0)
+        items += list(tab.children.find(AXRole="AXMenuButton"))
+    except ui.UIErr:
+        return []
+
+    if not phrase:
+        return item_names(items)
 
     return saved_item_selection_list(items)
