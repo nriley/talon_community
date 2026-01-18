@@ -414,15 +414,18 @@ class UserActions:
             actions.user.office_mac_ribbon_item_select(ribbon_menu)
 
 
-def left_top(element):
+def left_top(element, transpose=False):
     if frame := getattr(element, "AXFrame", None):
-        return (frame.left, frame.top)
+        return (frame.top, frame.left) if transpose else (frame.left, frame.top)
     else:
         return (0, 0)
 
 
-def item_names(items, names=[]):
-    elements = [(*left_top(element), element_title(element)) for element in items]
+def item_names(items, names=[], prefix="", across_then_down=False):
+    elements = [
+        (*left_top(element, across_then_down), f"{prefix}{element_title(element)}")
+        for element in items
+    ]
     elements.sort()
     if elements and names:
         names.append("")
@@ -434,7 +437,7 @@ def ribbon_items(phrase: list[str]):
     tab_group = document_window_tab_group()
     items = enabled_items_with_role(tab_group, "AXRadioButton")
     if not phrase:
-        names = [f"• {element_title(tab)}" for tab in items]
+        names = item_names(items, prefix="• ")
         items = []
 
     try:
