@@ -352,18 +352,6 @@ class UserActions:
             # sleep here so that clip.revert doesn't revert the clipboard too soon
             actions.sleep("300ms")
 
-    def office_mac_document_window():
-        if not (active_window := ui.active_window()):
-            raise Exception("Can't determine active window")
-
-        if active_window.app != onenote_app():
-            raise Exception("OneNote is not frontmost")
-
-        if not active_window.doc:
-            raise Exception("Frontmost window is not a document window")
-
-        return active_window
-
     # not standard OneNote; approximate equivalents of AutoHotKey
     def onenote_heading_1():
         actions.key("ctrl-e enter")
