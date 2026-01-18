@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, app
+from talon import Context, Module, actions, app, ui
 
 is_mac = app.platform == "mac"
 
@@ -224,6 +224,11 @@ class Actions:
         """Show command palette"""
         actions.key("ctrl-shift-p")
 
+    def vscode_find_everywhere(
+        text: str, include_files: str | None = None, exclude_files: str | None = None
+    ):
+        """Find across multiple files"""
+
 
 @mac_ctx.action_class("edit")
 class MacEditActions:
@@ -365,6 +370,41 @@ class UserActions:
         actions.user.split_window_vertically()
 
     # tabs.py support end
+
+    def vscode_find_everywhere(text, include_files=None, exclude_files=None):
+        actions.user.find_everywhere(text)
+
+        if not (include_files or exclude_files):
+            return
+
+        include_field = None
+        if is_mac:
+            search_group = ui.active_window().children.find_one(
+                AXRole="AXGroup",
+                AXDOMIdentifier="workbench.view.search",
+            )
+            try:
+                include_field = search_group.children.find_one(
+                    AXRole="AXTextField",
+                    AXDescription="files to include",
+                )
+                include_field.AXFocused = True
+            except ui.UIErr:
+                actions.user.vscode("workbench.action.search.toggleQueryDetails")
+        else:
+            # XXX on Windows, assumes query details are already visible
+            # XXX (may be able to do something similar to the above with accessibility)
+            actions.key("tab:5")
+        if include_files:
+            if include_field is not None:
+                include_field.AXValue = include_files
+            else:
+                actions.insert(include_files)
+        if exclude_files:
+            actions.key("tab:2")
+            actions.insert(exclude_files)
+
+        actions.user.find_everywhere("")
 
     # find_and_replace.py support begin
 
