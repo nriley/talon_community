@@ -1,6 +1,7 @@
 from talon import Context, Module, actions, app, ui
 
 is_mac = app.platform == "mac"
+is_windows = app.platform == "windows"
 
 ctx = Context()
 ctx_editor = Context()
@@ -391,13 +392,32 @@ class UserActions:
                 include_field.AXFocused = True
             except ui.UIErr:
                 actions.user.vscode("workbench.action.search.toggleQueryDetails")
+        elif is_windows:
+            for attempt in range(10):
+                try:
+                    fe = ui.focused_element()
+                    if fe.control_type == "Edit" and fe.class_name == "input" and fe.name.startswith("Search"):
+                        break
+                    actions.sleep("10ms")
+                except OSError:
+                    pass
+            else:
+                fe = None
+            if fe is not None:
+                try:
+                    include_field = fe.parent.find_one(control_type="Edit", name="files to include", max_depth=0)
+                    actions.key("tab:5")
+                except (IndexError, OSError):
+                    actions.user.vscode("workbench.action.search.toggleQueryDetails")
         else:
-            # XXX on Windows, assumes query details are already visible
-            # XXX (may be able to do something similar to the above with accessibility)
+            # assume query details are already visible
             actions.key("tab:5")
         if include_files:
             if include_field is not None:
-                include_field.AXValue = include_files
+                if is_mac:
+                    include_field.AXValue = include_files
+                else:
+                    include_field.value_pattern.value = include_files
             else:
                 actions.insert(include_files)
         if exclude_files:
