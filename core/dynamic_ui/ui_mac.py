@@ -223,7 +223,7 @@ class UserActions:
             match element.AXRole:
                 case "AXScrollArea":
                     break
-                case ("AXWindow", "AXApplication"):
+                case "AXWindow" | "AXApplication":
                     raise Exception("Unable to find a scroll area")
 
         if action not in element.actions:
