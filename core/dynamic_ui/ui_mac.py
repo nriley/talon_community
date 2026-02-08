@@ -149,6 +149,12 @@ class UserActions:
         parent = element.parent
         with suppress(ui.UIErr):
             element.AXSelected = True
+        # AXSelected appears read-only in Catalyst; press to select instead
+        if element.AXRole == "AXGroup":
+            with suppress(ui.UIErr):
+                element = element.children.find_one(AXRole="AXButton", max_depth=0)
+        if "AXPress" in element.actions:
+            element.perform("AXPress")
         if element.AXSelected:
             return
         if (
@@ -301,12 +307,21 @@ def list_rows(element, all=False):
                 rows = element.children
         case "AXGrid":
             rows = element.children
+        case "AXGroup":  # Catalyst AXValue for headings may be expansion state
+            rows = [c for c in element.children if c.AXRole != "AXHeading"]
         case _:
             rows = getattr(element, "AXRows" if all else "AXVisibleRows", [])
     i = 1
     for row in rows:
         titles = []
-        for role in (None, "AXStaticText", "AXTextField", "AXImage", "AXCell"):
+        for role in (
+            None,
+            "AXStaticText",
+            "AXTextField",
+            "AXImage",
+            "AXCell",
+            "AXButton",
+        ):
             elements = [row] if role is None else row.children.find(AXRole=role)
             for text in elements:
                 for attr in ("AXValue", "AXTitle", "AXDescription"):
@@ -353,8 +368,27 @@ def potential_sidebars():
     # Doesn't identify sidebars in Catalyst apps
     parent = actions.user.ui_element_active_window_or_sheet()
     seen_children = []
+    if parent.children.find(AXRole="AXGroup", AXSubrole="iOSContentGroup", max_depth=0):
+        for splitter in parent.children.find(AXRole="AXSplitter", max_depth=3):
+            # Splitters in Catalyst apps have no containing split group
+            split = splitter.parent
+            for group in split.children.find(AXRole="AXGroup", max_depth=0):
+                for collection in group.children.find(
+                    AXRole="AXGroup", AXRoleDescription="collection", max_depth=3
+                ):
+                    if collection in seen_children:
+                        continue
+                    yield collection
+                    seen_children.append(collection)
+        return
+
     for depth in range(3):
         for split in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
+            for outline in split.children.find(AXRole="AXOutline", max_depth=0):
+                if outline in seen_children:
+                    continue
+                yield outline
+                seen_children.append(outline)
             if scroll_areas := split.children.find(AXRole="AXScrollArea", max_depth=2):
                 frame_scroll = [(sa.AXFrame.left, sa) for sa in scroll_areas]
                 frame_scroll.sort(key=itemgetter(0))
