@@ -394,7 +394,7 @@ def saved_item_selection_list(items, fallback=None):
 class UserActions:
 
     def office_mac_ribbon_item_select(ribbon_item):
-        if ribbon_item.AXRole == "AXComboBox":
+        if ribbon_item.AXRole in ("AXComboBox", "AXIncrementor"):
             ribbon_item.AXFocused = True
             return
         try:
@@ -447,6 +447,7 @@ def ribbon_items(phrase: list[str]):
                 "AXButton",
                 "AXCheckBox",
                 "AXComboBox",
+                "AXIncrementor",
                 "AXMenuButton",
                 "AXRadioButton",
             ):
