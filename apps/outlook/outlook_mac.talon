@@ -12,6 +12,8 @@ delete all | empty folder: user.menu_select("Edit|Empty Folder")
 flag: key(ctrl-5)
 unflag: user.menu_select("Message|Flag|Clear Flag")
 # unflag: key(cmd-ctrl-') # does not work reliably
+pin: key(ctrl-p)
+unpin: key(cmd-ctrl-p)
 junk: key(cmd-shift-j)
 not junk: key(cmd-shift-alt-j)
 download:
