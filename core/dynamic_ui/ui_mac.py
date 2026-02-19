@@ -1,5 +1,6 @@
 from contextlib import suppress
 from enum import StrEnum, auto
+from itertools import chain
 from operator import itemgetter
 from typing import Optional
 
@@ -314,20 +315,27 @@ def list_rows(element, all=False):
     i = 1
     for row in rows:
         titles = []
-        for role in (
-            None,
-            "AXStaticText",
-            "AXTextField",
-            "AXImage",
-            "AXCell",
-            "AXButton",
-        ):
-            elements = [row] if role is None else row.children.find(AXRole=role)
-            for text in elements:
-                for attr in ("AXValue", "AXTitle", "AXDescription"):
-                    if title := getattr(text, attr, None):
-                        titles.append([text.AXPosition.y, text.AXPosition.x, title])
-                        break
+        elements = chain(
+            [row],
+            row.children.find(
+                *[
+                    dict(AXRole=role)
+                    for role in (
+                        "AXStaticText",
+                        "AXTextField",
+                        "AXImage",
+                        "AXCell",
+                        "AXButton",
+                    )
+                ],
+                prefetch=("AXValue", "AXTitle", "AXDescription", "AXPosition"),
+            ),
+        )
+        for text in elements:
+            for attr in ("AXValue", "AXTitle", "AXDescription"):
+                if title := getattr(text, attr, None):
+                    titles.append([text.AXPosition.y, text.AXPosition.x, title])
+                    break
         if not titles:
             continue
 
