@@ -8,5 +8,7 @@ merge: "m "
 new: "n "
 quit: "q "
 # convention so early exits are more visible
+quit early: "QUIT"
 quit when: "QUIT:"
+quit with: "QUIT "
 write: "w "
