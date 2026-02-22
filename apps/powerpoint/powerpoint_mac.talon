@@ -2,9 +2,11 @@ app: powerpoint_mac
 -
 tag(): user.pages
 
-# dictation mode gets confused when typing too fast
 settings():
-    insert_wait = 0.1
+    # always paste to insert
+    user.paste_to_insert_threshold = 0
+    # wait longer before insertion to prevent incorrect insertion in the middle of text
+    user.insert_wait = 5
 
 (slide | normal) view: key(cmd-1)
 slide sorter: key(cmd-2)
