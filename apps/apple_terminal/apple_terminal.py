@@ -1,7 +1,5 @@
 from talon import Context, Module, actions, app, cron, ctrl, ui
 
-# TODO: fit this to terminal.py
-
 mod = Module()
 ctx = Context()
 ctx.matches = r"""
@@ -137,35 +135,6 @@ class EditActions:
 class UserActions:
     def file_manager_current_path():
         return ui.active_window().doc or None
-
-    def file_manager_open_directory(path: str):
-        actions.insert("cd ")
-        path = f'"{path}"'
-        actions.insert(path)
-        actions.key("enter")
-
-        # jtk - refresh title isn't necessary since the apple terminal does it for us
-        # actions.user.file_manager_refresh_title()
-
-    def file_manager_open_parent():
-        actions.insert("cd ..")
-        actions.key("enter")
-
-    def file_manager_select_directory(path: str):
-        """selects the directory"""
-        actions.insert(path)
-
-    def file_manager_new_folder(name: str):
-        name = f'"{name}"'
-
-        actions.insert("mkdir " + name)
-
-    def file_manager_open_file(path: str):
-        actions.insert(path)
-        actions.key("enter")
-
-    def file_manager_select_file(path: str):
-        actions.insert(path)
 
     def file_manager_refresh_title():
         return

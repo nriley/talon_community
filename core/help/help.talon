@@ -28,7 +28,7 @@ help customize: user.help_list("user.edit_text_file")
 help websites: user.help_list("user.website")
 help focused: user.help_focused_toggle()
 
-(help formatters | help format | format help):
+help formatters | help format | format help:
     user.help_formatters(user.get_formatters_words(), false)
-(help re formatters | help re format | re format help):
+help re formatters | help re format | re format help:
     user.help_formatters(user.get_reformatters_words(), true)

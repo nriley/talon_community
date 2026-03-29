@@ -27,7 +27,6 @@ def on_phrase(j):
         print(">", " ".join(words))
 
 
-# todo: dynamic rect?
 @imgui.open(y=0)
 def gui(gui: imgui.GUI):
     global history

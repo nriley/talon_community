@@ -1,6 +1,7 @@
 #custom vscode commands go here
 app: vscode
 -
+
 tag(): user.find_and_replace
 tag(): user.font_size
 tag(): user.line_commands
@@ -131,7 +132,7 @@ refactor rename: user.vscode("editor.action.rename")
 refactor this: user.vscode("editor.action.refactor")
 
 #code navigation
-(go declaration | follow): user.vscode("editor.action.revealDefinition")
+go declaration | follow: user.vscode("editor.action.revealDefinition")
 follow next: user.vscode("goToNextReference")
 follow previous: user.vscode("goToPreviousReference")
 
@@ -264,7 +265,6 @@ terminal <number_small>: user.vscode_terminal(number_small)
 task run [<user.text>]:
     user.vscode("workbench.action.tasks.runTask")
     insert(user.text or "")
-#TODO: should this be added to linecommands?
 copy line down: user.vscode("editor.action.copyLinesDownAction")
 copy line up: user.vscode("editor.action.copyLinesUpAction")
 

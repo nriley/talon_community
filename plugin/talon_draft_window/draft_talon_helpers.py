@@ -78,6 +78,9 @@ class ContextSensitiveDictationActions:
             area[area.sel.right : area.sel.right + 50],
         )
 
+    def paste(text: str):
+        actions.insert(text)
+
 
 @ctx_focused.action_class("edit")
 class EditActions:

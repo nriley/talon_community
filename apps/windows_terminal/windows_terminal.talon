@@ -1,5 +1,6 @@
 app: windows_terminal
 -
+
 tag(): user.command_search
 
 # makes the commands in terminal.talon available
@@ -15,7 +16,6 @@ tag(): user.anaconda
 # tag(): user.kubectl
 
 tag(): user.tabs
-# TODO: file_manager
 tag(): user.splits
 
 settings open: key(ctrl-,)
