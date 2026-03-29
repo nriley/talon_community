@@ -1,5 +1,6 @@
 app: outlook_calendar_win
 -
+
 # moves by week
 next: key(alt-down)
 previous: key(alt-up)

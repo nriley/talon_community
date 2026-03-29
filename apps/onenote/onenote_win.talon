@@ -1,5 +1,6 @@
 app: onenote_win
 -
+
 tag(): user.font_size
 
 refresh: key(ctrl-pagedown ctrl-pageup)

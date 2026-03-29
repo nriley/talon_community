@@ -5,7 +5,7 @@ tag(): user.address
 tag(): user.find
 tag(): user.navigation
 
-(location | address): browser.focus_address()
+location | address: browser.focus_address()
 page: browser.focus_page()
 copy (location | address):
     browser.focus_address()

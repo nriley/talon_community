@@ -1,5 +1,6 @@
 app: omnigraffle
 -
+
 bring to front: key(cmd-shift-f)
 send to back: key(cmd-shift-b)
 

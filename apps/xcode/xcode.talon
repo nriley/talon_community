@@ -1,5 +1,6 @@
 app: xcode
 -
+
 tag(): user.find_and_replace
 tag(): user.line_commands
 tag(): user.splits
@@ -49,7 +50,7 @@ focus previous: key(cmd-alt-shift-`)
 focus pick: key(cmd-j)
 go forward: key(ctrl-cmd-right)
 go back: key(ctrl-cmd-left)
-(go definition | follow): key(cmd-ctrl-j)
+go definition | follow: key(cmd-ctrl-j)
 issue next: key(cmd-')
 issue previous: key(cmd-")
 counterpart next: key(cmd-ctrl-up)

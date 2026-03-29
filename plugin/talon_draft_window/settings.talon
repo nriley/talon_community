@@ -1,4 +1,3 @@
--
 settings():
     user.draft_window_theme = "light"
     user.draft_window_text_size = 18

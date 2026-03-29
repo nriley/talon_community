@@ -29,7 +29,7 @@ settings():
 #python-specific grammars
 dunder <user.python_special_name>:
     text = user.formatted_text("{python_special_name or ''}", "SNAKE_CASE")
-    "__{text}__"
+    insert("__{text}__")
 dunder: user.insert_between("__", "__")
 
 state (def | deaf | deft): "def "

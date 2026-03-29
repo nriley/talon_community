@@ -1,6 +1,7 @@
 os: mac
 app: rstudio
 -
+
 tag(): user.command_search
 tag(): user.find_and_replace
 tag(): user.line_commands
@@ -148,7 +149,7 @@ zoom source: key(ctrl-shift-1)
 (zoom | show) all: key(ctrl-shift-0)
 
 help that: key(f1)
-(define that | go declaration | follow | definition show): key(f2)
+define that | go declaration | follow | definition show: key(f2)
 previous plot: key(cmd-alt-f11)
 next plot: key(cmd-alt-f12)
 

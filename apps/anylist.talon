@@ -10,7 +10,7 @@ settings():
 add [<user.text>]:
     key(esc a)
     text = text or ""
-    "{user.formatted_text(text, 'CAPITALIZE_FIRST_WORD')}"
+    insert("{user.formatted_text(text, 'CAPITALIZE_FIRST_WORD')}")
 
 checked: key(esc h)
 favorites: key(alt-f)
@@ -23,7 +23,7 @@ edit:
     sleep(300ms)
     key(shift-tab)
 favorite: key(esc f)
-(save | done): key(cmd-enter)
+save | done: key(cmd-enter)
 
 # Quantity
 less: key(-)

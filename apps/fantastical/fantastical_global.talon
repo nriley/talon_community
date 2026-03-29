@@ -1,5 +1,6 @@
 os: mac
 -
+
 ^fantastical [<user.text>]:
     user.fantastical_parse(user.formatted_text("{text or ''}", "CAPITALIZE_FIRST_WORD"))
 

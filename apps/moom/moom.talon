@@ -1,5 +1,6 @@
 os: mac
 -
+
 # move window absolute
 window top right: user.moom_keys("w")
 window top left: user.moom_keys("q")

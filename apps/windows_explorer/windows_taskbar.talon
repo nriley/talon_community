@@ -1,5 +1,6 @@
 os: windows
 -
+
 ^calendar mini:
     key("super-n")
     sleep(50ms)

@@ -1,5 +1,6 @@
 app.bundle: com.apple.mail
 -
+
 tag(): user.find_and_replace
 
 archive: key(ctrl-cmd-a)

@@ -11,8 +11,7 @@ help buttons: user.help_list("user.ui_active_window_button")
 
 [gooey] field <user.ui_active_window_field>:
     user.ui_element_focus(ui_active_window_field)
-field hover <user.ui_active_window_field>:
-    user.ui_element_hover(ui_active_window_field)
+field hover <user.ui_active_window_field>: user.ui_element_hover(ui_active_window_field)
 field menu <user.ui_active_window_field>: user.ui_element_menu(ui_active_window_field)
 help fields: user.help_list("user.ui_active_window_field")
 
@@ -34,9 +33,12 @@ row {user.disclosure_action} <user.ui_focused_list_visible_row>:
     user.ui_element_disclose(ui_focused_list_visible_row, disclosure_action)
 help (rows | items): user.help_list("user.ui_focused_list_visible_row")
 
-[gooey] (row | item) all <user.ui_focused_list_row>: user.ui_element_select(ui_focused_list_row)
-(row | item) all menu <user.ui_focused_list_row>: user.ui_element_menu(ui_focused_list_row)
-(row | item) all hover <user.ui_focused_list_row>: user.ui_element_hover(ui_focused_list_row)
+[gooey] (row | item) all <user.ui_focused_list_row>:
+    user.ui_element_select(ui_focused_list_row)
+(row | item) all menu <user.ui_focused_list_row>:
+    user.ui_element_menu(ui_focused_list_row)
+(row | item) all hover <user.ui_focused_list_row>:
+    user.ui_element_hover(ui_focused_list_row)
 help (rows | items) all: user.help_list("user.ui_focused_list_row")
 
 [gooey] sidebar <user.ui_sidebar_row>: user.ui_element_select(ui_sidebar_row)
@@ -45,8 +47,7 @@ sidebar hover <user.ui_sidebar_row>: user.ui_element_hover(ui_sidebar_row)
 sidebar {user.disclosure_action} <user.ui_sidebar_row>:
     user.ui_element_disclose(user.ui_sidebar_row, disclosure_action)
 sidebar [scroll] {user.scroll_direction}:
-    sidebar = user.ui_element_sidebar()
-    if sidebar: user.ui_element_scroll(scroll_direction, sidebar)
+    user.ui_element_scroll(scroll_direction, sidebar)
 
 help sidebar: user.help_list("user.ui_sidebar_row")
 

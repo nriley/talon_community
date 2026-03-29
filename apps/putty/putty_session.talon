@@ -1,31 +1,32 @@
 app: putty
 app: citrix_desktop_mac
 -
+
 session menu: user.putty_open_menu()
 
 session new:
     user.putty_open_menu()
-    "w"
+    insert("w")
 
 session (duplicate | dupe):
     user.putty_open_menu()
-    "d"
+    insert("d")
 
 session saved:
     user.putty_open_menu()
-    "v"
+    insert("v")
 
 session clear:
     user.putty_open_menu()
-    "t"
+    insert("t")
     sleep(200ms)
     user.putty_open_menu()
-    "l"
+    insert("l")
 
 session copy:
     user.putty_open_menu()
-    "o"
+    insert("o")
 
 session restart:
     user.putty_open_menu()
-    "r"
+    insert("r")

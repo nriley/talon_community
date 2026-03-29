@@ -1,5 +1,5 @@
 # select from a list with the keyboard
-(pic | pick): key(return)
+pic | pick: key(return)
 (pic | pick) <number_small>:
     key("down:{number_small - 1}")
     sleep(50ms)

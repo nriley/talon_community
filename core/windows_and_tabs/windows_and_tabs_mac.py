@@ -34,13 +34,11 @@ class AppActions:
         ui.active_app().element.AXHidden = True
 
     def window_hide_others():
-        applescript.run(
-            """
+        applescript.run("""
 use framework "Foundation"
 set NSWorkspace to current application's class "NSWorkspace"
 NSWorkspace's sharedWorkspace's hideOtherApplications()
-"""
-        )
+""")
 
     def window_open():
         actions.key("cmd-n")

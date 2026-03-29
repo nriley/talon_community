@@ -1,5 +1,6 @@
 app: outlook_mac
 -
+
 # dictation mode gets confused when typing too fast
 settings():
     insert_wait = 2

@@ -396,7 +396,11 @@ class UserActions:
             for attempt in range(10):
                 try:
                     fe = ui.focused_element()
-                    if fe.control_type == "Edit" and fe.class_name == "input" and fe.name.startswith("Search"):
+                    if (
+                        fe.control_type == "Edit"
+                        and fe.class_name == "input"
+                        and fe.name.startswith("Search")
+                    ):
                         break
                     actions.sleep("10ms")
                 except OSError:
@@ -405,7 +409,9 @@ class UserActions:
                 fe = None
             if fe is not None:
                 try:
-                    include_field = fe.parent.find_one(control_type="Edit", name="files to include", max_depth=0)
+                    include_field = fe.parent.find_one(
+                        control_type="Edit", name="files to include", max_depth=0
+                    )
                     actions.key("tab:5")
                 except (IndexError, OSError):
                     actions.user.vscode("workbench.action.search.toggleQueryDetails")

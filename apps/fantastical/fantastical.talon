@@ -1,5 +1,6 @@
 app: fantastical
 -
+
 next: key(cmd-right)
 previous: key(cmd-left)
 tomorrow: key(shift-right)

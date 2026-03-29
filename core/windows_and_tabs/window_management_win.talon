@@ -1,5 +1,6 @@
 os: windows
 -
+
 # not universal but common enough
 app (exit | quit): key(alt-f x)
 full screen: key(f11)

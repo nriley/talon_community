@@ -85,16 +85,14 @@ class UserActions:
     def outlook_set_selected_folder(folder: str):
         # for "old Outlook" this uses the scripting dictionary
         # for "new Outlook" this currently uses the displayed folder name
-        result = applescript.run(
-            f"""
+        result = applescript.run(f"""
 			tell application id "com.microsoft.Outlook"
 				if (exists (selected folder)) then
 					set selected folder to {folder}
 					return true
 				end if
 				return false
-			end tell"""
-        )
+			end tell""")
         if result == "false":
             # new Outlook (at least until it gets OSA support)
             actions.user.outlook_focus_folder_list()
@@ -106,8 +104,7 @@ class UserActions:
         actions.key("ctrl-e")
 
     def outlook_unflag():
-        applescript.run(
-            """
+        applescript.run("""
 			tell application id "com.microsoft.Outlook"
 				get selected objects
 				repeat with _object in result
@@ -115,8 +112,7 @@ class UserActions:
 						set todo flag of _object to not flagged
 					end if
 				end repeat
-			end tell"""
-        )
+			end tell""")
 
     def outlook_focus_message_list():
         outlook = outlook_app()
