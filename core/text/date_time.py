@@ -27,7 +27,7 @@ month_words = "one two three four five six seven eight nine ten eleven twelve".s
 months = {word: number for number, word in enumerate(month_words, 1)}
 
 
-@mod.capture(rule=f'({"|".join(month_words)})')
+@mod.capture(rule=f"({'|'.join(month_words)})")
 def month(m) -> int:
     return months[m[0]]
 
@@ -36,7 +36,7 @@ digit_words = "one two three four five six seven eight nine".split()
 digits = {word: number for number, word in enumerate(digit_words, 1)}
 
 
-@mod.capture(rule=f'<number_small> | (twenty | thirty) [{"|".join(digit_words)}]')
+@mod.capture(rule=f"<number_small> | (twenty | thirty) [{'|'.join(digit_words)}]")
 def day(m) -> int:
     if hasattr(m, "number_small"):
         return m.number_small

@@ -392,7 +392,6 @@ def saved_item_selection_list(items, fallback=None):
 
 @ctx.action_class("user")
 class UserActions:
-
     def office_mac_ribbon_item_select(ribbon_item):
         if ribbon_item.AXRole in ("AXComboBox", "AXIncrementor"):
             ribbon_item.AXFocused = True

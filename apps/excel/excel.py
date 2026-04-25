@@ -23,12 +23,14 @@ def excel_column(m) -> str | int:
     return int(m.number_string)
 
 
-@mod.capture(rule="""
+@mod.capture(
+    rule="""
         (<user.excel_row> [through <user.excel_row>]) |
         (<user.excel_column> [through (<user.excel_column> | <user.number_string>)]) |
         (<user.excel_row> <user.excel_column> [through <user.excel_row> <user.excel_column>]) |
         (<user.excel_column> <user.excel_row> [through <user.excel_column> <user.excel_row>])
-    """)
+    """
+)
 def excel_reference(m) -> str:
     match app.platform:
         case "mac":
