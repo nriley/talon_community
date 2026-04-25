@@ -34,7 +34,7 @@ open that: key(cmd-down)
 move it here: key(cmd-alt-v)
 eject that: key(cmd-e)
 
-open close: key(cmd-alt-down)
+open close: key(cmd-alt-o)
 go parent close: key(cmd-alt-up)
 
 # The default command for this doesn't match Mac standard terminology
