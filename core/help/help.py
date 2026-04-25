@@ -1,4 +1,3 @@
-import itertools
 import math
 import re
 from collections import defaultdict
@@ -587,7 +586,7 @@ def get_sorted_keys_by_context_specificity(
             if keys:
                 return (display_name, "Context-dependent", 1)
             return (display_name, "Global", 0)
-        except Exception as ex:
+        except:
             return (display_name, "", 0)
 
     grouped_list = [
@@ -638,7 +637,7 @@ def hide_all_help_guis():
 def paginate_list(data, SIZE=None):
     chunk_size = SIZE or settings.get("user.help_max_command_lines_per_page")
     it = iter(data)
-    for i in range(0, len(data), chunk_size):
+    for _ in range(0, len(data), chunk_size):
         yield {k: data[k] for k in islice(it, chunk_size)}
 
 
