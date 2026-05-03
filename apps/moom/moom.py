@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from typing import Union
 
-from talon import Module, actions, cron, ui
+from talon import Module, actions, ui
 
 mod = Module()
 
@@ -73,7 +72,7 @@ def moom_controls_if_opened():
 
 @mod.action_class
 class Actions:
-    def moom(key: Union[str, MoomControl]):
+    def moom(key: str | MoomControl):
         """Press the corresponding Moom control [key]"""
         global opened_handler, moom_controls
         if not opened_handler:

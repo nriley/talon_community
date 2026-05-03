@@ -111,7 +111,7 @@ class UserActions:
     def office_mac_document_window():
         active_app = ui.active_app()
         try:
-            for attempt in range(10):
+            for attempt in range(10):  # noqa: B007
                 try:
                     window = active_app.children.find_one(
                         AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
@@ -136,7 +136,7 @@ class UserActions:
         if tab.get("AXValue") != 1:
             tab.perform("AXPress")
 
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.sleep("50ms")
             if tab.get("AXValue") == 1:
                 break
@@ -155,7 +155,7 @@ class UserActions:
             return None
 
         controls = []
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.sleep("50ms")
             if controls := ribbon.children.find(AXRole=role):
                 break
@@ -208,7 +208,7 @@ class UserActions:
 
         if keytips_active():
             ctrl.key_press("shift", alt=True, app=active_app)
-            for attempt in range(10):
+            for _attempt in range(10):
                 if not keytips_active():
                     break
                 actions.sleep("10ms")
@@ -218,7 +218,7 @@ class UserActions:
                 raise RuntimeError(error)
 
         ctrl.key_press("shift", alt=True, app=active_app)
-        for attempt in range(10):
+        for _attempt in range(10):
             if keytips_active():
                 break
             actions.sleep("10ms")
@@ -228,6 +228,26 @@ class UserActions:
             raise RuntimeError(error)
 
         actions.key(" ".join(keys))
+
+    def office_mac_ribbon_item_select(ribbon_item):
+        if ribbon_item.AXRole in ("AXComboBox", "AXIncrementor"):
+            ribbon_item.AXFocused = True
+            return
+        try:
+            ribbon_item.perform("AXPress")
+        except:  # XXX sometimes "fails" when it actually succeeds
+            pass
+        actions.user.help_refresh()
+
+    def office_mac_ribbon_item_hover(ribbon_item):
+        ctrl.mouse_move(*ribbon_item.AXFrame.center)
+
+    def office_mac_ribbon_menu_select(ribbon_menu):
+        if ribbon_menu.AXRole == "AXMenuButton" and "AXShowMenu" in ribbon_menu.actions:
+            ribbon_menu.perform("AXShowMenu")
+            actions.user.help_refresh()
+        else:
+            actions.user.office_mac_ribbon_item_select(ribbon_menu)
 
     def command_search(command=""):
         with suppress(ui.UIErr):
@@ -246,15 +266,15 @@ class UserActions:
 
         try:
             toolbar_group = document_window_toolbar_group()
-        except ui.UIErr:
-            raise Exception(f"Unable to locate window toolbar")
+        except ui.UIErr as e:
+            raise Exception("Unable to locate window toolbar") from e
         try:
             search_field = toolbar_group.children.find_one(
                 AXRole="AXTextField", AXSubrole="AXSearchField", max_depth=0
             )
             search_field.AXFocused = True
-        except ui.UIErr:
-            raise Exception("Unable to locate Search button")
+        except ui.UIErr as e:
+            raise Exception("Unable to locate Search button") from e
 
         search_field.AXValue = command
         if command == "":
@@ -264,7 +284,7 @@ class UserActions:
             return
 
         active_app = ui.active_app()
-        for attempt in range(10):
+        for _attempt in range(10):
             with suppress(ui.UIErr):
                 window = active_app.children.find_one(
                     AXRole="AXWindow",
@@ -280,7 +300,7 @@ class UserActions:
         # jump over find and replace options
         menu_buttons = group.children.find(AXRole="AXMenuButton")[3:]
         for index, button in enumerate(menu_buttons):
-            if button.AXEnabled == False:
+            if not button.AXEnabled:
                 button = menu_buttons[index + 1]
                 ctrl.mouse_move(*button.AXFrame.center)
                 return
@@ -294,8 +314,8 @@ class UserActions:
                 AXIdentifier="CUIDocumentShellWindowAutosaveWidgetAutoID",
                 max_depth=0,
             ).perform("AXPress")
-        except ui.UIErr:
-            raise Exception(f"Unable to locate document actions button")
+        except ui.UIErr as e:
+            raise Exception("Unable to locate document actions button") from e
 
 
 mod.list("ribbon_items", desc="Ribbon tabs and controls (if visible)")
@@ -377,8 +397,8 @@ def saved_item_selection_list(items, fallback=None):
         spoken_title = ""
         if title := element_title(item):
             spoken_title = spoken_forms(title)
-        elif fallback is not None:
-            if element := fallback(item):
+        elif fallback is not None:  # noqa: SIM102
+            if element := fallback(item):  # noqa: SIM102
                 if title := element_title(element):
                     spoken_title = spoken_forms(title)
         if spoken_title:
@@ -390,29 +410,6 @@ def saved_item_selection_list(items, fallback=None):
 # XXX end share with menu_select
 
 
-@ctx.action_class("user")
-class UserActions:
-    def office_mac_ribbon_item_select(ribbon_item):
-        if ribbon_item.AXRole in ("AXComboBox", "AXIncrementor"):
-            ribbon_item.AXFocused = True
-            return
-        try:
-            ribbon_item.perform("AXPress")
-        except:  # XXX sometimes "fails" when it actually succeeds
-            pass
-        actions.user.help_refresh()
-
-    def office_mac_ribbon_item_hover(ribbon_item):
-        ctrl.mouse_move(*ribbon_item.AXFrame.center)
-
-    def office_mac_ribbon_menu_select(ribbon_menu):
-        if ribbon_menu.AXRole == "AXMenuButton" and "AXShowMenu" in ribbon_menu.actions:
-            ribbon_menu.perform("AXShowMenu")
-            actions.user.help_refresh()
-        else:
-            actions.user.office_mac_ribbon_item_select(ribbon_menu)
-
-
 def left_top(element, transpose=False):
     if frame := getattr(element, "AXFrame", None):
         return (frame.top, frame.left) if transpose else (frame.left, frame.top)
@@ -420,7 +417,7 @@ def left_top(element, transpose=False):
         return (0, 0)
 
 
-def item_names(items, names=[], prefix="", across_then_down=False):
+def item_names(items, names=(), prefix="", across_then_down=False):
     elements = [
         (*left_top(element, across_then_down), f"{prefix}{element_title(element)}")
         for element in items
@@ -451,7 +448,7 @@ def ribbon_items(phrase: list[str]):
                 "AXRadioButton",
             ):
                 items.append(item)
-    except ui.UIErr as e:
+    except ui.UIErr:
         pass
 
     if not phrase:

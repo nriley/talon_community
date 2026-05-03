@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, app, ui
+from talon import Context, actions, app, ui
 
 if app.platform == "mac":
     from appscript import app as appscript_app
@@ -76,7 +76,7 @@ class UserActions:
         actions.key("cmd-shift-s")
         window = excel_window()
 
-        for attempt in range(5):
+        for _attempt in range(5):
             try:
                 sheet = window.children.find_one(AXRole="AXSheet", max_depth=0)
                 break
@@ -91,7 +91,7 @@ class UserActions:
         )
         file_format_popup.perform("AXPress")
 
-        for attempt in range(5):
+        for _attempt in range(5):
             try:
                 file_format_menu = file_format_popup.children.find_one(
                     AXRole="AXMenu", max_depth=0

@@ -23,11 +23,10 @@ class UserActions:
 
         document_window = ui.active_window().element
 
-        for attempt in range(10):
+        for _attempt in range(10):
             try:
                 el = ui.active_window().element
                 if el.control_type == "Menu" and el.name == "Save as type":
-                    file_format_menu = el
                     break
             except ui.UIErr:
                 actions.sleep("100ms")

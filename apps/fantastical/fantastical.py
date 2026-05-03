@@ -1,3 +1,5 @@
+from contextlib import suppress
+
 from talon import Context, Module, actions, ui
 
 ctx = Context()
@@ -53,12 +55,12 @@ class UserActions:
     def fantastical_show_mini_calendar():
         import webbrowser
 
-        webbrowser.open(f"x-fantastical3://show/mini")
+        webbrowser.open("x-fantastical3://show/mini")
 
     def fantastical_show_calendar():
         import webbrowser
 
-        webbrowser.open(f"x-fantastical3://show/calendar")
+        webbrowser.open("x-fantastical3://show/calendar")
 
     def fantastical_show_notifications():
         if not (notifications := fantastical_notifications()):
@@ -66,7 +68,7 @@ class UserActions:
 
         notifications.perform("AXPress")
 
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.sleep("50ms")
             try:
                 if notifications.children:
@@ -99,7 +101,7 @@ class UserActions:
         except ui.UIErr:
             actions.key("cmd-enter")
 
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.sleep("50ms")
             try:
                 menu = ui.active_menu()
@@ -123,7 +125,7 @@ class UserActions:
             split = window.children.find_one(AXRole="AXSplitGroup", max_depth=0)
             if split.AXSplitters[0].AXValue == 0:
                 actions.user.menu_select("View|Show Sidebar")
-                for attempt in range(10):
+                for _attempt in range(10):
                     if split.AXSplitters[0].AXValue > 0:
                         break
                     actions.sleep("50ms")
@@ -148,14 +150,12 @@ class UserActions:
         menu_extra = fantastical_helper.children.find_one(
             AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=1
         )
-        try:
+        with suppress(ui.ActionFailed):
             menu_extra.perform("AXPress")
-        except:
-            pass  # XXX generates talon.mac.ui.ActionFailed
 
-        for attempt in range(10):
+        for _attempt in range(10):
             try:
-                join_item = menu_extra.children.find_one(
+                menu_extra.children.find_one(
                     AXRole="AXMenuItem", AXIdentifier="conferenceMenuItemSelected:"
                 )
                 break

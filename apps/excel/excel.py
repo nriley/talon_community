@@ -92,7 +92,7 @@ def select_lines(action, direction, count):
 
     selection_delay = f"{settings.get('user.edit_command_line_selection_delay')}ms"
 
-    for i in range(1, count + 1):
+    for _attempt in range(1, count + 1):
         selection_callback()
         actions.sleep(selection_delay)
 

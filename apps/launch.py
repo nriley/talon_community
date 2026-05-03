@@ -4,7 +4,7 @@ mod = Module()
 
 
 def wait_focused_app(bundle, tries=10):
-    for attempt in range(tries):
+    for _attempt in range(tries):
         active_app = ui.active_app()
         if active_app.bundle == bundle:
             return active_app

@@ -73,7 +73,7 @@ class EditActions:
         # clip.capture() always returns clip.NoChange
         clip.set_text("blah")
         actions.edit.copy()
-        for i in range(20):
+        for _attempt in range(20):
             text = clip.text()
             if text is not None and text != "blah":
                 return text

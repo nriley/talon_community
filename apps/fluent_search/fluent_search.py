@@ -13,7 +13,7 @@ FLUENT_SEARCH_EXE = None
 
 
 def wait_for_fluent_search_window():
-    for attempt in range(20):
+    for _attempt in range(20):
         if ui.active_app().name == "FluentSearch":
             return True
         actions.sleep("50ms")

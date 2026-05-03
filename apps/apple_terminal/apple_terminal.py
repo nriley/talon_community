@@ -58,7 +58,7 @@ class Actions:
                     w for w in terminal.windows() if w.id == terminal_window_id
                 ).focus()
                 ctrl.key_press(key="k", super=True)
-                for attempt in range(10):
+                for _attempt in range(10):
                     window_contents = terminal_window.contents().rstrip("\n")
                     if window_contents == "":
                         break

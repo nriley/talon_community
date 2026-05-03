@@ -25,7 +25,7 @@ class UserActions:
             pass
 
         actions.key("ctrl-alt-shift-h")
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.sleep("50ms")
             try:
                 focused_element = ui.focused_element()

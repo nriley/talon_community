@@ -1,4 +1,6 @@
-from talon import Context, Module, actions, ui
+from contextlib import suppress
+
+from talon import Context, Module, actions, app, ui
 
 mod = Module()
 ctx = Context()
@@ -90,12 +92,10 @@ class UserActions:
 
     def mail_download_images():
         mail = mail_app()
-        try:
+        with suppress(ui.UIErr):
             mail.active_window.element.children.find_one(
                 AXRole="AXGroup", AXDescription="load failed proxy content banner"
             ).children.find_one(AXRole="AXButton").perform("AXPress")
-        except ui.UIErr:
-            pass
 
 
 @mod.action_class

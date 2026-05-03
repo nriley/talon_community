@@ -16,7 +16,7 @@ class UserActions:
             AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=0
         )
         menu_extra.perform("AXPress")
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.sleep("50ms")
             try:
                 search_field = menu_extra.children.find_one(

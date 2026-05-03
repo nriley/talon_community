@@ -36,7 +36,7 @@ class UserActions:
         actions.user.password_show()
         focused_element = None
         search_field = None
-        for attempt in range(100):
+        for _attempt in range(100):
             actions.sleep("200ms")
             if apps := ui.apps(bundle="com.1password.1password"):
                 try:
@@ -92,7 +92,7 @@ class UserActions:
             else:
                 print(f"Found focused element: {focused_element.dump()}")
             raise Exception("Gave up waiting for 1Password Quick Access")
-        for attempt in range(10):
+        for _attempt in range(10):
             search_field.AXValue = text
             actions.sleep("50ms")
             if search_field.AXValue == text:

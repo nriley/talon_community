@@ -1,4 +1,4 @@
-from talon import Context, Module, app, ctrl, ui
+from talon import Context, Module, ctrl, ui
 
 
 def hidden_bar():
