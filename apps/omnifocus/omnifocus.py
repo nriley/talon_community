@@ -67,7 +67,7 @@ os: mac
 
 
 @ctx_global.action_class("user")
-class Actions:
+class GlobalUserActions:
     def omnifocus_create_task(name: str):
         from appscript import k
 

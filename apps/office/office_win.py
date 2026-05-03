@@ -63,7 +63,7 @@ class UserActions:
 
 
 @ctx_mail_this.action_class("user")
-class UserActions:
+class MailThisUserActions:
     def office_mail_this():
         actions.user.command_search("Mail Recipient (As Attachment)")
         actions.sleep("1s")

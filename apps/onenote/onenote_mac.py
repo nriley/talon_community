@@ -1,4 +1,3 @@
-import re
 from collections import defaultdict
 from contextlib import suppress
 from datetime import timedelta
@@ -56,7 +55,7 @@ class AppActions:
 class EditActions:
     def copy():
         serial_start = clip.serial()
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.key("cmd-c")
             actions.sleep("100ms")
             if clip.serial() != serial_start:
@@ -64,7 +63,7 @@ class EditActions:
 
     def cut():
         serial_start = clip.serial()
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.key("cmd-x")
             actions.sleep("100ms")
             if clip.serial() != serial_start:
@@ -293,7 +292,7 @@ def onenote_notebooks_outline(navigation):
         notebooks_button.perform("AXPress")
 
     # wait for notebooks to appear
-    for attempt in range(5):
+    for _attempt in range(5):
         try:
             notebooks = navigation.children.find_one(AXRole="AXGroup", max_depth=0)
             return notebooks.children.find_one(AXRole="AXOutline")
@@ -376,7 +375,7 @@ class UserActions:
             )
             checkbox.perform("AXPress")
         # focus the note body if necessary
-        for attempt in range(10):
+        for _attempt in range(10):
             focused = ui.focused_element()
             if focused and focused.AXRole == "AXWindow" and focused.get("AXDocument"):
                 actions.sleep("100ms")
@@ -463,7 +462,7 @@ class UserActions:
             notebooks_button.perform("AXPress")
 
         # wait for section and page navigation to reappear
-        for attempt in range(5):
+        for _attempt in range(5):
             try:
                 sections_pages = navigation.children.find_one(
                     AXRole="AXSplitGroup", max_depth=0
@@ -602,7 +601,7 @@ class UserActions:
         zoom_combo_box = onenote_zoom_combo_box()
         if zoom_combo_box is None:
             app.notify(
-                body=f"Could not find Zoom combo box",
+                body="Could not find Zoom combo box",
                 title="OneNote",
             )
             ctrl.mouse_move(*saved_mouse_pos)
@@ -628,7 +627,7 @@ class UserActions:
         )
         if len(matches) != 1:
             app.notify(
-                body=f"Could not find top left corner of highlighted area",
+                body="Could not find top left corner of highlighted area",
                 title="OneNote",
             )
             ctrl.mouse_move(*saved_mouse_pos)
@@ -658,7 +657,7 @@ class UserActions:
             ctrl.mouse_click(button=0)
         else:
             app.notify(
-                body=f"Could not find top left corner of outline handle",
+                body="Could not find top left corner of outline handle",
                 title="OneNote",
             )
 
@@ -668,13 +667,13 @@ class UserActions:
         if zoom_level != "100%":
             zoom_combo_box.AXValue = zoom_level
             # Usually this takes two tries
-            for attempt in range(5):
+            for _attempt in range(5):
                 zoom_combo_box.AXFocused = True
-                if zoom_combo_box.AXFocused == True:
+                if zoom_combo_box.AXFocused:
                     actions.key("tab")
                     break
             else:
-                app.notify(body=f"Unable to focus zoom combo box", title="OneNote")
+                app.notify(body="Unable to focus zoom combo box", title="OneNote")
             if not open_tab:
                 ribbon.AXValue.perform("AXPress")
             elif open_tab.AXTitle != "View":
