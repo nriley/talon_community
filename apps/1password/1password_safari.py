@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, ui
+from talon import Context, Module, ui
 
 ctx = Context()
 mod = Module()
@@ -20,7 +20,7 @@ class UserActions:
         window = ui.active_window()
         if not window:
             return
-        if not (sections := getattr(window.element, "AXSections")):
+        if not (sections := getattr(window.element, "AXSections", None)):
             return
         content = next(
             o["SectionObject"] for o in sections if o["SectionUniqueID"] == "AXContent"
