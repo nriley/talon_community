@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, app, cron, ui
+from talon import Context, Module, actions, app, cron
 
 FDLINK_APPLICATION = None
 FD_RECORDING_CONTROL = None
