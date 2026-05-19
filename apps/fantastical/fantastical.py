@@ -66,7 +66,9 @@ class UserActions:
         if not (notifications := fantastical_notifications()):
             return
 
-        notifications.perform("AXPress")
+        with suppress(Exception):
+            # raises talon.mac.ui.ActionFailed even when it works
+            notifications.perform("AXPress")
 
         for _attempt in range(10):
             actions.sleep("50ms")
