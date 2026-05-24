@@ -1,6 +1,6 @@
 from typing import Optional
 
-from talon import Context, Module, actions
+from talon import Module, actions
 
 mod = Module()
 mod.tag("font_size", desc="Tag for enabling font size commands")

@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, app, keychain, registry, ui
+from talon import Context, Module, actions, app
 
 mod = Module()
 ctx = Context()
@@ -78,8 +78,6 @@ def ready():
         sessions
     )
 
-
-from talon import app
 
 if app.platform == "windows":
     app.register("ready", ready)

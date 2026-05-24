@@ -1,5 +1,3 @@
-import types
-
 from talon import Module, actions
 
 mod = Module()

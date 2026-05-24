@@ -1,9 +1,10 @@
 import math
 import re
 from collections import defaultdict
+from collections.abc import Iterable
 from itertools import islice
 from textwrap import wrap
-from typing import Any, Iterable, Optional, Tuple
+from typing import Any, Optional
 
 from talon import Context, Module, actions, imgui, registry, settings
 from talon.scripting import types
@@ -575,8 +576,8 @@ def get_sorted_display_keys(
 def get_sorted_keys_by_context_specificity(
     context_map: dict[str, Any],
     display_name_to_context_name_map: dict[str, str],
-) -> list[Tuple[str, str, int]]:
-    def get_group(display_name) -> Tuple[str, str, int]:
+) -> list[tuple[str, str, int]]:
+    def get_group(display_name) -> tuple[str, str, int]:
         try:
             context_name = display_name_to_context_name_map[display_name]
             context = context_map[context_name]

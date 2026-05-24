@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from threading import get_ident
 
 from talon import Context, Module, actions, app, imgui, ui
 

@@ -1,6 +1,4 @@
-import os
-
-from talon import Context, Module, actions, app, ui
+from talon import Context, Module, actions, ui
 
 mod = Module()
 

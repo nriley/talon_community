@@ -1,7 +1,6 @@
-from re import sub
 from typing import Optional
 
-from talon import Context, Module, actions, app, ui
+from talon import Context, Module, actions, app
 
 mod = Module()
 
