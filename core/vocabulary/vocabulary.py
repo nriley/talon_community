@@ -1,8 +1,7 @@
 import logging
 import os
 import re
-from collections.abc import Sequence
-from typing import Union
+from typing import Sequence, Union  # noqa: UP035
 
 from talon import Context, Module, actions
 from talon.grammar import Phrase
