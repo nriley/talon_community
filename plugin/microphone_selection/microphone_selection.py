@@ -62,7 +62,7 @@ def gui(gui: imgui.GUI):
             actions.user.microphone_select(index)
 
     gui.spacer()
-    if gui.button("[esc] Microphone close"):
+    if gui.button("[esc] microphone close"):
         actions.user.microphone_selection_hide()
 
 
