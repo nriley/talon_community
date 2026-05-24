@@ -84,7 +84,7 @@ class Actions:
 
     def microphone_select(index: int):
         """Selects a microphone"""
-        if 1 <= index and index <= len(microphone_device_list):
+        if index >= 1 and index <= len(microphone_device_list):
             actions.sound.set_microphone(microphone_device_list[index - 1])
             actions.user.microphone_selection_hide()
 

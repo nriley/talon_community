@@ -492,7 +492,7 @@ def refresh_context_command_map(enabled_only=False):
 
     for context_name, context in registry.contexts.items():
         splits = context_name.split(".")
-        if "talon" != splits[-1] or (enabled_only and context not in active_contexts):
+        if splits[-1] != "talon" or (enabled_only and context not in active_contexts):
             continue
         current_context_map = {
             str(val.rule.rule): val.script.code
