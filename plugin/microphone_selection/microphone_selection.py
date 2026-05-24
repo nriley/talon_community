@@ -29,16 +29,13 @@ def update_microphone_list():
     global microphone_device_list
     microphone_device_list = ["None", "System Default"]
 
-    # On Windows, it's presently necessary to check the state, or
-    # we will get any and every microphone that was ever connected.
     devices = [
-        dev.name
-        for dev in cubeb_ctx.inputs()
-        if dev.state == cubeb.DeviceState.ENABLED
-        and dev.name not in EXCLUDE_MICROPHONES
+        device
+        for device in actions.sound.microphones()
+        if device not in microphone_device_list and device not in EXCLUDE_MICROPHONES
     ]
-
     devices.sort()
+
     microphone_device_list += devices
 
 
