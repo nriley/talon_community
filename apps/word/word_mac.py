@@ -37,7 +37,7 @@ def word_document_window():
             or e.get("AXFullScreenButton") is None
             or e.get("AXDefaultButton") is not None
         ):
-            raise Exception(f"Frontmost window is not a document window")
+            raise Exception("Frontmost window is not a document window")
 
     return word_appscript().windows[its.active == True]()[0]
 

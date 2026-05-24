@@ -78,7 +78,7 @@ def focused_help(gui: imgui.GUI):
         FOCUSED_HELP.gui = gui
     gui = FOCUSED_HELP
 
-    title(gui, f"Focused", spacer=False)
+    title(gui, "Focused", spacer=False)
 
     match app.platform:
         case "mac":

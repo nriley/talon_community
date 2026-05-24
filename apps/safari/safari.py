@@ -68,7 +68,7 @@ class BrowserActions:
         window = ui.active_window()
         if not window:
             return
-        if not (sections := getattr(window.element, "AXSections")):
+        if not (sections := window.element.AXSections):
             return
         content = next(
             o["SectionObject"] for o in sections if o["SectionUniqueID"] == "AXContent"

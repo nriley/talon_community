@@ -202,7 +202,7 @@ class UserActions:
             vs.AXValue = 1 if tail else 0
             if select:
                 if hasattr(element, "AXSelectedRows") and (
-                    rows := getattr(element, "AXVisibleRows")
+                    rows := element.AXVisibleRows
                 ):
                     with suppress(ui.UIErr):
                         rows[-1 if tail else 0].AXSelected = True

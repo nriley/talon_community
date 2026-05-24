@@ -234,7 +234,7 @@ def create_exploded_forms(spoken_forms: list[str]):
         # ex: "readme" explodes into "read me"
         else:
             for word in line.split(" "):
-                if word in packed_words.keys():
+                if word in packed_words:
                     exploded_form.append(packed_words[word])
                 else:
                     exploded_form.append(word)
@@ -256,7 +256,7 @@ def create_extension_forms(spoken_forms: list[str]):
             # NOTE: If we ever run in to file extensions in the middle of file name, the
             # truncated form is going to be busted. ie: foo.md.disabled
 
-            if substring in file_extensions_map.keys():
+            if substring in file_extensions_map:
                 file_extension_forms.append(file_extensions_map[substring])
                 dotted_extension_form.append(REVERSE_PRONUNCIATION_MAP["."])
                 dotted_extension_form.append(file_extensions_map[substring])
@@ -306,7 +306,7 @@ def create_abbreviated_forms(spoken_forms: list[str]):
         unabbreviated_forms = []
         abbreviated_forms = []
         for substring in line.split(" "):
-            if substring in swapped_abbreviation_map.keys():
+            if substring in swapped_abbreviation_map:
                 abbreviated_forms.append(swapped_abbreviation_map[substring])
             else:
                 abbreviated_forms.append(substring)

@@ -187,7 +187,7 @@ def format_context_title(context_name: str) -> str:
         context_name,
         (
             "ACTIVE"
-            if context_map.get(context_name, None) in cached_active_contexts
+            if context_map.get(context_name) in cached_active_contexts
             else "INACTIVE"
         ),
     )
@@ -198,7 +198,7 @@ def format_context_button(index: int, context_label: str, context_name: str) -> 
     global show_enabled_contexts_only
     should_show_asterisk: bool = (
         not show_enabled_contexts_only
-        and context_map.get(context_name, None) in cached_active_contexts
+        and context_map.get(context_name) in cached_active_contexts
     )
     postfix: str = "*" if should_show_asterisk else ""
 
@@ -591,8 +591,7 @@ def get_sorted_keys_by_context_specificity(
             return (display_name, "", 0)
 
     grouped_list = [
-        get_group(display_name)
-        for display_name in display_name_to_context_name_map.keys()
+        get_group(display_name) for display_name in display_name_to_context_name_map
     ]
     return sorted(
         grouped_list,
