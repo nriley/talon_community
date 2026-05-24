@@ -1,10 +1,8 @@
-from talon import Context, Module, actions, app, imgui
-from talon.lib import cubeb
+from talon import Context, Module, actions, app, cron, imgui
 
 mod = Module()
 ctx = Context()
 
-cubeb_ctx = cubeb.Context()
 
 CALL_MICROPHONE = "SpeechMike III"
 pre_call_microphone = None
@@ -21,12 +19,13 @@ EXCLUDE_MICROPHONES = {
 }
 
 microphone_device_list = []
+update_microphone_cron_job = None
 
 
-# by convention, None and System Default are listed first
-# to match the Talon context menu.
 def update_microphone_list():
     global microphone_device_list
+    # By convention, None and System Default are listed first
+    # to match the Talon microphone menu.
     microphone_device_list = ["None", "System Default"]
 
     devices = [
@@ -54,13 +53,14 @@ def gui(gui: imgui.GUI):
     gui.text("Click or type to select a microphone")
     gui.text("(or say “microphone pick #”)")
     gui.line()
+    gui.text("Microphone list updates every 5 seconds")
+    gui.spacer()
     active_microphone = actions.sound.active_microphone()
     for index, item in enumerate(microphone_device_list, 1):
         if gui.button(
             f"{f'[{index}] ' if index < 10 else ''}{item}{' — active' if item == active_microphone else ''}"
         ):
             actions.user.microphone_select(index)
-
     gui.spacer()
     if gui.button("[esc] microphone close"):
         actions.user.microphone_selection_hide()
@@ -70,17 +70,24 @@ def gui(gui: imgui.GUI):
 class Actions:
     def microphone_selection_toggle():
         """Show GUI for choosing the Talon microphone"""
+        global update_microphone_cron_job
+
         if gui.showing:
             actions.user.microphone_selection_hide()
             return
         update_microphone_list()
         gui.show()
         ctx.tags = ["user.microphone_selection_open"]
+        update_microphone_cron_job = cron.interval("5s", update_microphone_list)
 
     def microphone_selection_hide():
         """Hide the microphone selection GUI"""
+        global update_microphone_cron_job
+
         gui.hide()
         ctx.tags = []
+        cron.cancel(update_microphone_cron_job)
+        update_microphone_cron_job = None
 
     def microphone_select(index: int):
         """Selects a microphone"""
@@ -114,11 +121,3 @@ class Actions:
         else:
             actions.sound.set_microphone(pre_call_microphone)
             app.notify(title="Restored prior microphone", body=pre_call_microphone)
-
-
-def on_ready():
-    cubeb_ctx.register("devices_changed", devices_changed)
-    update_microphone_list()
-
-
-app.register("ready", on_ready)
