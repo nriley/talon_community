@@ -31,7 +31,18 @@ ordinal_words = {
     80: "eightieth",
     90: "ninetieth",
 }
-tens_words = "zero ten twenty thirty forty fifty sixty seventy eighty ninety".split()
+tens_words = [
+    "zero",
+    "ten",
+    "twenty",
+    "thirty",
+    "forty",
+    "fifty",
+    "sixty",
+    "seventy",
+    "eighty",
+    "ninety",
+]
 
 # ordinal_numbers maps ordinal words into their corresponding numbers.
 ordinal_numbers = {}

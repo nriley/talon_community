@@ -23,7 +23,20 @@ def ampm(m) -> str:
     return m.ampm
 
 
-month_words = "one two three four five six seven eight nine ten eleven twelve".split()
+month_words = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve",
+]
 months = {word: number for number, word in enumerate(month_words, 1)}
 
 
@@ -32,7 +45,7 @@ def month(m) -> int:
     return months[m[0]]
 
 
-digit_words = "one two three four five six seven eight nine".split()
+digit_words = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 digits = {word: number for number, word in enumerate(digit_words, 1)}
 
 
