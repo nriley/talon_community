@@ -290,9 +290,7 @@ def gui_context_help(gui: imgui.GUI):
             )
         else:
             gui.text(
-                "Help: Active Contexts Only ({}/{})".format(
-                    current_context_page, total_page_count
-                )
+                f"Help: Active Contexts Only ({current_context_page}/{total_page_count})"
             )
 
         gui.line()
