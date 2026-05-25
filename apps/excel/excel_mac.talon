@@ -111,3 +111,6 @@ ribbon: key(cmd-alt-r)
     key(ctrl-g tab)
     insert(excel_reference)
     key(return)
+
+checkbox: user.menu_select("Insert|Checkbox")
+check: key(esc space)
