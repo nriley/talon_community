@@ -1,6 +1,6 @@
 from talon import Context, Module, actions, app, settings
 
-from ...core.edit import edit_command, edit_command_actions
+from ...core.edit import edit_command
 
 mod = Module()
 ctx = Context()
@@ -96,7 +96,7 @@ def select_lines(action, direction, count):
         selection_callback()
         actions.sleep(selection_delay)
 
-    edit_command_actions.run_action_callback(action)
+    actions.user.run_edit_action_callback(action)
 
 
 custom_callbacks = {
