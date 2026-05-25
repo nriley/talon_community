@@ -11,7 +11,7 @@ from talon.screen import capture
 from talon.skia.image import Image
 
 try:
-    ui.Element
+    ui.Element  # noqa: B018
 except AttributeError:  # XXX temporary workaround until this is exposed
     from talon.windows.ax import Element
 
@@ -37,6 +37,14 @@ class NavigationLevel(Enum):
     NOTEBOOKS = -1
     SECTIONS = 0
     PAGES = 1
+
+
+class SearchLevel(StrEnum):
+    PAGE = "Search This Page"
+    SECTION = "Search This Section"
+    SECTION_GROUP = "Search This Section Group"
+    NOTEBOOK = "Search This Notebook"
+    ALL_NOTEBOOKS = "Search All Notebooks"
 
 
 class Disclosure(StrEnum):
@@ -78,9 +86,7 @@ class EditActions:
 
     # user.find_and_replace
     def find(text: str = None):
-        actions.key("ctrl-g cmd-f")
-        actions.sleep("100ms")
-        actions.insert(text)
+        onenote_search(text, SearchLevel.PAGE)
 
 
 mod.list("onenote_disclose", desc="OneNote disclosure actions")
@@ -281,9 +287,7 @@ def onenote_show_sidebar(tab):
 
 def onenote_notebooks_outline(navigation):
     try:
-        sections_pages = navigation.children.find_one(
-            AXRole="AXSplitGroup", max_depth=0
-        )
+        navigation.children.find_one(AXRole="AXSplitGroup", max_depth=0)
     except ui.UIErr:
         pass
     else:
@@ -326,13 +330,33 @@ def onenote_navigation_list(level):
     return notebooks_or_sections
 
 
+def onenote_search(text, level):
+    navigation = onenote_show_sidebar(SidebarTab.SEARCH)
+    match level:
+        case SearchLevel.PAGE:
+            actions.key("cmd-f")
+        case SearchLevel.ALL_NOTEBOOKS:
+            actions.key("cmd-alt-f")
+        case _:
+            raise ValueError("Unsupported search level")
+
+    search_field = navigation.children.find_one(
+        AXRole="AXTextField", AXSubrole="AXSearchField"
+    )
+    if not text:
+        search_field.AXFocused = True
+        return
+
+    if " " in text:
+        text = f'"{text}"'
+    search_field.AXValue = text
+
+
 @ctx.action_class("user")
 class UserActions:
     # user.find_and_replace
     def find_everywhere(text: str):
-        actions.key("ctrl-g cmd-alt-f")
-        actions.sleep("200ms")
-        actions.insert(text)
+        onenote_search(text, SearchLevel.ALL_NOTEBOOKS)
 
     # user.navigation
     # XXX Key equivalents are unresponsive as of OneNote 16.103.2 (25112216)
