@@ -8,23 +8,29 @@ os: mac
 """
 
 
+def launchbar_app():
+    import appscript
+
+    return appscript.app(id="at.obdev.LaunchBar")
+
+
 @ctx.action_class("user")
 class UserActions:
     def launchbar_action(action: str, argument: str):
-        import appscript
-
-        app = appscript.app(id="at.obdev.LaunchBar")
+        launchbar = launchbar_app()
         if argument:
-            app.perform_action(action, with_string=argument)
+            launchbar.perform_action(action, with_string=argument)
         else:
-            app.perform_action(action)
+            launchbar.perform_action(action)
 
     def launchbar_select(text: str):
-        import webbrowser
+        launchbar = launchbar_app()
         from urllib.parse import quote
 
         abbreviation = actions.user.formatted_text(text, "ALL_LOWERCASE,NO_SPACES")
-        webbrowser.open("x-launchbar:select?abbreviation=" + quote(abbreviation))
+        launchbar.open_location(
+            "x-launchbar:select?abbreviation=" + quote(abbreviation)
+        )
 
 
 @mod.action_class
