@@ -181,7 +181,7 @@ class UserActions:
         )
         list_split = sidebar_split.children.find_one(AXRole="AXSplitGroup", max_depth=0)
         infobar = list_split.children.find_one(
-            AXRole="AXScrollArea", AXTitle="Infobar View", max_depth=0
+            AXRole="AXScrollArea", AXIdentifier="InfoBarContainer", max_depth=1
         )
         download_button = infobar.children.find_one(AXRole="AXButton", max_depth=0)
         download_button.perform("AXPress")
