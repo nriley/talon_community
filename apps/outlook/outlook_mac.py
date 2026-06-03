@@ -16,7 +16,7 @@ def outlook_app():
 def outlook_focused_element():
     outlook = outlook_app()
     seen_nothing = False
-    for attempt in range(10):
+    for _attempt in range(10):
         element = outlook.focused_element
         if element and getattr(element, "AXRole", None):
             return element
@@ -115,8 +115,6 @@ class UserActions:
 			end tell""")
 
     def outlook_focus_message_list():
-        outlook = outlook_app()
-
         element = outlook_focused_element()
         if (
             element.AXRole == "AXGroup"
@@ -130,7 +128,7 @@ class UserActions:
             return
 
         last_focused_element = None
-        for attempt in range(10):
+        for _attempt in range(10):
             focused_element = outlook_focused_element()
             role = focused_element.AXRole
             if focused_element != last_focused_element:
@@ -157,7 +155,7 @@ class UserActions:
             actions.key("cmd-alt-s")
 
         last_focused_element = None
-        for attempt in range(10):
+        for _attempt in range(10):
             focused_element = outlook_focused_element()
             role = focused_element.AXRole
             if focused_element != last_focused_element:
@@ -189,10 +187,8 @@ class UserActions:
         download_button.perform("AXPress")
 
     def outlook_focus_message_body():
-        outlook = outlook_app()
-
         last_focused_element = None
-        for attempt in range(10):
+        for _attempt in range(10):
             focused_element = outlook_focused_element()
             role = focused_element.AXRole
             if focused_element != last_focused_element:
@@ -211,7 +207,7 @@ class UserActions:
     def outlook_react():
         actions.key("cmd-ctrl-r")
         outlook = outlook_app()
-        for attempt in range(10):
+        for _attempt in range(10):
             windows = outlook.element.children.find(
                 AXRole="AXWindow", AXTitle="", AXSubrole="AXUnknown", max_depth=0
             )
