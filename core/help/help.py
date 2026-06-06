@@ -895,10 +895,9 @@ class Actions:
                 refresh_context_command_map(show_enabled_contexts_only)
             else:
                 update_active_contexts_cache(registry.last_active_contexts)
-        elif gui_list_help.showing:
-            if cached_list is not None:
-                cached_list = None
-                cached_list_contents = {}
+        elif gui_list_help.showing and cached_list is not None:
+            cached_list = None
+            cached_list_contents = {}
 
     def help_hide():
         """Hides the help"""

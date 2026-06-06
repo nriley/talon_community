@@ -73,11 +73,10 @@ def resume_if_suspended_by_app(app):
     if app_bundle_id not in disabling_app_bundle_ids:
         return
     disabling_app_bundle_ids.discard(app_bundle_id)
-    if was_enabled_globally:
-        if len(disabling_app_bundle_ids) == 0:
-            # print(f'enabling...')
-            actions.speech.enable()
-            actions.user.microphone_restore()
+    if was_enabled_globally and len(disabling_app_bundle_ids) == 0:
+        # print(f'enabling...')
+        actions.speech.enable()
+        actions.user.microphone_restore()
 
 
 def register_events():
