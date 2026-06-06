@@ -83,7 +83,7 @@ def on_win_open(window):
                 web_area = window.element.children.find_one(
                     AXRole="AXWebArea", max_depth=0
                 )
-                button = web_area.children.find_one(AXRole="AXButton")
+                web_area.children.find_one(AXRole="AXButton")
             except ui.UIErr:
                 return
             if teams_window_is_meeting_window(window):

@@ -168,7 +168,7 @@ class UserActions:
         else:
             list_top = None
         for attr in ("AXSelectedRows", "AXSelectedChildren"):
-            if (selected := getattr(list_top or parent, attr, None)) is not None:
+            if getattr(list_top or parent, attr, None) is not None:
                 list_top = list_top or parent
                 with suppress(ui.UIErr):
                     setattr(list_top, attr, [element])
@@ -411,7 +411,7 @@ def potential_sidebars():
 
 def sidebar():
     for scroll_child in potential_sidebars():
-        if rows := list_rows(scroll_child, True):
+        if list_rows(scroll_child, True):
             return scroll_child
 
 
