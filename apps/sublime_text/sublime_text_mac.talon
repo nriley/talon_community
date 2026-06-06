@@ -18,7 +18,7 @@ settings():
 
 bar switch: key(cmd-k cmd-b)
 
-file hunt [<user.text>]:
+file hunt [<user.text>]$:
     key(cmd-p)
     insert(text or "")
 

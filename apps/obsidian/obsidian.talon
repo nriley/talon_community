@@ -25,7 +25,7 @@ show settings: user.obsidian("app:open-settings")
 
 # note operations
 file hunt: user.obsidian("switcher:open")
-file hunt [<user.text>]:
+file hunt [<user.text>]$:
     user.obsidian("switcher:open")
     sleep(50ms)
     insert(user.text or "")

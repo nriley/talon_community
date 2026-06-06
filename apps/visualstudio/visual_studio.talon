@@ -27,7 +27,7 @@ fullscreen switch: key(shift-alt-enter)
 wrap switch: key(ctrl-e ctrl-w)
 
 # File Commands
-file hunt [<user.text>]:
+file hunt [<user.text>]$:
     key(ctrl-shift-t)
     insert(text or "")
 file create: key(ctrl-n)
