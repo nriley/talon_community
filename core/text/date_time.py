@@ -9,11 +9,6 @@ mod = Module()
 mod.list("ampm", desc="AM or PM")
 
 
-@mod.capture
-def ampm(m) -> str:
-    "AM or PM"
-
-
 ctx = Context()
 ctx.lists["self.ampm"] = {"AM": " AM", "PM": " PM", "A": " AM", "P": " PM"}
 
