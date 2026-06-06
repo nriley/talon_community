@@ -119,7 +119,7 @@ class UserActions:
                 # selecting is not necessary to pop up the menu,
                 # but helps if you insert a replacement
                 selected_range = Span(0, element.AXNumberOfCharacters)
-                for attempt in range(10):
+                for _attempt in range(10):
                     element.AXSelectedTextRange = selected_range
                     if element.AXSelectedTextRange == selected_range:
                         break

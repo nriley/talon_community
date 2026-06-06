@@ -12,7 +12,7 @@ class Actions:
             return True
 
         ui.launch(bundle=shroud_bundle)
-        for attempt in range(50):
+        for _attempt in range(50):
             if len(ui.apps(bundle=shroud_bundle)):
                 return False
             actions.sleep("50ms")

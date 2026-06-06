@@ -196,7 +196,7 @@ class UserActions:
 
         ctrl.mouse_click(1)
 
-        for attempt in range(10):
+        for _attempt in range(10):
             actions.sleep("50ms")
             if actions.user.active_menu_safe() is not None:
                 return

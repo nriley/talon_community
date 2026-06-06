@@ -393,7 +393,7 @@ class UserActions:
             except ui.UIErr:
                 actions.user.vscode("workbench.action.search.toggleQueryDetails")
         elif is_windows:
-            for attempt in range(10):
+            for _attempt in range(10):
                 try:
                     fe = ui.focused_element()
                     if (
