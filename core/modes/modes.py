@@ -39,17 +39,18 @@ def dictation_mode_active() -> bool:
 @mod.action_class
 class Actions:
     def command_mode():
-        """Enable command mode"""
+        """Switch to command mode."""
+        actions.user.status_remove("Dictation Mode")
         actions.mode.disable("sleep")
         actions.mode.disable("dictation")
         actions.mode.enable("command")
 
     def dictation_mode():
-        """Enable dictation mode"""
+        """Switch to dictation mode."""
+        actions.user.status_add("Dictation Mode")
         actions.mode.disable("sleep")
-        actions.mode.disable("command")
+        actions.mode.enable("command")  # mixed mode
         actions.mode.enable("dictation")
-        actions.user.code_clear_language_mode()
         actions.user.gdb_disable()
 
     def talon_mode():
@@ -80,21 +81,6 @@ class Actions:
                 actions.user.dragon_engine_wake()
                 # note: this may not do anything for all versions of Dragon. Requires Pro.
                 actions.user.dragon_engine_normal_mode()
-
-    def dictation_mode():
-        """Switch to dictation mode."""
-        actions.user.status_add("Dictation Mode")
-        actions.mode.disable("sleep")
-        actions.mode.enable("command")  # mixed mode
-        actions.mode.enable("dictation")
-        actions.user.gdb_disable()
-
-    def command_mode():
-        """Switch to command mode."""
-        actions.user.status_remove("Dictation Mode")
-        actions.mode.disable("sleep")
-        actions.mode.disable("dictation")
-        actions.mode.enable("command")
 
     def toggle_dictation_mode():
         """Switch from dictation to command mode or vice versa."""
