@@ -30,10 +30,7 @@ class UserActions:
 class Actions:
     def speech_suspended() -> bool:
         """Returns whether speech recognition is suspended due to an in-progress call"""
-        for bundle_id in disabling_app_bundle_ids:
-            if ui.apps(bundle=bundle_id):
-                return True
-        return False
+        return any(ui.apps(bundle=bundle_id) for bundle_id in disabling_app_bundle_ids)
 
 
 def suspend_by_app(app):
