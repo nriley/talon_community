@@ -296,14 +296,14 @@ def status_menu_items_fallback():
     screen_rect = display_area().inset(-1)
 
     talon_pid = os.getpid()
-    for app in ui.apps():
-        if app.pid == talon_pid:
+    for a in ui.apps():
+        if a.pid == talon_pid:
             continue  # XXX can pop up menu extra but can't select from it
 
-        if "/XPCServices/" in app.exe:
+        if "/XPCServices/" in a.exe:
             continue  # XXX hangs; can we filter these out more cleanly?
 
-        if menu_bar := getattr(app.element, "AXExtrasMenuBar", None):
+        if menu_bar := getattr(a.element, "AXExtrasMenuBar", None):
             if (position := getattr(menu_bar, "AXPosition", None)) is None:
                 continue
 
