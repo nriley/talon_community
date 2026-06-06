@@ -133,7 +133,7 @@ def scan_small_numbers(l: list[str]) -> Iterator[Union[str, int]]:
             d = l.pop()
             yield numbers_map[n] + numbers_map[d]
         # already a number (ordinal)
-        elif type(n) == int:
+        elif isinstance(n, int):
             yield n
         # turn small number terms into corresponding numbers
         elif n not in scales_map:
