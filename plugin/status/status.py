@@ -1,3 +1,5 @@
+from contextlib import suppress
+
 from talon import Module, app, canvas, ui
 from talon.types import Rect
 
@@ -21,10 +23,8 @@ class Actions:
         """Remove the specified status message."""
         global status
 
-        try:
+        with suppress(KeyError):
             status.remove(message)
-        except KeyError:
-            pass
 
         if len(status) == 0:
             hide_status()
