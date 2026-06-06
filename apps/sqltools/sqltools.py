@@ -18,7 +18,7 @@ app: sqltools
 """
 
 ctx_win = Context()
-ctx_win.matches: """
+ctx_win.matches = """
 os: windows
 app: sqltools
 """
