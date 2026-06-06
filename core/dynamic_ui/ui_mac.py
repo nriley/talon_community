@@ -172,7 +172,7 @@ class UserActions:
                 list_top = list_top or parent
                 with suppress(ui.UIErr):
                     setattr(list_top, attr, [element])
-                if (
+                if (  # noqa: SIM102
                     getattr(list_top, "AXOrientation", None)
                     != "AXHorizontalOrientation"
                 ):
@@ -275,7 +275,7 @@ def active_window_elements(*roles):
                         titles.append(title)
                         break
                 else:
-                    if identifier := getattr(element, "AXIdentifier", None):
+                    if identifier := getattr(element, "AXIdentifier", None):  # noqa: SIM102
                         if not identifier.startswith("_") and not identifier.endswith(
                             ":"
                         ):

@@ -100,8 +100,8 @@ def item_titles(items, fallback=None):
     for item in items:
         if title := element_title(item):
             yield title
-        elif fallback is not None:
-            if element := fallback(item):
+        elif fallback is not None:  # noqa: SIM102
+            if element := fallback(item):  # noqa: SIM102
                 if title := element_title(element):
                     yield title
 
@@ -114,8 +114,8 @@ def saved_item_selection_list(items, fallback=None):
         spoken_title = ""
         if title := element_title(item):
             spoken_title = spoken_forms(title)
-        elif fallback is not None:
-            if element := fallback(item):
+        elif fallback is not None:  # noqa: SIM102
+            if element := fallback(item):  # noqa: SIM102
                 if title := element_title(element):
                     spoken_title = spoken_forms(title)
         if spoken_title:

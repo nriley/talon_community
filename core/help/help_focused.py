@@ -133,7 +133,7 @@ def focused_help(gui: imgui.GUI):
                     "window",
                 ),
             )
-            if top_level := active_menu.get("AXTopLevelUIElement"):
+            if top_level := active_menu.get("AXTopLevelUIElement"):  # noqa: SIM102
                 if parent := top_level.get("AXParent"):
                     gui.text(f"app: {parent}")
 
