@@ -1,4 +1,4 @@
-from talon import Context, Module, actions, ui
+from talon import Context, Module, actions, app, ui
 
 DEFAULT_DISABLE_BUNDLE_IDS = frozenset(
     {
@@ -82,6 +82,4 @@ def register_events():
 
 
 # if we try to do this on module load at startup, the action speech.enabled is not yet defined
-from talon import app
-
 app.register("ready", register_events)
