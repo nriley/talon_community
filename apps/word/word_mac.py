@@ -39,7 +39,7 @@ def word_document_window():
         ):
             raise Exception("Frontmost window is not a document window")
 
-    return word_appscript().windows[its.active == True]()[0]
+    return word_appscript().windows[its.active == True]()[0]  # noqa: E712
 
 
 def word_document_zoom():
