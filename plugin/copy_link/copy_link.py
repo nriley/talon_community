@@ -38,9 +38,9 @@ class Actions:
 # Command codes are of the form `\uN?`, where N is a signed 16-bit integer and
 # ? is a placeholder character for pre-1.5 RTF readers.
 
-import codecs
-import re
-from struct import unpack
+import codecs  # noqa: E402
+import re  # noqa: E402
+from struct import unpack  # noqa: E402
 
 # Encode everything < 0x20, the \, { and } chars and everything > 0x7f.
 # Codeponts over \uffff are handled separately so capture these in a second
