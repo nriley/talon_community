@@ -42,7 +42,7 @@ class UserActions:
 
 
 @ctx_presentation.action_class("user")
-class UserActions:
+class PresentationUserActions:
     # user.pages
     def page_next():
         actions.key("pagedown")

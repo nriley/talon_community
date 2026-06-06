@@ -52,7 +52,7 @@ class UserActions:
 
 
 @ctx_configuration.action_class("user")
-class UserActions:
+class ConfigurationUserActions:
     def putty_open_session(putty_session: str):
         actions.key("alt-e")
         actions.insert(putty_session)

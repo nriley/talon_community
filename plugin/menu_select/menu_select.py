@@ -240,7 +240,7 @@ class UserActions:
 
 
 @ctx_win_citrix.action_class("user")
-class UserActions:
+class WinCitrixUserActions:
     def contextual_menu_open():
         actions.key("shift-f10")
 

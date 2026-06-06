@@ -22,7 +22,7 @@ app: rstudio
 
 
 @ctx_mac.action_class("app")
-class AppActions:
+class MacAppActions:
     def tab_open():
         actions.key("cmd-shift-n")
 
@@ -44,13 +44,13 @@ class CodeActions:
 
 
 @ctx_mac.action_class("code")
-class CodeActions:
+class MacCodeActions:
     def toggle_comment():
         actions.key("cmd-shift-c")
 
 
 @ctx_mac.action_class("edit")
-class EditActions:
+class MacEditActions:
     # user.line_commands
     def jump_line(n):
         actions.key("cmd-shift-alt-g")
@@ -77,7 +77,7 @@ class EditActions:
 
 
 @ctx_mac.action_class("user")
-class UserActions:
+class MacUserActions:
     # user.find_and_replace
     def find_everywhere(text: str):
         actions.key("cmd-shift-f")
