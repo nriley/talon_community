@@ -1,5 +1,6 @@
 import os
 import re
+from contextlib import suppress
 from typing import Optional
 
 from talon import Context, Module, actions, app, ctrl, imgui, ui
@@ -203,10 +204,8 @@ class UserActions:
         raise Exception("Unable to pop up contextual menu")
 
     def menu_item_select(menu_item: ui.Element):
-        try:
+        with suppress(ui.UIErr):  # XXX sometimes "fails" when it actually succeeds
             menu_item.perform("AXPress")
-        except:  # XXX sometimes "fails" when it actually succeeds
-            pass
 
     def menu_item_hover(menu_item: ui.Element):
         ctrl.mouse_move(*menu_item.AXFrame.center)

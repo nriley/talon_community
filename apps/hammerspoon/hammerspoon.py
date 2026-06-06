@@ -1,3 +1,5 @@
+from contextlib import suppress
+
 from talon import Context, Module, app, ui
 
 ctx = Context()
@@ -28,10 +30,9 @@ class UserActions:
         hs_menu_extra = hs.AXExtrasMenuBar.children.find_one(
             AXRole="AXMenuBarItem", AXSubrole="AXMenuExtra", max_depth=0
         )
-        try:
+
+        with suppress(ui.UIErr):  # This appears to fail but doesn't
             hs_menu_extra.perform("AXPress")
-        except:
-            pass  # This appears to fail but doesn't
         hs_menu_extra.children.find_one(AXRole="AXMenuItem", AXTitle=title).perform(
             "AXPress"
         )

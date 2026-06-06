@@ -233,10 +233,8 @@ class UserActions:
         if ribbon_item.AXRole in ("AXComboBox", "AXIncrementor"):
             ribbon_item.AXFocused = True
             return
-        try:
+        with suppress(ui.UIErr):  # XXX sometimes "fails" when it actually succeeds
             ribbon_item.perform("AXPress")
-        except:  # XXX sometimes "fails" when it actually succeeds
-            pass
         actions.user.help_refresh()
 
     def office_mac_ribbon_item_hover(ribbon_item):
