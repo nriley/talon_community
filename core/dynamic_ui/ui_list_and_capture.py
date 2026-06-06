@@ -95,7 +95,9 @@ class Actions:
             return "\n".join(LIST.keys())
 
         if element_transformer is None:
-            element_transformer = lambda e: e
+
+            def element_transformer(e):
+                return e
 
         def ui_capture(m, element_transformer=element_transformer) -> ui.Element:
             processing_time = time.time() - LIST_GENERATION_END_TIME
