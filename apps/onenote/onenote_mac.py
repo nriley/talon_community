@@ -240,12 +240,13 @@ def onenote_image_matches_in_notebook_window(
                 excess_matches.mkdir(exist_ok=True)
 
                 now = actions.user.time_format()
+                save_method = "save" if hasattr(needle, "save") else "write_file"
                 for rect in matches:
                     path = excess_matches / f"{now} {image_name} {rect}.png"
-                    capture(*rect, retina=False).write_file(path)
+                    getattr(capture(*rect, retina=False), save_method)(path)
 
-                needle.write_file(excess_matches / f"{now} {image_name}.png")
-                haystack.write_file(excess_matches / f"{now} haystack.png")
+                getattr(needle, save_method)(excess_matches / f"{now} {image_name}.png")
+                getattr(haystack, save_method)(excess_matches / f"{now} haystack.png")
                 return []
 
             if not matches:
