@@ -609,8 +609,8 @@ class UserActions:
         # - 100% zoom level (ensured below)
         # - (Potentially) font size
         window = actions.user.office_mac_document_window()
-        rect = window.rect
-        scale = window.screen.scale
+        rect = window.window.rect
+        scale = window.window.screen.scale
 
         # Deselect anything and move the mouse pointer out of the way of the content
         # to avoid an accidental match later
@@ -645,7 +645,7 @@ class UserActions:
         actions.edit.select_all()
 
         matches = onenote_image_matches_in_notebook_window(
-            window,
+            window.window,
             "onenote_highlight_top_left",
             attempts=10,
             delay="10ms",
@@ -667,7 +667,7 @@ class UserActions:
         actions.sleep("100ms")
 
         matches = onenote_image_matches_in_notebook_window(
-            window,
+            window.window,
             "onenote_outline_handle_top_left",
             attempts=10,
             delay="10ms",
