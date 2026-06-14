@@ -12,6 +12,12 @@ def focus_slides():
 
 @ctx.action_class("user")
 class UserActions:
+    def copy_style():
+        actions.key("ctrl-shift-c")
+
+    def paste_style():
+        actions.key("ctrl-shift-v")
+
     # user.pages
     def page_next():
         focus_slides()

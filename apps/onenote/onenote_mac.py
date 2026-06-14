@@ -355,6 +355,9 @@ def onenote_search(text, level):
 
 @ctx.action_class("user")
 class UserActions:
+    def normal_style():
+        actions.key("cmd-shift-n")
+
     # user.find_and_replace
     def find_everywhere(text: str):
         onenote_search(text, SearchLevel.ALL_NOTEBOOKS)

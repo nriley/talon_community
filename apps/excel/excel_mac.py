@@ -72,6 +72,9 @@ def excel_workbook_window():
 
 @ctx.action_class("user")
 class UserActions:
+    def clear_style():
+        actions.user.menu_select("Edit|Clear|Formats")
+
     def excel_save_as_format(format: str):
         actions.key("cmd-shift-s")
         window = excel_window()

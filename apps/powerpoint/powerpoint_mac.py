@@ -27,6 +27,12 @@ class AppActions:
 
 @ctx.action_class("user")
 class UserActions:
+    def copy_style():
+        actions.key("cmd-shift-c")
+
+    def paste_style():
+        actions.key("cmd-shift-v")
+
     def zoom_to_fit():
         actions.key("cmd-alt-o")
 

@@ -45,6 +45,9 @@ def mail_selected_messages():
 
 @ctx.action_class("user")
 class UserActions:
+    def clear_style():
+        actions.user.menu_select("Format|Style|Remove Style")
+
     def mail_select_last_message():
         if not (messages_table := mail_messages_table()):
             return

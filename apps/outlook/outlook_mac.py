@@ -77,6 +77,15 @@ class EditActions:
 
 @ctx.action_class("user")
 class UserActions:
+    def copy_style():
+        actions.user.menu_select("Edit|Copy Formatting")
+
+    def paste_style():
+        actions.user.menu_select("Edit|Paste Formatting")
+
+    def clear_style():
+        actions.user.menu_select("Edit|Clear Formatting")
+
     def find_everywhere(text: str):
         actions.key("cmd-shift-f")
         if text:

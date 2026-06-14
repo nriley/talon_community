@@ -46,9 +46,6 @@ send backward: key(ctrl-[])
 group that: key(ctrl-g)
 un group that: key(ctrl-shift-g)
 
-copy style: key(ctrl-shift-c)
-(pace | pist | paste) style: key(ctrl-shift-v)
-
 mail this: user.office_mail_this()
 
 mail p d f:

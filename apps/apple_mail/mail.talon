@@ -30,8 +30,6 @@ message (last | lost | lust):
     key(end)
     user.mail_select_last_message()
 
-normal: user.menu_select("Format|Style|Remove Style")
-
 # MsgFiler
 move: user.launch_or_focus_bundle("com.atow.MsgFiler4")
 

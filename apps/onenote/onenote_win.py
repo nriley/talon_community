@@ -32,6 +32,9 @@ class EditActions:
 
 @ctx.action_class("user")
 class UserActions:
+    def normal_style():
+        actions.key("ctrl-shift-n")
+
     def get_font_size():
         actions.user.office_ribbon_select("hfs")
         font_size = actions.edit.selected_text()

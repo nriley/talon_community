@@ -70,8 +70,6 @@ group that: key(cmd-alt-g)
 un group that: key(cmd-alt-shift-g)
 regroup that: key(cmd-alt-j)
 
-(copy | pick up object) style: key(cmd-shift-c)
-(pace | pist | paste | apply object) style | pistil: key(cmd-shift-v)
 duplicate: key(cmd-d)
 
 mail this: user.menu_select("File|Share|Send Presentation")
