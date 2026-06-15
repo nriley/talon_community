@@ -74,7 +74,7 @@ section new: key(cmd-t)
 section previous: key(cmd-{)
 section next: key(cmd-})
 
-go (page | pages): key(ctrl-cmd-g)
+go (page | pages) | bar navigation: key(ctrl-cmd-g)
 go page <user.onenote_page>: user.onenote_navigate(onenote_page)
 page {user.onenote_disclose} <user.onenote_page>:
     user.onenote_disclose(onenote_page, onenote_disclose)
@@ -103,12 +103,14 @@ page move left: key(cmd-alt-[)
 go top: key(alt-up)
 go bottom: key(alt-down)
 
+bar search: user.find_everywhere("")
+
 # navigating in recent notes (pages)
+bar (recent | history): user.onenote_go_recent(0)
 page forward [<user.ordinals>]$:
     offset = ordinals or 1
     offset = -1 * offset
     user.onenote_go_recent(offset)
-
 page back [<user.ordinals>]$: user.onenote_go_recent(ordinals or 1)
 
 key(cmd-ctrl-down): user.onenote_go_recent(1)
