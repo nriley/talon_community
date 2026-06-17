@@ -54,7 +54,7 @@ class AppActions:
 
 @ctx.action_class("edit")
 class EditActions:
-    def find(text: str = None):
+    def find(text):
         actions.key("cmd-f")
         if text:
             actions.insert(text)

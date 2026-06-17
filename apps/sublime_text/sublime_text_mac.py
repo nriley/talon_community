@@ -60,11 +60,11 @@ class EditActions:
     def select_word():
         actions.key("cmd-d")
 
-    def select_line(n: int = None):
+    def select_line(n):
         actions.key("cmd-l")
 
     # user.find_and_replace
-    def find(text: str = None):
+    def find(text):
         actions.key("cmd-f")
         actions.insert(text)
 

@@ -49,7 +49,7 @@ class EditActions:
     def select_word():
         actions.key("ctrl-w")
 
-    def select_line(n: int = None):
+    def select_line(n):
         actions.key("ctrl-l")
 
     def jump_line(n: int):

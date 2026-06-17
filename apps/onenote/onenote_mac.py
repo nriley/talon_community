@@ -77,7 +77,7 @@ class EditActions:
             if clip.serial() != serial_start:
                 return
 
-    def select_line(n: int = None):
+    def select_line(n):
         actions.key("right left cmd-a")
         actions.sleep("100ms")
 
@@ -85,7 +85,7 @@ class EditActions:
         actions.key("cmd-shift-v")
 
     # user.find_and_replace
-    def find(text: str = None):
+    def find(text):
         onenote_search(text, SearchLevel.PAGE)
 
 

@@ -17,7 +17,7 @@ class AppActions:
 
 @ctx.action_class("edit")
 class EditActions:
-    def select_line(n: int = None):
+    def select_line(n):
         actions.key("ctrl-a")
 
     def zoom_in():
