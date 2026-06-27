@@ -30,6 +30,8 @@ mod.apps.vscode = """
 os: linux
 and app.name: Code
 os: linux
+and app.name: code
+os: linux
 and app.name: code-oss
 os: linux
 and app.name: code-insiders
