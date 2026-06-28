@@ -22,12 +22,18 @@ def finder():
 
 @mod.action_class
 class Actions:
+    def finder_open_computer():
+        """Open the Computer in the Mac Finder"""
+
     def finder_open_trash():
         """Open the Trash in the Mac Finder"""
 
 
 @ctx.action_class("user")
 class UserActions:
+    def finder_open_computer():
+        finder().computer_container.open()
+
     def finder_open_trash():
         finder().trash.open()
 

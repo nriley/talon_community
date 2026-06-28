@@ -26,6 +26,8 @@ column view: key(cmd-3)
 list view: key(cmd-2)
 gallery view: key(cmd-4)
 
+open computer: user.finder_open_computer()
+
 trash that: key(cmd-backspace)
 empty trash: key(cmd-shift-backspace)
 go trash: user.finder_open_trash()
