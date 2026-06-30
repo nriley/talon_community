@@ -285,7 +285,7 @@ class EditActions:
     def jump_line(n):
         actions.user.emacs("goto-line", n)
 
-    def select_line(n):
+    def select_line(n=None):
         if n is not None:
             actions.edit.jump_line(n)
         else:
