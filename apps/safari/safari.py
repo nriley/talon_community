@@ -132,7 +132,7 @@ class AppActions:
 
 @ctx.action_class("edit")
 class EditActions:
-    def find(text):
+    def find(text=None):
         if text is not None:
             clip.set_text(text, mode="find")
             actions.key("cmd-g")

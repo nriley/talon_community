@@ -91,7 +91,7 @@ class EditActions:
     def file_start():
         actions.key("ctrl-home")
 
-    def find(text):
+    def find(text=None):
         actions.key("ctrl-f")
         if text:
             actions.insert(text)

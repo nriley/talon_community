@@ -315,7 +315,7 @@ class EditActions:
 
     # Some modes override ctrl-s/r to do something other than isearch-forward, so we
     # deliberately don't use actions.user.emacs.
-    def find(text):
+    def find(text=None):
         actions.key("ctrl-s")
         if text:
             actions.insert(text)

@@ -232,7 +232,7 @@ class EditActions:
     def find_previous():
         actions.user.idea("action FindPrevious")
 
-    def find(text):
+    def find(text=None):
         actions.user.idea("action Find")
         if text:
             actions.insert(text)

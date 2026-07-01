@@ -87,7 +87,7 @@ class EditActions:
         actions.key("cmd-shift-v")
 
     # user.find_and_replace
-    def find(text):
+    def find(text=None):
         onenote_search(text, SearchLevel.PAGE)
 
 

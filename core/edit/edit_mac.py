@@ -93,7 +93,7 @@ class EditActions:
     def file_start():
         actions.key("cmd-up")
 
-    def find(text):
+    def find(text=None):
         if text is not None:
             clip.set_text(text, mode="find")
         actions.key("cmd-f")

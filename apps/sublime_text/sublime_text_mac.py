@@ -66,7 +66,7 @@ class EditActions:
         actions.key("cmd-l")
 
     # user.find_and_replace
-    def find(text):
+    def find(text=None):
         actions.key("cmd-f")
         actions.insert(text)
 
