@@ -17,7 +17,9 @@ class AppActions:
 
 @ctx.action_class("edit")
 class EditActions:
-    def select_line(n):
+    def select_line(n=None):
+        if n is not None:
+            raise ValueError("Unable to select a specific line")
         actions.key("ctrl-a")
 
     def zoom_in():

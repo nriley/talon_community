@@ -161,7 +161,7 @@ class EditActions:
     def select_all():
         actions.key("ctrl-a")
 
-    def select_line(n):
+    def select_line(n=None):
         if n is not None:
             actions.edit.jump_line(n)
         actions.key("end shift-home")

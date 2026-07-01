@@ -77,7 +77,9 @@ class EditActions:
             if clip.serial() != serial_start:
                 return
 
-    def select_line(n):
+    def select_line(n=None):
+        if n is not None:
+            raise ValueError("Unable to select a specific line")
         actions.key("right left cmd-a")
         actions.sleep("100ms")
 

@@ -252,7 +252,9 @@ class EditActions:
     def indent_less():
         actions.user.idea("action EditorUnindentSelection")
 
-    def select_line(n):
+    def select_line(n=None):
+        if n is not None:
+            raise ValueError("Unable to select a specific line")
         actions.user.idea("action EditorSelectLine")
 
     def select_word():

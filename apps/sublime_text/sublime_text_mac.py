@@ -60,7 +60,9 @@ class EditActions:
     def select_word():
         actions.key("cmd-d")
 
-    def select_line(n):
+    def select_line(n=None):
+        if n is not None:
+            actions.edit.jump_line(n)
         actions.key("cmd-l")
 
     # user.find_and_replace

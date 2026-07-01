@@ -53,7 +53,9 @@ class EditActions:
     def select_word():
         actions.key("ctrl-d")
 
-    def select_line(n):
+    def select_line(n=None):
+        if n is not None:
+            actions.edit.jump_line(n)
         actions.key("ctrl-l")
 
     def jump_line(n: int):
