@@ -55,5 +55,5 @@ class EditActions:
 
     def find(text=None):
         actions.key("ctrl-shift-f")
-        if str:
+        if text:
             actions.insert(text)
