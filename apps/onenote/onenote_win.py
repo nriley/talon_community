@@ -34,6 +34,11 @@ class EditActions:
 
 @ctx.action_class("user")
 class UserActions:
+    def command_search(command=""):
+        actions.next(f'"{command}"')
+        actions.sleep("500ms")
+        actions.key("down")
+
     def normal_style():
         actions.key("ctrl-shift-n")
 
