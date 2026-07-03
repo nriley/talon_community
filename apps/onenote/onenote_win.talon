@@ -59,7 +59,8 @@ expand all: key(alt-shift-0)
 # but add option to just collapse a single level
 collapse (this | that): key(alt-shift--)
 
-mail this: user.office_ribbon_select("hm1")
+# user.office_mail_this() also works, but override doesn't
+mail this: key(ctrl-shift-e)
 
 go (notebook | notebooks): key(ctrl-g)
 
