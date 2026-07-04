@@ -1,5 +1,7 @@
 from talon import Context, Module, actions, app, ctrl, ui
-from talon.mac import applescript
+
+if app.platform == "mac":
+    from talon.mac import applescript
 
 ctx = Context()
 mod = Module()
