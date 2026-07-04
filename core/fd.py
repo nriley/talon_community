@@ -4,10 +4,24 @@ FDLINK_APPLICATION = None
 FD_RECORDING_CONTROL = None
 
 if app.platform == "windows":
-    import win32com.client
-    from pywintypes import com_error
+    try:
+        import win32com.client
+        from pywintypes import com_error as COMError
 
-    FDLINK_APPLICATION = win32com.client.Dispatch("FDLink.Application")
+        FDLINK_APPLICATION = win32com.client.Dispatch("FDLink.Application")
+    except ImportError:
+        try:
+            import comtypes.client
+            from comtypes import COMError
+
+            FDLINK_APPLICATION = comtypes.client.CreateObject(
+                "FDLink.Application", dynamic=True
+            )
+        except ImportError:
+            app.notify(
+                "No COM support available",
+                "pip install comtypes to interact with Fluency Direct",
+            )
 
 mod = Module()
 ctx = Context()
@@ -73,7 +87,7 @@ class UserActions:
         if fdrc := fd_recording_control():
             try:
                 return fdrc.GetRecognizerStatus() == 1
-            except com_error:
+            except COMError:
                 FD_RECORDING_CONTROL = None
 
         return False
@@ -87,7 +101,7 @@ class UserActions:
                 fdrc.EnableRecording(False)
                 # however, recording remains off after reenabled
                 fdrc.EnableRecording(True)
-            except com_error:
+            except COMError:
                 FD_RECORDING_CONTROL = None
 
     def enable_fd():
