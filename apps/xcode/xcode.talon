@@ -40,6 +40,12 @@ inspect history: key(cmd-alt-2)
 inspect help: key(cmd-alt-3)
 inspect switch: key(cmd-alt-0)
 
+# Editor toolbar (top)
+related: key(ctrl-1)
+project: key(ctrl-4)
+group: key(ctrl-5)
+doc: key(ctrl-6)
+
 # Debug area (bottom)
 bug switch: key(cmd-shift-y)
 bug console: key(cmd-shift-c)
