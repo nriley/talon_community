@@ -20,6 +20,8 @@ product archive: user.menu_select("Product|Archive")
 
 product clean: key(cmd-shift-k)
 
+product reveal: user.menu_select("Product|Show Build Folder in Finder")
+
 organizer: key(cmd-shift-alt-o)
 
 # Sidebar navigators (left side)
