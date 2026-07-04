@@ -51,6 +51,7 @@ bug switch: key(cmd-shift-y)
 bug console: key(cmd-shift-c)
 
 # Navigate
+editor: user.menu_select("Navigate|Move Focus to Next Editor Pane")
 focus next: key(cmd-alt-`)
 focus previous: key(cmd-alt-shift-`)
 focus pick: key(cmd-j)
