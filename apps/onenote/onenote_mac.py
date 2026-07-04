@@ -8,7 +8,11 @@ from typing import Optional
 from talon import Context, Module, actions, app, clip, cron, ctrl, ui
 from talon.experimental.locate import locate_in_image
 from talon.screen import capture
-from talon.skia.image import Image
+
+try:
+    from skia import Image
+except ModuleNotFoundError:
+    from talon.skia.image import Image
 
 try:
     ui.Element  # noqa: B018
