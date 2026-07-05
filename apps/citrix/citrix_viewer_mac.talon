@@ -1,12 +1,13 @@
 app: citrix_viewer_mac
 -
 
+# bridged clipboard isn't that fast or reliable
+tag(): user.no_paste_to_insert
+
 settings():
     # keys get dropped frequently, particularly during initial login
     insert_wait = 4
     key_wait = 6
-    # bridged clipboard isn't that fast or reliable
-    user.paste_to_insert_threshold = -1
 
 full screen: user.window_toggle_full_screen()
 

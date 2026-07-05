@@ -4,10 +4,11 @@ app: excel_mac
 tag(): user.find_and_replace
 tag(): user.tabs
 
+# Pasting into a column heading in a PivotTable doesn't work,
+# but typing does
+tag(): user.no_paste_to_insert
+
 settings():
-    # Pasting into a column heading in a PivotTable doesn't work,
-    # but typing does
-    user.paste_to_insert_threshold = -1
     key_wait = 5
 
 save as excel: user.excel_save_as_format("Excel Workbook (.xlsx)")
