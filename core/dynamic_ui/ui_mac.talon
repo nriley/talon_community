@@ -57,3 +57,6 @@ select head end: user.ui_element_end(false, true)
 select tail end: user.ui_element_end(true, true)
 
 scroll {user.scroll_direction}: user.ui_element_scroll(scroll_direction)
+
+window focus <user.ui_active_app_window>: user.ui_element_focus(ui_active_app_window)
+help windows: user.help_list("user.ui_active_app_window")

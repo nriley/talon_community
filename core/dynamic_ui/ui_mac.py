@@ -100,6 +100,10 @@ class UserActions:
             element.perform("AXPress")
 
     def ui_element_focus(element):
+        if "AXRaise" in element.actions:
+            element.perform("AXRaise")
+            return
+
         element.AXFocused = True
         if not element.AXFocused:
             previous_position = ctrl.mouse_pos()
@@ -423,6 +427,17 @@ def sidebar_rows():
         return {}
 
 
+def active_app_windows():
+    windows = ui.active_app().element.children.find(AXRole="AXWindow", max_depth=0)
+    window_title = [(w.get("AXTitle"), w) for w in windows]
+    window_title.sort()
+    return {
+        f"{title}{' *' if window.AXMain else ''}": window
+        for title, window in window_title
+        if title
+    }
+
+
 def on_ready():
     actions.user.ui_dynamic_list_and_capture(
         "button in active window",
@@ -489,6 +504,12 @@ def on_ready():
             desc="Links in active window",
         ),
         lambda: active_window_elements("AXLink"),
+    )
+    actions.user.ui_dynamic_list_and_capture(
+        "window in active application",
+        ctx,
+        mod.list("ui_active_app_window", desc="Windows in active application"),
+        active_app_windows,
     )
 
 
