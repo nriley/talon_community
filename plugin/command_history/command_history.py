@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 
 from talon import Module, actions, imgui, settings, speech_system
@@ -24,7 +25,7 @@ def on_phrase(j):
     if text is not None:
         history.append(text)
         history = history[-settings.get("user.command_history_size") :]
-        print(">", " ".join(words))
+        logging.info("> %s", " ".join(words))
 
 
 @imgui.open(y=0)
