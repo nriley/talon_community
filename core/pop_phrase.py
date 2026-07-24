@@ -19,6 +19,7 @@ auto_pop_that_phrases = [
     "downer",
     "upper",
     "scroll",
+    "swipe",
     "next",
     "previous",
     "step over",
