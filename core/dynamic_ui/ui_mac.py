@@ -377,12 +377,10 @@ def focused_list_rows(all=False):
 
 
 def potential_sidebars():
-    # Doesn't identify sidebars in Catalyst apps
     parent = actions.user.ui_element_active_window_or_sheet()
     seen_children = []
     if parent.children.find(AXRole="AXGroup", AXSubrole="iOSContentGroup", max_depth=0):
         for splitter in parent.children.find(AXRole="AXSplitter", max_depth=3):
-            # Splitters in Catalyst apps have no containing split group
             split = splitter.parent
             for group in split.children.find(AXRole="AXGroup", max_depth=0):
                 for collection in group.children.find(
