@@ -47,6 +47,12 @@ class Actions:
     def ui_element_sidebar() -> Optional[ui.Element]:
         """Return a UI element for the active window’s sidebar"""
 
+    def ui_element_sidebar_selected_rows() -> list[ui.Element]:
+        """Return the selected rows in the active window’s sidebar"""
+
+    def ui_element_sidebar_selected_menu():
+        """Show a menu on the first selected row in the active window’s sidebar"""
+
     def ui_element_click(element: ui.Element):
         """Click on a UI element"""
 
@@ -94,6 +100,13 @@ class UserActions:
 
     def ui_element_sidebar():
         return sidebar()
+
+    def ui_element_sidebar_selected_rows():
+        return sidebar_selected_rows()
+
+    def ui_element_sidebar_selected_menu():
+        if rows := sidebar_selected_rows():
+            actions.user.ui_element_menu(rows[0])
 
     def ui_element_click(element):
         with suppress(ui.ActionFailed):
@@ -376,9 +389,36 @@ def focused_list_rows(all=False):
     return list_rows(element, all)
 
 
+def left_top_sorted(children):
+    lte = [(c.AXFrame.left, c.AXFrame.top, c) for c in children]
+    lte.sort(key=itemgetter(0, 1))
+    yield from map(itemgetter(2), lte)
+
+
 def potential_sidebars():
     parent = actions.user.ui_element_active_window_or_sheet()
     seen_children = []
+
+    def element_potential_sidebars(element):
+        nonlocal seen_children
+        if element.AXRole in ("AXOutline", "AXTable"):
+            yield element
+
+        for child in element.children.find(AXRole="AXOutline", max_depth=0):
+            if child in seen_children:
+                continue
+            yield child
+            seen_children.append(child)
+        if scroll_areas := element.children.find(AXRole="AXScrollArea", max_depth=2):
+            for sa in left_top_sorted(scroll_areas):
+                scroll_child = sa.children[0]
+                if scroll_child in seen_children:
+                    continue
+                if scroll_child.AXRole in ("AXOutline", "AXTable"):
+                    yield scroll_child
+                seen_children.append(scroll_child)
+
+    # Catalyst
     if parent.children.find(AXRole="AXGroup", AXSubrole="iOSContentGroup", max_depth=0):
         for splitter in parent.children.find(AXRole="AXSplitter", max_depth=3):
             split = splitter.parent
@@ -392,37 +432,44 @@ def potential_sidebars():
                     seen_children.append(collection)
         return
 
+    children = parent.children.find(
+        dict(AXRole="AXOutline"), dict(AXRole="AXTable"), max_depth=0
+    )
+    for child in left_top_sorted(children):
+        yield from element_potential_sidebars(child)
+
+    if sds := getattr(parent, "AXSections", None):
+        sections = left_top_sorted(map(itemgetter("SectionObject"), sds))
+        for section in sections:
+            yield from element_potential_sidebars(section)
+
     for depth in range(3):
         for split in parent.children.find(AXRole="AXSplitGroup", max_depth=depth):
-            for outline in split.children.find(AXRole="AXOutline", max_depth=0):
-                if outline in seen_children:
-                    continue
-                yield outline
-                seen_children.append(outline)
-            if scroll_areas := split.children.find(AXRole="AXScrollArea", max_depth=2):
-                frame_scroll = [(sa.AXFrame.left, sa) for sa in scroll_areas]
-                frame_scroll.sort(key=itemgetter(0))
-                for _, sa in frame_scroll:
-                    scroll_child = sa.children[0]
-                    if scroll_child in seen_children:
-                        continue
-                    if scroll_child.AXRole in ("AXOutline", "AXTable"):
-                        yield scroll_child
-                    seen_children.append(scroll_child)
+            yield from element_potential_sidebars(split)
 
 
 def sidebar():
-    for scroll_child in potential_sidebars():
-        if list_rows(scroll_child, True):
-            return scroll_child
+    for child in potential_sidebars():
+        if list_rows(child, True):
+            return child
 
 
 def sidebar_rows():
-    for scroll_child in potential_sidebars():
-        if rows := list_rows(scroll_child, True):
+    for child in potential_sidebars():
+        if rows := list_rows(child, True):
             return rows
     else:
         return {}
+
+
+def sidebar_selected_rows():
+    for child in potential_sidebars():
+        selected_rows = getattr(child, "AXSelectedChildren", None)
+        if selected_rows is None and (rows := list_rows(child, True)):
+            selected_rows = [row for row in rows if getattr(row, "AXSelected", None)]
+        if selected_rows:
+            return selected_rows
+    return []
 
 
 def active_app_windows():
