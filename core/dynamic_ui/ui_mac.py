@@ -432,6 +432,7 @@ def potential_sidebars():
                     seen_children.append(collection)
         return
 
+    # BBEdit
     children = parent.children.find(
         dict(AXRole="AXOutline"), dict(AXRole="AXTable"), max_depth=0
     )
