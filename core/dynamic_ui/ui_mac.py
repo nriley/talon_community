@@ -175,6 +175,11 @@ class UserActions:
             element.perform("AXPress")
         if element.AXSelected:
             return
+        # BBEdit
+        for child in element.children:
+            if "AXPick" in child.actions:
+                child.perform("AXPick")
+                return
         if (
             parent.AXRole == "AXList"
             and getattr(parent, "AXSubrole", None) == "AXSectionList"
@@ -466,6 +471,8 @@ def sidebar_rows():
 def sidebar_selected_rows():
     for child in potential_sidebars():
         selected_rows = getattr(child, "AXSelectedChildren", None)
+        if selected_rows is None:
+            selected_rows = getattr(child, "AXSelectedRows", None)
         if selected_rows is None and (rows := list_rows(child, True)):
             selected_rows = [row for row in rows if getattr(row, "AXSelected", None)]
         if selected_rows:
