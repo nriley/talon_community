@@ -29,7 +29,7 @@ class EditActions:
         actions.key("ctrl-alt-shift--")
 
     def zoom_reset():
-        actions.user.office_ribbon_select("w1")
+        actions.user.office_ribbon_select("w001")
 
 
 @ctx.action_class("user")
