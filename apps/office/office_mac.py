@@ -415,7 +415,9 @@ def left_top(element, transpose=False):
         return (0, 0)
 
 
-def item_names(items, names=(), prefix="", across_then_down=False):
+def item_names(items, names=None, prefix="", across_then_down=False):
+    if names is None:
+        names = []
     elements = [
         (*left_top(element, across_then_down), f"{prefix}{element_title(element)}")
         for element in items
