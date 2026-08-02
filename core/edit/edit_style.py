@@ -23,6 +23,10 @@ class Actions:
         """Applies the “Normal” style to the selection"""
         actions.user.clear_style()
 
+    def paste_plain_text():
+        """Paste clipboard as plain text"""
+        actions.edit.paste_match_style()
+
 
 @ctx_mac.action_class("user")
 class MacUserActions:
@@ -34,3 +38,7 @@ class MacUserActions:
 
     def clear_style():
         actions.key("cmd-ctrl-backspace")
+
+    def paste_plain_text():
+        text = actions.clip.text()
+        actions.user.paste(text)
