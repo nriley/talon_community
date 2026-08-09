@@ -423,9 +423,13 @@ def potential_sidebars():
                     yield scroll_child
                 seen_children.append(scroll_child)
 
-    # Catalyst
-    if parent.children.find(AXRole="AXGroup", AXSubrole="iOSContentGroup", max_depth=0):
-        for splitter in parent.children.find(AXRole="AXSplitter", max_depth=3):
+    # Catalyst (tested in Books, Home, Maps, Messages, Weather)
+    # XXX Tahoe Maps does not expose items' labels
+    if content := parent.children.find(
+        AXRole="AXGroup", AXSubrole="iOSContentGroup", max_depth=0
+    ):
+        group = content[0]
+        for splitter in group.children.find(AXRole="AXSplitter", max_depth=3):
             split = splitter.parent
             for group in split.children.find(AXRole="AXGroup", max_depth=0):
                 for collection in group.children.find(
@@ -435,6 +439,29 @@ def potential_sidebars():
                         continue
                     yield collection
                     seen_children.append(collection)
+        else:
+            # Liquid Glass sidebars no longer expose a splitter. Try looking for
+            # siblings, otherwise just look at first group children.
+            if siblings := group.children.find(
+                dict(
+                    AXRole="AXGroup", AXRoleDescription="Nav bar"
+                ),  # Messages, Weather
+                dict(AXRole="AXGroup", AXDescription="Sidebar"),  # Books
+                dict(AXRole="AXTextField", AXSubrole="AXSearchField"),  # Maps
+                max_depth=5,
+            ):
+                group = siblings[0].parent
+            while group.AXRoleDescription != "collection":
+                if not (
+                    groups := group.children.find(
+                        dict(AXRole="AXGroup", AXRoleDescription="group"),
+                        dict(AXRole="AXGroup", AXRoleDescription="collection"),
+                        max_depth=0,
+                    )
+                ):
+                    return
+                group = groups[0]
+            yield group
         return
 
     # BBEdit
