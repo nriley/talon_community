@@ -260,7 +260,7 @@ elif app.platform == "mac":
         return items
 
 
-@mod.capture(rule="{self.running}")  # | <user.text>)")
+@mod.capture(rule="{user.running}")  # | <user.text>)")
 def running_applications(m) -> str:
     "Returns a single application name"
     try:
@@ -269,7 +269,7 @@ def running_applications(m) -> str:
         return m.text
 
 
-@mod.capture(rule="{self.launch}")
+@mod.capture(rule="{user.launch}")
 def launch_applications(m) -> str:
     "Returns a single application name"
     return m.launch
@@ -306,7 +306,7 @@ def update_running_list():
         if running_app_name := running_application_dict.get(full_application_name):
             running[running_name] = running_app_name
 
-    ctx.lists["self.running"] = running
+    ctx.lists["user.running"] = running
 
     for quit_app in set(app_mouse_pos) - set(foreground_apps):
         del app_mouse_pos[quit_app]
@@ -346,7 +346,7 @@ class Actions:
                     f'Skipped getting app: "{name}" has less than 3 chars.'
                 )
             for running_name, full_application_name in ctx.lists[
-                "self.running"
+                "user.running"
             ].items():
                 if running_name == name or running_name.lower().startswith(
                     name.lower()
@@ -470,7 +470,7 @@ def gui_running(gui: imgui.GUI):
     gui.text("Running applications: spoken forms")
     gui.line()
     running_apps = sorted(
-        (v.lower(), k, v) for k, v in ctx.lists["self.running"].items()
+        (v.lower(), k, v) for k, v in ctx.lists["user.running"].items()
     )
     for _, running_name, full_application_name in running_apps:
         gui.text(f"{full_application_name}: {running_name}")
@@ -485,7 +485,7 @@ def update_launch_list():
 
     # actions.user.talon_pretty_print(launch)
 
-    ctx.lists["self.launch"] = actions.user.create_spoken_forms_from_map(
+    ctx.lists["user.launch"] = actions.user.create_spoken_forms_from_map(
         launch, words_to_exclude
     )
 
