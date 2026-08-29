@@ -67,22 +67,17 @@ words_to_exclude = [
 HAVE_PYWIN32 = False
 
 if app.platform == "windows":
-    with suppress(ImportError):
-        import pywintypes
-        from win32com.propsys import propsys, pscon
-        from win32com.shell import shell, shellcon
-
-        HAVE_PYWIN32 = True
-
-    if HAVE_PYWIN32:
-        # on Windows, WindowsApps are not like normal applications, so
-        # we use the shell:AppsFolder to populate the list of applications
-        # rather than via e.g. the start menu. This way, all apps, including "modern" apps are
-        # launchable. To easily retrieve the apps this makes available, navigate to shell:AppsFolder in Explorer
-
+    # This try/except block is to make this work with versions of beta Talon that have removed pywin32 as a dependency
+    # this handles an import error by using the new builtin Talon action for getting the list of apps
+    # remove the try block after public Talon supports that action and use the definition in the except block for get_apps
+    try:
         import ctypes
         import os
         from ctypes import wintypes
+
+        import pywintypes
+        from win32com.propsys import propsys, pscon
+        from win32com.shell import shell, shellcon
 
         # KNOWNFOLDERID
         # https://msdn.microsoft.com/en-us/library/dd378457
@@ -163,9 +158,10 @@ if app.platform == "windows":
                     items[name] = app_user_model_id
 
             return items
-    else:
-        get_apps = actions.apps.list
+    except ImportError:
 
+        def get_apps():
+            return actions.apps.list()
 
 elif app.platform == "linux":
     import configparser
