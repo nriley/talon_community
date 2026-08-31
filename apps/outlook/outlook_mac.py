@@ -94,21 +94,22 @@ class UserActions:
             actions.insert(text)
 
     def outlook_set_selected_folder(folder: str):
-        # for "old Outlook" this uses the scripting dictionary
-        # for "new Outlook" this currently uses the displayed folder name
-        result = applescript.run(f"""
-			tell application id "com.microsoft.Outlook"
-				if (exists (selected folder)) then
-					set selected folder to {folder}
-					return true
-				end if
-				return false
-			end tell""")
-        if result == "false":
-            # new Outlook (at least until it gets OSA support)
-            actions.user.outlook_focus_folder_list()
-            actions.insert(folder)
-            actions.user.outlook_focus_message_list()
+        folder = folder.lower()
+        folder_list = actions.user.outlook_focus_folder_list()
+        folder_outline = folder_list.children.find_one(AXRole="AXOutline", max_depth=0)
+        for folder_row in folder_outline.AXRows:
+            if (
+                folder_row.children.find_one(AXRole="AXStaticText").AXValue.lower()
+                == folder
+            ):
+                folder_row.AXSelected = True
+                return
+        else:
+            message = f"Unable to find Outlook folder “{folder}”"
+            app.notify(message)
+            raise Exception(message)
+
+        actions.user.outlook_focus_message_list()
 
     def outlook_archive():
         actions.user.outlook_focus_message_list()
@@ -158,29 +159,26 @@ class UserActions:
         toolbar_split = outlook.active_window.children.find_one(
             AXRole="AXSplitGroup", max_depth=0
         )
-        sidebar_split = toolbar_split.children.find_one(
-            AXRole="AXSplitGroup", max_depth=0
-        )
-        scroll_area_or_split_group = sidebar_split.children[0]
-        if scroll_area_or_split_group.AXRole != "AXScrollArea":
+        try:
+            folder_list = toolbar_split.children.find_one(
+                AXRole="AXScrollArea", max_depth=0
+            )
+        except:
             actions.key("cmd-alt-s")
+            for _attempt in range(10):
+                actions.sleep("50ms")
+                folder_list = toolbar_split.children.find_one(
+                    AXRole="AXScrollArea", max_depth=0
+                )
+            else:
+                app.notify(
+                    "Unable to focus Outlook folder list",
+                    body="If this keeps happening, consider closing and reopening the Outlook window",
+                )
+                raise Exception("Unable to focus Outlook folder list")
 
-        last_focused_element = None
-        for _attempt in range(10):
-            focused_element = outlook_focused_element()
-            role = focused_element.AXRole
-            if focused_element != last_focused_element:
-                if role == "AXOutline":
-                    return
-                actions.key("ctrl-shift-[")
-            last_focused_element = focused_element
-            actions.sleep("50ms")
-
-        app.notify(
-            "Unable to focus Outlook folder list",
-            body="If this keeps happening, consider closing and reopening the Outlook window",
-        )
-        raise Exception("Unable to focus Outlook folder list")
+        folder_list.AXFocused = True
+        return folder_list
 
     def outlook_download_images():
         outlook = outlook_app()
@@ -249,8 +247,8 @@ class Actions:
     def outlook_focus_message_list():
         """Focus the message list in Outlook"""
 
-    def outlook_focus_folder_list():
-        """Focus the folder list in Outlook"""
+    def outlook_focus_folder_list() -> ui.Element | None:
+        """Focus and return the folder list in Outlook"""
 
     def outlook_download_images():
         """Download images in Outlook"""

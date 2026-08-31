@@ -70,22 +70,15 @@ expand:
     key(right)
 message: user.outlook_focus_message_body()
 
-go folder <user.outlook_recent_folder>:
+go folder <user.ui_sidebar_row>:
     user.outlook_focus_folder_list()
-    insert('{user.formatted_text(outlook_recent_folder, "ALL_LOWERCASE,NO_SPACES")}')
-    user.outlook_focus_message_list()
-
-go folder <user.text>:
-    user.outlook_focus_folder_list()
-    insert('{user.formatted_text(text, "ALL_LOWERCASE,NO_SPACES")}')
+    user.ui_element_select(ui_sidebar_row)
     user.outlook_focus_message_list()
 
 go [to] inbox: user.outlook_set_selected_folder("inbox")
 go [to] drafts: user.outlook_set_selected_folder("drafts")
-go [to] junk: user.outlook_set_selected_folder("junk mail")
-go [to] sent: user.outlook_set_selected_folder("sent items")
-
-# new Outlook only (not exposed in scripting dictionary)
+go [to] junk: user.outlook_set_selected_folder("junk email")
+go [to] sent: user.outlook_set_selected_folder("sent")
 go [to] archive: user.outlook_set_selected_folder("archive")
 
 # different implementation in "old Outlook" - replace above if you're using it
