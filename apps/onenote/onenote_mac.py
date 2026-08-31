@@ -129,9 +129,9 @@ def on_ready():
 app.register("ready", on_ready)
 
 
-@mod.capture(rule="<number_small>")
+@mod.capture(rule="<number_small> | done")
 def now_entry(m) -> str:
-    return " ".join(m._unmapped)
+    return str(m)
 
 
 @mod.action_class
@@ -538,7 +538,7 @@ class UserActions:
             actions.sleep("200ms")
 
         if entry:
-            actions.mimic(entry)
+            actions.insert(entry)
 
     def onenote_day_heading(days_in_future: Optional[int] = 0):
         actions.user.onenote_heading_1()
