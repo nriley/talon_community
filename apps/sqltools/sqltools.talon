@@ -15,6 +15,8 @@ object: key(f12)
 object script: key(ctrl-f12)
 sequel plus: key(ctrl-shift-f5)
 
+complete: key(ctrl-shift-space)
+
 # Intentional overlap with formatting commands
 all cap that: key(ctrl-shift-up)
 all down that: key(ctrl-shift-down)
