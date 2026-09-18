@@ -18,3 +18,8 @@ mail this: user.office_mail_this()
 ribbon: key(ctrl-f1)
 
 markup: user.office_ribbon_select("rtd")
+
+comment | comet:
+	key(menu)
+	sleep(200ms)
+	key(m m enter)
