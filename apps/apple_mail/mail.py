@@ -19,7 +19,7 @@ def mail_messages_table():
     mail = mail_app()
     try:
         return mail.active_window.children.find_one(
-            AXRole="AXTable", AXDescription="messages", max_depth=3
+            AXRole="AXTable", AXDescription="messages", max_depth=4
         )
     except ui.UIErr:
         return None  # no messages table found
