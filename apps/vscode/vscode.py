@@ -534,8 +534,10 @@ class UserActions:
     # line_commands.py support end
 
     # comment_block.py
-    def code_comment_block():
+    def code_comment_block(text=None):
         actions.user.vscode("editor.action.blockComment")
+        if text:
+            actions.insert(text)
 
     def insert_snippet(body: str):
         actions.user.run_rpc_command("editor.action.insertSnippet", {"snippet": body})
