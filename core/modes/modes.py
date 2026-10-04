@@ -4,6 +4,13 @@ mod = Module()
 ctx_sleep = Context()
 ctx_awake = Context()
 
+modes = {
+    "presentation": "voice-controlled presentations",
+}
+
+for key, value in modes.items():
+    mod.mode(key, value)
+
 ctx_sleep.matches = r"""
 mode: sleep
 """
