@@ -295,14 +295,21 @@ class UserActions:
         else:
             raise Exception("Unable to locate command search window")
         group = window.children.find_one(AXRole="AXGroup", max_depth=0)
-        # jump over find and replace options
-        menu_buttons = group.children.find(AXRole="AXMenuButton")[3:]
-        for index, button in enumerate(menu_buttons):
-            if not button.AXEnabled:
-                button = menu_buttons[index + 1]
-                ctrl.mouse_move(*button.AXFrame.center)
-                return
-        raise Exception("No matching action")
+        actions = False
+        for child in group.children:
+            print(actions, child.AXRole, child.AXTitle)
+            match child.AXRole:
+                case "AXStaticText":
+                    if "Actions" in child.AXTitle:
+                        actions = True
+                        continue
+                case "AXMenuButton":
+                    if not actions:
+                        continue
+                    if child.AXEnabled:
+                        ctrl.mouse_move(*child.AXFrame.center)
+                        return
+        raise Exception("No matching Office action")
 
     def office_document_actions():
         toolbar_group = document_window_toolbar_group()
