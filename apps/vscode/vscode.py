@@ -350,7 +350,7 @@ class UserActions:
 
     # multiple_cursor.py support end
 
-    def command_search(command: str = ""):
+    def command_search(command=""):
         actions.user.vscode("workbench.action.showCommands")
         if command != "":
             actions.insert(command)

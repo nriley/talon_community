@@ -47,7 +47,7 @@ class UserActions:
     def tab_jump(number: int):
         actions.key(f"ctrl-{number}")
 
-    def command_search(command: str = ""):
+    def command_search(command=""):
         actions.key("ctrl-e")
         if command != "":
             actions.sleep("180ms")

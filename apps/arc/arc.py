@@ -20,7 +20,7 @@ class UserActions:
         actions.sleep("180ms")
         actions.app.tab_close()
 
-    def command_search(command: str = ""):
+    def command_search(command=""):
         actions.key("cmd-l")
         if command != "":
             actions.sleep("200ms")

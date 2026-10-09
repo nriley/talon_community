@@ -1,3 +1,5 @@
+from typing import Optional
+
 from talon import Module
 
 mod = Module()
@@ -9,5 +11,5 @@ mod.tag(
 
 @mod.action_class
 class command_search_actions:
-    def command_search(command: str = ""):
+    def command_search(command: Optional[str] = ""):
         """Searches for command based on text"""

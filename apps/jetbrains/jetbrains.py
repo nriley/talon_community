@@ -337,7 +337,7 @@ class UserActions:
     def camel_right():
         actions.user.idea("action EditorNextWordInDifferentHumpsMode")
 
-    def command_search(command: str = ""):
+    def command_search(command=""):
         actions.user.idea("action GotoAction")
         if command != "":
             actions.insert(command)

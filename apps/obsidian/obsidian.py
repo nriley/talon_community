@@ -365,7 +365,7 @@ class AppActions:
 @ctx.action_class("user")
 class UserActions:
     # command palette / command search
-    def command_search(command: str = ""):
+    def command_search(command=""):
         actions.user.obsidian("command-palette:open")
         if command:
             actions.insert(command)
