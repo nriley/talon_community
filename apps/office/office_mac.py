@@ -360,8 +360,7 @@ def spoken_forms(s):
         if has_non_alpha_or_space:
             return f"""{spoken_forms}
 {RE_NON_ALPHA_OR_SPACE.sub(" ", s.lower())}"""
-        else:
-            return spoken_forms
+        return spoken_forms
     return s.lower()
 
 
@@ -411,8 +410,7 @@ def saved_item_selection_list(items, fallback=None):
 def left_top(element, transpose=False):
     if frame := getattr(element, "AXFrame", None):
         return (frame.top, frame.left) if transpose else (frame.left, frame.top)
-    else:
-        return (0, 0)
+    return (0, 0)
 
 
 def item_names(items, names=None, prefix="", across_then_down=False):
