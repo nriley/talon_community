@@ -184,7 +184,7 @@ class UserActions:
                 tab_index, tab_name, role, name, filter
             )
         ) is None:
-            return None
+            return
 
         control.perform("AXPress")
 
