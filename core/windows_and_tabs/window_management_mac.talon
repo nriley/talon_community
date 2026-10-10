@@ -3,7 +3,7 @@ os: mac
 
 app hide: app.window_hide()
 app hide others: app.window_hide_others()
-app quit: key(cmd-q)
+app quit: app.quit()
 full screen: key(cmd-ctrl-f)
 window close all: key(cmd-alt-w)
 window fill: key(ctrl-fn-f)
