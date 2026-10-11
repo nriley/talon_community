@@ -674,9 +674,9 @@ async def gui_list_help(ui, ui_wrapper):
         else:
             talon_list = talon_list([])
             if isinstance(talon_list, str):
-                talon_list = {c: "" for c in talon_list.splitlines()}
+                talon_list = dict.fromkeys(talon_list.splitlines(), "")
             elif isinstance(talon_list, list):
-                talon_list = {c: "" for c in talon_list}
+                talon_list = dict.fromkeys(talon_list, "")
             cached_list = selected_list
             cached_list_contents = talon_list
 
