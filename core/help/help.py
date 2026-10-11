@@ -659,6 +659,8 @@ def hide_all_help_guis():
 
 @open_gui(y=0, refresh_period="500ms")
 async def gui_list_help(ui, ui_wrapper):
+    global cached_list
+    global cached_list_contents
     global selected_list
     global page_scroller
 
