@@ -102,7 +102,10 @@ class Actions:
 
     def enter_user_mode(mode: str):
         """Save current modes, disable dictation/command and enable user.<mode> mode if inactive"""
-        if ("user." + mode) in scope.get("mode", ()):
+        active_modes = scope.get("mode", ())
+        if ("user." + mode) in active_modes:
+            return
+        if "sleep" in active_modes:
             return
         actions.mode.save()
         actions.mode.disable("dictation")
