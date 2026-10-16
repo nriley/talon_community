@@ -39,6 +39,7 @@ c t scan: CT scan
 cat scan: CT scan
 cursorless: Cursorless
 Datalink
+DAR
 Dev
 DNS
 Doc Flowsheet
