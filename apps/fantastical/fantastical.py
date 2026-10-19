@@ -17,6 +17,10 @@ and app.bundle: com.flexibits.fantastical2.mac
 """
 
 
+def fantastical_appscript():
+    return ui.apps(bundle="com.flexibits.fantastical2.mac")[0].appscript()
+
+
 def fantastical_calendar_window():
     window = ui.active_window()
     if not window or window.element.get("AXSubrole", None) != "AXStandardWindow":
@@ -48,19 +52,13 @@ def fantastical_notifications():
 @ctx.action_class("user")
 class UserActions:
     def fantastical_parse(text: str):
-        ui.apps(bundle="com.flexibits.fantastical2.mac")[0].appscript().parse_sentence(
-            text
-        )
+        fantastical_appscript().parse_sentence(text)
 
     def fantastical_show_mini_calendar():
-        import webbrowser
-
-        webbrowser.open("x-fantastical3://show/mini")
+        fantastical_appscript().open_location("x-fantastical3://show/mini")
 
     def fantastical_show_calendar():
-        import webbrowser
-
-        webbrowser.open("x-fantastical3://show/calendar")
+        fantastical_appscript().open_location("x-fantastical3://show/calendar")
 
     def fantastical_show_notifications():
         if not (notifications := fantastical_notifications()):
