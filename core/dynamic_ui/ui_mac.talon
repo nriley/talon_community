@@ -48,6 +48,7 @@ sidebar hover <user.ui_sidebar_row>: user.ui_element_hover(ui_sidebar_row)
 sidebar {user.disclosure_action} <user.ui_sidebar_row>:
     user.ui_element_disclose(user.ui_sidebar_row, disclosure_action)
 sidebar [scroll] {user.scroll_direction}:
+    sidebar = user.ui_element_sidebar()
     user.ui_element_scroll(scroll_direction, sidebar)
 
 help sidebar: user.help_list("user.ui_sidebar_row")
