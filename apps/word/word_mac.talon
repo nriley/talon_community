@@ -17,6 +17,7 @@ mail this: user.menu_select("File|Share|Send Document")
 mail pdf: user.menu_select("File|Share|Send PDF")
 
 ribbon: key(cmd-alt-r)
+ruler: user.menu_select("View|Ruler")
 
 comments switch: user.toggle_comments()
 comment | comet: user.menu_select("Insert|Comment")
