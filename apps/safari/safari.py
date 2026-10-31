@@ -43,7 +43,7 @@ class BrowserActions:
                 AXIdentifier="WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD",
             )
             return address_field.AXValue
-        except (ui.UIErr, AttributeError):
+        except ui.UIErr, AttributeError:
             pass
         try:
             return window.appscript().current_tab.URL(timeout=0.1)

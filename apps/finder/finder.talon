@@ -28,6 +28,8 @@ gallery view: key(cmd-4)
 
 open computer: user.finder_open_computer()
 
+hidden [files] toggle: key(cmd-shift-.)
+
 trash that: key(cmd-backspace)
 empty trash: key(cmd-shift-backspace)
 go trash: user.finder_open_trash()
