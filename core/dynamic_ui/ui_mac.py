@@ -341,7 +341,7 @@ def list_rows(element, all=False):
             [row],
             row.children.find(
                 *[
-                    dict(AXRole=role)
+                    dict(AXRole=role)  # noqa: C408
                     for role in (
                         "AXStaticText",
                         "AXTextField",
@@ -443,19 +443,19 @@ def potential_sidebars():
             # Liquid Glass sidebars no longer expose a splitter. Try looking for
             # siblings, otherwise just look at first group children.
             if siblings := group.children.find(
-                dict(
+                dict(  # noqa: C408
                     AXRole="AXGroup", AXRoleDescription="Nav bar"
                 ),  # Messages, Weather
-                dict(AXRole="AXGroup", AXDescription="Sidebar"),  # Books
-                dict(AXRole="AXTextField", AXSubrole="AXSearchField"),  # Maps
+                dict(AXRole="AXGroup", AXDescription="Sidebar"),  # Books  # noqa: C408
+                dict(AXRole="AXTextField", AXSubrole="AXSearchField"),  # Maps  # noqa: C408
                 max_depth=5,
             ):
                 group = siblings[0].parent
             while group.AXRoleDescription != "collection":
                 if not (
                     groups := group.children.find(
-                        dict(AXRole="AXGroup", AXRoleDescription="group"),
-                        dict(AXRole="AXGroup", AXRoleDescription="collection"),
+                        dict(AXRole="AXGroup", AXRoleDescription="group"),  # noqa: C408
+                        dict(AXRole="AXGroup", AXRoleDescription="collection"),  # noqa: C408
                         max_depth=0,
                     )
                 ):
@@ -466,7 +466,9 @@ def potential_sidebars():
 
     # BBEdit
     children = parent.children.find(
-        dict(AXRole="AXOutline"), dict(AXRole="AXTable"), max_depth=0
+        dict(AXRole="AXOutline"),  # noqa: C408
+        dict(AXRole="AXTable"),  # noqa: C408
+        max_depth=0,  # noqa: C408
     )
     for child in left_top_sorted(children):
         yield from element_potential_sidebars(child)
@@ -485,6 +487,7 @@ def sidebar():
     for child in potential_sidebars():
         if list_rows(child, True):
             return child
+    return None
 
 
 def sidebar_rows():

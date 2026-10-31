@@ -47,7 +47,7 @@ from struct import unpack  # noqa: E402
 # group. Valid surrogate pairs are supported too.
 _charescape = re.compile(
     "([\x00-\x1f\\\\{}\x80-\ud7ff\ue000-\uffff])|"
-    "([\U00010000-\U0001ffff]|[\ud800-\udbff][\udc00-\udfff])"
+    + "([\U00010000-\U0001ffff]|[\ud800-\udbff][\udc00-\udfff])"
 )
 
 
@@ -95,6 +95,7 @@ def rtfunicode(name):
             incrementalencoder=IncrementalEncoder,
             streamwriter=StreamWriter,
         )
+    return None
 
 
 codecs.register(rtfunicode)

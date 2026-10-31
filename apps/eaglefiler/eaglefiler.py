@@ -46,9 +46,9 @@ class UserActions:
         browser_window = eaglefiler_front_browser_window()
         try:
             if not (displayed_records := browser_window.displayed_records()):
-                return None
+                return
         except CommandError:
-            return None
+            return
 
         browser_window.selected_records.set(displayed_records[0])
 

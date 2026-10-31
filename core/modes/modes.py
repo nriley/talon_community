@@ -146,8 +146,7 @@ def restore_dictation_mode_on_app_activate(app):
 def remove_dictation_app_on_quit(app):
     global dictation_apps
 
-    if app in dictation_apps:
-        dictation_apps.remove(app)
+    dictation_apps.discard(app)
 
 
 def on_ready():

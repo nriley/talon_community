@@ -116,7 +116,7 @@ class UserActions:
                     window = active_app.children.find_one(
                         AXRole="AXWindow", AXSubrole="AXStandardWindow", max_depth=0
                     )
-                except (AttributeError, ui.UIErr):
+                except AttributeError, ui.UIErr:
                     # XXX Microsoft Word sometimes returns an invalid/empty element
                     actions.sleep("10ms")
                 else:
@@ -388,9 +388,7 @@ def element_title(e):
 
 
 def enabled_items_with_role(element, role):
-    return [
-        item for item in element.children.find(AXRole=role, AXEnabled=True, max_depth=0)
-    ]
+    return list(element.children.find(AXRole=role, AXEnabled=True, max_depth=0))
 
 
 def saved_item_selection_list(items, fallback=None):

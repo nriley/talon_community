@@ -428,7 +428,7 @@ class UserActions:
                         control_type="Edit", name="files to include", max_depth=0
                     )
                     actions.key("tab:5")
-                except (IndexError, OSError):
+                except IndexError, OSError:
                     actions.user.vscode("workbench.action.search.toggleQueryDetails")
         else:
             # assume query details are already visible

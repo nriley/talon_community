@@ -330,11 +330,11 @@ def onenote_navigation_list(level):
     if level == NavigationLevel.PAGES:
         labels = reversed(outline.children.find(AXRole="AXStaticText"))
         pages = {label.AXValue: label for label in labels}
-        return pages
+        return pages  # noqa: RET504
 
     cells = reversed(outline.children.find(AXRole="AXCell"))
     notebooks_or_sections = {cell.AXDescription: cell for cell in cells}
-    return notebooks_or_sections
+    return notebooks_or_sections  # noqa: RET504
 
 
 def onenote_search(text, level):

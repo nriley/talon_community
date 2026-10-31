@@ -74,8 +74,7 @@ def focused_help(gui: imgui.GUI):
     if FOCUSED_HELP.play_back(gui):
         hide_button(gui)
         return
-    else:
-        FOCUSED_HELP.gui = gui
+    FOCUSED_HELP.gui = gui
     gui = FOCUSED_HELP
 
     title(gui, "Focused", spacer=False)
@@ -113,7 +112,7 @@ def focused_help(gui: imgui.GUI):
     try:
         active_app = focused_element.window.app
         title(gui, "Element’s App")
-    except (ui.UIErr, AttributeError):  # typically "Window not found"
+    except ui.UIErr, AttributeError:  # typically "Window not found"
         if active_app := ui.active_app():
             title(gui, "Active App")
     if active_app:

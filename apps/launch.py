@@ -12,7 +12,7 @@ def wait_focused_app(bundle, tries=10):
             active_app = ui.focused_element().window.app
             if active_app.bundle == bundle:
                 return active_app
-        except (RuntimeError, OSError, ui.UIErr):
+        except RuntimeError, OSError, ui.UIErr:
             pass
         actions.sleep("50ms")
     else:

@@ -14,7 +14,7 @@ def unc_app():
 def unc_alert():
     unc = unc_app()
     if not unc:
-        return
+        return None
 
     window = unc.active_window.element
     if window.get("AXSubrole") != "AXSystemDialog":

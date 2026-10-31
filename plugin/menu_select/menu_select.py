@@ -69,8 +69,7 @@ def spoken_forms(s):
         if has_non_alpha_or_space:
             return f"""{spoken_forms}
 {RE_NON_ALPHA_OR_SPACE.sub(" ", s.lower())}"""
-        else:
-            return spoken_forms
+        return spoken_forms
     return s.lower()
 
 
@@ -91,9 +90,7 @@ def element_title(e):
 
 
 def enabled_items_with_role(element, role):
-    return [
-        item for item in element.children.find(AXRole=role, AXEnabled=True, max_depth=0)
-    ]
+    return list(element.children.find(AXRole=role, AXEnabled=True, max_depth=0))
 
 
 def item_titles(items, fallback=None):
@@ -318,6 +315,7 @@ def status_menu_items_fallback():
     def fallback(item):
         if item in singletons:
             return item.AXTopLevelUIElement.AXParent
+        return None
 
     return items, fallback
 

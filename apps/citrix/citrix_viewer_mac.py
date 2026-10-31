@@ -19,10 +19,9 @@ def citrix_view_menu():
         print("Citrix Viewer is not the active application")
         return None
     menu_bar = citrix_viewer.children.find_one(AXRole="AXMenuBar", max_depth=0)
-    view_menu = menu_bar.children.find_one(
+    return menu_bar.children.find_one(
         AXRole="AXMenuBarItem", AXTitle="View", max_depth=0
     ).children[0]
-    return view_menu
 
 
 @ctx.action_class("user")

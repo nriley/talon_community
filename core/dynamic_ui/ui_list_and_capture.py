@@ -45,8 +45,7 @@ def spoken_forms(s, max_length=0):
 def top_left(element):
     if frame := getattr(element, "AXFrame", None):
         return (frame.top, frame.left)
-    else:
-        return (0, 0)
+    return (0, 0)
 
 
 @mod.action_class

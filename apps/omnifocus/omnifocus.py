@@ -23,6 +23,7 @@ def omnifocus_app():
         apps = ui.apps(bundle=bundle_id)
         if apps:
             return apps[0]
+    return None
 
 
 @ctx.action_class("user")
@@ -49,7 +50,7 @@ class UserActions:
 
     def omnifocus_select_tree(tree: str):
         content = omnifocus_app().appscript().windows[1].content
-        trees = [eval("content." + tree, dict(content=content), {})]
+        trees = [eval("content." + tree, {"content": content}, {})]
         content.selected_trees.set(trees)
 
         actions.key("alt-cmd-2")

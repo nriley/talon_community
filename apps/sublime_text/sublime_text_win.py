@@ -177,7 +177,6 @@ class Actions:
         if not sublime_text:
             app.notify("Sublime Text is not running.")
             return
-        else:
-            sublime_text = sublime_text[0]
+        sublime_text = sublime_text[0]
         subl_path = str(Path(sublime_text.exe).parents[0] / "subl.exe")
         call([subl_path, "--"] + paths)

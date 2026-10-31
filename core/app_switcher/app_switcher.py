@@ -2,7 +2,6 @@ import os
 import shlex
 import subprocess
 import time
-from contextlib import suppress
 from pathlib import Path
 
 import talon

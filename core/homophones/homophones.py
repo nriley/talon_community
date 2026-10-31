@@ -147,7 +147,7 @@ def raise_homophones(word_to_find_homophones_for, forced=False, selection=False)
         clip.set_text(f"{prefix}{new}{suffix}")
         actions.edit.paste()
         return
-    elif is_selection and (prefix or suffix):
+    if is_selection and (prefix or suffix):
         active_word_list = [f"{prefix}{new}{suffix}" for new in active_word_list]
 
     ctx.tags = ["user.homophones_open"]
