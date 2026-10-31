@@ -266,13 +266,23 @@ class UserActions:
             toolbar_group = document_window_toolbar_group()
         except ui.UIErr as e:
             raise Exception("Unable to locate window toolbar") from e
-        try:
-            search_field = toolbar_group.children.find_one(
-                AXRole="AXTextField", AXSubrole="AXSearchField", max_depth=0
-            )
-            search_field.AXFocused = True
-        except ui.UIErr as e:
-            raise Exception("Unable to locate Search button") from e
+
+        def office_mac_search_field():
+            with suppress(ui.UIErr):
+                return toolbar_group.children.find_one(
+                    AXRole="AXTextField", AXSubrole="AXSearchField", max_depth=0
+                )
+            return None
+
+        if (search_field := office_mac_search_field()) is None:
+            actions.key("ctrl-cmd-u")
+            for _attempt in range(10):
+                if (search_field := office_mac_search_field()) is not None:
+                    break
+                actions.sleep("10ms")
+            else:
+                raise Exception("Unable to locate search field")
+        search_field.AXFocused = True
 
         search_field.AXValue = command
         if command == "":
