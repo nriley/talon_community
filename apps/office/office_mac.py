@@ -295,16 +295,15 @@ class UserActions:
         else:
             raise Exception("Unable to locate command search window")
         group = window.children.find_one(AXRole="AXGroup", max_depth=0)
-        actions = False
+        seen_actions = False
         for child in group.children:
-            print(actions, child.AXRole, child.AXTitle)
             match child.AXRole:
                 case "AXStaticText":
                     if "Actions" in child.AXTitle:
-                        actions = True
+                        seen_actions = True
                         continue
                 case "AXMenuButton":
-                    if not actions:
+                    if not seen_actions:
                         continue
                     if child.AXEnabled:
                         ctrl.mouse_move(*child.AXFrame.center)
