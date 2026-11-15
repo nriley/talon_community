@@ -1,13 +1,15 @@
 os: mac
 -
 
-launch <user.text>: user.launchbar_select(text)
+# XXX "watch" is a conformer workaround
 
-launch brief {user.abbreviation}: user.launchbar_select(abbreviation)
+(launch | watch) <user.text>: user.launchbar_select(text)
 
-launch bar: user.launch_or_focus_bundle("at.obdev.LaunchBar")
+(launch | watch) brief {user.abbreviation}: user.launchbar_select(abbreviation)
 
-launch running: user.launchbar_action("Running Applications", "")
+(launch | watch) bar: user.launch_or_focus_bundle("at.obdev.LaunchBar")
+
+(launch | watch) running: user.launchbar_action("Running Applications", "")
 
 web search <phrase>: user.launchbar_action("Google", "{phrase}")
 
@@ -17,9 +19,9 @@ web search <phrase>: user.launchbar_action("Google", "{phrase}")
 # Instant Send: Double Control (which I have mapped to caps lock)
 # Show clipboard history: Control-Option-Command-V
 
-launch paste: key(ctrl-cmd-alt-v)
+(launch | watch) paste: key(ctrl-cmd-alt-v)
 
-launch send:
+(launch | watch) send:
     key(ctrl:down)
     sleep(10ms)
     key(ctrl:up ctrl:down)
