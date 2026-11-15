@@ -98,12 +98,10 @@ class UserActions:
         folder_list = actions.user.outlook_focus_folder_list()
         folder_outline = folder_list.children.find_one(AXRole="AXOutline", max_depth=0)
         for folder_row in folder_outline.AXRows:
-            if (
-                folder_row.children.find_one(AXRole="AXStaticText").AXValue.lower()
-                == folder
-            ):
-                folder_row.AXSelected = True
-                return
+            for label in folder_row.children.find(AXRole="AXStaticText"):
+                if label.AXValue.lower() == folder:
+                    folder_row.AXSelected = True
+                    return
         else:
             message = f"Unable to find Outlook folder “{folder}”"
             app.notify(message)
