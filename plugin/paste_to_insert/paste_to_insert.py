@@ -12,6 +12,8 @@ Zero means always paste; -1 means never paste. Note: some contexts (e.g. the ter
 """,
 )
 
+mod.tag("no_paste_to_insert", "Tag for temporarily disabling paste to insert")
+
 # forces text to be typed and not pasted
 force_typing: bool = False
 
