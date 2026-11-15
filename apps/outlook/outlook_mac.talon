@@ -81,10 +81,6 @@ go [to] junk: user.outlook_set_selected_folder("junk email")
 go [to] sent: user.outlook_set_selected_folder("sent")
 go [to] archive: user.outlook_set_selected_folder("archive")
 
-# different implementation in "old Outlook" - replace above if you're using it
-# flag: key(ctrl-5)
-# unflag: user.outlook_unflag()
-
 # message composition
 bold: key(cmd-b)
 italic: key(cmd-i)

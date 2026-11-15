@@ -1,8 +1,5 @@
 from talon import Context, Module, actions, app, ctrl, ui
 
-if app.platform == "mac":
-    from talon.mac import applescript
-
 ctx = Context()
 mod = Module()
 
@@ -112,17 +109,6 @@ class UserActions:
     def outlook_archive():
         actions.user.outlook_focus_message_list()
         actions.key("ctrl-e")
-
-    def outlook_unflag():
-        applescript.run("""
-			tell application id "com.microsoft.Outlook"
-				get selected objects
-				repeat with _object in result
-					if _object's class is (incoming message) and _object's todo flag is not (not flagged) then
-						set todo flag of _object to not flagged
-					end if
-				end repeat
-			end tell""")
 
     def outlook_focus_message_list():
         element = outlook_focused_element()
