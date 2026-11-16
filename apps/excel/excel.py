@@ -18,8 +18,8 @@ def excel_row(m) -> int:
 
 @mod.capture(rule="(column <user.number_string>)|([column] <user.letter>+)")
 def excel_column(m) -> str | int:
-    if letter := getattr(m, "letter", None):
-        return letter.upper()
+    if letter_list := getattr(m, "letter_list", None):
+        return "".join(letter_list).upper()
     return int(m.number_string)
 
 
