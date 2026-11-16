@@ -21,6 +21,9 @@ collapse that: key(cmd-0)
 focus | hoist: key(cmd-shift-f)
 unfocused | unhoist: key(cmd-shift-alt-f)
 
+check: user.menu_select("Edit|Set Status|Checked")
+uncheck: user.menu_select("Edit|Set Status|Unchecked")
+
 toolbar: key(cmd-alt-t)
 # status bar
 
