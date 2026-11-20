@@ -528,7 +528,7 @@ class UserActions:
             ctrl.key_press("enter", app=app)
             for _ in range(5):
                 ctrl.key_press("tab", shift=True, app=app)
-            for _ in range(2):
+            for _ in range(3):
                 ctrl.key_press("tab", app=app)
             ctrl.key_press(
                 "0", alt=True, super=True, app=app
