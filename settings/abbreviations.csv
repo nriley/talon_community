@@ -172,8 +172,7 @@ pos,position
 pic,position independent code
 pie,position independent executable
 prev,previous
-PROD,prod
-PROD,production
+PRD,prod
 prop,property
 pub,public
 py,python
