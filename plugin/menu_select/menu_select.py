@@ -1,6 +1,7 @@
 import os
 import re
 from contextlib import suppress
+from time import time
 from typing import Optional
 
 from talon import Context, Module, actions, app, ctrl, imgui, ui
@@ -141,6 +142,16 @@ class Actions:
     def active_menu_safe() -> Optional[ui.Element]:
         """Returns the active menu if there is actually one (working around app/Talon issues)"""
         return ui.active_menu()
+
+    def active_menu_wait_ms(timeout_ms: float) -> ui.Element | None:
+        """Returns the active menu if there is one within the specified time"""
+        timeout_s = timeout_ms / 1000
+        start = time()
+        while (menu := actions.user.active_menu_safe()) is None:
+            if time() - start > timeout_s:
+                break
+            actions.sleep("10ms")
+        return menu
 
 
 STATUS_MENU_TITLES = []

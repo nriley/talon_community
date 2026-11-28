@@ -6,7 +6,10 @@ app: sublime_merge_mac
     sleep(100ms)
     user.insert_formatted(prose or "", "CAPITALIZE_FIRST_WORD")
 
-^message previous: key(cmd-; down)
+^message previous:
+    key(cmd-;)
+    user.active_menu_wait_ms(100)
+    key(down)
 
 go locations: key(cmd-1)
 go commits: key(cmd-2)
