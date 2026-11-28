@@ -73,6 +73,7 @@ stash pop: key(cmd-shift-s)
 
 ^repo [<user.text>]:
     key(escape ctrl-cmd-p)
+    sleep(10ms)
     insert('{user.formatted_text(text or "", "ALL_LOWERCASE,NO_SPACES")}')
 
 ^file previous: key(cmd-shift-[)
