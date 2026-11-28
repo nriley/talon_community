@@ -7,6 +7,7 @@ mod.apps.safari = """
 os: mac
 app.bundle: com.apple.Safari
 app.bundle: com.apple.SafariTechnologyPreview
+app.bundle: /^com.apple.Safari.WebApp.*$/i
 """
 
 ctx.matches = r"""
